@@ -44,19 +44,19 @@ Reruns tests when nothing has changed and using --build-cache`
 
 # Usage
 
-`bazel info` to show version number, and embedded jdk version. Must be run in a bazel workspace.
-`bazel info execution_root` show the execution root, ie: the working directory where Bazel executes all actions during the execution phase.
-`bazel fetch //...` to prefetch all dependencies, normally happens as part of `bazel build` see [here](https://docs.bazel.build/versions/master/external.html#fetching-dependencies)
-`bazel build //...` build everything
-`bazel test //...` test everything
-`bazel cquery //...` show all targets
-`bazel query 'rdeps(//..., //3rdparty/jvm/com/amazonaws:aws_java_sdk_dynamodb)'` show all targets depending on dynamodb
-`bazel query "somepath(//myapp:tests, //3rdparty/jvm/org/scalatest:scalatest)"` show a path between two targets.
-`bazel query "allpaths(//myapp:tests, //3rdparty/jvm/org/scalatest:scalatest)"` show [all paths](https://docs.bazel.build/versions/master/query.html#path-operators) between two targets.
-`bazel query 'kind(rule, external:all)' --output label_kind` list all the rules in the `//external` package
-`bazel query 'kind(maven_jar, //external:*)' --output build` list the definition of all the rulles in the `//external` package of type maven_jar
-`bazel query 'filter(.*log4j.*, kind(rule, external:all))' --output label_kind` list all log4j rules in the `//external package` NB: this is preferable to `bazel query 'kind(rule, external:all)' --output label_kind | grep log4j` as during the piping grep seems to miss some lines.
-`bazel shutdown` shutdown the workspace's bazel processes
+`bazel info` to show version number, and embedded jdk version. Must be run in a bazel workspace.  
+`bazel info execution_root` show the execution root, ie: the working directory where Bazel executes all actions during the execution phase.  
+`bazel fetch //...` to prefetch all dependencies, normally happens as part of `bazel build` see [here](https://docs.bazel.build/versions/master/external.html#fetching-dependencies).  
+`bazel build //...` build everything.  
+`bazel test //...` test everything.  
+`bazel cquery //...` show all targets.  
+`bazel query 'rdeps(//..., //3rdparty/jvm/com/amazonaws:aws_java_sdk_dynamodb)'` show all targets depending on dynamodb.  
+`bazel query "somepath(//myapp:tests, //3rdparty/jvm/org/scalatest:scalatest)"` show a path between two targets.  
+`bazel query "allpaths(//myapp:tests, //3rdparty/jvm/org/scalatest:scalatest)"` show [all paths](https://docs.bazel.build/versions/master/query.html#path-operators) between two targets.  
+`bazel query 'kind(rule, external:all)' --output label_kind` list all the rules in the `//external` package.  
+`bazel query 'kind(maven_jar, //external:*)' --output build` list the definition of all the rulles in the `//external` package of type maven_jar.  
+`bazel query 'filter(.*log4j.*, kind(rule, external:all))' --output label_kind` list all log4j rules in the `//external package` NB: this is preferable to `bazel query 'kind(rule, external:all)' --output label_kind | grep log4j` as during the piping grep seems to miss some lines.  
+`bazel shutdown` shutdown the workspace's bazel processes.  
 
 # External dependencies
 
@@ -200,7 +200,7 @@ Labels start with `//` but package names don't, ie: `my/app` is a package which 
 
 ## Phases
 
-Loading, analysis, and execution - see https://docs.bazel.build/versions/master/skylark/concepts.html#evaluation-model
+Loading, analysis, and execution - see [Evaluation model](https://docs.bazel.build/versions/master/skylark/concepts.html#evaluation-model)
 
 By design, loading a .bzl file has no visible side-effect, it only defines values and functions.
 
@@ -223,7 +223,7 @@ Most BUILD files are declarations of rules. To encourage minimal BUILD definitio
 
 Best practice is to add a `BUILD` file for each Java package ([ref](https://docs.bazel.build/versions/master/bazel-and-java.html)). Pants calls this the [1:1:1](https://www.pantsbuild.org/build_files.html#target-granularity) rule - 1 package contains 1 BUILD file which contains 1 target.
 
-In [this scala example]((https://github.com/johnynek/bazel-deps/blob/master/src/scala/com/github/johnynek/bazel_deps/BUILD) the `BUILD` file is used to specify a target for each individual file. This is probably to minimise compilation time because rules_scala is slow and doesn't yet do incremental compilation. Ideally targets will build in seconds rather than minutes, and large targets a split up. However, splitting the dependency graph like this for performance makes for a more awkward developer experience and hides a higher level logical dependency graph - see [this discussion](https://groups.google.com/forum/#!topic/bazel-discuss/3iUy5jxS3S0) and [also this discussion](https://github.com/bazelbuild/rules_scala/issues/328#issuecomment-417823637)
+In [this scala example](https://github.com/johnynek/bazel-deps/blob/master/src/scala/com/github/johnynek/bazel_deps/BUILD) the `BUILD` file is used to specify a target for each individual file. This is probably to minimise compilation time because rules_scala is slow and doesn't yet do incremental compilation. Ideally targets will build in seconds rather than minutes, and large targets a split up. However, splitting the dependency graph like this for performance makes for a more awkward developer experience and hides a higher level logical dependency graph - see [this discussion](https://groups.google.com/forum/#!topic/bazel-discuss/3iUy5jxS3S0) and [also this discussion](https://github.com/bazelbuild/rules_scala/issues/328#issuecomment-417823637).
 
 Bazel can introducing breaking changes between versions, so a good practice is to download a pinned version of bazel and run that.
 
@@ -246,7 +246,7 @@ After a sync, external java dependencies that have sources will be correctly lin
 
 # Data dependencies
 
-Bazel runs binaries (including tests) in a [runfiles](https://docs.bazel.build/versions/master/skylark/rules.html#runfiles) directory, eg: for the target `//package1:tests` it would be `bazel-bin/package1/tests.runfiles/`. The runfiles directory contains symlinks to all dependencies needed by the target at run time.You can also inspect the manifest file which lists all the symlinks, eg: `tests.runfiles_mainfest`. If the binary needs a file at runtime, and not during build time, it can be specified as a data [https://docs.bazel.build/versions/master/build-ref.html#data] dependency. If data dependencies change, the binary won't be rebuilt, but any binaries/tests will be re-run. Note that this is not the same as the runtime java class path - for that use `runtime_deps` on `java_library` or `java_import`. 
+Bazel runs binaries (including tests) in a [runfiles](https://docs.bazel.build/versions/master/skylark/rules.html#runfiles) directory, eg: for the target `//package1:tests` it would be `bazel-bin/package1/tests.runfiles/`. The runfiles directory contains symlinks to all dependencies needed by the target at run time.You can also inspect the manifest file which lists all the symlinks, eg: `tests.runfiles_mainfest`. If the binary needs a file at runtime, and not during build time, it can be specified as a [data dependency](https://docs.bazel.build/versions/master/build-ref.html#data). If data dependencies change, the binary won't be rebuilt, but any binaries/tests will be re-run. Note that this is not the same as the runtime java class path - for that use `runtime_deps` on `java_library` or `java_import`. 
 
 ...."The relative path of a file in the runfiles tree is the same as the relative path of that file in the source tree or generated output tree".....
 
