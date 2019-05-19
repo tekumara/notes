@@ -10,16 +10,6 @@ That said, it's a lot of work to set up (so many layers of indirection!) and unf
 
 In particular I found setting up external dependencies quite tricky, and there is a lack of support for repositories that require authentication. The external dependency story seems like it could do with a lot of love but I guess it hasn't received much attention because they vendor everything at the big G.
 
-## Why a monorepo?
-
-* Continuous integration - test consumers and libraries together [ref](https://medium.com/@Jakeherringbone/you-too-can-love-the-monorepo-d95d1d6fcebe)
-* Everyone will be on the latest and "breaking changes are caught synchronously and so impossible" [ref](http://www.draconianoverlord.com/2018/07/15/mono-repos.html)
-* Long running features can use branches
-* Makes integration of shared internal code much easier - if you are only used only third party dependencies from maven central then you probably don't need a monorepo
-* Build everything from source - rather than managing two dependency graphs (source repos + binary artifacts) you only need to manage one. [ref](https://gist.github.com/mariusae/7c4c7a57dc34e53ad4bf2cfcd94bf9f0#file-monorepo-txt-L40)
-
-Monorepos work well at certain sizes - too big and you run into tooling problems. Consider at what size your VCS grinds to a halt, or your IDE indexes become slow (if your IDE can unload modules that might help).
-
 ## What is bazel?
 
 Bazel is a distributed build system, that manages an explicitly defined dependency graph of rules which are pure functions that turn inputs into outputs. Rules can even be bash scripts (see [genrule](https://docs.bazel.build/versions/master/be/general.html#genrule)). Rather than modification times like Make, bazel uses intelligent hashing of the compiler and inputs to detect when rebuilds need to occur. Outputs are stored and managed by the bazel cache using content addressable storage, and can be shared remotely.
