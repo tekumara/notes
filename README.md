@@ -1,1 +1,3 @@
 # notes
+
+Notes that I should one day turn into a blog post or something ...

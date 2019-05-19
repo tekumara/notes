@@ -21,6 +21,7 @@ udf((link: String) => extract(s3Factory(), bucket)(link))
 ### Task not serializable
 
 When task serialization fails you'll get a stack trace like:
+
 ```
 Exception in thread "main" org.apache.spark.SparkException: Task not serializable
   at org.apache.spark.util.ClosureCleaner$.ensureSerializable(ClosureCleaner.scala:340)
@@ -38,44 +39,46 @@ If an object can't be serialized by the JavaSerializer, you can either
 * enable the Kyro serializer and try broadcasting it
 * make it a `lazy val` so it is created once per task/partition by an executor, as per here [Using Transient Lazy Val's To Avoid Spark Serialisation Issues](https://nathankleyn.com/2017/12/29/using-transient-and-lazy-vals-to-avoid-spark-serialisation-issues/) - note `@transient` isn't strictly necessary. In effect, the `lazy val` creates a function that creates the unserializable object on first access. This function can't contain an already created version of the object because serialization of it will be attempted.
 * make the object a member of a singleton object
-* If your UDF calls a class function or uses a class instance variable, it will try and serialize the whole class, see [Task not serializable: java.io.NotSerializableException when calling function outside closure only on classes not objects](https://stackoverflow.com/questions/22592811/task-not-serializable-java-io-notserializableexception-when-calling-function-ou/23053760#23053760). One solution is to make the function a member of a singleton object.
-* Move the creation of the unserializable object into a generator/iterator, which doesn't need to be serialized, and use mapPartitions eg:
-``` 
-    uniqueLinks.mapPartitions { rowIterator =>
-      new AbstractIterator[Row] {
+* if your UDF calls a class function or uses a class instance variable, it will try and serialize the whole class, see [Task not serializable: java.io.NotSerializableException when calling function outside closure only on classes not objects](https://stackoverflow.com/questions/22592811/task-not-serializable-java-io-notserializableexception-when-calling-function-ou/23053760#23053760). One solution is to make the function a member of a singleton object.
+* move the creation of the unserializable object into a generator/iterator, which doesn't need to be serialized, and use mapPartitions eg:
 
-        // s3 is not serializable, but we can create one here
-        // it will be created once per task/partition
-        val s3 = {
-          val s3Config = new ClientConfiguration().withMaxConnections(200)
-          val s3 = AmazonS3ClientBuilder.standard().withClientConfiguration(s3Config).withRegion(config.awsRegion).build()
-          logger.info(s"Created AmazonS3 $s3")
-          s3
+  ```scala 
+      uniqueLinks.mapPartitions { rowIterator =>
+        new AbstractIterator[Row] {
+
+          // s3 is not serializable, but we can create one here
+          // it will be created once per task/partition
+          val s3 = {
+            val s3Config = new ClientConfiguration().withMaxConnections(200)
+            val s3 = AmazonS3ClientBuilder.standard().withClientConfiguration(s3Config).withRegion(config.awsRegion).build()
+            logger.info(s"Created AmazonS3 $s3")
+            s3
+          }
+
+          def hasNext: Boolean = {
+            rowIterator.hasNext
+          }
+
+          def next(): Row = {
+            val row = rowIterator.next()
+
+            val key = row.getAs[String]("s3Key")
+            val object = s3.getObject("bucket, key)
+            val data = ....
+
+            Row(link,data.orNull)
+          }
         }
+      }(RowEncoder(dataSchema))
+  ```
 
-        def hasNext: Boolean = {
-          rowIterator.hasNext
-        }
+  This is equivalent to using map with a `lavy val s3` outside the map.
 
-        def next(): Row = {
-          val row = rowIterator.next()
+### A note on using lazy vals in Scala 2.11
 
-          val key = row.getAs[String]("s3Key")
-          val object = s3.getObject("bucket, key)
-          val data = ....
+In Scala 2.11, an anonymous function (eg: UDF) that closes over a local lazy val, defined in the method of a trait, will maintain a reference to the object it is mixed into, which then needs to be serializable. In this example, `udf` will contain an `$outer` reference to an ObjectA instance:
 
-          Row(link,data.orNull)
-        }
-      }
-    }(RowEncoder(dataSchema))
-```
-This is equivalent to using map with a `lavy val s3` outside the map.
-
-### Using lazy vals
-
-NB: In Scala 2.11, an anonymous function (eg: UDF) that closes over a local lazy val, defined in the method of a trait, will maintain a reference to the object it is mixed into, which then needs to be serializable, eg:
-
-```
+```scala
 trait TraitA {
 
   def traitFoo(s: String): () => String = {
@@ -91,18 +94,18 @@ trait TraitA {
 
 object ObjectA extends TraitA { ... }
 ```
-`udf` will contain an `$outer` reference to an ObjectA instance.
 
 To avoid this either:
+
 * don't use a lazy val
 * define the method as a static method on an `object`
-* use Scala 2.12 
+* use Scala 2.12
 
 The same problem will occur if the udf closes over a lazy val and is defined on a class as an instance method.
 
 For more examples see [scala-anonfun-debug](https://github.com/tekumara/scala-anonfun-debug)
 
-### Kryo serialization errors
+## Kryo serialization errors
 
 If Kryo has trouble serializing it doesn't always give helpful errors, eg:
 ```
@@ -134,4 +137,5 @@ java.lang.NoClassDefFoundError: Could not initialize class org.tensorflow.Graph
     at org.apache.spark.broadcast.TorrentBroadcast.getValue(TorrentBroadcast.scala:96)
     at org.apache.spark.broadcast.Broadcast.value(Broadcast.scala:70)
 ```
+
 This isn't a classpath issue. You may be able to work around it by broadcasting an object's dependencies, and creating the object from its dependencies on the executor. 
