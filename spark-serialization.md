@@ -8,7 +8,7 @@ The [KyroSerializer](https://spark.apache.org/docs/latest/tuning.html#data-seria
 
 Spark also serialises UDFs (aka task serialization) as closures using the  JavaSerializer (see [here](https://stackoverflow.com/a/40261550/149412)).
 
-When UDFs are serialized any outer context that is referenced is also serialized. eg: if a function references a field in a class, then the whole class is serialized as well. 
+When UDFs are serialized any outer context that is referenced is also serialized. eg: if a function references a field or method in a class, then the whole class is serialized as well. 
 
 Members of singletons (ie: static members) are available on all executors, don't require serialization, and can be referenced from a UDF. If you have a member of a singleton that you want to vary between test and production code, you can place your UDF in a Trait and mix it into a prod object and a test object.
 
@@ -34,12 +34,13 @@ Serialization stack:
   - object not serializable (class: com.amazonaws.services.s3.AmazonS3Client, value: com.amazonaws.services.s3.AmazonS3Client@4cddc3d9)
 ```
 
+This can happen when your UDF calls a class function or uses a class instance variable, and it tries to serialise the whole class and hits something it can't seralize (see [here](https://stackoverflow.com/questions/22592811/task-not-serializable-java-io-notserializableexception-when-calling-function-ou/23053760#23053760).
+
 If an object can't be serialized by the JavaSerializer, you can either
 * remove the unserializable object from the object graph being serialized if it is not actually needed
 * enable the Kyro serializer and try broadcasting it
 * make it a `lazy val` so it is created once per task/partition by an executor, as per here [Using Transient Lazy Val's To Avoid Spark Serialisation Issues](https://nathankleyn.com/2017/12/29/using-transient-and-lazy-vals-to-avoid-spark-serialisation-issues/) - note `@transient` isn't strictly necessary. In effect, the `lazy val` creates a function that creates the unserializable object on first access. This function can't contain an already created version of the object because serialization of it will be attempted.
-* make the object a member of a singleton object
-* if your UDF calls a class function or uses a class instance variable, it will try and serialize the whole class, see [Task not serializable: java.io.NotSerializableException when calling function outside closure only on classes not objects](https://stackoverflow.com/questions/22592811/task-not-serializable-java-io-notserializableexception-when-calling-function-ou/23053760#23053760). One solution is to make the function a member of a singleton object.
+* make the referenced object/function a member of a singleton object
 * move the creation of the unserializable object into a generator/iterator, which doesn't need to be serialized, and use mapPartitions eg:
 
   ```scala 
@@ -72,7 +73,7 @@ If an object can't be serialized by the JavaSerializer, you can either
       }(RowEncoder(dataSchema))
   ```
 
-  This is equivalent to using map with a `lavy val s3` outside the map.
+This is equivalent to using map with a `lavy val s3` outside the map.
 
 ### A note on using lazy vals in Scala 2.11
 
