@@ -1,5 +1,6 @@
 # Monorepos
 
+
 ## Why a monorepo?
 
 * Continuous integration - test consumers and libraries together [ref](https://medium.com/@Jakeherringbone/you-too-can-love-the-monorepo-d95d1d6fcebe)
@@ -16,6 +17,10 @@ In a monorepos that always builds HEAD, multiple versions are supported by dupli
 
 
 ## Quotes
+
+
+"The other one that was kinda nice was, because of the mono-repo, it was kinda amazing to make a 3 line change in some core java library and then see CI run a suite of 1M unit tests across all projects in the mono repo dependent on that lib." https://twitter.com/patricktoomey/status/1223406186898153473?s=20
+
 
 "The model quickly broke down, however, when, through util and finagle, we introduced a substantial amount of shared software infrastructure. In order for some downstream projects (e.g. the original version of Woodstar) to consume changes to, say, util, all intermediate projects needed to be updated—integrated, compiled, re-published—in order to avoid introducing dependency diamond conflicts. The upshot is that some teams spent roughly half of their time simply integrating changes. One way to view this is: binary dependencies introduce an additional, extrinsic, dependency graph which must be independently synchronized with the source dependency graph. The situation is greatly improved—simplified, easier to reason about, avoiding external synchronization—when software is compiled entirely and transitively from source code." [ref](https://gist.github.com/mariusae/7c4c7a57dc34e53ad4bf2cfcd94bf9f0#file-monorepo-txt-L40)
 

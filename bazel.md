@@ -410,7 +410,7 @@ mkdir -p ~/.zsh/completion/
 curl https://raw.githubusercontent.com/bazelbuild/bazel/master/scripts/zsh_completion/_bazel > ~/.zsh/completion/_bazel
 ```
 
-Then modify fpath in ~/.zshrc BEFORE calling oh-my-zsh, which runs compinit:
+Then modify fpath in ~/.zshrc BEFORE calling oh-my-zsh (which runs compinit):
 
 ```
 fpath=($fpath ~/.zsh/completion/)
