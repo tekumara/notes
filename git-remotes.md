@@ -1,6 +1,6 @@
 # git remotes
 
-## [Synchronizing changes between repositories](http://gitref.org/remotes/)
+## Synchronizing changes between repositories
 
 Unlike centralized version control systems that have a client that is very different from a server, Git repositories are all basically equal and you simply synchronize between them.
 
@@ -17,12 +17,12 @@ A *fast forward push* sends a commit that is a descendant of the remote's HEAD.
 `git remote` - list, add and delete remote repositories. These are not necessary, but help make remote operations easier by mapping a remote URLs to an easy to remember alias.
 
 `git remote -v ` list remote aliases and their details  
-`git remote add origin git@github.com:tukushan/delme-git.git ` add a remote alias called `origin` 
+`git remote add origin git@github.com:tukushan/delme-git.git ` add a remote alias called *origin*
 
 ## git push
 
 `git push upstream featureX` push current branch HEAD to specific remote branch  
-`git push origin --delete featureY` delete the origin remote branch `featureX`
+`git push origin --delete featureY` delete the origin remote branch *featureX*
 
 ## git fetch
 
