@@ -26,9 +26,9 @@ A *fast forward push* sends a commit that is a descendant of the remote's HEAD.
 
 ## git fetch
 
-Fetch will update local remote tracking branches (eg: `remotes/origin/master`) to match their remote branch, retrieving any commits that aren't already stored locally. 
+Fetch will update local remote tracking branches (eg: *remotes/origin/master* to match their remote branch, retrieving any commits that aren't already stored locally. 
 
-The branches to fetch from a remote by default, and the corresponding local remote tracking branch is configured by `remote.<remote-name>.fetch`, see `git config`. Example defaults, for two remotes, one called `origin` and the other called `upstream`:
+The branches to fetch from a remote by default, and the corresponding local remote tracking branch is configured by `remote.<remote-name>.fetch`, see `git config`. Example defaults, for two remotes, one called *origin* and the other called *upstream*:
 
 ```
 remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
@@ -37,9 +37,9 @@ remote.upstream.fetch=+refs/heads/*:refs/remotes/upstream/*
 
 `git fetch` fetch the latest commits on all remotes onto their respective local remote tracking branch.  
 `git fetch origin` fetching the latest commits from the origin remote onto its local remote tracking branch.  
-`git fetch origin master` fetch the latest commits on origin/master to the remote tracking branch `remotes/origin/master`. Local master will not be merged.   
-`git fetch upstream master:master` fetch upstream/master and do a fast-forward merge of local master.  
-`git fetch -f upstream master:master` fetch upstream/master and reset local master to upstream/master.  
+`git fetch origin master` fetch the latest commits on origin/master to the remote tracking branch *remotes/origin/master*. Local master will not be merged.   
+`git fetch upstream master:master` fetch *upstream/master* and do a fast-forward merge of local master.  
+`git fetch -f upstream master:master` fetch *upstream/master* and reset local master to point to it.  
 `git fetch --all --prune` removes all obsolete tracking branches. Useful after branches have been deleted on the remote.  
 
 ## git pull (a fetch and merge)
