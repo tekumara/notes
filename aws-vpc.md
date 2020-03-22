@@ -1,6 +1,6 @@
 # VPC
 
-A VPC contains many subnets, and many security groups. Subnets may 
+A VPC contains many subnets, and many security groups.
 
 ## Internet Gateway
 
@@ -23,7 +23,7 @@ If you place a load-balancer or EC2 instance in a subnet without an IGW, even if
 
 ## Default VPC
 
-IPv4 CIDR: 172.31.0.0/16
+IPv4 CIDR: 172.31.0.0/16  
 Subnets: 172.31.0.0/20, 172.31.32.0/20, 172.31.32.0/20
 
 The default VPC has an IGW and a default public subnet that will assign public IP addresses
