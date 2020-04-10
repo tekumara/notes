@@ -18,10 +18,6 @@ or
 pkg_resources.ContextualVersionConflict: (boto3 1.10.45 (/Users/tekumara/.virtualenvs/aec/lib/python3.6/site-packages), Requirement.parse('boto3==1.9.130'), {'aec'})
 ```
 
-The package aec in the current environment expects a different version of boto3 from the one you have just installed.
+The package _aec_ in the current environment expects a different version of _boto3_ from the one you have just installed. The required versions are specified in _$package_name.egg-info/requires.txt_. If this is an editable package this will be located in the source code directory.
 
-The required versions are specified in `$package_name.egg-info/requires.txt`.
-
-If this is an editable package this will be located in the source code directory.
-
-If `requires.txt` is out-of-sync from the source's `setup.py` then reinstalling will update it, ie: `pip install -e .` 
+It may be that _requires.txt_ is out-of-sync from the editable package's _setup.py_. In which case reinstalling will update it, ie: `pip install -e .`
