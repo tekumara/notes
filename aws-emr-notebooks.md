@@ -2,19 +2,21 @@
 
 AWS EMR notebooks run on a t3.small instance in an AWS managed account (244647660906) with an ENI that attaches the instance to your VPC. The instance does not have access to the internet.
 
-The EMR notebook environment has [sparkmagic](https://github.com/jupyter-incubator/sparkmagic) which is used to access your EMR cluster via Livy. Livy runs on the master node and starts the Spark driver in process. Livy's REST API runs on port 18888.
+The EMR notebook environment has [sparkmagic](https://github.com/jupyter-incubator/sparkmagic) which is used to access your EMR cluster via Livy. Livy runs on the EMR master node and starts the Spark driver in process. Livy's REST API runs on port 18888.
 
-The [Spark Job monitoring widget](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-managed-notebooks-spark-monitor.html#emr-managed-notebooks-monitoring-widget) is installed. The widget fetches and displays Spark job progress from the [Spark Monitoring REST API](https://spark.apache.org/docs/1.6.2/monitoring.html#rest-api). Its package name is _awseditorssparkmonitoringwidget_.
+The [Spark Job monitoring widget](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-managed-notebooks-spark-monitor.html#emr-managed-notebooks-monitoring-widget) is installed. The widget fetches and displays Spark job progress from the [Spark Monitoring REST API](https://spark.apache.org/docs/1.6.2/monitoring.html#rest-api). Its python package name is _awseditorssparkmonitoringwidget_.
+
+The contents of _/home/notebook/work/_ is continually synced to S3. This is performed by the python package _awseditorsstorage_ which is a S3 backed ContentsManager for Jupyter built by AWS. It works in combination with a HTTP service running on localhost called _managed-workspace_.
 
 The [jupyterlab-git](https://github.com/jupyterlab/jupyterlab-git) extension is also installed.
 
-## Pyspark kernel
+## PySpark kernel
 
-The pyspark kernel is running on the master (inside the Livy process?)
+The PySpark kernel is running on the master (inside the Livy process?)
 
-After the first execution of any cell a Spark session will be started by Livy and you will see the spark info widget.
+On the first execution of any cell a Spark session will be started by Livy and the sparkmagic info widget displayed. The widget contains links to the Spark UI and Driver logs. These links require network level access to the cluster.
 
-To load a public dataset:
+The `spark` variable contains the spark session. Example of loading a dataset:
 ```
 df = spark.read.csv("s3://ebirdst-data/ebirdst_run_names.csv")
 ```
@@ -37,7 +39,7 @@ The Livy/Spark driver logs are written to `livy-livy-server.out.gz` which is per
 
 ## Jobs die at the 60 minute mark
 
-The default Livy session timeout is 60 mins. If your job dies at 60 mins, without any Spark executor failures, then increase the timeout, eg:
+The default Livy session timeout is 60 mins. If your job dies at 60 mins, and because of an Spark executor failure, then it's probably Livy timing out the session. To increase the timeout, use this EMR configuration:
 ```
 [
     {
