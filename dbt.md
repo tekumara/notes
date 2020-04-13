@@ -10,7 +10,7 @@
 * models can reference other models and form a DAG
 * [macros](https://docs.getdbt.com/docs/writing-code-in-dbt/macros) for reusing SQL across models
 * sources - define source tables, so you can rerun all models that depend on it, and also check the freshness of sources
-* seed data - eg: from a csv in the repo
+* seed data - eg: from a csv in the repo. Good for creating a dev schema (without PII etc.) that's used for testing
 * snapshot - snapshot tables (creates type 2 slowly changing dimensions)
 * [analysis](https://docs.getdbt.com/docs/building-a-dbt-project/analyses) - create a SQL statement but don't execute it
 * [packages](https://docs.getdbt.com/docs/guides/building-packages) eg: packaging from another git repo - [example](https://github.com/stkbailey/fivethirtyeight-dbt-data)
@@ -18,10 +18,11 @@
 * documentation - shows model descriptions and DAG lineage (requires a host, eg: S3)
 * metadata - models can have [tags](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/tags/) (eg: pii, nightly) which can be referenced when running models or in the documentation 
 * templating - ie: [SQL + Jinja](https://docs.getdbt.com/docs/writing-code-in-dbt/getting-started-with-jinja)
-  * to create in different schemas
+  * to create in different schemas, and different environments (eg: dev/test/prod)
   * to reference other models or avoid hardcoding table names
   * to interpolate from variables provided in config or via the command line
-  * is independent of the scheduler eg: Airflow     
+  * is independent of the scheduler eg: Airflow  
+  * to create conditionals, eg: when running in a test schema only use a subset of data   
 
 Limitations
 * Discussion on [partitioning ala hive](https://discourse.getdbt.com/t/on-the-limits-of-incrementality/303/6)
@@ -31,5 +32,6 @@ Limitations
 References
 * [Only run changed models](https://discourse.getdbt.com/t/tips-and-tricks-about-working-with-dbt/287/2)
 * [dbt coding conventions](https://github.com/fishtown-analytics/corp/blob/master/dbt_coding_conventions.md)
-* [snowflake cost monitoring example](https://github.com/randypitcherii/cloud_cost_monitoring) uses Github Actions for CI/CD and deploys each PR to its own schems
+* [snowflake cost monitoring example](https://github.com/randypitcherii/cloud_cost_monitoring) uses Github Actions for CI/CD and deploys each PR to its own schema. See the [video](https://www.youtube.com/watch?v=snp2hxxWgqk)
 * [seed data example](https://github.com/stkbailey/fivethirtyeight-dbt-data) from FiveThirtyEight
+* [Script to autogenerate dbt commands for changed models against a chosen git branch](https://gist.github.com/jtalmi/c6265c8a17120cfb150c97512cb68aa6) see also this video on [dbt and git diff](https://www.youtube.com/watch?v=m-QlIVss0UA)

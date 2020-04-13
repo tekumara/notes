@@ -8,6 +8,8 @@ To get a token see [Create and regenerate API tokens](https://get.slack.help/hc/
 
 ## Stars API
 
+NB: these are now called saved messages.
+
 eg: [list starred messages](https://api.slack.com/methods/stars.list) in the order they were starred, most recent first, with 1000 per page:
 
 ```

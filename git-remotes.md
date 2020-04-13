@@ -23,6 +23,7 @@ A *fast forward push* sends a commit that is a descendant of the remote's HEAD.
 
 `git push upstream featureX` push current branch HEAD to specific remote branch  
 `git push origin --delete featureY` delete the origin remote branch *featureX*
+`git push -u origin --all` push all branches to origin, and add upstream tracking branches
 
 ## git fetch
 
