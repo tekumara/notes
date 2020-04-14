@@ -1,6 +1,6 @@
 # AWS EMR Notebooks
 
-AWS EMR notebooks run on a t3.small instance in an AWS managed account (244647660906) with an ENI that attaches the instance to your VPC. The instance does not have access to the internet.
+An AWS EMR notebook provides Jupyterlab and Jupyter hosted in a t3.small sized container. It's hosted in an AWS managed account (244647660906) with an ENI that attaches the instance to your VPC. The instance does not have access to the internet.
 
 The EMR notebook environment has [sparkmagic](https://github.com/jupyter-incubator/sparkmagic) which is used to access your EMR cluster via Livy. Livy runs on the EMR master node and starts the Spark driver in process. Livy's REST API runs on port 18888.
 
