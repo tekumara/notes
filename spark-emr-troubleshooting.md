@@ -47,8 +47,6 @@ If the node has run out of disk you'll see error like:
 
 First check if this is due to in-balanced partitions.
 
-
-
 ## Increasing disk space
 
 The easiest way to increase disk space on EMR is by choosing a large instance type. See this [Instance Storage](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-storage.html) guide which shows the amount of disk provided by each instance type.

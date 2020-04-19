@@ -16,6 +16,18 @@ Available kernels:
   python3          /Users/tekumara/.virtualenvs/my-venv/share/jupyter/kernels/python3
 ```  
 
+User kernels location:
+* mac os: `~/Library/Jupyter/kernels/`
+* linux: `~/.local/share/jupyter/kernels`
+
+Virtualenv kernels:
+* `~/.virtualenvs/jupyter/share/jupyter/kernels/`
+
+
+See [Kernelspec](https://jupyter-client.readthedocs.io/en/latest/kernels.html#kernelspecs)
+
+
+
 Start jupyter, serving from the current directory
 ```
 jupyter notebook
