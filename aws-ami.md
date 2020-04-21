@@ -1,12 +1,5 @@
 # AWS AMI
 
-## Key pair
-
-If you create AMI from a source instance, it will contain authorization for the key pair used at the time the source instance was created.
-
-Any instances created from that AMI, even with a different key pair, will still allow access from the source instance's key pair as well.
-
-
 ## Snapshots
 
 An AMI is a registered snapshot and can be created using Create Image from the console.
@@ -15,8 +8,7 @@ Deregistering an AMI does not delete the snapshot.
 
 An AMI can have Public visibility.
 
-
-## CLI
+## Describe images
 
 Latest image starting with `GAMI-AMZLinux2`
 ```
@@ -28,8 +20,7 @@ List all images owned by your account and accounts 137112412989 (ie: Amazon base
 aws ec2 describe-images --owners 137112412989 898082745236 self --query 'sort_by(Images, &CreationDate)[].[Name,ImageId]' --output table
 ```
 
-
-## Latest Amazon Linux Base AMIs
+## Latest Amazon Linux Base AMIs (SSM)
 
 To list all the latest amazon linux base AMIs, query parameter store ([ref](https://aws.amazon.com/blogs/compute/query-for-the-latest-amazon-linux-ami-ids-using-aws-systems-manager-parameter-store/)):
 
@@ -65,4 +56,8 @@ Storage types:
 * hvm - fully virtualized (recommended)
 * pv - paravirtual (older instances onld)
 
+## Key pair
 
+If you create an AMI from a source instance, it will contain authorization for the key pair used at the time the source instance was created.
+
+Any instances created from that AMI, even with a different key pair, will still allow access from the source instance's key pair as well.
