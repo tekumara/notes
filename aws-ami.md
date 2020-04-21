@@ -15,10 +15,18 @@ Latest image starting with `GAMI-AMZLinux2`
 aws ec2 describe-images --filters "Name=name,Values=GAMI-AMZLinux2*" --query 'reverse(sort_by(Images, &CreationDate))[0].Name' --output text
 ```
 
-List all images owned by your account and accounts 137112412989 (ie: Amazon base images) and 898082745236 (ie: Amazon Deep Learning)
+List all images owned by your account (self) and account 898082745236 (ie: Amazon Deep Learning images)
 ```
-aws ec2 describe-images --owners 137112412989 898082745236 self --query 'sort_by(Images, &CreationDate)[].[Name,ImageId]' --output table
+aws ec2 describe-images --owners self 898082745236 --query 'sort_by(Images, &CreationDate)[].[Name,ImageId]' --output table
 ```
+
+Accounts
+
+amazon All Amazon images (windows, deep learning, eks etc.)
+137112412989 Amazon Linux base
+099720109477 Canonical Ubuntu
+898082745236 Amazon Deep Learning
+
 
 ## Latest Amazon Linux Base AMIs (SSM)
 
