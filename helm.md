@@ -46,4 +46,4 @@ kubectl -n kube-system delete serviceaccount tiller
 ### User "system:serviceaccount:kube-system:default" cannot get namespaces in the namespace "default"
 
 This occurs when tiller has been installed but doesn't have cluster admin rights.
-Uninstall tiller, create a serviceaccount, bind it to cluster-admin, and then reinstall tiller using that account (see above).
+Uninstall tiller, create a serviceaccount, bind it to cluster-admin, and then reinstall tiller using that account (see [above](#install-helm-v2)).

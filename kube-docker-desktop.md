@@ -1,8 +1,17 @@
 # kube docker desktop
 
-Docker desktop bundles Kubernetes with RBAC.
 
-## Install the metrics server
+## RBAC
+
+Docker desktop installs a ClusterRoleBinding that grants cluster-admin to all service accounts in the kube-system namespace, including the default service account. It allows tiller to be installed without creating a service account, see [#3694](https://github.com/docker/for-mac/issues/3694). It's arguably not best practice.
+
+To inspect the binding: `kubectl describe clusterrolebinding docker-for-desktop-binding` 
+
+More about [RABC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
+
+## Install metrics server
+
+The metrics server for CPU/memory monitoring isn't installed out-of-the-box. To install:
 
 ```
 kubectl apply -f $(curl -s https://api.github.com/repos/kubernetes-sigs/metrics-server/releases/latest | jq '.assets[0].browser_download_url')
