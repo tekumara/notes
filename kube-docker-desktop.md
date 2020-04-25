@@ -5,17 +5,13 @@ Docker desktop bundles Kubernetes with RBAC.
 ## Install the metrics server
 
 ```
-curl -L https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.3.6/components.yaml > /tmp/components.yaml
+kubectl apply -f $(curl -s https://api.github.com/repos/kubernetes-sigs/metrics-server/releases/latest | jq '.assets[0].browser_download_url')
 ```
-
-When metrics-server starts the logs will show the following errors:
-```
-Unable to authenticate the request due to an error: x509: certificate signed by unknown authority
-```
-Because self-signed certificates are used, insecure TLS need to be enabled by starting metrics-server with the `--kubelet-insecure-tls` arg:
+Because self-signed certificates are used out of the box, you need to enable insecure TLS by starting metrics-server with the `--kubelet-insecure-tls` arg:
 ```
 kubectl patch deployment metrics-server -n kube-system --type json -p '[{"op": "add", "path": "/spec/template/spec/containers/0/args/0", "value":"--kubelet-insecure-tls"}]' 
 ```
+Otherwise metrics won't be collected and the logs will show the error *Unable to authenticate the request due to an error: x509: certificate signed by unknown authority*
 
 ## Troubleshooting
 

@@ -18,6 +18,9 @@ Alternatively using [kubectx](https://github.com/ahmetb/kubectx):
 `kubens` show all namespaces  
 `kubens -c` show the current namespace
 
+## Dry runs
+
+To see the effects of commands that modify the cluster (eg: apply/path), add `--dry-run=client -o yaml | less`
 
 ## Inspection
 
@@ -57,8 +60,6 @@ Insert an element into the head of the args array
 ```
 kubectl patch deployment metrics-server -n kube-system --type json -p '[{"op": "add", "path": "/spec/template/spec/containers/0/args/0", "value":"--kubelet-insecure-tls"}]' 
 ```
-
-To see the effects of a patch without applying, add `--dry-run=client -o yaml | less`
 
 ## Delete
 
