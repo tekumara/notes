@@ -14,13 +14,29 @@ Zerotier uses NAT traversal over UDP, falling back to TCP (see [Router configura
 Network status: `sudo zerotier-cli listnetworks` 
 
 ACCESS_DENIED means the peer hasn't been authorized on the network.  
-PORT_ERROR might occur after install on MacOS - a restart should fix it  
+PORT_ERROR might occur after install on MacOS - a restart should fix it
+OK means you are good to go!  
+
+## vs sshuttle
+
+Very unproven but zerotier seems to have higher throughput and lower latency than sshuttle.  
 
 ## Troubleshooting
 
-### zerotier-cli: missing authentication token and authtoken.secret not found (or readable) in /var/lib/zerotier-one
+### missing authentication token and authtoken.secret not found (or readable) in /var/lib/zerotier-one
 
-must run as root, eg: `sudo zerotier-cli info`
+You must run *zerotier-cli* as root, eg: `sudo zerotier-cli info`
+
+### Error connecting to the ZeroTier service: connection failed
+
+If you get this error when running *zerotier-cli*, check the service is up and inspect the logs:
+
+```
+systemctl status zerotier-one
+journalctl -u zerotier-one
+```
+
+If everything still looks good, try a restart: `sudo systemctl restart zerotier-one`
 
 ## Reference
 
