@@ -15,15 +15,13 @@ helm init --service-account=tiller
 
 Verify
 ```
-# should return nothing
-helm list
-```
-
-```
 kubectl get deployments tiller-deploy -n kube-system
 
 NAME            READY   UP-TO-DATE   AVAILABLE   AGE
-tiller-deploy   0/1     1            0           15s
+tiller-deploy   1/1     1            0           15s
+
+# should return nothing
+helm list
 ```
 
 Uninstall
