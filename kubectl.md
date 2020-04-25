@@ -2,19 +2,22 @@
 
 ## Contexts & namespaces
 
-Contexts, including the default context, are specified in `~/.kube/config`
+`$KUBECONFIG` can be set to a colon separated list of config files. If unset it will default to `~/.kube/config`
+
+Clusters, users and contexts are specified in the config files. The first config file in `$KUBECONFIG` contains the `current-context` key which specifies the current context.
 
 `kubectl config get-contexts` list contexts  
-`kubectl config use-context docker-desktop` set default context to *docker-desktop*   
+`kubectl config use-context docker-desktop` set current context to *docker-desktop*   
 `kubectl config view --minify --output 'jsonpath={..namespace}'` show the current namespace
 
 Alternatively using [kubectx](https://github.com/ahmetb/kubectx):
 
-`kubectx` lists contexts and allows you to select one with fzf  
+`kubectx` lists contexts and allows you to select one with fzf as the current context  
 `kubectx -c` list current context  
 
 `kubens` show all namespaces  
-`kubens -c` show the current namespace  
+`kubens -c` show the current namespace
+
 
 ## Inspection
 
@@ -24,6 +27,8 @@ Alternatively using [kubectx](https://github.com/ahmetb/kubectx):
 `kubectl api-resources` show all resource types  
 `kubectl get apiservice` show all apiservice resources  
 `kubectl get namespaces` show all namespaces  
+`kubectl top nodes` show CPU/MEM for nodes
+`kubectl top pods -A` show CPU/MEM for pods in all namespaces
 
 Show all forwarded ports:
 ```
@@ -41,9 +46,24 @@ kubectl krew install get-all
 kubectl get-all
 ```
 
+## Patch
+
+Set the contents of the args array
+```
+kubectl patch deployment metrics-server -n kube-system -p '{"spec": {"template": {"spec":{"containers":[{"name":"metrics-server","args":["--cert-dir=/tmp","--secure-port=4443"]}]}}}}' 
+```
+
+Insert an element into the head of the args array
+```
+kubectl patch deployment metrics-server -n kube-system --type json -p '[{"op": "add", "path": "/spec/template/spec/containers/0/args/0", "value":"--kubelet-insecure-tls"}]' 
+```
+
+To see the effects of a patch without applying, add `--dry-run=client -o yaml | less`
+
 ## Delete
 
 `kubectl delete namespace livy` delete the livy namespace and all resources
+`kubectl delete -f <file.yml>` delete the resources in the file
 
 ### Delete a namespace stuck in the Terminating state
 
@@ -57,9 +77,21 @@ Delete them, and then wait 5 mins.
 
 If that doesn't work, try [knsk.sh](https://github.com/thyarles/knsk)
 
+## Merge two config files
+```
+(KUBECONFIG=~/.kube/config:~/someotherconfig && kubectl config view --flatten > ~/.kube/config.new)
+```
+
+
 ## Troubleshooting
 
-Container is stuck in state `ContainerCreating`. Usually means there's an issuing downloading the container. Check the pod events:
+### Container is stuck in state `ContainerCreating`
+
+Usually means there's an issuing downloading the container. Check the pod events:
 ```
 kubectl describe pods -n livy
 ```
+
+### error: metrics not available yet
+
+If you see this when running `kubectrl top nodes` then you need to install and enable the metrics server.
