@@ -33,7 +33,7 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl top nodes` show CPU/MEM for nodes
 `kubectl top pods -A` show CPU/MEM for pods in all namespaces
 
-Show all forwarded ports:
+Show all forwarded ports, ie: [NodePort services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types):
 ```
 kubectl get svc -o json --all-namespaces | jq '.items[] | {name:.metadata.name, p:.spec.ports[] } | select( .p.nodePort != null ) | "\(.name): localhost:\(.p.nodePort) -> \(.p.port) -> \(.p.targetPort)"'
 ```

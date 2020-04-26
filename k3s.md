@@ -4,7 +4,7 @@
 
 k3s can be run inside a docker container using k3d
 
-Install
+Install:
 ```
 brew install k3d
 ```
@@ -17,11 +17,11 @@ export KUBECONFIG="$(k3d get-kubeconfig --name='k3s-default')"
 
 ### Local image store
 
-k3s doesn't have access to the host's image store. Docker Desktop and k8s do and so can share locally built images.
+k3s doesn't have access to the host's local image store. Docker Desktop and k8s do and so can share locally built images.
 
-To import an image from the docker-daemon into the default k3d cluster:
+To import an image from the local docker-daemon into the default k3d cluster:
 ```
-k3d import-images mybuild:latest
+k3d import-images myapp:latest
 ```
 
 Alternatively you could [run a registry](https://github.com/rancher/k3d/blob/master/docs/registries.md), although it's more work.
@@ -31,7 +31,7 @@ Alternatively you could [run a registry](https://github.com/rancher/k3d/blob/mas
 #### listen tcp 0.0.0.0:6443: bind: address already in use
 
 This will occur if you are already running an API server, eg: Docker Desktop.
-Stop Docker Desktop, or specify an alternate port, eg: `k3d create --api-port 6444`
+Specify an alternate port, eg: `k3d create --api-port 6444`
 
 ## multipass
 
