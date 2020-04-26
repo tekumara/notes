@@ -30,6 +30,7 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl api-resources` show all resource types  
 `kubectl get apiservice` show all apiservice resources  
 `kubectl get namespaces` show all namespaces  
+`kubectl get nodes` describe node details including IP address, capacity, resources requests and limits
 `kubectl top nodes` show CPU/MEM for nodes
 `kubectl top pods -A` show CPU/MEM for pods in all namespaces
 

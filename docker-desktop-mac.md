@@ -10,10 +10,7 @@ brew cask install docker
 Start docker from spotlight search - command+space - docker.
 This starts docker and creates a symlink to the `docker` & `docker-compose` cli tools in `/usr/local/bin/docker`
 
-Docker Desktop (and docker-for-mac) is more integrated and recommended than the older docker-machine (the new boot2docker) which is part of the docker toolbox and uses a Virtualbox VM running Linux. The Virtualbox VM has a separate IP address so you have to tell the Docker command line tools to talk to the VM using the docker-machine cli. It is installed via `brew install docker docker-compose`
-
-https://stories.amazee.io/docker-on-mac-performance-docker-machine-vs-docker-for-mac-4c64c0afdf99
-https://docs.docker.com/docker-for-mac/docker-toolbox/
+Docker Desktop (aka docker-for-mac) is more integrated and recommended than the older docker-machine (the new boot2docker) which is part of the Docker Toolbox and uses a Virtualbox VM running Linux. The Virtualbox VM has a separate IP address so you have to tell the Docker command line tools to talk to the VM using the docker-machine cli. It is installed via `brew install docker docker-compose`. See [Docker Desktop on Mac vs. Docker Toolbox](https://docs.docker.com/docker-for-mac/docker-toolbox/)
 
 ## Installing the man pages
 

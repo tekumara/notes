@@ -1,16 +1,11 @@
 # Docker network
 
 `docker network ls` list  
-`docker network inspect bridge` to see subnet and IP address for network *bridge*
-`docker network rm bridge` to remove network *bridge*
+`docker network inspect bridge` to see subnet and IP address for network *bridge*  
+`docker network rm bridge` to remove network *bridge*  
 `docker network prune` to remove unused networks
 
-On a Linux host, docker will create virtual interfaces prefixed with `br-*`. They will persist after a container is stopped and over machine restarts, but will be removed by `docker-compose down`.
-
-To prevent docker from using a subnet, create a dummy one with a tight mask ([ref](https://github.com/moby/moby/issues/21776#issuecomment-222325610)), eg:
-`docker network create --subnet 172.19.0.0/24 reserved-172-19-0-0-24`
-
-The default networks are
+The default networks are:
 ```
 NETWORK ID          NAME                DRIVER              SCOPE
 d4f2926e878e        bridge              bridge              local
@@ -18,16 +13,26 @@ d4f2926e878e        bridge              bridge              local
 36ae9224d2cb        none                null                local
 ```
 
-If no network is specified, containers will use the default *bridge* network which has the following options:
+Drivers:
+
+none = disables all networking
+host = uses the host IP/ports
+bridge = a separate network interface with its own subnet. The default when no network is specified. Containers on different bridge networks can't communicate.
+
+On the Linux host running the docker daemon, the default bridge network interface is *docker0*. For user-defined bridge networks, Docker will creates interfaces prefixed with *br-*.
+
+Networks persist after a container is stopped and over machine restarts. If created using docker compose, they can  be removed by `docker-compose down`.
+
+To prevent docker from using a subnet, create a dummy one with a tight mask ([ref](https://github.com/moby/moby/issues/21776#issuecomment-222325610)), eg:
+`docker network create --subnet 172.19.0.0/24 reserved-172-19-0-0-24`
+
+## Docker for Mac considerations
+
+Docker for Mac runs the docker daemon inside a LinuxKit VM. The docker bridge networks (eg: bridge0) exist on the Linux host running the docker daemon, and are not reachable from the macOS host.
+
+In order to reach docker container ports they have to be [port forwarded via vpnkit](https://github.com/moby/vpnkit/blob/master/docs/ports.md) to the Mac host. eg: to forward port 80 in the nginx container to the macOS host: 
 ```
-$ docker network inspect bridge | jq '.[0].Options'
-{
-  "com.docker.network.bridge.default_bridge": "true",
-  "com.docker.network.bridge.enable_icc": "true",
-  "com.docker.network.bridge.enable_ip_masquerade": "true",
-  "com.docker.network.bridge.host_binding_ipv4": "0.0.0.0",
-  "com.docker.network.bridge.name": "docker0",
-  "com.docker.network.driver.mtu": "1500"
-}
+docker run -p 8000:80 --name webserver nginx
 ```
 
+See [Networking features in Docker Desktop for Mac](https://docs.docker.com/docker-for-mac/networking/#known-limitations-use-cases-and-workarounds)
