@@ -39,6 +39,11 @@ Show all forwarded ports, ie: [NodePort services](https://kubernetes.io/docs/con
 kubectl get svc -o json --all-namespaces | jq '.items[] | {name:.metadata.name, p:.spec.ports[] } | select( .p.nodePort != null ) | "\(.name): localhost:\(.p.nodePort) -> \(.p.port) -> \(.p.targetPort)"'
 ```
 
+### Accessing the cluster
+
+`kubectl run -it --image=alpine helper` starts an pod called *helper* running the alpine image in the cluster
+`kubectl delete pod helper` delete the helper pod 
+
 ### Listing all resources
 
 `kubectl get all --all-namespaces` show "all" kubernetes objects in all namespaces. The "all" type is a pseudo-type that's deprecated, and doesn't cover all resource types (eg: it omits secrets). Resource types included are: pods, services, daemonsets, deployments, replicasets (see [#151](https://github.com/kubernetes/kubectl/issues/151#issuecomment-544247961))  

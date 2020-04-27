@@ -1,6 +1,6 @@
 # k3s
 
-[k3s](https://k3s.io/) is a lightweight Kubernetes distribution with low resource requirements, eg: it doesn't use [resource hungry etcd](https://github.com/etcd-io/etcd/issues/11460). It's great for creating lots of temporary development clusters.
+[k3s](https://k3s.io/) is a lightweight Kubernetes distribution with low resource requirements, eg: it doesn't use [resource hungry etcd](https://github.com/etcd-io/etcd/issues/11460). It's great for creating lots of disposable development clusters.
 
 The main limitation is it doesn't share its host's local image store ([see below](#local-image-store)) so images aren't cached, and it requires extra steps to access locally built images.
 
@@ -75,8 +75,15 @@ Specify an alternate port, eg: `k3d create --api-port 6444`
 k3s can be installed on a multipass Ubuntu VM. You will need a way to copy images built on your host and multipass.
 
 Either:
-* (recommended) use https://github.com/matti/k3sup-multipass which runs k3s via `multipass shell`
+* (recommended) use https://github.com/matti/k3sup-multipass which runs k3s via `multipass shell`. 
 * create a multipass instance with an ssh key, then run k3sup
+
+eg:
+```
+k3sup-multipass create flyte
+export KUBECONFIG=$(k3sup-multipass kubeconfig flyte)
+```
+
 
 To merge a kube config file generated from k3sup-multipass with ~/.kube/config:
 
