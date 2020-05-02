@@ -49,7 +49,7 @@ eval "$(pyenv virtualenv-init -)"
 
 ## pyenv-virtualenvwrapper (recommended)
 
-[pyenv-virtualenvwrapper](https://github.com/pyenv/pyenv-virtualenvwrapper), unlike pyenv-virtualenv, does not extend pyenv with the abillity to create virtualenvs as first-class pyenv versions. Instead, when creating a virtualenv, it makes virtualenvwrapper use the active pyenv version of python, rather than the system version.
+[pyenv-virtualenvwrapper](https://github.com/pyenv/pyenv-virtualenvwrapper), unlike pyenv-virtualenv, does not extend pyenv with the abillity to create virtualenvs as first-class pyenv versions. Instead, when creating a virtualenv, it makes virtualenvwrapper use the active pyenv version of python, rather than the system version. Unlike pyenv-virtualenv it places virtualenvs in the standard location, eg: `~/.virtualenvs` which means it integrates with other tools.  
 
 eg:
 ```
