@@ -47,7 +47,3 @@ Remove kernel `myenv`
 ```
 jupyter kernelspec uninstall myenv
 ```
-
-## Reconnecting
-
-If you close the browser the Jupyter kernel will continue to run. You can reopen the notebook and reconnect to the kernel but you won't receive any output from the currently running cell. You can interrupt the kernel and the cell will stop running.

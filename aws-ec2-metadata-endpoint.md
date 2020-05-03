@@ -26,4 +26,4 @@ curl http://169.254.169.254/latest/meta-data/instance-type
 
 ## Reference
 
-See [Retrieving instance metadata](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html)
+[Instance metadata categories](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-categories.html) lists whats available from the metadata endpoint.
