@@ -32,6 +32,6 @@ Run the following first:
 
 ## Reconnecting
 
-If you close the browser the Jupyter kernel will continue to run. You can reopen the notebook and reconnect to the kernel but you won't receive any output from the currently running cell (see [#641](https://github.com/jupyter/notebook/issues/641)). You can interrupt the kernel and the cell will stop running, and any future output will be directed to the new browser session.
+If you close the browser the Jupyter kernel will continue to run. You can reopen the notebook and reconnect to the kernel but you won't receive any output from the currently running cell (see [#641](https://github.com/jupyter/notebook/issues/641)). If the cell is still running you can interrupt the kernel to stop it. Output for subsequent executions will then be visible.
 
 As an alternative, start ipython in a tmux session.

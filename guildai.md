@@ -17,7 +17,7 @@ Recording runs acts like a regression test for any refactoring.
 
 ## Guild home
 
-guild home:
+[guild home](https://guild.ai/docs/reference/guild-home/):
 * when inside a virtualenv is stored in the venv root, eg: `~/.virtualenvs/my-venv/.guild/`
 * when not inside a virtualenv is stored in `~/.guild/`
 * can be overridden by setting the environment variable `$GUILD_HOME`
