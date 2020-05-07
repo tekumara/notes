@@ -2,16 +2,16 @@
 
 Guild is designed like a package manager & task runner (eg: the npm of ML) with experiment tracking/diffing/compare. Task running is a simple sequential execution of steps, rather than a complex DAG or parallel processing.
 
-Takes a functional approach rather than OO ie: instead of making everything subclass a `GuildModel`, small pieces can be composed together in a .yml file.
+Takes a functional approach rather than OO ie: instead of making everything subclass a `GuildModel`, small pieces can be composed together in guild.yml file.
 
-Would be cool to automatically schedule a guild.yml in a scheduler like kubeflow/airflow/prefect. Guild becomes the nice interface/abstraction to these other (more complex) tools.
+guild.yml could become the interface/abstraction between ML code and a scheduler. With the right integration tooling could imagine a guild.yml being the interface to kubeflow pipeline/airflow DAG etc.
 
-Guild stores a source code snapshot under the runs directory, eg: `.guild/runs/c46af199a57f4aae9bcc5635561b6391/.guild/sourcecode/`
+Guild is integrated with TensorBoard. It can read scalars from tfevent files, and launch TensorBoard.
 
-Recording runs acts like a regression test for any refactoring.
+Why record runs? Recording runs acts like a regression test for any refactoring.
 
 Guild can:
-* record metadata: username, aws account, instance-type
+* record metadata, eg: username, aws account, instance-type
 * record model checkpoints
 * record tensorboard training logs
 * record tensorboard validation logs
@@ -23,7 +23,7 @@ Guild can:
 
 Limitations:
 * there isn't really a concept of namespaces for multiple models
-* notebook support is limited, guild's opinion is that training should be done in scripts via the CLI
+* notebook support is limited. Guild's opinion is that training should be done in scripts via the CLI for better reproducibility.
 
 ## guild.yml
 
@@ -98,6 +98,11 @@ run.write_attr("label", "boom!!")
 tfevents files are not ending up in the runs directory (notebook)
 
 guild.run will change the current directory to the run directory first, so make sure the tensorboard writer is instantiated in a function that called by `guild.run` and not beforehand.
+
+## Source code tracking
+
+Guild stores a source code snapshot under the runs directory, eg: *.guild/runs/c46af199a57f4aae9bcc5635561b6391/.guild/sourcecode/*
+However, this doesn't happen when running guild from a notebook.
 
 ## Packages
 
