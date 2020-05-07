@@ -23,6 +23,7 @@ Guild can:
 
 Limitations:
 * there isn't really a concept of namespaces for multiple models
+* notebook support is limited, guild's opinion is that training should be done in scripts via the CLI
 
 ## guild.yml
 
