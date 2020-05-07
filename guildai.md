@@ -39,14 +39,14 @@ Limitations:
 
 ## Usage
 
-`guild ops` lists the operations in `guild.yml`, or if there's no `guild.yml` in the current directory it shows operations from installed packages
-`guild ls 1` list files stored for run 1
-`guild runs` show runs
-`guild push mstore 1` push run 1 to remote mstore
-`guild pull mstore` pull runs from remote mstore
-`guild view` starts a [UI](
+* `guild ops` lists the operations in `guild.yml`, or if there's no `guild.yml` in the current directory it shows operations from installed packages
+* `guild ls 1` list files stored for run 1
+* `guild runs` show runs
+* `guild push mstore 1` push run 1 to remote mstore
+* `guild pull mstore` pull runs from remote mstore
+* `guild view` starts a [UI](
 https://guild.ai/docs/tools/guild-view/) that visualises all runs and their output files, scalars and logs. Can also start tensorboard.
-`guild label 1 --set worked!` change the label of run 1 to `worked!`
+* `guild label 1 --set worked!` change the label of run 1 to `worked!`
 
 ## Scalars
 
@@ -95,19 +95,17 @@ run.write_attr("label", "boom!!")
 
 ### Notebook Troubleshooting
 
-tfevents files are not ending up in the runs directory (notebook)
-
-guild.run will change the current directory to the run directory first, so make sure the tensorboard writer is instantiated in a function that called by `guild.run` and not beforehand.
+If tfevents files are not ending up in the runs directory, make sure the tensorboard writer is instantiated in a function that called by `guild.run` and not beforehand.
 
 ## Source code tracking
 
-Guild stores a source code snapshot under the runs directory, eg: *.guild/runs/c46af199a57f4aae9bcc5635561b6391/.guild/sourcecode/*
+Guild stores a source code snapshot under the runs directory, eg: *.guild/runs/c46af199a57f4aae9bcc5635561b6391/.guild/sourcecode/*  
 However, this doesn't happen when running guild from a notebook.
 
 ## Packages
 
-Guild packages are wheels. Packages can have dataset dependencies (resources) that are downloaded when the operation that specifies them is run, and cached locally in `${GUILD_HOME}/cache/resources/`
+Guild packages are wheels. Packages can have dataset dependencies (resources) that are downloaded when the operation that specifies them is run, and cached locally in *${GUILD_HOME}/cache/resources/* 
 
-`guild package` creates a wheel in `dist/` and can include output files from runs ([example](https://github.com/guildai/guildai/tree/master/examples/package))
+`guild package` creates a wheel in *dist/* and can include output files from runs ([example](https://github.com/guildai/guildai/tree/master/examples/package))
 
-`guild install gpkg.mnist` installed the [guild package mnist](https://github.com/guildai/packages/tree/master/gpkg/mnist) into the current virtualenv
+`guild install gpkg.mnist` install the [guild package mnist](https://github.com/guildai/packages/tree/master/gpkg/mnist) into the current virtualenv
