@@ -10,6 +10,20 @@ Guild stores a source code snapshot under the runs directory, eg: `.guild/runs/c
 
 Recording runs acts like a regression test for any refactoring.
 
+Guild can:
+* record metadata: username, aws account, instance-type
+* record model checkpoints
+* record tensorboard training logs
+* record tensorboard validation logs
+* label experiments after the fact
+* push experiments to model store
+* pull experiments from model store
+* store source code used during the experiment (not when using notebooks)
+* watch the output of an experiment and sync it in real-time
+
+Limitations:
+* there isn't really a concept of namespaces for multiple models
+
 ## guild.yml
 
 * `requires` can pass files between operations ([example](https://github.com/guildai/guildai/tree/master/examples/hello))
@@ -24,8 +38,14 @@ Recording runs acts like a regression test for any refactoring.
 
 ## Usage
 
-`guild ls 1` list files stored for run 1
 `guild ops` lists the operations in `guild.yml`, or if there's no `guild.yml` in the current directory it shows operations from installed packages
+`guild ls 1` list files stored for run 1
+`guild runs` show runs
+`guild push mstore 1` push run 1 to remote mstore
+`guild pull mstore` pull runs from remote mstore
+`guild view` starts a [UI](
+https://guild.ai/docs/tools/guild-view/) that visualises all runs and their output files, scalars and logs. Can also start tensorboard.
+`guild label 1 --set worked!` change the label of run 1 to `worked!`
 
 ## Scalars
 
@@ -36,17 +56,36 @@ Scalars are numeric metrics (eg: loss, accuracy) logged during a run and stored 
 
 `guildai tensorboard` will start tensorboard and allow you to compare scalars across all the runs
 
-## Labels
-
-Labels can be applied to existing runs using `guild runs label`
-
-## Web view
-
-`guild view` starts a UI that visualises all runs and their output files, scalars and logs. Can also start tensorboard.
-
-https://guild.ai/docs/tools/guild-view/
-
 ## Notebooks
+
+Example of running in a notebook:
+```
+# guildai will record function params as flags
+def train(user="tekumara", 
+          aws_account = "my-research-account", 
+          instance_type = instance_type(),
+          lr=0.00001, 
+          weight_decay=0.000001):    
+    ...
+
+    trainer = Trainer(
+        ...
+        # tensorboard logs will be written inside the run directory to logs/
+        serialization_dir='./logs',
+    )
+    
+    # alternatively, record the instance type as a file inside the run directory
+    with open('instance-type', 'w') as f:
+        f.write(instance_type())
+        
+    return trainer.train()
+
+
+# start the training
+# guild will create a new directory, and change into it
+run, return_val = guild.run(train)
+run
+```
 
 Set a label
 ```
@@ -57,11 +96,11 @@ run.write_attr("label", "boom!!")
 
 tfevents files are not ending up in the runs directory (notebook)
 
-guild.run will change the current directory to the run directory first, so make sure the tensorboard writer is instantiated in a function that called by guild.run() and not beforehand.
+guild.run will change the current directory to the run directory first, so make sure the tensorboard writer is instantiated in a function that called by `guild.run` and not beforehand.
 
 ## Packages
 
-Guild packages are wheels. Packages can have dataset dependencies (resources) that are downloaded when the operation that specifies them is run, and caches locally in `${GUILD_HOME}/cache/resources/`
+Guild packages are wheels. Packages can have dataset dependencies (resources) that are downloaded when the operation that specifies them is run, and cached locally in `${GUILD_HOME}/cache/resources/`
 
 `guild package` creates a wheel in `dist/` and can include output files from runs ([example](https://github.com/guildai/guildai/tree/master/examples/package))
 
