@@ -2,7 +2,7 @@
 
 ## Why?
 
-pyenv builds python from source using its [python-build](https://github.com/pyenv/pyenv/tree/master/plugins/python-build) plugin. This allows you to install a specific minor version rather than whatever your package manager gives you. It also, unlike your package manager, allows you to have multiple versions of python installed and switch between them. It works the same across platforms (eg: macOS, ubuntu, redhat) which allows you to maintain a consistent python version when system python distribution differs.
+pyenv builds python from source using its [python-build](https://github.com/pyenv/pyenv/tree/master/plugins/python-build) plugin. This allows you to install a specific minor version rather than whatever your package manager gives you. It also, unlike your package manager, allows you to have multiple versions of python installed and switch between them. It works the same across platforms (eg: macOS, ubuntu, redhat) which allows you to maintain a consistent python version when system python distributions differ. Also, by having your applications depend on a pyenv controlled version of python, when the package manager (eg: brew) upgrades python it doesn't force the change on your applications.
 
 ##  Install
 
@@ -17,14 +17,14 @@ echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nf
 echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
 ```
 
-```eval "$(pyenv init -)"``` will add *~/.pyenv/shims* to the path and add a wrapper around pyenv, see [here](https://github.com/pyenv/pyenv#advanced-configuration)
+What ```eval "$(pyenv init -)"``` does is add *~/.pyenv/shims* to the path, and adds a wrapper around pyenv. For more info see [here](https://github.com/pyenv/pyenv#advanced-configuration)
 
 ## Usage
 
 Before installing a version of python, which is built from source, make sure your system has the [suggested build environment](https://github.com/pyenv/pyenv/wiki#suggested-build-environment) otherwise the build may produce warnings.
 
 ```pyenv install -l``` list the versions of python available for install from the [definition set](https://github.com/pyenv/pyenv/tree/master/plugins/python-build/share/python-build). Includes pypy and anaconda.  
-```pyenv install -v 3.6.2``` install version 3.6.2 to ```~/.pyenv/versions/3.6.2/``` in verbose mode (outputs compilation status to stdout)
+```pyenv install -v 3.6.2``` install version 3.6.2 to *~/.pyenv/versions/3.6.2/* in verbose mode (outputs compilation status to stdout)  
 ```pyenv versions``` show all python versions available. *system* =  whatever version would run if pyenv weren't installed.  
 ```pyenv global``` show/set the python version for this user, as defined in *$(pyenv root)/version*. If this file is not present, then the *system* version will be used.  
 ```pyenv shell``` show/set the python version for this shell session, ie: shows/sets the *PYENV_VERSION* environment variable.  
