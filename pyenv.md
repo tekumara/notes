@@ -2,39 +2,35 @@
 
 ## Why?
 
-pyenv builds python from source, allowing you to install a specific minor version rather than whatever your package manager gives you. It also, unlike your package manager, allows you to have multiple versions of python installed and switch between them. It works the same across platforms (eg: macOS, ubuntu, redhat) which allows you to maintain a consistent python version when system python distribution differs.
+pyenv builds python from source using its [python-build](https://github.com/pyenv/pyenv/tree/master/plugins/python-build) plugin. This allows you to install a specific minor version rather than whatever your package manager gives you. It also, unlike your package manager, allows you to have multiple versions of python installed and switch between them. It works the same across platforms (eg: macOS, ubuntu, redhat) which allows you to maintain a consistent python version when system python distribution differs.
 
 ##  Install
 
-Install binaries on Mac OS X: ```brew install pyenv``` then
-bash: 
+* Install binaries on Mac OS X: ```brew install pyenv```
+* Install binaries on *nix using [pyenv-installer](https://github.com/pyenv/pyenv-installer): ```curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash```
+* bash: 
 ```
 echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bash_profile
 ```
-zsh:
+* zsh:
 ```
 echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
 ```
-
-
-Install binaries on *nix using [pyenv-installer](https://github.com/pyenv/pyenv-installer): ```curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash```
 
 ```eval "$(pyenv init -)"``` will add *~/.pyenv/shims* to the path and add a wrapper around pyenv, see [here](https://github.com/pyenv/pyenv#advanced-configuration)
 
 ## Usage
 
+Before installing a version of python, which is built from source, make sure your system has the [suggested build environment](https://github.com/pyenv/pyenv/wiki#suggested-build-environment) otherwise the build may produce warnings.
+
+```pyenv install -l``` list the versions of python available for install from the [definition set](https://github.com/pyenv/pyenv/tree/master/plugins/python-build/share/python-build). Includes pypy and anaconda.  
+```pyenv install -v 3.6.2``` install version 3.6.2 to ```~/.pyenv/versions/3.6.2/``` in verbose mode (outputs compilation status to stdout)
 ```pyenv versions``` show all python versions available. *system* =  whatever version would run if pyenv weren't installed.  
 ```pyenv global``` show/set the python version for this user, as defined in *$(pyenv root)/version*. If this file is not present, then the *system* version will be used.  
 ```pyenv shell``` show/set the python version for this shell session, ie: shows/sets the *PYENV_VERSION* environment variable.  
 ```pyenv local``` show/set the python version for this directory, ie: the *.python-version* file in the current directory.
 
 More info about [choosing the python version](https://github.com/pyenv/pyenv#choosing-the-python-version)
-
-pyenv includes the [python-build](https://github.com/pyenv/pyenv/tree/master/plugins/python-build) plugin, which can be also be installed stand-alone. It can be used to build python versions from source. Make sure your system has the [suggested build environment](https://github.com/pyenv/pyenv/wiki#suggested-build-environment) otherwise the build may produce warnings.
-
-```pyenv install -l``` list the versions of python available for install from the [definition set](https://github.com/pyenv/pyenv/tree/master/plugins/python-build/share/python-build). Includes pypy and anaconda.  
-```pyenv install -v 3.6.2``` install version 3.6.2 to ```~/.pyenv/versions/3.6.2/``` in verbose mode (outputs compilation status to stdout)
-
 
 ## pyenv-virtualenv
 
@@ -50,7 +46,7 @@ eval "$(pyenv virtualenv-init -)"
 
 ## pyenv-virtualenvwrapper (recommended)
 
-[pyenv-virtualenvwrapper](https://github.com/pyenv/pyenv-virtualenvwrapper), unlike pyenv-virtualenv, does not extend pyenv with the abillity to create virtualenvs as first-class pyenv versions. Instead, when creating a virtualenv, it makes virtualenvwrapper use the active pyenv version of python, rather than the system version. Unlike pyenv-virtualenv it places virtualenvs in the standard location, eg: *~/.virtualenvs* which means it integrates with other tools.  
+[pyenv-virtualenvwrapper](https://github.com/pyenv/pyenv-virtualenvwrapper), unlike pyenv-virtualenv, does not extend pyenv with the abillity to create virtualenvs as first-class pyenv versions. Instead it causes virtualenvwrapper to use the active pyenv version of python when creating a virtualenv, rather than the system version. Unlike pyenv-virtualenv it places virtualenvs in the standard location, eg: *~/.virtualenvs* which means it integrates with other tools.  
 
 eg:
 ```
@@ -72,7 +68,7 @@ Install the [lazy version](https://virtualenvwrapper.readthedocs.io/en/latest/in
 pyenv virtualenvwrapper_lazy
 ```
 
-## zsh pyenv + pyenv-virtualwrapper plugin
+## zsh plugin for pyenv + pyenv-virtualwrapper
 
 see https://github.com/sorin-ionescu/prezto/tree/master/modules/python
 
@@ -107,8 +103,3 @@ Make sure `eval "$(pyenv init -)"` has been run first.
 /Users/tekumara/.pyenv/shims/python: line 21: /usr/local/Cellar/pyenv/1.2.15/libexec/pyenv: No such file or directory
 ```
 This can occur when upgrading to a new version of pyenv. To fix, rebuild the shims with `pyenv rehash`
-
-## Ref
-
-
-[pyenv stackoverflow answer](https://askubuntu.com/a/865644/6127)
