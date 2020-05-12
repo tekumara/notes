@@ -2,9 +2,10 @@
 
 ## Rust Install
 
-In Ubuntu and Mac OS X, install using rustup: 
+In Ubuntu and Mac OS X, [install using rustup](https://www.rust-lang.org/tools/install): 
 ```
-curl https://sh.rustup.rs -sSf | sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# To configure your current shell run
 source $HOME/.cargo/env
 ```
 
