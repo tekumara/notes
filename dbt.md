@@ -2,7 +2,7 @@
 # dbt
 [dbt](http://getdbt.com/) makes it easy for data teams to version control and collaborate on data transformations.
 
-dbt turns raw data into transformed data inside your database warehouse.
+dbt turns raw data into transformed data inside your data warehouse.
 ![dbt](https://d33wubrfki0l68.cloudfront.net/18774f02c29380c2ca7ed0a6fe06e55f275bf745/a5007/ui/img/svg/product.svg)
 
 ## Git + CI/CD 
@@ -17,7 +17,7 @@ Store dbt projects in a git repo. This becomes the source of truth for all your 
   * ephemeral - i.e. a CTE
 * models can reference other models and form a DAG. dbt uses the DAG to execute models in the correct sequence.
 * metadata - models can have [tags](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/tags/) (e.g., PII, nightly) which can be referenced when running models or in the documentation 
-* [documentation](https://blog.getdbt.com/using-dbt-docs/) can be auto-generated from the models into a static website. The docs include descriptions (with markdown support), a visualisation of the DAG, and search functionality. Deploy targets include any web host, S3, or GitHub pages.
+* [documentation](https://blog.getdbt.com/using-dbt-docs/) can be auto-generated from the models into a static website. The docs include descriptions (with markdown support), a visualisation of the DAG, and search functionality. Deploy targets can be any web host, S3, or GitHub pages.
 * [sources](https://docs.getdbt.com/docs/building-a-dbt-project/using-sources) define source tables. You can rerun all models that depend on them, run tests to check their validity, and also check their freshness.
 * [seed data](https://docs.getdbt.com/docs/building-a-dbt-project/seeds) are CSV files in your project (and stored in git) loaded into your warehouse. Useful for mapping tables or loading test data (e.g., without PII) into a test schema ([example](https://github.com/stkbailey/fivethirtyeight-dbt-data)).
 * [snapshots](https://docs.getdbt.com/docs/building-a-dbt-project/snapshots) implement type 2 slowly changing dimensions over mutable source tables
@@ -38,7 +38,7 @@ Store dbt projects in a git repo. This becomes the source of truth for all your 
 
 ## Limitations and challenges
 * dbt doesn't build tables [partition-by-partition like hive](https://discourse.getdbt.com/t/on-the-limits-of-incrementality/303/6)
-* [When rebuilding dev, use a subset of the data](https://discourse.getdbt.com/t/how-we-treat-big-data-models-in-our-dbt-setup/704/2)
+* [When rebuilding dev from scratch, use a subset of the data to speed things up](https://discourse.getdbt.com/t/how-we-treat-big-data-models-in-our-dbt-setup/704/2)
 
 
 ## Paid version
