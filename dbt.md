@@ -1,20 +1,22 @@
 
 # dbt
 
+## Features
+
 * uses git is a source of truth for all tables and enables gitops
 * models - everything is a SELECT statement. Materializations determine how a model is persisted in the warehouse:
   * table - dropped and recreated
   * view - dropped and recreated
   * incremental - run on a subset of data
   * ephemeral - ie: a CTE
-* models can reference other models and form a DAG to document data lineage 
+* models can reference other models and form a DAG
 * [macros](https://docs.getdbt.com/docs/writing-code-in-dbt/macros) for reusing SQL across models
 * sources - define source tables, so you can rerun all models that depend on it, and also check the freshness of sources
 * seed data - eg: from a csv in the repo. Good for creating a dev schema (without PII etc.) that's used for testing
 * snapshot - snapshot tables (creates type 2 slowly changing dimensions)
 * [analysis](https://docs.getdbt.com/docs/building-a-dbt-project/analyses) - create a SQL statement but don't execute it
 * [packages](https://docs.getdbt.com/docs/guides/building-packages) eg: packaging from another git repo - [example](https://github.com/stkbailey/fivethirtyeight-dbt-data)
-* testing
+* [testing](https://docs.getdbt.com/docs/building-a-dbt-project/testing-and-documentation/testing/) - schema tests check constraints are valid. Custom data tests are arbitrary SQL statements that fail when more than 1 row is returned.
 * [documentation](https://blog.getdbt.com/using-dbt-docs/) - shows model descriptions and DAG lineage (requires a host, eg: S3)
 * metadata - models can have [tags](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/tags/) (eg: pii, nightly) which can be referenced when running models or in the documentation 
 * templating - ie: [SQL + Jinja](https://docs.getdbt.com/docs/writing-code-in-dbt/getting-started-with-jinja)
@@ -24,12 +26,12 @@
   * is independent of the scheduler eg: Airflow  
   * to create conditionals, eg: when running in a test schema only use a subset of data   
 
-Limitations
+## Limitations
 * Discussion on [partitioning ala hive](https://discourse.getdbt.com/t/on-the-limits-of-incrementality/303/6)
 * [How we treat big data models in our dbt setup](https://discourse.getdbt.com/t/how-we-treat-big-data-models-in-our-dbt-setup/704)
 * No scheduler - see dbt cloud
 
-References
+## References
 * [Only run changed models](https://discourse.getdbt.com/t/tips-and-tricks-about-working-with-dbt/287/2)
 * [dbt coding conventions](https://github.com/fishtown-analytics/corp/blob/master/dbt_coding_conventions.md)
 * [snowflake cost monitoring example](https://github.com/randypitcherii/cloud_cost_monitoring) uses Github Actions for CI/CD and deploys each PR to its own schema. See the [video](https://www.youtube.com/watch?v=snp2hxxWgqk)
