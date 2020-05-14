@@ -3,18 +3,18 @@
 
 [dbt](http://getdbt.com/) makes it easy for data teams to version control and collaborate on data transformations.
 
-## git + CI/CD 
+## Git + CI/CD 
 
-Store dbt projects in a git repo which becomes the source of truth for all your tables. When combined with CI/CD this provides a workflow with approval via PR, testing in test schemas, and releases to production. This [example](https://github.com/randypitcherii/cloud_cost_monitoring) uses Github Actions. Every PR creates and deploys models into a new schema. Automated and exploratory tests run on sample data in the PR schema, before going to production ([video](https://www.youtube.com/watch?v=snp2hxxWgqk))
+Store dbt projects in a git repo. This becomes the source of truth for all your tables. When combined with CI/CD this enables a workflow with approval via PR, tests in test schemas, and releases to production. See this [example](https://github.com/randypitcherii/cloud_cost_monitoring) which uses Github Actions. Every PR creates and deploys models into a new schema. Automated and exploratory tests run on sample data in the PR schema, before going to production ([video](https://www.youtube.com/watch?v=snp2hxxWgqk)).
 
 ## Features
 * models are the core concept in dbt. One model = one table. Every model is a SELECT statement.
-* [materialization strategies](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/materializations) persist models in the warehouse:
+* dbt turns models into tables and views in a warehouse using one of these [materialization strategies](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/materializations):
   * table - dropped and recreated
   * view - dropped and recreated
   * incremental - run on a subset of data
   * ephemeral - i.e. a CTE
-* models can reference other models and form a DAG
+* models can reference other models and form a DAG. dbt uses the DAG to execute models in the correct sequence.
 * metadata - models can have [tags](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/tags/) (e.g., PII, nightly) which can be referenced when running models or in the documentation 
 * [documentation](https://blog.getdbt.com/using-dbt-docs/) shows model descriptions and DAG lineage (requires a host, e.g., S3)
 * [sources](https://docs.getdbt.com/docs/building-a-dbt-project/using-sources) define source tables. You can rerun all models that depend on them, run tests to check their validity, and also check their freshness.
@@ -27,7 +27,7 @@ Store dbt projects in a git repo which becomes the source of truth for all your 
   * custom data tests are arbitrary SQL statements that fail when returning more than 1 row
 * [macros](https://docs.getdbt.com/docs/writing-code-in-dbt/macros) are snippets of SQL reusable across models
 * template with [Jinja](https://docs.getdbt.com/docs/writing-code-in-dbt/getting-started-with-jinja)
-  * to create models in different schemas (e.g., dev/test/prod)
+  * to create models in different schemas/[environments](https://docs.getdbt.com/docs/guides/managing-environments) (e.g., dev/test/prod)
   * to reference other models or avoid hard coding table names
   * to interpolate from variables provided in config or via the command line
   * to create conditionals, e.g., when running in a test schema only use a subset of data   
