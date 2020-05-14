@@ -2,7 +2,8 @@
 # dbt
 [dbt](http://getdbt.com/) makes it easy for data teams to version control and collaborate on data transformations.
 
-![dbt](https://blog.getdbt.com/content/images/downloaded_images/What--exactly--is-dbt-/1-BogoeTTK1OXFU1hPfUyCFw.png)
+dbt turns raw data into transformed data. 
+![dbt](https://d33wubrfki0l68.cloudfront.net/18774f02c29380c2ca7ed0a6fe06e55f275bf745/a5007/ui/img/svg/product.svg)
 
 ## Git + CI/CD 
 Store dbt projects in a git repo. This becomes the source of truth for all your tables. When combined with CI/CD this enables a workflow with approval via PR, tests in test schemas, and releases to production. See this [example](https://github.com/randypitcherii/cloud_cost_monitoring) which uses Github Actions. Every PR creates and deploys models into a new schema. Automated and exploratory tests run on sample data in the PR schema, before going to production ([video](https://www.youtube.com/watch?v=snp2hxxWgqk)).
