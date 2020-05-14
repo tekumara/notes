@@ -61,6 +61,14 @@ deactivate
 
 # enter/switch virtualenv
 workon newenv
+
+# list contents of virtual env site-packages dir 
+ls "$VIRTUAL_ENV"/lib/python*/site-packages 
+
+# remove all packages
+wipeenv
+
+
 ```
 
 Install the [lazy version](https://virtualenvwrapper.readthedocs.io/en/latest/install.html?highlight=lazy#lazy-loading) into your .bashrc, for a quicker shell startup time:
