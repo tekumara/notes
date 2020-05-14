@@ -3,10 +3,11 @@
 
 [dbt](http://getdbt.com/) makes it easy for data teams to version control and collaborate on data transformations.
 
+## git + CI/CD 
+
+Store dbt projects in a git repo which becomes the source of truth for all your tables. When combined with CI/CD this provides a workflow with approval via PR, testing in test schemas, and releases to production. This [example](https://github.com/randypitcherii/cloud_cost_monitoring) uses Github Actions. Every PR creates and deploys models into a new schema. Automated and exploratory tests run on sample data in the PR schema, before going to production ([video](https://www.youtube.com/watch?v=snp2hxxWgqk))
+
 ## Features
-* uses git is a source of truth for all tables
-* when combined with CI/CD provides a workflow with approval via PR, testing in test schemas, and releases to production
-  * an [example](https://github.com/randypitcherii/cloud_cost_monitoring) which uses Github Actions. Every PR creates and deploys models into a new schema. Automated and exploratory tests run on sample data in the PR schema, before going to production ([video](https://www.youtube.com/watch?v=snp2hxxWgqk))
 * models are the core concept in dbt. One model = one table. Every model is a SELECT statement.
 * [materialization strategies](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/materializations) persist models in the warehouse:
   * table - dropped and recreated
@@ -17,7 +18,7 @@
 * metadata - models can have [tags](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/tags/) (e.g., PII, nightly) which can be referenced when running models or in the documentation 
 * [documentation](https://blog.getdbt.com/using-dbt-docs/) shows model descriptions and DAG lineage (requires a host, e.g., S3)
 * [sources](https://docs.getdbt.com/docs/building-a-dbt-project/using-sources) define source tables. You can rerun all models that depend on them, run tests to check their validity, and also check their freshness.
-* [seed data](https://docs.getdbt.com/docs/building-a-dbt-project/seeds) are CSV files in your project (and stored in git) loaded into your warehouse. Useful mapping tables or loading test data (e.g., without PII) into a dev schema ([example](https://github.com/stkbailey/fivethirtyeight-dbt-data)).
+* [seed data](https://docs.getdbt.com/docs/building-a-dbt-project/seeds) are CSV files in your project (and stored in git) loaded into your warehouse. Useful mapping tables or loading test data (e.g., without PII) into a test schema ([example](https://github.com/stkbailey/fivethirtyeight-dbt-data)).
 * [snapshots](https://docs.getdbt.com/docs/building-a-dbt-project/snapshots) implement type 2 slowly changing dimensions over mutable source tables
 * [analyses](https://docs.getdbt.com/docs/building-a-dbt-project/analyses) are SQL templates compiled into .sql files, rather than materialized against the warehouse. Compilation resolves all references and substitutions.
 * [packages](https://docs.getdbt.com/docs/guides/building-packages) enable sharing of models and their composition into other projects ([example](https://github.com/stkbailey/fivethirtyeight-dbt-data))
