@@ -2,6 +2,8 @@
 # dbt
 [dbt](http://getdbt.com/) makes it easy for data teams to version control and collaborate on data transformations.
 
+![dbt](https://blog.getdbt.com/content/images/downloaded_images/What--exactly--is-dbt-/1-BogoeTTK1OXFU1hPfUyCFw.png)
+
 ## Git + CI/CD 
 Store dbt projects in a git repo. This becomes the source of truth for all your tables. When combined with CI/CD this enables a workflow with approval via PR, tests in test schemas, and releases to production. See this [example](https://github.com/randypitcherii/cloud_cost_monitoring) which uses Github Actions. Every PR creates and deploys models into a new schema. Automated and exploratory tests run on sample data in the PR schema, before going to production ([video](https://www.youtube.com/watch?v=snp2hxxWgqk)).
 
@@ -14,7 +16,7 @@ Store dbt projects in a git repo. This becomes the source of truth for all your 
   * ephemeral - i.e. a CTE
 * models can reference other models and form a DAG. dbt uses the DAG to execute models in the correct sequence.
 * metadata - models can have [tags](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/tags/) (e.g., PII, nightly) which can be referenced when running models or in the documentation 
-* [documentation](https://blog.getdbt.com/using-dbt-docs/) shows model descriptions and DAG lineage (requires a host, e.g., S3)
+* [documentation](https://blog.getdbt.com/using-dbt-docs/) can be auto-generated from the models into a static website. The docs include descriptions (with markdown support), a visualisation of the DAG, and search functionality. Deploy targets include any web host, S3, or GitHub pages.
 * [sources](https://docs.getdbt.com/docs/building-a-dbt-project/using-sources) define source tables. You can rerun all models that depend on them, run tests to check their validity, and also check their freshness.
 * [seed data](https://docs.getdbt.com/docs/building-a-dbt-project/seeds) are CSV files in your project (and stored in git) loaded into your warehouse. Useful for mapping tables or loading test data (e.g., without PII) into a test schema ([example](https://github.com/stkbailey/fivethirtyeight-dbt-data)).
 * [snapshots](https://docs.getdbt.com/docs/building-a-dbt-project/snapshots) implement type 2 slowly changing dimensions over mutable source tables
@@ -30,10 +32,13 @@ Store dbt projects in a git repo. This becomes the source of truth for all your 
   * to interpolate from variables provided in config or via the command line
   * to create conditionals, e.g., when running in a test schema only use a subset of data   
   * instead of using the capabilities of your scheduler (e.g., Airflow) to decouple and get the other benefits of dbt
+* [supports](https://docs.getdbt.com/docs/supported-databases) Snowflake, Redshift, BigQuery, Postgres and Microsoft SQL Server
+* [partially supports](https://docs.getdbt.com/docs/supported-databases) Presto and Spark (via the thrift-server)
 
 ## Limitations and challenges
 * dbt doesn't build tables [partition-by-partition like hive](https://discourse.getdbt.com/t/on-the-limits-of-incrementality/303/6)
 * [When rebuilding dev, use a subset of the data](https://discourse.getdbt.com/t/how-we-treat-big-data-models-in-our-dbt-setup/704/2)
+
 
 ## Paid version
 The paid version, called [dbt cloud](https://docs.getdbt.com/docs/dbt-cloud/cloud-overview/), is a SaaS product that provides an IDE and a way of executing your projects on schedule or commit.
