@@ -8,4 +8,4 @@ But you may not need a src directory if you aren't producing a component to shar
 
 The [discussion](https://github.com/pypa/packaging.python.org/issues/320#issuecomment-390187657) [rages](https://github.com/pypa/packaging.python.org/issues/320#issuecomment-390213738) [on](https://github.com/pypa/packaging.python.org/issues/320#issuecomment-390336319).
 
-[awscli](https://github.com/aws/aws-cli) doesn't use /src and [historically projects](https://github.com/pypa/packaging.python.org/issues/320#issuecomment-390188087) have been more inclined to not use /src
+[awscli](https://github.com/aws/aws-cli) doesn't use /src and [historically projects](https://github.com/pypa/packaging.python.org/issues/320#issuecomment-390188087) have been more inclined to not use /src. Modern projects like [Prefect](https://github.com/PrefectHQ/prefect) use the src/ layout.
