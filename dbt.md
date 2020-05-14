@@ -7,8 +7,8 @@
 * uses git is a source of truth for all tables
 * when combined with CI/CD provides a workflow with approval via PR, testing in test schemas, and releases to production
   * an [example](https://github.com/randypitcherii/cloud_cost_monitoring) which uses Github Actions. Every PR creates and deploys models into a new schema. Automated and exploratory tests run on sample data in the PR schema, before going to production ([video](https://www.youtube.com/watch?v=snp2hxxWgqk))
-* models are the core concept in dbt. Every model is a SELECT statement.
-* These [materialization strategies](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/materializations) persist models in the warehouse:
+* models are the core concept in dbt. One model = one table. Every model is a SELECT statement.
+* [materialization strategies](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/materializations) persist models in the warehouse:
   * table - dropped and recreated
   * view - dropped and recreated
   * incremental - run on a subset of data
@@ -33,7 +33,7 @@
   * instead of using the capabilities of your scheduler (e.g., Airflow) to decouple and get the other benefits of dbt
 
 ## Limitations and challenges
-* Discussion on [partitioning ala hive](https://discourse.getdbt.com/t/on-the-limits-of-incrementality/303/6)
+* dbt doesn't build tables [partition-by-partition like hive](https://discourse.getdbt.com/t/on-the-limits-of-incrementality/303/6)
 * [When rebuilding dev, use a subset of the data](https://discourse.getdbt.com/t/how-we-treat-big-data-models-in-our-dbt-setup/704/2)
 
 ## Paid version
