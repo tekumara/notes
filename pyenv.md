@@ -2,7 +2,7 @@
 
 ## Why?
 
-pyenv builds python from source using its [python-build](https://github.com/pyenv/pyenv/tree/master/plugins/python-build) plugin. This allows you to install a specific minor version rather than whatever your package manager gives you. It also, unlike your package manager, allows you to have multiple versions of python installed and switch between them. It works the same across platforms (eg: macOS, ubuntu, redhat) which allows you to maintain a consistent python version when system python distributions differ. Also, by having your applications depend on a pyenv controlled version of python, when the package manager (eg: brew) upgrades python it doesn't force the change on your applications.
+pyenv builds python from source using its [python-build](https://github.com/pyenv/pyenv/tree/master/plugins/python-build) plugin. This allows you to install a specific minor version rather than whatever your package manager (eg: brew) gives you. It also, unlike most package managers, allows you to have multiple versions of python installed and switch between them. It works the same across platforms (eg: macOS, ubuntu, redhat) which allows you to maintain a consistent python version when system python distributions differ. Also, by having your applications depend on a pyenv controlled version of python, when the package manager upgrades python it doesn't force the change on your applications.
 
 ##  Install
 
@@ -34,7 +34,7 @@ More info about [choosing the python version](https://github.com/pyenv/pyenv#cho
 
 ## pyenv-virtualenv
 
-[pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv) is a plugin for pyenv for creating and managing virtualenvs that are recognised as pyenv versions. This plugin also provides a ```pyenv activate``` command that works with virtualenvs.
+[pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv) is a plugin that extends pyenv to creating and managing virtualenvs. Virtualenvs are recognised like any other pyenv version. This plugin also provides a ```pyenv activate``` command that works with virtualenvs.
 
 ```pyenv virtualenvs``` list virtualenvs  
 ```pyenv virtualenv 3.6.2 general``` create a virtualenv called *general* with python version *3.6.2*. Will fail if this version is not already installed. The virtualenv will be created in *$(pyenv root)/versions/3.6.2/envs*. It will be symlinked from *$(pyenv root)/versions/general* and become a pyenv version that can be used like any other version.  
@@ -46,7 +46,7 @@ eval "$(pyenv virtualenv-init -)"
 
 ## pyenv-virtualenvwrapper (recommended)
 
-[pyenv-virtualenvwrapper](https://github.com/pyenv/pyenv-virtualenvwrapper), unlike pyenv-virtualenv, does not extend pyenv with the abillity to create virtualenvs as first-class pyenv versions. Instead it causes virtualenvwrapper to use the active pyenv version of python when creating a virtualenv, rather than the system version. Unlike pyenv-virtualenv it places virtualenvs in the standard location, eg: *~/.virtualenvs* which means it integrates with other tools.  
+[pyenv-virtualenvwrapper](https://github.com/pyenv/pyenv-virtualenvwrapper) causes virtualenvwrapper to use the active pyenv version of python when creating a virtualenv, rather than the system version. It places virtualenvs in the standard location, eg: *~/.virtualenvs* which means it integrates with other tools (unlike pyenv-virtualenv). Tab completion is provided when using its commands.
 
 eg:
 ```
@@ -67,7 +67,6 @@ ls "$VIRTUAL_ENV"/lib/python*/site-packages
 
 # remove all packages
 wipeenv
-
 
 ```
 
