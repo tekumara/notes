@@ -1,6 +1,8 @@
 # Hadoop-AWS
 
-See [Hadoop-AWS module: Integration with Amazon Web Services](https://hadoop.apache.org/docs/r3.1.0/hadoop-aws/tools/hadoop-aws/index.html)
+This document describes relevant changes to Hadoop AWS functionality (in particular S3 functionality) across major versions.
+
+For more info see [Hadoop-AWS module: Integration with Amazon Web Services](https://hadoop.apache.org/docs/r3.1.0/hadoop-aws/tools/hadoop-aws/index.html)
 
 ## Hadoop 2.8
 
@@ -13,13 +15,13 @@ The Hadoop [2.8 release line](http://hadoop.apache.org/docs/r2.8.0/index.html) c
 
 S3A in Hadoop 2.8+ will also handle IAM auth in EC2 VM see [Authenticating with Amazon S3](https://hortonworks.github.io/hdp-aws/s3-security/)
 
-Access key, secret key, and session token can be found in `~/.aws/credentials` after a SAML/AssumeRole operation.
+NB: Access key, secret key, and session token can be found in `~/.aws/credentials` after a SAML/AssumeRole operation.
 
 ## Hadoop 2.9
 
 The Hadoop [2.9 release line](http://hadoop.apache.org/docs/r2.9.0/index.html) contains [S3Guard](http://hadoop.apache.org/docs/r2.9.0/hadoop-aws/tools/hadoop-aws/s3guard.html) which provides consistency and metadata caching for S3A via a backing DynamoDB metadata store.
 
-Contains [HADOOP-14596](https://issues.apache.org/jira/browse/HADOOP-14596) which prevents the following warning appearing in the shell:
+Also contains [HADOOP-14596](https://issues.apache.org/jira/browse/HADOOP-14596) which prevents the following warning appearing in the shell:
 ```WARN S3AbortableInputStream: Not all bytes were read from the S3ObjectInputStream, aborting HTTP connection```
 
 
