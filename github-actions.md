@@ -8,3 +8,7 @@ Jobs execute across different runners but can [access artefacts from other jobs]
 Workflows are made up of one or more jobs and can be scheduled or activated by an [event](https://help.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow#triggering-a-workflow-with-events).
 
 For more info see [Core concepts for GitHub Actions](https://help.github.com/en/actions/getting-started-with-github-actions/core-concepts-for-github-actions)
+
+## Runners
+
+The GitHub ubuntu-latest runner environment is described [here](https://github.com/actions/virtual-environments/blob/ubuntu18/20200430.1/images/linux/Ubuntu1804-README.md)

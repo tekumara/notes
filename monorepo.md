@@ -38,3 +38,6 @@ As a final observation, you can split big repositories into smaller ones quite e
 "But, I think, more importantly: it's simple (again, small org, no scaling issues); and there is zero tax for putting code in the right places (e.g., co-developing a file-access library with a user of it). It's been great." [ref](https://twitter.com/marius/status/1080594562991542272)
 
 "I prefer monorepos for those organization sizes you mention, but I've noticed that it makes consuming and publishing open source more difficult. I think that should be seriously factored into one's decision about whether or not to use a monorepo."
+
+
+"...at least the monorepo+tests give you a way to actually detect all the stuff you're about to break. When you remove the monorepo, you remove the problems of lockstep, but this creates other problems (like security holes not getting patched everywhere)." [ref](https://twitter.com/apenwarr/status/1230512918166462464?s=20)
