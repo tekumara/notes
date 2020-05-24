@@ -45,7 +45,7 @@ Manual mode, the alternatives system will not change the links; it will leave al
 
 [man update-alternatives](http://linux.die.net/man/8/update-alternatives)
 
-## The type JComboBox is not generic; it cannot be parameterized with arguments <Object>
+## The type JComboBox is not generic; it cannot be parameterized with arguments \<Object\>
 
 /usr/lib/jvm/java-6-openjdk-amd64/jre/lib/rt.jar contains:
 

@@ -18,7 +18,7 @@ This will install the [openjdk .pkg file](https://github.com/AdoptOpenJDK/openjd
 
 ## Switching versions in the shell
 
-Show java versions in `/Library/Java/JavaVirtualMachines/` and the preferred Java home directory which is the latest version:
+Show java versions in `/Library/Java/JavaVirtualMachines/` and the preferred Java home directory:
 ```
 /usr/libexec/java_home -V
 ```
