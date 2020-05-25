@@ -1,5 +1,7 @@
 # bash pipelines
 
+Connecting the input and output of several commands, and grouping commands. See [Bash Reference - Pipelines](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Pipelines)
+
 ## Logging
 
 Log stdout and stderr to a file
@@ -18,7 +20,7 @@ A && B = Run B if A succeeded
 A || B = Run B if A failed
 A & = Run A in background.
 ```
-([ref](http://askubuntu.com/a/539293/6127), [list of commands](http://www.gnu.org/software/bash/manual/bashref.html#Lists))
+([ref](http://askubuntu.com/a/539293/6127), [Bash Reference Manual - Lists of Commands](http://www.gnu.org/software/bash/manual/bashref.html#Lists))
 
 ## Run commands in subshell
 
@@ -33,10 +35,13 @@ Combine local and remote files into one
 ```
 
 ## Grouping commands
-eg:
+
+To run a list of commands in the current shell:
 ```
 { list ; }
 ```
+
+The trailing semicolon isn't required if the closing curly bracket appears on its own line, or you are using zsh.
 
 When commands are grouped, redirections may be applied to the entire command list. See [Bash Reference Manual - Grouping Commands](
 http://www.gnu.org/software/bash/manual/bashref.html#Command-Grouping)

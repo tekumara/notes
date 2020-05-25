@@ -2,7 +2,7 @@
 
 ## Why?
 
-pyenv builds python from source using its [python-build](https://github.com/pyenv/pyenv/tree/master/plugins/python-build) plugin. This allows you to install a specific minor version rather than whatever your package manager (eg: brew) gives you. It also, unlike most package managers, allows you to have multiple versions of python installed and switch between them. It works the same across platforms (eg: macOS, ubuntu, redhat) which allows you to maintain a consistent python version when system python distributions differ. Also, by having your applications depend on a pyenv controlled version of python, when the package manager upgrades python it doesn't force the change on your applications.
+pyenv builds python from source using its [python-build](https://github.com/pyenv/pyenv/tree/master/plugins/python-build) plugin. You can install a specific minor version rather than whatever your package manager (eg: brew) gives you. It also, unlike most package managers, allows you to have multiple versions of python installed and switch between them. It works the same across platforms (eg: macOS, ubuntu, redhat) which allows you to maintain a consistent python version when system python distributions differ. Also, by having your applications depend on a pyenv controlled version of python, when the package manager upgrades python it doesn't force the change on your existing virtualenvs.
 
 ##  Install
 
@@ -46,7 +46,7 @@ eval "$(pyenv virtualenv-init -)"
 
 ## pyenv-virtualenvwrapper (recommended)
 
-[pyenv-virtualenvwrapper](https://github.com/pyenv/pyenv-virtualenvwrapper) causes virtualenvwrapper to use the active pyenv version of python when creating a virtualenv, rather than the system version. It places virtualenvs in the standard location, eg: *~/.virtualenvs* which means it integrates with other tools (unlike pyenv-virtualenv). Tab completion is provided when using its commands.
+[virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/) makes it easy to manage virtualenvs created in `~/.virtualenv`.[pyenv-virtualenvwrapper](https://github.com/pyenv/pyenv-virtualenvwrapper) causes virtualenvwrapper to use the active pyenv version of python when creating a virtualenv, rather than the system version. It places virtualenvs in the standard location, eg: *~/.virtualenvs* which means it integrates with other tools (unlike pyenv-virtualenv). Tab completion is provided when using its commands.
 
 eg:
 ```
