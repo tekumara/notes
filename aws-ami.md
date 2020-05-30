@@ -15,9 +15,9 @@ Latest image starting with `GAMI-AMZLinux2`
 aws ec2 describe-images --filters "Name=name,Values=GAMI-AMZLinux2*" --query 'reverse(sort_by(Images, &CreationDate))[0].Name' --output text
 ```
 
-List all images owned by your account (self) and account 898082745236 (ie: Amazon Deep Learning images)
+List all images owned by your account (self) and account 137112412989 (ie: Amazon Linux base image)
 ```
-aws ec2 describe-images --owners self 898082745236 --query 'sort_by(Images, &CreationDate)[].[Name,ImageId]' --output table
+aws ec2 describe-images --owners self 137112412989 --query 'reverse(sort_by(Images, &CreationDate))[].[Name,ImageId,CreationDate]' --output table
 ```
 
 Accounts
@@ -62,7 +62,7 @@ Storage types:
 
 [Virtualization types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/virtualization_types.html):
 * hvm - fully virtualized (recommended)
-* pv - paravirtual (older instances onld)
+* pv - paravirtual (older instances only)
 
 ## Key pair
 

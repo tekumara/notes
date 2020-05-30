@@ -5,7 +5,7 @@
 ```
 brew install helm@2
 
-# create a service account and give it cluster admin privileges
+# create a service account and give it cluster-admin privileges
 kubectl -n kube-system create serviceaccount tiller
 kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
 
