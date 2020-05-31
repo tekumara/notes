@@ -2,7 +2,7 @@
 
 ## Show differences in a specific commit 
 
-`git diff HEAD^!` - diff HEAD with its ancestor
+`git diff 'HEAD^!'` (or `git diff "HEAD^" HEAD`) HEAD with its ancestor
 
 [git-diff man page](https://www.kernel.org/pub/software/scm/git/docs/git-diff.html)
 

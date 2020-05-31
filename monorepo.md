@@ -41,3 +41,5 @@ As a final observation, you can split big repositories into smaller ones quite e
 
 
 "...at least the monorepo+tests give you a way to actually detect all the stuff you're about to break. When you remove the monorepo, you remove the problems of lockstep, but this creates other problems (like security holes not getting patched everywhere)." [ref](https://twitter.com/apenwarr/status/1230512918166462464?s=20)
+
+"Further, mono-repos may simply be part of a different “contract” with users. Instead of supporting older versions (imposing a cost only on the library developer), you instead split the costs a little bit. Library developers have to write patches to downstream projects on any breaking change, and downstream projects have to review these patches in a timely manner. This isn’t a contract that works with external users, but with internal users where you can expect these responsibilities to be honored, it has its benefits." [ref](https://www.tedinski.com/2018/02/06/system-boundaries.html)
