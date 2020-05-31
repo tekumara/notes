@@ -15,6 +15,11 @@ Show list of files in a commit
 git show --name-only 637a6264a4dc75658435fd41b8fe271b2c4c32c3
 ```
 
+Show contents of file README.md in head:
+```
+git show HEAD:README.md
+```
+
 Show history for a file, continuing past renames:
 ```
 git log --follow SAPI-Perf.jmx
@@ -68,6 +73,11 @@ git diff --name-only build-1159 build-1248
 Show all branches that contain a commit
 ```
 git branch -a --contains <SHA1sum-of-commit>
+```
+
+Show the last 3 commits for the current branch
+```
+git log -3
 ```
 
 NB:

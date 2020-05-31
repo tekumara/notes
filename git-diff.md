@@ -19,15 +19,20 @@ This will compare the HEAD to its parent and will show differences. Files that m
 
 Note that if you restrict your diff to just one path (eg: git diff -C10% HEAD HEAD^ a.txt) you aren't going to be able to identify the renames or copies because you've excluded everything expect the single path and renames or copies - by definition - involve two paths.
 
-## git diff shows a blank screen
+## git status and changes in the working tree vs index
 
-`git diff` only shows unstaged changes (eg: stuff not yet added). To see staged changes:
+working tree = current state on disk
+index = staging area
 
-`git diff --cached filename`
+`git status` shows 
+* Changes to be committed = staged changes
+* Changes not staged for commit = unstaged changes, but not yet added
+* Untracked files
 
-`git diff HEAD filename`
+`git diff <filename>` shows only unstaged changes (aka changes not staged for commit), ie: changes made to the working tree vs the index.
 
-(same applies for git difftool)
+`git diff --cached <filename>` shows only staged changes (aka changes to be commmitted), ie: changes made to the index vs HEAD
 
-[ref](http://stackoverflow.com/questions/10039747/how-to-view-file-diff-in-git-before-commit)
+`git diff HEAD filename` shows difference between HEAD and working directory (includes both staged and unstaged changes), ie: changes made to the working tree vs HEAD.
+
 
