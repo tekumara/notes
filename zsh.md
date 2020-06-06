@@ -24,10 +24,14 @@ chsh -s /usr/local/bin/zsh
 
 ## zshrc
 
-User config files
+User config files ([ref](https://unix.stackexchange.com/questions/71253/what-should-shouldnt-go-in-zshenv-zshrc-zlogin-zprofile-zlogout))
 ```
 .zshenv → [.zprofile if login] → [.zshrc if interactive] → [.zlogin if login] → [.zlogout sometimes]
 ```
+
+See
+* [ArchLinux Zsh - Startup/Shutdown files](https://wiki.archlinux.org/index.php/Zsh#Startup/Shutdown_files)
+* [An Introduction to the Z Shell - Startup Files](http://zsh.sourceforge.net/Intro/intro_3.html)
 
 System config files on macOS:  
 
@@ -77,3 +81,12 @@ rm ~/.zcompdump
 `setopt` lists options. 
 
 [Z Shell Manual - Options](http://zsh.sourceforge.net/Doc/Release/Options.html)
+
+## path
+
+The `PATH` variable and the `path` array are automatically synchronized ([ref](https://wiki.archlinux.org/index.php/Zsh#Configuring_$PATH)).
+
+## profiling
+
+Poorman's: `for i in $(seq 1 10); do /usr/bin/time zsh -i -c exit; done`
+rust's hyperfine: `hyperfine --warmup 3 'zsh -i -c exit;'`

@@ -34,4 +34,4 @@ Things prezto has out of the box that oh-my-zsh doesn't:
 
 1. I sometimes lose the git branch & working directory status in my prompt, or it becomes stale. I'm using the pure theme.
 1. editor defaults to emacs keybindings. If switched to vi, then [ALT + right arrow doesn't work](https://github.com/sorin-ionescu/prezto/issues/1763)
-1. zsh dies on startup when using the python plugin, see [#739](https://github.com/sorin-ionescu/prezto/issues/739) 
+1. the python plugin causes zsh to die on startup, see [#739](https://github.com/sorin-ionescu/prezto/issues/739) 
