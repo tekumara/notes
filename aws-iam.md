@@ -8,24 +8,7 @@
 
 InstanceProfile - associated with a Role, and can be attached to an EC2 instance so the EC2 instance assumes that role.
 
-## EC2FullAccess
-
-```
-{
-    "Version": "2012-10-17",
-    "Statement": {
-        "Effect": "Allow",
-        "Action": [
-            "iam:PassRole",
-            "iam:ListInstanceProfiles",
-            "ec2:*"
-        ],
-        "Resource": "*"
-    }
-}
-```
-
-## cli
+## CLI
 
 Describe role ARN, MaxSessionDuration, trust relationships for assuming the role (ie: AssumeRolePolicyDocument) etc.
 ```
