@@ -62,8 +62,11 @@ deactivate
 # enter/switch virtualenv
 workon newenv
 
-# list contents of virtual env site-packages dir 
-ls "$VIRTUAL_ENV"/lib/python*/site-packages 
+# list contents of virtual env dir 
+ls "$VIRTUAL_ENV"
+
+# list virtual env packages
+lssitepackages
 
 # remove all packages
 wipeenv

@@ -8,12 +8,12 @@
 * [editor](https://github.com/sorin-ionescu/prezto/tree/master/modules/editor) - sets editor specific key bindings options and variables.
 * [history](https://github.com/sorin-ionescu/prezto/tree/master/modules/histhistory) - set share history across sessions and other options
 * [directory](https://github.com/sorin-ionescu/prezto/tree/master/modules/directory) - sets directory options and defines directory aliases.
-* [spectrum](https://github.com/sorin-ionescu/prezto/tree/master/modules/spectrum) - provides variables for 256 color escape codes. Used by utility.
 * [utility](https://github.com/sorin-ionescu/prezto/tree/master/modules/utility) - coloured directory listings (ie: `ls -G`), `ll`, highlighting, spell correction
 * [completion](https://github.com/sorin-ionescu/prezto/tree/master/modules/completion) - zsh-completions
 * [prompt](https://github.com/sorin-ionescu/prezto/tree/master/modules/prompt) - nice prompts, eg: [pure](https://github.com/sindresorhus/pure)
 
 Others:
+* [spectrum](https://github.com/sorin-ionescu/prezto/tree/master/modules/spectrum) - provides variables for 256 color escape codes. Loaded by utility.
 * [helper](https://github.com/sorin-ionescu/prezto/tree/master/modules/helper) - helper functions for developing modules. Loaded by utility. 
 * [history-substring-search](https://github.com/sorin-ionescu/prezto/tree/master/modules/history-substring-search) - zsh-history-substring-search: when pressing up/down arrows, completes the end of a command from history
 

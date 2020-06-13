@@ -128,5 +128,5 @@ Note
 
 ## References
 
-* [SPARK-22614](https://issues.apache.org/jira/browse/SPARK-22614)
+* [SPARK-22614 Expose range partitioning shuffle](https://issues.apache.org/jira/browse/SPARK-22614)
 

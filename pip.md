@@ -21,3 +21,26 @@ pkg_resources.ContextualVersionConflict: (boto3 1.10.45 (/Users/tekumara/.virtua
 The package _aec_ in the current environment expects a different version of _boto3_ from the one you have just installed. The required versions are specified in _$package_name.egg-info/requires.txt_. If this is an editable package this will be located in the source code directory.
 
 It may be that _requires.txt_ is out-of-sync from the editable package's _setup.py_. In which case reinstalling will update it, ie: `pip install -e .`
+
+## Local project installs
+
+Install a copy of the package located at ../spark_data_testing into your site-packages dir:
+```
+pip install ../spark_data_testing
+```
+
+Install an editable version which points to the source in its original location, rather than a copy.
+```
+pip install -e ../spark_data_testing
+```
+This will create a `spark-data-testing.egg-link` file in your site-packages dir. It has the effect of placing your source directory on `PYTHONPATH`.
+
+See [Local Project Installs](https://pip.pypa.io/en/stable/reference/pip_install/#local-project-installs) 
+
+### Paths
+
+`../spark_data_testing` is the same as `file:../spark_data_testing`
+
+Any URL may use the `#egg=name` prefix to explicitly state the project name. When using `#egg=name` you need to use a url `file:`  
+
+
