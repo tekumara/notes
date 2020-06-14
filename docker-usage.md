@@ -11,6 +11,7 @@
 `docker inspect -f '{{.HostConfig.Memory}}' CONTAINER` to see the container memory limit in bytes   
 `docker inspect -f '{{ json .NetworkSettings }}' CONTAINER | jq .` network settings including exposed ports and bridged IP address  
 `docker image inspect REPO:TAG` see details of an image  
+`docker image inspect python:3.6-slim | jq '.[0].Size'` see size of image
 `docker exec -it CONTAINER --user root bash` start a shell inside a running container, as the root user  
 `docker logs -f CONTAINER` tail logs  
 `docker run -it --name mycontainer IMAGE [COMMAND]` create and start a new container from an image ([ref](https://docs.docker.com/engine/reference/run/)). To use the image's default command, omit `command`. `-it` is for interactive sessions (keep stdin open and start a psuedo-tty)  

@@ -31,13 +31,12 @@ kubectl delete clusterrolebinding tiller
 kubectl -n kube-system delete serviceaccount tiller
 ```
 
-## Inspection
+## Usage
 
-`helm list` list released
-
-## Deleting a chart
-
-`helm uninstall livy` delete the livy release. This does not delete all cluster resources.
+`helm install` install a chart  
+`helm upgrade --install` upgrade a release, or install if a release of this name doesn't exist  
+`helm list` list releases  
+`helm uninstall livy` delete the livy release. This does not delete all cluster resources.  
 
 ## Troubleshooting
 
