@@ -17,6 +17,11 @@ compress with bzip2:
 tar -cfj archive.tar.bz2 <files>
 ```
 
+compress with zstd:
+```
+tar --use-compress-program zstd -T0 -cf cache.tzst -P -C /home/runner/work/aec/aec --files-from manifest.txt
+```
+
 create archive in current dir, but change to /tmp before compression so files aren't prefixed with /tmp/
 ```
 tar -zcvf spark-apps.tar.gz -C /tmp spark-apps
