@@ -35,12 +35,18 @@ kubectl -n kube-system delete serviceaccount tiller
 
 `helm install` install a chart  
 `helm upgrade --install` upgrade a release, or install if a release of this name doesn't exist  
-`helm list` list releases  
-`helm uninstall livy` delete the livy release. This does not delete all cluster resources.  
-
+`helm list --tiller-namespace slim` list releases in the slim namespace  
+`helm delete --purge slim-api --tiller-namespace slim` delete the release slim-api in the slim namespace
+`helm version -s --tiller-namespace slim` show the server tiller version number
+ 
 ## Troubleshooting
 
 ### User "system:serviceaccount:kube-system:default" cannot get namespaces in the namespace "default"
 
 This occurs when tiller has been installed but doesn't have cluster admin rights.
 Uninstall tiller, create a serviceaccount, bind it to cluster-admin, and then reinstall tiller using that account (see [above](#install-helm-v2)).
+
+### cannot list resource "pods" in API group "" in the namespace "kube-system"
+
+Specify the tiller namespace, eg:
+`helm list --tiller-namespcae slim`

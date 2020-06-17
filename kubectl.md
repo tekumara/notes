@@ -71,6 +71,7 @@ kubectl patch deployment metrics-server -n kube-system --type json -p '[{"op": "
 
 `kubectl delete namespace livy` delete the livy namespace and all resources
 `kubectl delete -f <file.yml>` delete the resources in the file
+`kubectl delete deployment slim-api` delete a deployment
 
 ### Delete a namespace stuck in the Terminating state
 

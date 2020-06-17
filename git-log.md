@@ -81,7 +81,7 @@ git log -3
 ```
 
 NB:
-`rc-5017...HEAD` shows all commits on both branches from the common ancestor that differ
-`rc-5017..HEAD` shows all commits on HEAD from the common ancestor with rc-5017
+`rc-5017..HEAD` shows all commits on both branches from the common ancestor that differ, same as `rc-5017 master`
+`rc-5017...HEAD` shows all commits on HEAD from the common ancestor with rc-5017
 See [here](http://stackoverflow.com/questions/7251477/what-are-the-differences-between-double-dot-and-triple-dot-in-git-dif/7256391#7256391)
 

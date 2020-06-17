@@ -3,7 +3,7 @@
 ## requirements
 
 1. Each step runs inside a docker container
-1. Steps are specified in a small Makefiles/scripts 
+1. Steps are specified in small Makefiles/scripts 
 1. Check, test, and build steps can be run from a developer laptop
 1. Deploy steps can be run from a developer laptop
 1. Docker containers can be built
@@ -17,10 +17,11 @@
 1. Notifications of success/failure
 1. Steps can be blocks that require manual intervention
 1. Steps can be expressed in YAML rather than a general-purpose language
+1. Pipelines can run on a schedule
 
 ## pipeline
 
-Assumes green/blue deployment (is this reasonable for CF/k8s?)
+Assumes green/blue deployment (is this reasonable for CF/k8s?)  
 Q: where do medium-sized tests go?
 
 1. check-test
