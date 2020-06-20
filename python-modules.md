@@ -13,6 +13,7 @@
 See
 * [PyBay2016 - Cindy Sridharan - The Python Deployment Albatross](https://speakerdeck.com/pybay/2016-cindy-sridharan-the-python-deployment-albatross)
 * [Traps for the Unwary in Python’s Import System](http://python-notes.curiousefficiency.org/en/latest/python_concepts/import_traps.html)
+* [Practical Python - 9.1 Packages](https://github.com/dabeaz-course/practical-python/blob/main/Notes/09_Packages/01_Packages.md)
 
 ## Troubleshooting
 
@@ -88,3 +89,5 @@ Solutions:
 * Don't use relative imports, eg: replace `from .utils` -> `from data_pipeline.utils`. This will work both when running as a script or a module.
 
 See [Script vs. Module](https://stackoverflow.com/a/14132912/149412)
+
+The google python style guide [does not recommend](http://google.github.io/styleguide/pyguide.html#224-decision) relative imports.

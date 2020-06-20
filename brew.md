@@ -16,7 +16,8 @@ brew cask info java8
 `brew cask reinstall <caskname>` reinstall/upgrade to latest version  
 `brew tap caskroom/versions` Alternate cask versions
 
-`brew uses --recursive go` show all packages that require `go`
+`brew uses --recursive --installed go` show all installed packages that require `go`
+`brew log -p helm@2` show history of the helm@2 formula
 
 Show package owner of msbuild
 ```

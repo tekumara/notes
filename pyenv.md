@@ -71,6 +71,12 @@ lssitepackages
 # remove all packages
 wipeenv
 
+# make a temporary environment. It will be deleted when deactivated
+mktmpenv
+
+# show all commands
+virtualenvwrapper
+
 ```
 
 Install the [lazy version](https://virtualenvwrapper.readthedocs.io/en/latest/install.html?highlight=lazy#lazy-loading) into your .bashrc, for a quicker shell startup time:
