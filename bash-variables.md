@@ -1,12 +1,24 @@
 # bash variables
 
+A variable can be assigned and then used in subsequent commands:
+```
+foo=bar && echo $foo
+bar
+```
+
+The shell will expand it, but it won't be in the environment of subprocesses.
+
+To show variables: `set`
+
+Variables assigned in .bashrc will be available to the current shell, but not exported to subprocesses, eg: `HISTSIZE`
+
 ## export
 
-Makes the variable available to child processes via the environment.
+Makes the variable available to child processes as an environment variable.
 
-If you export a variable from .bashrc then you will see it in env.
+To see what's in the environment variables: `env`
 
-If you don't it will still take effect for bash, but not child processes, won't be seen in env, but can be displayed via echo, eg: `echo $HISTSIZE`
+[Difference between set, export and env in bash](https://hackjutsu.com/2016/08/04/Difference%20between%20set,%20export%20and%20env%20in%20bash/)
 
 ## set vs env
 
