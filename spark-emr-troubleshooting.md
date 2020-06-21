@@ -16,7 +16,9 @@ This is a general message that doesn't say much beyond that the job was cancelle
 
 These appear in the Spark UI for a task, eg:
 ```
-	ExecutorLostFailure (executor 29 exited unrelated to the running tasks) Reason: Container marked as failed: container_1583201437244_0001_01_000030 on host: ip-10-97-44-35.ec2.internal. Exit status: -100. Diagnostics: Container released on a *lost* node.
+ExecutorLostFailure (executor 29 exited unrelated to the running tasks) Reason: Container marked as failed:
+container_1583201437244_0001_01_000030 on host: ip-10-97-44-35.ec2.internal. Exit status: -100.
+Diagnostics: Container released on a *lost* node.
 ```	
 This is a generic error message that means there was YARN node failure, and so YARN stopped the container containing the Spark executor. It's not the root cause. To diagnose further inspect the YARN node manager logs.
 
@@ -45,7 +47,7 @@ If the node has run out of disk you'll see error like:
 
 ## Disk space and OOMs issues
 
-First check if this is due to in-balanced partitions.
+First check if this is due to in-balanced partitions. See [SQL Tab](#SQL-Tab)
 
 ## Increasing disk space
 
@@ -61,6 +63,27 @@ Either
 * change availability zone
 * change instance type
 * if using spot instances, switch to using on-demand 
+
+## ExternalShuffle - Executor is not registered
+
+The shuffle service is a long running process required for dynamic allocation. It allows executors to be shutdown and their shuffle files kept and served by the shuffle service beyond the lifetime of the executor. See [Graceful Decommission of Executors](https://spark.apache.org/docs/latest/job-scheduling.html#graceful-decommission-of-executors).
+
+If the shuffle service is killed and restarted, it can lose the list of registered executors.
+When this happens you will see these errors on the spark driver:
+```
+org.apache.spark.shuffle.FetchFailedException: Failure while fetching StreamChunkId{streamId=1573317867797, chunkIndex=0}
+: java.lang.RuntimeException: Executor is not registered
+```
+
+And these errors in the shuffle service logs:
+```
+org.apache.spark.network.server.TransportRequestHandler (shuffle-server-2-29): Error opening block StreamChunkId{streamId=596585941509, chunkIndex=8} for request from /10.97.36.245:34460
+java.lang.RuntimeException: Executor is not registered
+```
+
+YARN kills the shuffle service when there is a disk failure (ie: out of disk space). This is usually the cause, and the "Executor is not registered" is a symptom.
+
+For more info see [SPARK-27736](https://issues.apache.org/jira/browse/SPARK-27736)
 
 ## SQL Tab
 
