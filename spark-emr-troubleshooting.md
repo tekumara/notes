@@ -31,6 +31,16 @@ Either
 * change instance type
 * if using spot instances, switch to using on-demand 
 
+## Unhealthy Nodes
+
+The YARN Nodemanager [Health Checker Service](https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/NodeManager.html#Health_Checker_Service) determines the health of nodes. The default health checkmeasures disk space and if the disk becomes more than 90% full the node will be marked as unhealthy. An unhealthy node will have its containers killed and won't be assigned new containers.
+
+This AWS console graph shows all nodes have been unhealthy, and are no longer active:  
+
+![AWS console with unhealthy nodes](spark-emr-troubleshooting-console-unhealthy-nodes.png)
+
+For resolutions, see [Fix disk space](#Fix-disk-space)
+
 ## Executor is not registered
 
 The external shuffle service is a long running process required for dynamic allocation. The service serves shuffle files from an executor beyond its lifetime.
@@ -77,10 +87,10 @@ If the node has run out of disk you'll see errors like:
 2018-02-13 22:19:13,972 ERROR org.apache.hadoop.yarn.server.nodemanager.LocalDirsHandlerService (DiskHealthMonitor-Timer): Most of the disks failed. 1/2 local-dirs are bad: /mnt/yarn; 1/1 log-dirs are bad: /var/log/hadoop-yarn/containers
 ```
 
-## Fix disk space and OOM issues
+## Fix disk space
 
-1. First check if this is due to in-balanced partitions. See [SQL Tab](#SQL-Tab)
-1. Then try to [increase disk space](#increase-disk-space)
+1. Try to [increase disk space](#increase-disk-space)
+1. Check for imbalanced partitions/data skew via the [SQL Tab](#SQL-Tab) and repartition the dataset in a more balanced way.
 
 ### SQL Tab
 
