@@ -44,3 +44,39 @@ More info on both options [here](https://gist.github.com/BretFisher/5e1a0c7bcca4
 
 The Docker Desktop LinuxKit kernel is something like `4.9.93-linuxkit-aufs`. It is a custom built downstream from LinuxKit itself ([ref](https://github.com/docker/for-mac/issues/3050#issuecomment-402504883))
 
+## Troubleshooting
+
+High CPU - [#1759](https://github.com/docker/for-mac/issues/1759#issuecomment-583706239), [#4362](https://github.com/docker/for-mac/issues/4362#issuecomment-647101073)
+
+Preferences window stuck loading - [#4374](https://github.com/docker/for-mac/issues/4374#issuecomment-647075555)
+
+Kubernetes stuck starting - [#4624](https://github.com/docker/for-mac/issues/4624#issuecomment-647103959). Docker - Troubleshoot - Reset to factory defaults (nb: this will remove all images and containers)
+
+## Logs
+
+[Tailing the logs](https://docs.docker.com/docker-for-mac/troubleshoot/#check-the-logs)
+
+Logs: `~/Library/Containers/com.docker.docker/Data/log/vm/`
+
+`docker events` will tail docker events
+
+## Disk usage
+
+`docker system prune`removes all stopped containers, unused networks, dangling images, and build cache
+`docker image prune -a --filter 'until=720h'` remove all images earlier than a month ago
+
+`docker system df` will show docker disk utilization  
+`docker system df -v` show image, container and volumes size, shared size (ie: shared layers), unique size (ie: unique layers).
+
+Docker Desktop stores Linux containers and images in a single, large “disk image” file, located at `~/Library/Containers/com.docker.docker/Data/vms/0/data` 
+
+`ls -klsh ~/Library/Containers/com.docker.docker/Data/vms/0/data` will show the actual disk usage vs maximum:
+
+```
+total 68167208
+ 68167208 -rw-r--r--  1 tekumara  staff   104G 21 Jun 17:23 Docker.raw
+```
+Actual usage is 68MB, max is 104G
+
+See also: 
+[Disk utilization in Docker for Mac](https://docs.docker.com/docker-for-mac/space/)

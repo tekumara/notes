@@ -12,7 +12,7 @@ Caused by: org.apache.spark.SparkException: Job 3 cancelled because SparkContext
 
 This general error message doesn't tell you much. To understand more, inspect the Spark UI and/or logs.
 
-## Container released on a *lost* node.
+## Container released on a lost node.
 
 These appear in the Spark UI for a task, eg:
 ```
@@ -20,7 +20,7 @@ ExecutorLostFailure (executor 29 exited unrelated to the running tasks) Reason: 
 container_1583201437244_0001_01_000030 on host: ip-10-97-44-35.ec2.internal. Exit status: -100.
 Diagnostics: Container released on a *lost* node.
 ```	
-This generic error message means there was YARN node failure, and so YARN stopped the container containing the Spark executor. It does not indicate the root cause. To diagnose further inspect the YARN node manager logs.
+This generic error message means there was YARN node failure, and so YARN stopped the container containing the Spark executor. It does not indicate the root cause. To diagnose further [check the YARN node manager logs](#Check-the-YARN-node-manager-logs).
 
 ## EC2 is out of capacity
 
@@ -54,7 +54,7 @@ For more info see
 * [Graceful Decommission of Executors](https://spark.apache.org/docs/latest/job-scheduling.html#graceful-decommission-of-executors)
 * [SPARK-27736](https://issues.apache.org/jira/browse/SPARK-27736)
 
-## Check YARN node manager logs
+## Check the YARN node manager logs
 
 EMR stores all cluster logs at the _Log URI_ specified during cluster creation. Both the _Log URI_ and the _Cluster ID_ are visible from the EMR cluster **Summary** tab.
 
