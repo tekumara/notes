@@ -35,9 +35,11 @@ Either
 
 The YARN Nodemanager [Health Checker Service](https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/NodeManager.html#Health_Checker_Service) determines the health of nodes. The default health checkmeasures disk space and if the disk becomes more than 90% full the node will be marked as unhealthy. An unhealthy node will have its containers killed and won't be assigned new containers.
 
-This AWS console graph shows all nodes have been unhealthy, and are no longer active:  
+This AWS console graph shows all nodes have become unhealthy, and are no longer active:  
 
 ![AWS console with unhealthy nodes](spark-emr-troubleshooting-console-unhealthy-nodes.png)
+
+[EMR terminates nodes](https://docs.aws.amazon.com/emr/latest/ManagementGuide/UsingEMR_TerminationProtection.html#emr-termination-protection-unhealthy) that have been unhealthy for more than 45 mins, unless termination protection is enabled.
 
 For resolutions, see [Fix disk space](#Fix-disk-space)
 
