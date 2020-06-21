@@ -21,6 +21,11 @@ To delete tag locally and on remote
 git tag -d build-4980
 git push --delete origin build-4980
 ```
+or
+```
+t=build-4980 && git tag -d $t && git push --delete origin $t
+```
+
 
 To get diff of commit for tag1
 ```

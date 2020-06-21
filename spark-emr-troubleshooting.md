@@ -22,6 +22,38 @@ Diagnostics: Container released on a *lost* node.
 ```	
 This is a generic error message that means there was YARN node failure, and so YARN stopped the container containing the Spark executor. It's not the root cause. To diagnose further inspect the YARN node manager logs.
 
+## EC2 is out of capacity
+
+This occurs where there an not enough available EC2 instances in the availability zone.
+
+Either
+* change availability zone
+* change instance type
+* if using spot instances, switch to using on-demand 
+
+## Executor is not registered
+
+The external shuffle service is a long running process required for dynamic allocation. The service serves shuffle files from an executor beyond its lifetime.
+
+If the shuffle service is killed and restarted, it can lose its list of registered executors.
+When this happens you will see these errors on the spark driver:
+```
+org.apache.spark.shuffle.FetchFailedException: Failure while fetching StreamChunkId{streamId=1573317867797, chunkIndex=0}: 
+ java.lang.RuntimeException: Executor is not registered
+```
+
+And these errors in the shuffle service logs:
+```
+org.apache.spark.network.server.TransportRequestHandler (shuffle-server-2-29): Error opening block StreamChunkId{streamId=596585941509, chunkIndex=8} for request from /10.97.36.245:34460
+ java.lang.RuntimeException: Executor is not registered
+```
+
+YARN kills the shuffle service when there is a disk failure (ie: out of disk space). This is usually the cause, and *Executor is not registered* is a symptom.
+
+For more info see
+* [Graceful Decommission of Executors](https://spark.apache.org/docs/latest/job-scheduling.html#graceful-decommission-of-executors).
+* [SPARK-27736](https://issues.apache.org/jira/browse/SPARK-27736)
+
 ## Checking YARN node manager logs for disk space exhaustion
 
 EMR stores all cluster logs at the _Log URI_ specified when a cluster is created. Both the _Log URI_ and the _Cluster ID_ are visible from the EMR cluster **Summary** tab.
@@ -45,45 +77,9 @@ If the node has run out of disk you'll see error like:
 2018-02-13 22:19:13,972 ERROR org.apache.hadoop.yarn.server.nodemanager.LocalDirsHandlerService (DiskHealthMonitor-Timer): Most of the disks failed. 1/2 local-dirs are bad: /mnt/yarn; 1/1 log-dirs are bad: /var/log/hadoop-yarn/containers
 ```
 
-## Disk space and OOMs issues
+## Fixing disk space and OOMs issues
 
 First check if this is due to in-balanced partitions. See [SQL Tab](#SQL-Tab)
-
-## Increasing disk space
-
-The easiest way to increase disk space on EMR is by choosing a large instance type. See this [Instance Storage](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-storage.html) guide which shows the amount of disk provided by each instance type.
-
-The other way to increase disk space is to modify the EBS storage defaults when creating a cluster.
-
-## EC2 is out of capacity
-
-This occurs where there an not enough available EC2 instances in the availability zone.
-
-Either
-* change availability zone
-* change instance type
-* if using spot instances, switch to using on-demand 
-
-## ExternalShuffle - Executor is not registered
-
-The shuffle service is a long running process required for dynamic allocation. It allows executors to be shutdown and their shuffle files kept and served by the shuffle service beyond the lifetime of the executor. See [Graceful Decommission of Executors](https://spark.apache.org/docs/latest/job-scheduling.html#graceful-decommission-of-executors).
-
-If the shuffle service is killed and restarted, it can lose the list of registered executors.
-When this happens you will see these errors on the spark driver:
-```
-org.apache.spark.shuffle.FetchFailedException: Failure while fetching StreamChunkId{streamId=1573317867797, chunkIndex=0}
-: java.lang.RuntimeException: Executor is not registered
-```
-
-And these errors in the shuffle service logs:
-```
-org.apache.spark.network.server.TransportRequestHandler (shuffle-server-2-29): Error opening block StreamChunkId{streamId=596585941509, chunkIndex=8} for request from /10.97.36.245:34460
-java.lang.RuntimeException: Executor is not registered
-```
-
-YARN kills the shuffle service when there is a disk failure (ie: out of disk space). This is usually the cause, and the "Executor is not registered" is a symptom.
-
-For more info see [SPARK-27736](https://issues.apache.org/jira/browse/SPARK-27736)
 
 ## SQL Tab
 
@@ -102,3 +98,9 @@ peak memory total (min, med, max):
 spill size total (min, med, max): 
 2.3 TB (0.0 B, 0.0 B, 221.8 GB
 ```
+
+## Increasing disk space
+
+The easiest way to increase disk space on EMR is by choosing a large instance type. See this [Instance Storage](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-storage.html) guide which shows the amount of disk provided by each instance type.
+
+The other way to increase disk space is to modify the EBS storage defaults when creating a cluster.
