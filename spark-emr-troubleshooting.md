@@ -10,7 +10,7 @@ An error occurred while calling o147.parquet.
 Caused by: org.apache.spark.SparkException: Job 3 cancelled because SparkContext was shut down
 ```
 
-This is a general message that doesn't say much beyond that the job was cancelled. To understand more, inspect the Spark UI and/or logs.
+This general error message doesn't tell you much. To understand more, inspect the Spark UI and/or logs.
 
 ## Container released on a *lost* node.
 
@@ -20,7 +20,7 @@ ExecutorLostFailure (executor 29 exited unrelated to the running tasks) Reason: 
 container_1583201437244_0001_01_000030 on host: ip-10-97-44-35.ec2.internal. Exit status: -100.
 Diagnostics: Container released on a *lost* node.
 ```	
-This is a generic error message that means there was YARN node failure, and so YARN stopped the container containing the Spark executor. It's not the root cause. To diagnose further inspect the YARN node manager logs.
+This generic error message means there was YARN node failure, and so YARN stopped the container containing the Spark executor. It does not indicate the root cause. To diagnose further inspect the YARN node manager logs.
 
 ## EC2 is out of capacity
 
@@ -48,15 +48,15 @@ org.apache.spark.network.server.TransportRequestHandler (shuffle-server-2-29): E
  java.lang.RuntimeException: Executor is not registered
 ```
 
-YARN kills the shuffle service when there is a disk failure (ie: out of disk space). This is usually the cause, and *Executor is not registered* is a symptom.
+YARN kills the shuffle service when there is a disk failure (ie: out of disk space). Disk failures are usually the cause, and *Executor is not registered* is a symptom.
 
 For more info see
-* [Graceful Decommission of Executors](https://spark.apache.org/docs/latest/job-scheduling.html#graceful-decommission-of-executors).
+* [Graceful Decommission of Executors](https://spark.apache.org/docs/latest/job-scheduling.html#graceful-decommission-of-executors)
 * [SPARK-27736](https://issues.apache.org/jira/browse/SPARK-27736)
 
-## Checking YARN node manager logs for disk space exhaustion
+## Check YARN node manager logs
 
-EMR stores all cluster logs at the _Log URI_ specified when a cluster is created. Both the _Log URI_ and the _Cluster ID_ are visible from the EMR cluster **Summary** tab.
+EMR stores all cluster logs at the _Log URI_ specified during cluster creation. Both the _Log URI_ and the _Cluster ID_ are visible from the EMR cluster **Summary** tab.
 
 To fetch the YARN node logs given a `LOG_URI` and `CLUSTER_ID`:
 ```
@@ -68,7 +68,7 @@ The most common cause of node failure is disk failure (ie: running out of disk s
 zgrep -R "disks failed" *
 ```
 
-If the node has run out of disk you'll see error like:
+If the node has run out of disk you'll see errors like:
 
 ```
 2018-02-13 22:19:13,972 WARN org.apache.hadoop.yarn.server.nodemanager.DirectoryCollection (DiskHealthMonitor-Timer): Directory /mnt/yarn error, used space above threshold of 90.0%, removing from list of valid directories
@@ -77,11 +77,12 @@ If the node has run out of disk you'll see error like:
 2018-02-13 22:19:13,972 ERROR org.apache.hadoop.yarn.server.nodemanager.LocalDirsHandlerService (DiskHealthMonitor-Timer): Most of the disks failed. 1/2 local-dirs are bad: /mnt/yarn; 1/1 log-dirs are bad: /var/log/hadoop-yarn/containers
 ```
 
-## Fixing disk space and OOMs issues
+## Fix disk space and OOM issues
 
-First check if this is due to in-balanced partitions. See [SQL Tab](#SQL-Tab)
+1. First check if this is due to in-balanced partitions. See [SQL Tab](#SQL-Tab)
+1. Then try to [increase disk space](#increase-disk-space)
 
-## SQL Tab
+### SQL Tab
 
 The SQL tab will show you the DAG visualisation at the top, and the query plan at the bottom. As you hover over nodes in the DAG you can see the query plan for that node. Exchange nodes will show the data sizes, and Sort nodes will show spill sizes, which can help identify skew, eg:
 
@@ -99,7 +100,7 @@ spill size total (min, med, max):
 2.3 TB (0.0 B, 0.0 B, 221.8 GB
 ```
 
-## Increasing disk space
+### Increase disk space
 
 The easiest way to increase disk space on EMR is by choosing a large instance type. See this [Instance Storage](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-storage.html) guide which shows the amount of disk provided by each instance type.
 
