@@ -12,7 +12,7 @@ Caused by: org.apache.spark.SparkException: Job 3 cancelled because SparkContext
 
 This general error message doesn't tell you much. To understand more, inspect the Spark UI and/or logs.
 
-## Container released on a lost node.
+## Container released on a lost node
 
 These appear in the Spark UI for a task, eg:
 ```
@@ -91,8 +91,14 @@ If the node has run out of disk you'll see errors like:
 
 ## Fix disk space
 
-1. Try to [increase disk space](#increase-disk-space)
-1. Check for imbalanced partitions/data skew via the [SQL Tab](#SQL-Tab) and repartition the dataset in a more balanced way.
+1. If all nodes are unhealthy and exhausted disk space then [increase disk space](#increase-disk-space) or do intermediate writes to S3
+1. If some nodes are unhealthy check for imbalanced partitions/data skew via the [SQL Tab](#SQL-Tab) and repartition the dataset in a more balanced way.
+
+### Increase disk space
+
+The easiest way to increase disk space on EMR is by choosing a large instance type. See this [Instance Storage](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-storage.html) guide which shows the amount of disk provided by each instance type.
+
+The other way to increase disk space is to modify the EBS storage defaults when creating a cluster.
 
 ### SQL Tab
 
@@ -111,9 +117,3 @@ peak memory total (min, med, max):
 spill size total (min, med, max): 
 2.3 TB (0.0 B, 0.0 B, 221.8 GB
 ```
-
-### Increase disk space
-
-The easiest way to increase disk space on EMR is by choosing a large instance type. See this [Instance Storage](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-storage.html) guide which shows the amount of disk provided by each instance type.
-
-The other way to increase disk space is to modify the EBS storage defaults when creating a cluster.
