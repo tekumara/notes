@@ -36,13 +36,23 @@ brew create https://github.com/glassechidna/awsweb/releases/download/0.1.7/awswe
 
 This will create a formula in */usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/awsweb.rb*
 
-`brew install --verbose --debug foo` will ask you to open an interactive shell if the build fails so you can try to figure out what went wrong.
+`brew install --debug foo` will ask you to open an interactive shell if the build fails so you can try to figure out what went wrong.
 
 Use `brew info` and check if the version guessed by Homebrew from the URL is correct. Add an explicit version if not.
 
+The url can be a git repo, in which case `:revision` is the git sha for `:tag`.
+
+Other commands:
 `brew audit --strict --online foo` to test formulae for adherence to Homebrew house style (will install gems on first run)
 `brew audit --new-formula foo` foo highlights more potential issues than the standard audit.
+
+
 
 Docs:
 * https://docs.brew.sh/Formula-Cookbook#grab-the-url
 * https://www.rubydoc.info/github/Homebrew/brew/master/Formula
+
+### Troubleshooting
+
+When copying an existing formula, remove the `bottle` block. This is added by the Homebrew CI system.
+

@@ -5,6 +5,17 @@ Install
 pip install jupyter
 ```
 
+Start jupyter, serving from the current directory
+```
+jupyter notebook
+```
+
+## Config
+
+See `~/.jupyter/jupyter_notebook_config.py`
+
+## Kernels
+
 List kernels
 ```
 jupyter kernelspec list
@@ -25,11 +36,6 @@ Virtualenv kernels:
 
 
 See [Kernelspec](https://jupyter-client.readthedocs.io/en/latest/kernels.html#kernelspecs)
-
-Start jupyter, serving from the current directory
-```
-jupyter notebook
-```
 
 Create a kernel within the active virtualenv called `venv-wide` 
 ```
