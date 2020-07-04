@@ -4,20 +4,21 @@
 
 pyenv builds python from source using its [python-build](https://github.com/pyenv/pyenv/tree/master/plugins/python-build) plugin. You can install a specific minor version rather than whatever your package manager (eg: brew) gives you. It also, unlike most package managers, allows you to have multiple versions of python installed and switch between them. It works the same across platforms (eg: macOS, ubuntu, redhat) which allows you to maintain a consistent python version when system python distributions differ. Also, by having your applications depend on a pyenv controlled version of python, when the package manager upgrades python it doesn't force the change on your existing virtualenvs.
 
-##  Install
+## Install
 
 * Install binaries on Mac OS X: ```brew install pyenv```
 * Install binaries on *nix using [pyenv-installer](https://github.com/pyenv/pyenv-installer): ```curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash```
-* bash: 
-```
+
+Bash config:
+```bash
 echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bash_profile
 ```
-* zsh:
-```
+Zsh config:
+```zsh
 echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
 ```
 
-What ```eval "$(pyenv init -)"``` does is add *~/.pyenv/shims* to the path, and adds a wrapper around pyenv. For more info see [here](https://github.com/pyenv/pyenv#advanced-configuration)
+```eval "$(pyenv init -)"``` adds *~/.pyenv/shims* to the path, which are shims for `python`. For more info see [here](https://github.com/pyenv/pyenv#advanced-configuration)
 
 ## Usage
 
@@ -40,7 +41,8 @@ More info about [choosing the python version](https://github.com/pyenv/pyenv#cho
 ```pyenv virtualenv 3.6.2 general``` create a virtualenv called *general* with python version *3.6.2*. Will fail if this version is not already installed. The virtualenv will be created in *$(pyenv root)/versions/3.6.2/envs*. It will be symlinked from *$(pyenv root)/versions/general* and become a pyenv version that can be used like any other version.  
 
 [Auto-activation](https://github.com/pyenv/pyenv-virtualenv#activate-virtualenv) will automatically activate/deactive virtualenvs when entering a directory containing a *.python-version* file that specifies a valid virtualenv. To enable auto-activation (optional - not needed) add the following to *~/.bashrc* or *~/.zshrc*
-```
+
+```bash
 eval "$(pyenv virtualenv-init -)"
 ```
 
@@ -49,7 +51,8 @@ eval "$(pyenv virtualenv-init -)"
 [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/) makes it easy to manage virtualenvs created in `~/.virtualenv`.[pyenv-virtualenvwrapper](https://github.com/pyenv/pyenv-virtualenvwrapper) causes virtualenvwrapper to use the active pyenv version of python when creating a virtualenv, rather than the system version. It places virtualenvs in the standard location, eg: *~/.virtualenvs* which means it integrates with other tools (unlike pyenv-virtualenv). Tab completion is provided when using its commands.
 
 eg:
-```
+
+```bash
 # install the pyenv aware mkvirtualenv bash function
 pyenv virtualenvwrapper
 
@@ -62,7 +65,7 @@ deactivate
 # enter/switch virtualenv
 workon newenv
 
-# list contents of virtual env dir 
+# list contents of virtual env dir
 ls "$VIRTUAL_ENV"
 
 # list virtual env packages
@@ -76,21 +79,15 @@ mktmpenv
 
 # show all commands
 virtualenvwrapper
-
-```
-
-Install the [lazy version](https://virtualenvwrapper.readthedocs.io/en/latest/install.html?highlight=lazy#lazy-loading) into your .bashrc, for a quicker shell startup time:
-```
-pyenv virtualenvwrapper_lazy
 ```
 
 ## zsh plugin for pyenv + pyenv-virtualwrapper
 
-see https://github.com/sorin-ionescu/prezto/tree/master/modules/python
+See [tekumara/zsh-pyenv-virtualenvwrapper-lazy](https://github.com/tekumara/zsh-pyenv-virtualenvwrapper-lazy) for lazily loading pyenv-virtualwrapper
 
 ## Errors
 
-```
+```bash
 $ pip --version
 Traceback (most recent call last):
   File "~/.pyenv/versions/3.6.5/bin/pip", line 7, in <module>
@@ -104,18 +101,13 @@ pip will be installed into ```~/.local/lib/pythonX/site-packages/pip```
 
 If the above problem is with pip3, install as follows: ```python3 -m pip install --force-reinstall --user pip```
 
+>Failed to initialize virtualenvwrapper.
+>
+>Perhaps pyenv-virtualenvwrapper has not been loaded into your shell properly.  
+>Please restart current shell and try again.
 
-```
-Failed to initialize virtualenvwrapper.
+Make sure `eval "$(pyenv init -)"` has been run first.
 
-Perhaps pyenv-virtualenvwrapper has not been loaded into your shell properly.
-Please restart current shell and try again.
-```
+> /Users/tekumara/.pyenv/shims/python: line 21: /usr/local/Cellar/pyenv/1.2.15/libexec/pyenv: No such file or directory
 
-Make sure `eval "$(pyenv init -)"` has been run first. 
-
-
-```
-/Users/tekumara/.pyenv/shims/python: line 21: /usr/local/Cellar/pyenv/1.2.15/libexec/pyenv: No such file or directory
-```
 This can occur when upgrading to a new version of pyenv. To fix, rebuild the shims with `pyenv rehash`
