@@ -2,15 +2,16 @@
 
 Guild is designed like a package manager & task runner (eg: the npm of ML) with experiment tracking/diffing/compare. Task running is a simple sequential execution of steps, rather than a complex DAG or parallel processing.
 
-Takes a functional approach rather than OO ie: instead of making everything subclass a `GuildModel`, small pieces can be composed together in guild.yml file.
+Takes a functional approach rather than OO ie: instead of making everything subclass a `GuildModel`, small pieces can be composed together in a *guild.yml* file.
 
-guild.yml could become the interface/abstraction between ML code and a scheduler. With the right integration tooling could imagine a guild.yml being the interface to kubeflow pipeline/airflow DAG etc.
+*guild.yml* could become the interface/abstraction between ML code and a scheduler. With the right integration tooling you could imagine a *guild.yml* being the interface to kubeflow pipeline/airflow DAG etc.
 
 Guild is integrated with TensorBoard. It can read scalars from tfevent files, and launch TensorBoard.
 
 Why record runs? Recording runs acts like a regression test for any refactoring.
 
 Guild can:
+
 * record metadata, eg: username, aws account, instance-type
 * record model checkpoints
 * record tensorboard training logs
@@ -22,6 +23,7 @@ Guild can:
 * watch the output of an experiment and sync it in real-time
 
 Limitations:
+
 * there isn't really a concept of namespaces for multiple models
 * notebook support is limited. Guild's opinion is that training should be done in scripts via the CLI for better reproducibility.
 
@@ -33,6 +35,7 @@ Limitations:
 ## Guild home
 
 [guild home](https://guild.ai/docs/reference/guild-home/):
+
 * when inside a virtualenv is stored in the venv root, eg: `~/.virtualenvs/my-venv/.guild/`
 * when not inside a virtualenv is stored in `~/.guild/`
 * can be overridden by setting the environment variable `$GUILD_HOME`
@@ -51,6 +54,7 @@ https://guild.ai/docs/tools/guild-view/) that visualises all runs and their outp
 ## Scalars
 
 Scalars are numeric metrics (eg: loss, accuracy) logged during a run and stored as tf events. Scalars can be:
+
 * logged indirectly by your training framework to tf events, usually with a callback
 * logged directly from your code [using tensorboardX directly](https://github.com/guildai/guildai/blob/18948a3008dfda5e638651f0e2466ee05bf09a64/examples/scalars/train_with_tensorboardX.py)
 * captured from stdout by guildai and stored as tf events, aka [Output scalars](https://www-pre.guild.ai/scalars/). These are defined by regex patterns. The default pattern is `NAME: FLOAT` or you can [define your own patterns](https://github.com/guildai/guildai/tree/18948a3008dfda5e638651f0e2466ee05bf09a64/examples/scalars).
@@ -60,13 +64,14 @@ Scalars are numeric metrics (eg: loss, accuracy) logged during a run and stored 
 ## Notebooks
 
 Example of running in a notebook:
-```
+
+```python
 # guildai will record function params as flags
-def train(user="tekumara", 
-          aws_account = "my-research-account", 
+def train(user="tekumara",
+          aws_account = "my-research-account",
           instance_type = instance_type(),
           lr=0.00001, 
-          weight_decay=0.000001):    
+          weight_decay=0.000001):
     ...
 
     trainer = Trainer(
@@ -74,13 +79,12 @@ def train(user="tekumara",
         # tensorboard logs will be written inside the run directory to logs/
         serialization_dir='./logs',
     )
-    
+
     # alternatively, record the instance type as a file inside the run directory
     with open('instance-type', 'w') as f:
         f.write(instance_type())
-        
-    return trainer.train()
 
+    return trainer.train()
 
 # start the training
 # guild will create a new directory, and change into it
@@ -89,7 +93,8 @@ run
 ```
 
 Set a label
-```
+
+```python
 run.write_attr("label", "boom!!")
 ```
 

@@ -10,11 +10,14 @@ pyenv builds python from source using its [python-build](https://github.com/pyen
 * Install binaries on *nix using [pyenv-installer](https://github.com/pyenv/pyenv-installer): ```curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash```
 
 Bash config:
-```bash
+
+```shell
 echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bash_profile
 ```
+
 Zsh config:
-```zsh
+
+```shell
 echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
 ```
 
@@ -52,7 +55,7 @@ eval "$(pyenv virtualenv-init -)"
 
 eg:
 
-```bash
+```shell
 # install the pyenv aware mkvirtualenv bash function
 pyenv virtualenvwrapper
 
@@ -87,7 +90,7 @@ See [tekumara/zsh-pyenv-virtualenvwrapper-lazy](https://github.com/tekumara/zsh-
 
 ## Errors
 
-```bash
+```shell
 $ pip --version
 Traceback (most recent call last):
   File "~/.pyenv/versions/3.6.5/bin/pip", line 7, in <module>
