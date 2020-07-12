@@ -10,11 +10,26 @@ Determined AI provides cluster management for model training, and offer the foll
 * experiment tracking
 * team based - resources and experiment results are shared and accessible to any team member with access
 
-On the roadmap
+On the roadmap:
+
 * model store
 * spot instances on AWS
 * a kubernetes scheduler
 * RBAC
+
+Enterprise edition:
+
+* Okta integration (SAML, SCIM)
+* Support & product development
+* More high-end offerings to come
+
+## Network connectivity
+
+`det shell open` uses SSH, so require network level access  
+
+Notebook access is HTTP proxied via the master, eg: http://master:8080/proxy/80d46f5d-f41c-4dda-ae5c-9c276f61b8f0/
+
+CLI commands use WebSockets to communicate with the master.
 
 ## Local cluster install
 
@@ -50,8 +65,10 @@ Install the [cli](https://github.com/determined-ai/determined/tree/master/cli) f
 pip install determined-cli
 ```
 
-`det notebook start` Start a notebook on the cluster  
+`det notebook start -c .` Start a notebook on the cluster with contents of current dir 
 `det shell start` Start a shell on the cluster
+`det experiment create const.yaml .` Create experiment defined in *const.yaml* with model def in current dir
+`det tensorboard start 1` Start tensorboard to inspect experiment 1
 
 ## Determined container images
 

@@ -84,7 +84,6 @@ k3sup-multipass create flyte
 export KUBECONFIG=$(k3sup-multipass kubeconfig flyte)
 ```
 
-
 To merge a kube config file generated from k3sup-multipass with ~/.kube/config:
 
 ```

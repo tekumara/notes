@@ -32,7 +32,7 @@ Otherwise metrics won't be collected and the logs will show the error: *Unable t
 
 ## Troubleshooting
 
-If you see the following when connecting to a local Docker Desktop cluster: 
+If you see the following when connecting to a local Docker Desktop cluster:
 
 ```shell
 $ kubectl get deployments
@@ -46,3 +46,5 @@ To view etcd logs
 ```shell
 kubectl --context docker-desktop --namespace kube-system logs -f etcd-docker-desktop
 ```
+
+50% CPU usage from *com.docker.hyperkit* when Kubernetes is enabled, and no running pods. See [#12](https://github.com/docker/roadmap/issues/12#issuecomment-656970659)
