@@ -2,9 +2,10 @@
 
 Determined AI provides cluster management for model training, and offer the following [benefits](https://docs.determined.ai/latest/topic-guides/benefits-of-determined.html):
 
-* elastic scheduling of containers on GPUs for model training, including fair-sharing with pre-emption. Pre-empted training tasks checkpoint their state before terminating gracefully
-* elastic scheduling of notebooks, tensorboards, commands and shells on CPUs
-* [multi-machine distributed training](https://docs.determined.ai/latest/topic-guides/effective-distributed-training.html#effective-distributed-training) built on top of [NVIDIA/nccl](https://github.com/NVIDIA/nccl) and [facebookincubator/gloo](https://github.com/facebookincubator/gloo)
+* a multi-user platform for shared access to scare GPU resources (particularly useful on-prem) using fair-sharing with pre-emption. Pre-empted training tasks checkpoint their state before terminating gracefully.
+* elastic scaling in the cloud
+* scheduling of notebooks, tensorboards, commands and shells on CPUs and training on GPUs
+* [multi-machine distributed training](https://docs.determined.ai/latest/topic-guides/effective-distributed-training.html#effective-distributed-training) built on top of [horovod](https://github.com/horovod/horovod) which uses [NVIDIA/nccl](https://github.com/NVIDIA/nccl) and [facebookincubator/gloo](https://github.com/facebookincubator/gloo)
 * state-of-the-art hyperparameter tuning algorithm ([ASHA](https://arxiv.org/abs/1810.05934))
 * a high-performance random-access data layer ([yogadl](https://docs.determined.ai/latest/how-to/data-layer.html)) that locally caches data read from cloud storage. Enables transparent data sharding across multiple-machines, and resuming training mid-epoch.
 * experiment tracking
