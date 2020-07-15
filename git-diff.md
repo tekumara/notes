@@ -17,7 +17,7 @@
 
 This will compare the HEAD to its parent and will show differences. Files that may have moved or been renamed will be identified as the same file if they have 10% similarity. The 10% similarity figure is a good benchmark when there may be other changes in the file.
 
-Note that if you restrict your diff to just one path (eg: git diff -C10% HEAD HEAD^ a.txt) you aren't going to be able to identify the renames or copies because you've excluded everything expect the single path and renames or copies - by definition - involve two paths.
+Note that if you restrict your diff to just one path (eg: `git diff -C10% HEAD HEAD^ a.txt`) you aren't going to be able to identify the renames or copies because you've excluded everything expect the single path and renames or copies - by definition - involve two paths.
 
 ## git status and changes in the working tree vs index
 

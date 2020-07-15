@@ -11,22 +11,23 @@ An AMI can have Public visibility.
 ## Describe images
 
 Latest image starting with `GAMI-AMZLinux2`
+
 ```
 aws ec2 describe-images --filters "Name=name,Values=GAMI-AMZLinux2*" --query 'reverse(sort_by(Images, &CreationDate))[0].Name' --output text
 ```
 
 List all images owned by your account (self) and account 137112412989 (ie: Amazon Linux base image)
+
 ```
 aws ec2 describe-images --owners self 137112412989 --query 'reverse(sort_by(Images, &CreationDate))[].[Name,ImageId,CreationDate]' --output table
 ```
 
-Accounts
+## Accounts
 
 amazon All Amazon images (windows, deep learning, eks etc.)
 137112412989 Amazon Linux base
 099720109477 Canonical Ubuntu
 898082745236 Amazon Deep Learning
-
 
 ## Latest Amazon Linux Base AMIs (SSM)
 

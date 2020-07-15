@@ -17,6 +17,7 @@ On the roadmap:
 * spot instances on AWS
 * a kubernetes scheduler
 * RBAC
+* better CPU support - currently all the CPUs on a CPU-only agent are treated as a single slot
 
 Enterprise edition:
 
