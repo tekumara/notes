@@ -24,7 +24,7 @@ Note that if you restrict your diff to just one path (eg: `git diff -C10% HEAD H
 working tree = current state on disk
 index = staging area
 
-`git status` shows 
+`git status` shows
 * Changes to be committed = staged changes
 * Changes not staged for commit = unstaged changes, but not yet added
 * Untracked files
@@ -34,5 +34,3 @@ index = staging area
 `git diff --cached <filename>` shows only staged changes (aka changes to be commmitted), ie: changes made to the index vs HEAD
 
 `git diff HEAD filename` shows difference between HEAD and working directory (includes both staged and unstaged changes), ie: changes made to the working tree vs HEAD.
-
-
