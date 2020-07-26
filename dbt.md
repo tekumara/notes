@@ -15,7 +15,7 @@ Store dbt projects in a git repo. This becomes the source of truth for all your 
   * view - dropped and recreated
   * incremental - run on a subset of data
   * ephemeral - i.e. a CTE
-* models can reference other models and form a DAG. dbt uses the DAG to execute models in the correct sequence, and to perform [partial DAG updates to children/parents](https://docs.getdbt.com/reference/model-selection-syntax/) if requested.
+* models can reference other models and form a DAG. dbt uses the DAG to execute models in the correct sequence, and to perform [partial DAG updates to children/parents of selected models](https://docs.getdbt.com/reference/model-selection-syntax/).
 * metadata - models can have [tags](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/tags/) (e.g., PII, nightly) which can be referenced when running models or in the documentation 
 * [documentation](https://blog.getdbt.com/using-dbt-docs/) can be auto-generated from the models into a static website. The docs include descriptions (with markdown support), a visualisation of the DAG, and search functionality. Deploy targets can be any web host, S3, or GitHub pages.
 * [sources](https://docs.getdbt.com/docs/building-a-dbt-project/using-sources) define source tables. You can rerun all models that depend on them, run tests to check their validity, and also check their freshness.

@@ -49,7 +49,7 @@ This starts 3 containers:
 * [determined-master](https://github.com/determined-ai/determined/tree/master/master)
 
 They are connected by a docker bridge network.
-The master UI is served on http://localhost:8080 with user `admin` and no password.
+The master UI is served on http://localhost:8080 with user `admin` or `determined` with no password.
 
 To stop the local install:
 
@@ -67,10 +67,19 @@ Install the [cli](https://github.com/determined-ai/determined/tree/master/cli) f
 pip install determined-cli
 ```
 
-`det notebook start -c .` Start a notebook on the cluster with contents of current dir 
+`det notebook start -c .` Start a notebook on the cluster with contents of current dir
+`det notebook list -a` Show notebooks created by any user, not just yourself
 `det shell start` Start a shell on the cluster
 `det experiment create const.yaml .` Create experiment defined in *const.yaml* with model def in current dir
 `det tensorboard start 1` Start tensorboard to inspect experiment 1
+`det user login admin` authenticate as admin for the next 30 days, or until logged out
+
+## Users
+
+Experiments and notebooks are visible to everyone, regardless of who created them.
+
+By default the cli will authenticate as user `determined`
+
 
 ## Determined container images
 

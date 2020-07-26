@@ -22,6 +22,11 @@ List all images owned by your account (self) and account 137112412989 (ie: Amazo
 aws ec2 describe-images --owners self 137112412989 --query 'reverse(sort_by(Images, &CreationDate))[].[Name,ImageId,CreationDate]' --output table
 ```
 
+List images
+
+```
+aws ec2 describe-images --image-ids ami-66506c1c
+
 ## Accounts
 
 amazon All Amazon images (windows, deep learning, eks etc.)
