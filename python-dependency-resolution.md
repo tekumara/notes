@@ -30,7 +30,7 @@ poetry requires that the version of python is specified, and will resolve for th
 
 ## [pipgrip](https://github.com/ddelange/pipgrip)
 
-Vendors the [sdispater/mixology](https://github.com/sdispater/mixology) implementation of PubGrub for resolution. Works with `pip` and a requirements file.
+pipgrip vendors the [sdispater/mixology](https://github.com/sdispater/mixology) implementation of PubGrub for resolution. Works with `pip` and a requirements file.
 
 Slower than poetry, but like poetry can resolve [cases](https://github.com/jazzband/pip-tools/issues/1187) pip-compile can't.
 
