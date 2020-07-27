@@ -16,7 +16,7 @@ The resolver is faster than poetry, if not using hashes.
 
 `pip-compile --generate-hashes` will generate hashes which takes a lot longer if packages are not already in the cache
 
-`pip-sync` doesn't check hashes - yet, see [#706](https://github.com/jazzband/pip-tools/pull/706)
+Doesn't have a [proper dependency resolver](https://github.com/jazzband/pip-tools/issues/1187#issuecomment-663993125).
 
 ## poetry
 
