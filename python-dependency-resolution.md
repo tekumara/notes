@@ -28,6 +28,6 @@ Slower than poetry, but like poetry can resolve cases pip-compile can't.
 
 ## performance
 
-pip-compile 6 sec
-poerty 11 sec
-pipgrep 30 sec
+* pip-compile 6 sec
+* poerty 11 sec
+* pipgrep 30 sec
