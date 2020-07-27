@@ -6,7 +6,7 @@ pip lacks a dependency resolver, and so unable to resolve incompatibility issues
 ERROR: my-app 1.0.0 has requirement Flask~=1.0.2, but you'll have flask 1.1.2 which is incompatible.
 ```
  
-Even more harmful is when transitive dependencies drift in an incompatible way, causes future builds of the the app to fail (this has happened!)
+Even more harmful is when transitive dependencies drift in an incompatible way, causing future builds of the the app to fail (this has happened!)
 
 ## pip-compile
 
@@ -26,7 +26,7 @@ Instead dependencies are specified in `pyproject.toml` and resolved to `poetry.l
 
 poetry is slower than pip-compile but can resolve [cases](https://github.com/jazzband/pip-tools/issues/1187) pip-compile can't.
 
-poetry can resolve for specific versions of Python.
+poetry requires that the version of python is specified, and will resolve for that version.
 
 ## [pipgrip](https://github.com/ddelange/pipgrip)
 
