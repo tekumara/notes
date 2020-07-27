@@ -1,6 +1,6 @@
 # Pipenv
 
-Why? 
+Why?
 * Official python.org packaging tool - NB: this is [disputed](https://chriswarrick.com/blog/2018/07/17/pipenv-promises-a-lot-delivers-very-little/#officially-recommended-tool-or-how-we-got-here).
 * Provides mechanisms for keeping dependencies fresh (by storing package name only in `Pipfile`), rather than pinning every version like `pip freeze > requirements.txt`, while maintaining reproducible builds via `Pipfile.lock`. Upgrade dependencies to the latest with `pipenv update`
 * Can generate a dependency graph with `pipenv graph`
@@ -13,12 +13,14 @@ Why?
 Install [pipenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/):
 * Mac OS X `brew install pipenv`
 * Linux
+
 ```
 pip3 install --user pipenv
 # add to path in .zshrc, if it doesn't already exist
 [[ ":$PATH:" != *":$HOME/.local/bin:"* ]] && echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
 export PATH="$HOME/.local/bin:$PATH"
 ```
+
 * Bleeding edge `pip3 install git+https://github.com/pypa/pipenv.git#egg=pipenv`
 
 Usage
@@ -38,14 +40,15 @@ Usage
 |`pipenv --rm`|Removes the virtualenv. Equivalent to `rm -rf `pipenv --venv``|
 |`pipenv uninstall --lock X`|Remove package X from the Pipfile and virtualenv but don't update Pipfile.lock.Useful if you want to follow this command with another that will update Pipfile.lock, and you want to avoid re-locking (locking can take some time)|
 
-
 To install from a git repo, add the package name as an egg argument, eg: `pipenv install git+https://github.com/tukushan/main.git#egg=rmkemker_main`
 In the Pipfile, it will look like:
+
 ```
 rmkemker_main = {git = "https://github.com/tukushan/main.git"}
 ```
 
 To run pipenv using a Pipfile/virtualenv other than the current directory:
+
 ```
 PIPENV_PIPFILE=subprojects/spark-dist/Pipfile pipenv run
 ```
@@ -57,9 +60,11 @@ Pipenv will use a Pipfile in the current directory, or its parent, grandparent o
 When creating a new virtualenv via `pipenv install`, pipenv will select the python version from pyenv that's specified in the Pipfile. If the appropriate version isn't already installed, then it will use pyenv to download and install the missing CPython version.
 
 If this doesn't work, set `PYENV_ROOT` ([ref](https://github.com/pypa/pipenv/blob/0ec97edbf797d0d3d133dc773831c5e7fab92cd2/docs/diagnose.rst#-my-pyenv-installed-python-is-not-found)):
+
 ```
 export PYENV_ROOT=$HOME/.pyenv
 ```
+
 pyenv will build and install the appropriate python version under `~/.pyenv/versions/`. The virtualenv will be created in the usual place (ie: under `~/.local/share/virtualenvs/`) with binaries etc. from the newly installed version of python.
 
 ## Limitations
@@ -72,10 +77,9 @@ pyenv will build and install the appropriate python version under `~/.pyenv/vers
 * `Pipfile.lock` doesn't work reliably between Mac and Linux - eg: on one occasion the hashes generated on Mac didn't include the Linux version of the package, another time a particular version of a package was missing on the other OS (probably more the package maintainers fault)
 * Selectively updating a package doesn't work - you have to update everything or nothing.
 
-See 
+See:
 * [Pipenv review, after using it in production](https://medium.com/@DJetelina/pipenv-review-after-using-in-production-a05e7176f3f0)
 * [Pipenv: promises a lot, delivers very little](https://chriswarrick.com/blog/2018/07/17/pipenv-promises-a-lot-delivers-very-little/)
-
 
 # Pipenv Issues
 
@@ -114,7 +118,6 @@ Warning!! Cyclic dependencies found:
 * Keras-Applications => keras => Keras-Applications
 ```
 
-
 ```
 $ pipenv lock
 Warning: Your dependencies could not be resolved. You likely have a mismatch in your sub-dependencies.
@@ -123,9 +126,6 @@ Warning: Your dependencies could not be resolved. You likely have a mismatch in 
 Could not find a version that matches urllib3<1.23,<1.24,==1.23,>=1.20,>=1.21.1
 Tried: 0.3, 1.0, 1.0.1, 1.0.2, 1.1, 1.2, 1.2.1, 1.2.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.7.1, 1.8, 1.8.2, 1.8.3, 1.9, 1.9.1, 1.9.1, 1.10, 1.10, 1.10.1, 1.10.1, 1.10.2, 1.10.2, 1.10.3, 1.10.3, 1.10.4, 1.10.4, 1.11, 1.11, 1.12, 1.12, 1.13, 1.13, 1.13.1, 1.13.1, 1.14, 1.14, 1.15, 1.15, 1.15.1, 1.15.1, 1.16, 1.16, 1.17, 1.17, 1.18, 1.18, 1.18.1, 1.18.1, 1.19, 1.19, 1.19.1, 1.19.1, 1.20, 1.20, 1.21, 1.21, 1.21.1, 1.21.1, 1.22, 1.22, 1.23, 1.23
 There are incompatible versions in the resolved dependencies.
-
-$ 
 ```
+
 In this case, giving the resolver an explicit version of the failling transitive dependency (urllib3) helps it find a version that satisfies the constraints. See [#2812](https://github.com/pypa/pipenv/issues/2812)
-
-
