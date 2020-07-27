@@ -1,12 +1,14 @@
 # python dependency resolution
 
 pip lacks a dependency resolver, and so unable to resolve incompatibility issues which surface as:
- 
+
 ```
 ERROR: my-app 1.0.0 has requirement Flask~=1.0.2, but you'll have flask 1.1.2 which is incompatible.
 ```
- 
+
 Even more harmful is when transitive dependencies drift in an incompatible way, causing future builds of the the app to fail (this has happened!)
+
+Adding a resolver to pip is tracked in [pypa/pip#988](https://github.com/pypa/pip/issues/988).
 
 ## pip-compile
 
