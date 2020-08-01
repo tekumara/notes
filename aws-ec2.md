@@ -43,7 +43,6 @@ Show the UserData for a launched instance
 aws ec2 get-launch-template-data --instance-id $INSTANCE_ID | jq -r '.LaunchTemplateData.UserData | @base64d'
 ```
 
-
 ## Describe subnets
 
 List subnets with the Name tag (others ignored):
@@ -70,6 +69,13 @@ Describe security group
 
 ```
 aws ec2 describe-security-groups --group-ids sg-071ce0236a26a309c
+```
+
+## Volumes
+
+Create a volume
+```
+aws ec2 create-volume --size 10 --availability-zone us-east-1a --tag-specifications 'ResourceType=volume,Tags=[{Key=Name,Value=oliver-test}]'
 ```
 
 ## Launch templates

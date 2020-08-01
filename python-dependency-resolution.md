@@ -30,6 +30,8 @@ poetry is slower than pip-compile but can resolve [cases](https://github.com/jaz
 
 poetry requires that the version of python is specified. It supports [environment markers](https://python-poetry.org/docs/versions/#using-environment-markers).
 
+Has some pathologically [slow cases](https://github.com/python-poetry/poetry/issues/2094) (eg: `poetry add allennlp` on macOS takes 5m 18s)
+
 ## pipenv
 
 pipenv, like poetry, offers virtualenv management with dependency resolution, replacing pip and setuptools. It uses a [patched version](https://github.com/jazzband/pip-tools/issues/679#issuecomment-418268361) of pip-tools. So like pip-compile it can't resolve `pipenv install oslo.utils==1.4.0` and [other cases](https://github.com/pypa/pipenv/labels/Category%3A%20Dependency%20Resolution).
@@ -49,3 +51,7 @@ Slower than poetry, but like poetry can resolve [cases](https://github.com/jazzb
 * pip-compile 6 sec
 * poety 11 sec
 * pipgrep 30 sec
+
+allennlp
+* poetry 5m 28s (1m 50s second run)
+* pipgrip 2m 37s
