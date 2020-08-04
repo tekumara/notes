@@ -73,8 +73,6 @@ See [Understanding Type Inference](https://github.com/microsoft/pyright/blob/mas
 
 Pyright [locates .pyi stubs in several locations](https://github.com/microsoft/pyright/blob/master/docs/import-resolution.md#resolution-order) including typeshed stubs it vendors, your project workspace, and *lib/site-packages*. To find *lib/site-packages* pyright needs to run inside your virtualenv, or have the `venv` and `venvPath` configured in *pyrightconfig.json*.
 
-When Pyright can't find a `reportMissingImports` error is raised.
-
 Some `.py` files contain partial or complete type annotation. They can be used to infer missing type information by specifying the  the `--lib` command-line argument, or `"python.analysis.useLibraryCodeForTypes": true` for the pyright vscode extension (in Pylance this defaults to true).
 
 I recommend enabling this for modules that don't have type stubs to avoid issues like:
