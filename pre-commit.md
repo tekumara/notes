@@ -12,9 +12,13 @@ Hooks run in their own isolated virtualenv. If you need something to run inside 
 
 pre-commit will automatically download and cache non-local hooks.
 
-## Running hooks independently in a Makefile
+## Running hooks independently
+
+`pip install pre-commit-hooks` then:
 
 ```
-$(venv)/bin/double-quote-string-fixer src/*.py tests/*.py setup.py || echo Fixed
-$(venv)/bin/requirements-txt-fixer requirements.* || echo Fixed
+double-quote-string-fixer src/*.py tests/*.py setup.py || echo Fixed
+requirements-txt-fixer requirements.* || echo Fixed
 ```
+
+The hooks return an non-zero exit code when they make changes (hence the `|| echo Fixed`).
