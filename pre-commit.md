@@ -6,11 +6,18 @@
 * Can run hooks only on the changed files
 * Has some nice formatters for python, eg: [double-quote-string-fixer](https://github.com/pre-commit/pre-commit-hooks#double-quote-string-fixer) to convert double to single quotes.
 
+## Cache
+
+Non-system hooks are downloaded and cached in *~/.cache/pre-commit/repo**. `additional_dependencies` for local hooks will also be stored here.  
+
 ## Gotchas
 
-Hooks run in their own isolated virtualenv. If you need something to run inside your project's virtualenv (eg: pylint, pyright to identify valid imports) then run it as a local [system hook](https://pre-commit.com/#system).
+If you need something to run inside your project's virtualenv (eg: pylint, pyright to identify valid imports) then run it as a local [system hook](https://pre-commit.com/#system).
 
-pre-commit will automatically download and cache non-local hooks.
+## Config
+
+`types: [python]` only run the hook when python files change.
+`pass_filenames: false` don't pass file names to the hook entry point. By default, changed file names will be passed in batches. If there are lots of files, your hook entry point will run multiple times.
 
 ## Running hooks independently
 

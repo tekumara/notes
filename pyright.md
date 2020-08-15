@@ -93,3 +93,7 @@ pyright --createstub botocore
 ```
 
 See [Type Stub Files](https://github.com/microsoft/pyright/blob/master/docs/type-stubs.md)
+
+## Checking a subset of files
+
+pyright can be supplied a set of files on the the command line, in which case it will ignore *pyrightconfig.json* and use the default configuration. For this reason, when using pyright in a pre-commit hook you probably want to specify `pass_filenames: false`.

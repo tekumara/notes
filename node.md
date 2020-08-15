@@ -13,3 +13,11 @@ nvm install node
 # test
 node --version
 ```
+
+## npm
+
+Find latest version of *pyright*:
+
+```
+npm search pyright
+```
