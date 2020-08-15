@@ -1,6 +1,9 @@
 # Git diff
 
-## Show differences in a specific commit 
+`git diff main HEAD` diff between main and the current branch.
+`git diff main..HEAD` same as the previous command
+
+## Show differences in a specific commit
 
 `git diff 'HEAD^!'` (or `git diff "HEAD^" HEAD`) HEAD with its ancestor
 

@@ -38,7 +38,7 @@ remote.upstream.fetch=+refs/heads/*:refs/remotes/upstream/*
 
 `git fetch` fetch the latest commits on all remotes onto their respective local remote tracking branch.  
 `git fetch origin` fetching the latest commits from the origin remote onto its local remote tracking branch.  
-`git fetch origin master` fetch the latest commits on origin/master to the remote tracking branch *remotes/origin/master*. Local master will not be merged.   
+`git fetch origin master` fetch the latest commits on origin/master to the remote tracking branch *remotes/origin/master*. Local master will not be merged.  
 `git fetch upstream master:master` fetch *upstream/master* and do a fast-forward merge of local master.  
 `git fetch -f upstream master:master` fetch *upstream/master* and reset local master to point to it.  
 `git fetch --all --prune` removes all obsolete tracking branches. Useful after branches have been deleted on the remote.  
