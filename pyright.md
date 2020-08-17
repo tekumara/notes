@@ -73,14 +73,23 @@ See [Understanding Type Inference](https://github.com/microsoft/pyright/blob/mas
 
 Pyright [locates .pyi stubs in several locations](https://github.com/microsoft/pyright/blob/master/docs/import-resolution.md#resolution-order) including typeshed stubs it vendors, your project workspace, and *lib/site-packages*. To find *lib/site-packages* pyright needs to run inside your virtualenv, or have the `venv` and `venvPath` configured in *pyrightconfig.json*.
 
-Some `.py` files contain partial or complete type annotation. They can be used to infer missing type information by specifying the  the `--lib` command-line argument, or `"python.analysis.useLibraryCodeForTypes": true` for the pyright vscode extension (in Pylance this defaults to true).
+### Use library code for types
 
-I recommend enabling this for modules that don't have type stubs to avoid issues like:
+Many libraries lack stubs. However their `.py` files can contain partial or complete type annotation. To use annotations in `.py` files, and infer any missing types, when stubs are missing:
+* specify the `--lib` command-line argument
+* set `"python.analysis.useLibraryCodeForTypes": true` for the pyright vscode extension. In Pylance this defaults to true.
+* set `"useLibraryCodeForTypes": false` in *pyrightconfig.json*. NB: Setting this to `false` will override Pylance.
+
+Use library code for types is a double-edged sound. On the one hand, it can avoid issues like:
 
 ```
   12:32 - error: "client" is not a known member of module (reportGeneralTypeIssues)
   12:26 - error: Type of "client" is unknown (reportUnknownMemberType)
 ```
+
+But on the other hand, the type information is inferred and can reveal problems in library. Some of these problems can only be fixed by the third party library author, and/or a type stub.
+
+If you are using Pyright/pylance for type checking, `"useLibraryCodeForTypes": false` is recommended. The feature was added to provide completion suggestions when using Pylance, see [pyright/#945](https://github.com/microsoft/pyright/issues/945#issuecomment-674466348).
 
 ## Missing Type Stubs
 
@@ -97,3 +106,4 @@ See [Type Stub Files](https://github.com/microsoft/pyright/blob/master/docs/type
 ## Checking a subset of files
 
 pyright can be supplied a set of files on the the command line, in which case it will ignore *pyrightconfig.json* and use the default configuration. For this reason, when using pyright in a pre-commit hook you probably want to specify `pass_filenames: false`.
+

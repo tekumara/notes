@@ -51,3 +51,15 @@ To resolve add the following import:
 ```python
 import structlog.contextvars
 ```
+
+
+## Generic types can't be reassigned
+
+```
+from typing import List, Optional
+
+a = list(["a", "b", "c"])
+aopt2: List[Optional[str]] = a
+```
+
+Generates a type error `Type "str" cannot be assigned to type "str | None"` see [Type Concepts - Generic Types](https://github.com/microsoft/pyright/blob/master/docs/type-concepts.md#generic-types)

@@ -21,3 +21,15 @@ Find latest version of *pyright*:
 ```
 npm search pyright
 ```
+
+To install pyright into *./node_modules/*:
+
+```
+npm pyright
+```
+
+To install pyright into *$NODE_PATH$*:
+
+```
+npm -g pyright
+```

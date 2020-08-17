@@ -2,7 +2,7 @@
 
 ## Terminal
 
-The integrated terminal will start in the project workspace, source any python virtualenvs, and inherits environment variables from vscode.
+The integrated terminal will start in the project workspace, source any python virtualenvs, and inherit environment variables from vscode.
 
 ## Vscode vs IntelliJ
 
@@ -10,7 +10,7 @@ The integrated terminal will start in the project workspace, source any python v
 
 In vscode, when comparing changes in the git working tree to HEAD, there's no ability to compare individual lines between versions.
 
-IntelliJ debugger evaluates expressions inline, which is rather nice.
+IntelliJ debugger evaluates expressions inline, which is rather nice. Vscode will show variable values when you hover over them.
 
 ## Tests
 
@@ -18,5 +18,5 @@ Command Shift P - Python: Discover Tests
 
 ## Debugging
 
-To debug inside dependencies, add `"justMyCode": false` to the launch config.
-To avoid creating terminal windows everytime you launch (the default) set `"console": "internalConsole"` in the launch config.
+To debug inside dependencies, add `"justMyCode": false` to the launch config.  
+To avoid creating terminal windows every time you launch (the default) set `"console": "internalConsole"` in the launch config.
