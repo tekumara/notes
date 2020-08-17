@@ -18,13 +18,13 @@ The virtualenv *activate* script is modified to set `NODE_PATH`. Doesn't take im
 
 ## Use system version
 
-To use the globally installed system version of node in the current python virtualenv (takes ms):
+To link the globally installed system version of node into the current python virtualenv (recommended, much faster than the above):
 
 ```
 nodeenv -p -n system
 ````
 
-This creates a *$VIRTUAL_ENV/bin/node* shell script which calls the system `node` binary. There isn't an npm script. The virtualenv *activate* script is modified to set `NODE_PATH` and needs to be run to take effect.
+This creates a *$VIRTUAL_ENV/bin/node* shell script which calls the system `node` binary. There isn't an npm script. The virtualenv *activate* script is modified to set `NODE_PATH`. Doesn't take immediate effect, so needs to be run after linking.
 
 To create a node env and install packages globally (ie: equivalent to `npm -g`):
 
