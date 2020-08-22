@@ -49,4 +49,4 @@ Uninstall tiller, create a serviceaccount, bind it to cluster-admin, and then re
 ### cannot list resource "pods" in API group "" in the namespace "kube-system"
 
 Specify the tiller namespace, eg:
-`helm list --tiller-namespcae slim`
+`helm list --tiller-namespace slim`

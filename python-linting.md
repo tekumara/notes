@@ -17,7 +17,8 @@ autopep8 requires pycodestyle and fixes issues it identifies.
 | ------------------------------------------------------------ | ------ | ------ | ------- | ------- |
 | no-value-for-parameter                                       | ✔      | ✘      | ✘       | ✘       |
 | too-many-function-args                                       | ✔      | ✘      | ✔       | ✔       |
-| unused-import                                                | ✔      | ✔      | ✘       | ✘       |
+| unused-import ([F401][F401])                                 | ✔      | ✔      | ✘       | ✘       |
+| unused-argument                                              | ✔      | ✘      | ✘       | ✔       |
 | not in ([E713][e713]) (pep8)                                 | ✘      | ✔      | ✘       | ✘       |
 | undefined-variable                                           | ✔      | ½      | ✔       | ✔       |
 | f-string without any placeholders ([F541][f541])             | ✘      | ✔      | ✘       | ✘       |
@@ -27,6 +28,7 @@ autopep8 requires pycodestyle and fixes issues it identifies.
 | missing whitespace after ',' ([E231][e231])                  | ✘      | ✔      | ✘       | ✘       |
 | too many leading '#' for block comment ([E266][e266])        | ✘      | ✔      | ✘       | ✘       |
 | not accessed                                                 | ✘      | ✘      | ✘       | ✔       |
+| from module import * ([F403][F403])                          | ✘      | ✔      | ✘       | ✘       |
 
 pylint has syntax-error and flake8 has E999 but they capture different errors. pyright captures the superset.
 
@@ -36,6 +38,8 @@ pylint has syntax-error and flake8 has E999 but they capture different errors. p
 [w291]: https://www.flake8rules.com/rules/W291.html
 [e741]: https://www.flake8rules.com/rules/E741.html
 [e231]: https://www.flake8rules.com/rules/E231.html
+[f403]: https://www.flake8rules.com/rules/F403.html
+[f401]: https://www.flake8rules.com/rules/F401.html
 
 ## References
 
