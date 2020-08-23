@@ -19,9 +19,10 @@ bar
 
 # foo2 is not exported
 env | grep -i foo2
+
 ```
 
-Set a shell variable and make it available to child processes, eg:
+Set a shell variable and make it available to child processes:
 
 ```
 export foo=bar && python -c 'import os; print(os.environ["foo"])'
@@ -34,12 +35,14 @@ Modify the environment of a subprocess started from the shell:
 foo=bar python -c 'import os; print(os.environ["foo"])'
 bar
 
+# equivalent
+env foo=bar python -c 'import os; print(os.environ["foo"])
+bar
+
 # NB: foo is not set in the shell
 echo $foo
 
 ```
-
-The above is equivalent to: `env foo=bar python -c 'import os; print(os.environ["foo"])'
 
 Note that `echo` is a bash builtin so behaves differently:
 
@@ -48,7 +51,7 @@ Note that `echo` is a bash builtin so behaves differently:
 foo=bar && echo $foo
 bar
 
-# but nothing echoed here because echo runs in the current process
+# but not here because echo runs in the current process
 foo2=bar echo $foo2
 ```
 
@@ -58,7 +61,7 @@ foo2=bar echo $foo2
 
 ## exporting DYLD_LIBRARY_PATH weirdness
 
-This is strange:
+This is [strange](https://stackoverflow.com/questions/58126808/how-can-i-export-dyld-library-path):
 
 ```
 $ export DYLD_LIBRARY_PATH=/usr/local/Cellar/gcc@6/6.5.0_2/lib/gcc/6/
@@ -69,6 +72,4 @@ DYLD_LIBRARY_PATH=/usr/local/Cellar/gcc@6/6.5.0_2/lib/gcc/6/
 $ env | grep -i dyld
 ```
 
-If I remove the underscores, it exports, ie:DYLDLIBRARYPATH
-
-https://stackoverflow.com/questions/58126808/how-can-i-export-dyld-library-path
+If I remove the underscores, ie:`DYLDLIBRARYPATH`, it exports.
