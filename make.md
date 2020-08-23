@@ -13,18 +13,17 @@ test:
 ```
 
 See:
-* [How make Reads a Makefile](https://www.gnu.org/software/make/manual/html_node/Reading-Makefiles.html)
-* [How do I write the 'cd' command in a makefile?](https://stackoverflow.com/a/1789616/149412)
-* [Recipe Syntax](https://www.gnu.org/software/make/manual/html_node/Recipe-Syntax.html)
 
+- [How make Reads a Makefile](https://www.gnu.org/software/make/manual/html_node/Reading-Makefiles.html)
+- [How do I write the 'cd' command in a makefile?](https://stackoverflow.com/a/1789616/149412)
+- [Recipe Syntax](https://www.gnu.org/software/make/manual/html_node/Recipe-Syntax.html)
+
+## Line prefixes
 
 [Line prefixes](https://stackoverflow.com/questions/3477292/what-do-and-do-as-prefixes-to-recipe-lines-in-make):
-`-` ignore and continue if the command fails
-`@` suppresses the normal 'echo' of the command that is executed.
 
-No difference between `$(var)` and `${var}`. Its recommended to be consistent. Note that `${var}` can be used in bash, whereas `$(var)` can't. [ref](https://stackoverflow.com/questions/25185607/whats-the-difference-between-parenthesis-and-curly-bracket-syntax-in-ma)
-
-
+- `-` ignore and continue if the command fails
+- `@` suppresses the normal 'echo' of the command that is executed.
 
 ## Conditionals
 
@@ -32,9 +31,9 @@ eg: `ifeq`
 
 "A conditional causes part of a makefile to be obeyed or ignored depending on the values of variables. Conditionals can compare the value of one variable to another, or the value of a variable to a constant string. Conditionals control what make actually "sees" in the makefile, so they cannot be used to control shell commands at the time of execution." [ref](http://kirste.userpage.fu-berlin.de/chemnet/use/info/make/make_7.html) [ref](https://stackoverflow.com/a/11994561/149412):
 
-
 `ifdef` will be ignore if it appears after commands in a target,
 eg: this works
+
 ```
 foo:
     echo foo
@@ -50,6 +49,7 @@ bar:
 ```
 
 this doesn't
+
 ```
 foo:
     echo foo
@@ -63,6 +63,9 @@ endif
 bar:
     echo "$(noswap-flag)"
 ```
+
+"The if function provides support for conditional expansion in a functional context (as opposed to the GNU make makefile conditionals such as ifeq (see Syntax of Conditionals)."
+[8.4 Functions for Conditionals](https://www.gnu.org/software/make/manual/html_node/Conditional-Functions.html#Conditional-Functions)
 
 ## Variable assignment
 
@@ -80,10 +83,15 @@ If you use `:=` then the result of the call will be empty string.
 `define` is useful for defining multi-line variables, see [6.8 Defining Multi-Line Variables](https://www.gnu.org/software/make/manual/html_node/Multi_002dLine.html#Multi_002dLine)
 
 See also:
-* [The Two Flavors of Variables](https://www.gnu.org/software/make/manual/html_node/Flavors.html)
-* [Variable Assignment](https://www.gnu.org/software/make/manual/html_node/Reading-Makefiles.html#Variable-Assignment)
-* https://stackoverflow.com/a/448939/149412
-* https://stackoverflow.com/a/30215530/149412
+
+- [The Two Flavors of Variables](https://www.gnu.org/software/make/manual/html_node/Flavors.html)
+- [Variable Assignment](https://www.gnu.org/software/make/manual/html_node/Reading-Makefiles.html#Variable-Assignment)
+- https://stackoverflow.com/a/448939/149412
+- https://stackoverflow.com/a/30215530/149412
+
+## Variable substitution
+
+No difference between `$(var)` and `${var}`. Its recommended to be consistent. Note that `${var}` can be used in bash, whereas `$(var)` can't. [ref](https://stackoverflow.com/questions/25185607/whats-the-difference-between-parenthesis-and-curly-bracket-syntax-in-ma)
 
 ## Shell
 
@@ -93,37 +101,15 @@ If using simple variables, eg: `FILES=$(shell ls)` note that shell will be execu
 
 https://www.gnu.org/software/make/manual/html_node/Shell-Function.html
 
-## Conditionals
-
-"The if function provides support for conditional expansion in a functional context (as opposed to the GNU make makefile conditionals such as ifeq (see Syntax of Conditionals)."
-[8.4 Functions for Conditionals](https://www.gnu.org/software/make/manual/html_node/Conditional-Functions.html#Conditional-Functions)
-
 ## Phony
 
 If you want a target to be called regardless of if there is file with the target name in the same directory, use `.PHONY: mytarget` or `.PHONY: *` to make always execute all targets. https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html
 
-## Errors
-
-```
-awk '/^##.*$/,/^[~\/\.a-zA-Z_-]+:/' $(MAKEFILE_LIST) 
-```
-
-`Makefile:17: warning: undefined variable /'` - need to use `$$` instead of `$`
-
 ## Comments
- 
+
 `#` marks a comment however variable expansion will still occur!
 
 eg: `# $(FILES := $(shell ls))` will still execute `ls` even when commented!
-
-
-## Debug
-
-Show debug
-```
-make --debug=v install
-```
-
 
 ## Target with % wildcard
 
@@ -146,7 +132,7 @@ mappings-for-image: env-AWS_REGION env-IMAGE_ID
         "$(AWS_REGION)" $(IMAGE_ID) > build/mappings.yml
 ```
 
-## String replacement 
+## String replacement
 
 Patsubst matches whole words, eg: `$(patsubst %un,a,run something)` will resolve to `a something`
 
@@ -157,11 +143,13 @@ subst matches text occurences, eg: `$(subst u,a,run something)` will resolve to 
 ## Eval
 
 [Eval](https://www.gnu.org/software/make/manual/html_node/Eval-Function.html#Eval-Function) will parse its contents as Makefile syntax. Its useful for setting a variable from the result of a shell command within a target, eg:
+
 ```
 time-one-min-ago:
     $(eval timemillis = $(shell echo "($$(date +%s)-(60))*1000" | bc))
     echo $(timemillis)
 ```
+
 The shell command above only runs when the target is executed.
 
 Alternatively, to perform a shell command only when a specific target runs (and not all targets), scope the variable definition to the target, eg:
@@ -172,13 +160,10 @@ time-one-min-ago:
     echo $(timemillis)
 ```
 
-## Missing seperator
-
-Make sure the target line begins with a tab.
-
 ## Wildcards
 
 Wildcards will match a pattern to an explicit subdirectory level, eg:
+
 ```
 # match match every file in `src` and the first level of subdirectories
 $(wildcard src/*/*)
@@ -186,11 +171,12 @@ $(wildcard src/*/*)
 # match every file in `src` and two levels of subdirectories
 $(wildcard src/*/*/*)
 
-# rescursively match all subdirectory levels 
+# rescursively match all subdirectory levels
 $(shell find src)
 ```
 
 ## List all targets
+
 ```
 .PHONY: list
 list:
@@ -198,25 +184,9 @@ list:
 	| awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' \
 	| sort \
 	| egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
-```    
-
+```
 
 ## Reference
 
 [Index of Concepts](https://www.gnu.org/software/make/manual/html_node/Concept-Index.html)
 [Heredoc in a Makefile](https://stackoverflow.com/questions/5873025/heredoc-in-a-makefile/7377522#7377522) - describes the use of the `.ONESHELL` target.
-
-
-## cat build.sh > build
-
-When I run `make build` on my macOS laptop it gets right to the end and then errors with:
-
-```
-cat build.sh >build
-/bin/sh: build: Is a directory
-make: *** [build] Error 1
-```
-
-This is because the `build` target has no recipe, and since there's a build.sh file, make runs [a weird SCCS built-in rule](https://stackoverflow.com/questions/43264686/why-does-calling-make-with-a-shell-script-target-create-an-executable-file). 
-
-`.PHONY: build` will fix this. Alternatively, add a recipe for the `build` target, or rename `build.sh`
