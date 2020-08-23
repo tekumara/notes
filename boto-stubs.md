@@ -1,4 +1,4 @@
-# boto-stubs
+# boto stubs
 
 [boto3-stubs](https://pypi.org/project/boto3-stubs/) are built by [mypy_boto3_builder](https://github.com/vemel/mypy_boto3_builder).
 
