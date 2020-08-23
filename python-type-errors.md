@@ -52,7 +52,6 @@ To resolve add the following import:
 import structlog.contextvars
 ```
 
-
 ## Generic types can't be reassigned
 
 ```
