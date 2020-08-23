@@ -35,3 +35,7 @@ awk '/^##.*$/,/^[~\/\.a-zA-Z_-]+:/' $(MAKEFILE_LIST)
 ```
 
 `Makefile:17: warning: undefined variable /'` - need to use `$$` instead of `$`
+
+## commands commence before first target
+
+Check you indents are spaces rather than tabs.
