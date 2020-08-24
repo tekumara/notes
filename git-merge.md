@@ -17,7 +17,7 @@ A non fast-forward merge, eg: `git merge --no-ff work` will create a new merge c
 
 Conflicts appear as unmerged files in `git status`.
 
-* *ours* = current change, eg: HEAD. The currently checked out branch if merging, or the new HEAD being rebased on to.
+* *ours* = current change, updated upstream eg: HEAD. The currently checked out branch if merging, or the new HEAD being rebased on to.
 * *theirs* = incoming change. The branch being merged in (eg: stashed changes), or the branch being rebased.
 
 You will need to resolve the conflicts, eg:

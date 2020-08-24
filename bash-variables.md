@@ -9,57 +9,60 @@ Variables assigned in _.bashrc_ will be only available to the current shell, and
 Set a variable in the context of the current shell only:
 
 ```
-# foo2 is not exported, so isn't in the environment of a subprocess
-foo2=bar && python -c 'import os; print(os.environ["foo2"])'
+# foo1 is not exported, so isn't in the environment of a subprocess
+foo1=bar && python -c 'import os; print(os.environ["foo1"])'
 
-KeyError: 'foo2'
+KeyError: 'foo1'
 
-echo $foo2
+echo $foo1
 bar
 
-# foo2 is not exported
-env | grep -i foo2
+# foo1 is not exported
+env | grep -i foo1
 
 ```
 
 Set a shell variable and make it available to child processes:
 
 ```
-export foo=bar && python -c 'import os; print(os.environ["foo"])'
+export foo2=bar && python -c 'import os; print(os.environ["foo2"])'
 bar
 ```
 
 Modify the environment of a subprocess started from the shell:
 
 ```
-foo=bar python -c 'import os; print(os.environ["foo"])'
+foo3=bar python -c 'import os; print(os.environ["foo3"])'
 bar
 
 # equivalent
-env foo=bar python -c 'import os; print(os.environ["foo"])
+env foo3=bar python -c 'import os; print(os.environ["foo3"])
 bar
 
 # NB: foo is not set in the shell
-echo $foo
+echo $foo3
 
+# Take the COLUMNS shell var and export it to a subprocess that doesn't write to a terminal (eg: is piped)
+COLUMNS=$COLUMNS python -c 'import shutil; print(shutil.get_terminal_size())' | head
+os.terminal_size(columns=151, lines=24)
 ```
 
 Note that `echo` is a bash builtin so behaves differently:
 
 ```
 # echo can see shell variables
-foo=bar && echo $foo
+foo4=bar && echo $foo4
 bar
 
 # but not here because echo runs in the current process
-foo2=bar echo $foo2
+foo4=bar echo $foo4
 ```
 
 ## References
 
 [Difference between set, export and env in bash](https://hackjutsu.com/2016/08/04/Difference%20between%20set,%20export%20and%20env%20in%20bash/)
 
-## exporting DYLD_LIBRARY_PATH weirdness
+## DYLD_LIBRARY_PATH weirdness
 
 This is [strange](https://stackoverflow.com/questions/58126808/how-can-i-export-dyld-library-path):
 
