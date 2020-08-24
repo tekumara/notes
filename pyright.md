@@ -1,8 +1,8 @@
 # pyright
 
-[pyright](https://github.com/microsoft/pyright) is Microsoft's Python type checker, available as an extension in VSCode and a CLI tool. It has active support and deployment, is fast, and in strict mode detects a lot of issues other type checkers miss.
+[pyright](https://github.com/microsoft/pyright) is Microsoft's Python type checker running on node. It has active support and deployment, is fast, and in strict mode detects a lot of issues other type checkers miss.
 
-[pylance](https://github.com/microsoft/pylance-release) is a VSCode language server extension that bundles pyright and other goodies like auto-imports, code completion and additional bundles stubs (eg: pandas, matplotlib)
+[pylance](https://github.com/microsoft/pylance-release) is a VS Code language server extension that bundles pyright and other goodies like auto-imports, code completion and additional stubs (eg: pandas, matplotlib)
 
 ## typeCheckingMode
 
