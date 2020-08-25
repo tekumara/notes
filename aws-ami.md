@@ -26,6 +26,7 @@ List images
 
 ```
 aws ec2 describe-images --image-ids ami-66506c1c
+```
 
 ## Accounts
 
@@ -56,19 +57,21 @@ aws ssm get-parameters --name /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-
 
 ## AMI types
 
-* graphics - for use with the GPU instance types
-* minimal - for use with the EBS storage type (see below)
-* arm64 - ARM CPU
-* x86_64 - Intel CPU
+- graphics - for use with the GPU instance types
+- minimal - for use with the EBS storage type (see below)
+- arm64 - ARM CPU
+- x86_64 - Intel CPU
 
 Storage types:
-* ebs - backed by a magnetic EBS volume
-* gp2 - backed by a SSD EBS volume
-* s3 - instance-store backed (ie: temporary locally attached storage)
+
+- ebs - backed by a magnetic EBS volume
+- gp2/ssd - backed by a SSD EBS volume
+- s3 - instance-store backed (ie: temporary locally attached storage)
 
 [Virtualization types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/virtualization_types.html):
-* hvm - fully virtualized (recommended)
-* pv - paravirtual (older instances only)
+
+- hvm - fully virtualized (recommended)
+- pv - paravirtual (older instances only)
 
 ## Key pair
 

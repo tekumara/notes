@@ -88,7 +88,7 @@ Use library code for types is a double-edged sound. On the one hand, it can avoi
 
 But on the other hand, the type information is inferred and can reveal problems in library. Some of these problems can only be fixed by the third party library author, and/or a type stub.
 
-If you are using Pyright/pylance for type checking, `"useLibraryCodeForTypes": false` is recommended. The feature was added to provide completion suggestions when using Pylance, see [pyright/#945](https://github.com/microsoft/pyright/issues/945#issuecomment-674466348).
+If you are using Pyright/pylance for type checking, `"useLibraryCodeForTypes": false` is recommended. The feature was added to provide completion suggestions when using Pylance, see [pyright/#945](https://github.com/microsoft/pyright/issues/945#issuecomment-674466348). However, it will also disable "Go to Definition" behaviour, see [pylance-release/#278](https://github.com/microsoft/pylance-release/issues/278)
 
 ## Missing Type Stubs
 
