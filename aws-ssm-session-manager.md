@@ -27,9 +27,8 @@ The SSM agent should be installed by default.
 
 Is SSM installed on the instance, and which version?
 
-```
-rpm -qa | grep ssm
-```
+Amazon Linux: `rpm -qa | grep ssm`
+Ubuntu: `snap list`
 
 Upgrade ssm
 
