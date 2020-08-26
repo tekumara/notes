@@ -18,6 +18,12 @@ List directories in the home directory, listing directory names rather than cont
 ls -d ~/*/
 ```
 
+List directories in the home directory, with the directory base name only:
+
+```
+(cd ~ && ls -d */)
+```
+
 List contents of home directory, with newest last:
 
 ```
