@@ -33,6 +33,7 @@ autopep8 requires pycodestyle and fixes issues it identifies.
 | too many leading '#' for block comment ([E266][e266]) (pep8) | ✘        | ✔      | ✘       | ✘       |
 | not accessed                                                 | ✘        | ✘      | ✘       | ✔       |
 | from module import \* ([F403][f403])                         | ✘        | ✔      | ✘       | ✘       |
+| non-default argument follows default argument ([E999][e999]) | ✔        | ✔      | ✔       | ✔       |
 
 \* _pylint using the VS Code [default pylint rules](https://code.visualstudio.com/docs/python/linting#_default-pylint-rules)_
 
@@ -47,6 +48,7 @@ pylint has syntax-error and flake8 has E999 but they capture different errors. p
 [f403]: https://www.flake8rules.com/rules/F403.html
 [f401]: https://www.flake8rules.com/rules/F401.html
 [e266]: https://www.flake8rules.com/rules/E266.html
+[e999]: https://www.flake8rules.com/rules/E999.html
 
 ## References
 
