@@ -27,7 +27,7 @@ Hive doesn't work with hadoop 3.1 so don't include it:
 ## Troubleshooting
 
 ```
-[error] /Users/oliver.mannion/code3/spark/common/unsafe/src/main/java/org/apache/spark/unsafe/Platform.java:25: error: cannot find symbol
+[error] /Users/tekumara/code3/spark/common/unsafe/src/main/java/org/apache/spark/unsafe/Platform.java:25: error: cannot find symbol
 ```
 
 Make sure you are using jdk8.
