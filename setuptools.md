@@ -6,7 +6,7 @@
 
 During pip install, a wheel is built from the sdist.
 
-Be sure to delete the *dist/* and **.egg-info/* dirs before running `python setup.py sdist` otherwise the remnants of previous builds will be included.
+Be sure to delete the **.egg-info/* dir before running `python setup.py sdist` otherwise *SOURCES.txt* will contain remnants of previous builds (eg: files that have since been deleted).
 
 A package is a directory with a `__init.__.py` file.
 

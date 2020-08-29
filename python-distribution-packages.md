@@ -5,22 +5,13 @@
 
 ## Distributions
 
-_sdist_: source distribution. Source files + metadata in a source archive, ie: a `tar.gz`. Will require a compiler toolchain to build any C extensions.
+_sdist_: source distribution. Source files + metadata in a source archive, ie: a `tar.gz`. Will require a compiler toolchain to build any C extensions. During pip install, _setup.py_ is run to build a wheel.
 
-_bdist_wheel_: binary distribution, packaged as a wheel file, ie: a `.whl` file which is a gzipped tar containing built binaries + metadata. Doesn't require a C compile step. Creates `.pyc` files during installation to match the python interpreter used. Built for a particular OS and version of python eg: `pybay-1.0-3.0-py27-abi3-inux_x86_64.whl`
+_bdist_wheel_: binary distribution, packaged as a wheel file, ie: a `.whl` file which is a gzipped tar containing built binaries + metadata (dist-info) without setup.py. Doesn't require a C compile step. Creates `.pyc` files during installation to match the python interpreter used. Built for a particular OS and version of python eg: `pybay-1.0-3.0-py27-abi3-inux_x86_64.whl`.
 
-Install wheel: `pip install wheel`  
-To create a wheel: `python setup.py bdist_wheel`
+git repo: pip can install from a git repo. It treats the git repo as a source dist.
 
-Example uncompressed wheel file directory tree:
-
-```
-pyspark/
-pyspark-2.4.4.data/
-pyspark-2.4.4.dist-info/
-```
-
-"Newer pip versions preferentially install built distributions, but will fall back to source archives if needed. You should always upload a source archive and provide built archives for the platforms your project is compatible with."
+> "Newer pip versions preferentially install built distributions, but will fall back to source archives if needed. You should always upload a source archive and provide built archives for the platforms your project is compatible with."
 
 ## setup.py
 
@@ -35,7 +26,7 @@ setup(
     name='epr',
     version='0.1',
     description='emr-pipeline-runner',
-    packages=find_packages(),
+    packages=find_packages(exclude=["tests"]),
     python_requires=">=3.6",
 )
 ```
@@ -46,21 +37,36 @@ setup(
 Read dependencies from `requirements.txt` as follows:
 
 ```
+from pathlib import Path
+
 from setuptools import setup, find_packages
 
-install_requires = open("requirements.txt").read().strip().split("\n")
+install_requires = Path("requirements.txt").read_text()
 
 setup(
     name='epr',
     version='0.1',
     description='emr-pipeline-runner',
-    packages=find_packages(),
+    packages=find_packages(exclude=["tests"]),
     python_requires=">=3.6",
     install_requires=install_requires,
 )
 ```
 
 `install_requires` specifies dependencies that pip will install along with your distribution package.
+
+## wheel
+
+Install wheel: `pip install wheel`  
+Build a wheel: `python setup.py bdist_wheel`
+
+Example uncompressed wheel file directory tree:
+
+```
+pyspark/
+pyspark-2.4.4.data/
+pyspark-2.4.4.dist-info/
+```
 
 ## pex
 
@@ -73,7 +79,7 @@ chmod +x pybay.pex
 ./pybax.pex
 ```
 
-## wheel & shiv
+## shiv
 
 ```
 ## build wheel
@@ -92,3 +98,4 @@ asak: dist
 - [Python Packaging User Guide - Glossary](https://packaging.python.org/glossary/)
 - [Distributing Python Modules](https://docs.python.org/3.8/distributing/index.html#distributing-index)
 - [PyBay2016 - Cindy Sridharan - The Python Deployment Albatross](https://speakerdeck.com/pybay/2016-cindy-sridharan-the-python-deployment-albatross)
+- [Testing your python package as installed](https://blog.ganssle.io/articles/2019/08/test-as-installed.html)
