@@ -8,7 +8,7 @@ Install (ubuntu):
 sudo apt install openssh-server
 ```
 
-Config in */etc/ssh/sshd_config*. The commented out lines indicate what the default is, eg: `#PubkeyAuthentication yes` means PubkeyAuthentication is on.
+Config in _/etc/ssh/sshd_config_. The commented out lines indicate what the default is, eg: `#PubkeyAuthentication yes` means PubkeyAuthentication is on.
 
 To see config options: `man sshd_config`
 
@@ -37,25 +37,33 @@ Or disable the user password during creation: `sudo adduser --disabled-password 
 
 ## Logging
 
+To see logs:
 
+```
 journalctl -u ssh.service
-
-
-With `LogLevel VERBOSE` auth logs go to _/var/log/auth.log_ including a fingerprint of any key that was used.
+```
 
 Logins:
 
 ```
-grep -Ei 'sshd.*(password|key)' /var/log/auth.log && zgrep -Ei 'sshd.*(password|key)' /var/log/auth*.gz
+journalctl -u ssh.service | grep -Ei 'password|key'
 ```
 
 Failed logins:
 
 ```
-grep -Ei 'invalid|failed' /var/log/auth.log && zgrep -Ei 'invalid|failed' /var/log/auth*.gz
+journalctl -u ssh.service | grep -Ei 'invalid|failed'
 ```
 
-See example and more details [here](https://serverfault.com/a/291768/126276).
+## Troubleshooting
+
+```
+Aug 28 12:39:20 ip-10-97-37-75 sshd[3383]: AuthorizedKeysCommand /usr/share/ec2-instance-connect/eic_run_authorized_keys ubuntu SHA256:LabnPmEHz5pmTRahIBzti3fdfFlnlj23i/ifc56hsEI failed, status 22
+Aug 28 12:39:20 ip-10-97-37-75 sshd[3383]: Failed publickey for ubuntu from 10.97.34.166 port 41798 ssh2: RSA SHA256:LabnPmEHz5pmTRahIBzti3fdfFlnlj23i/ifc56hsEI
+```
+
+
+
 
 ## Reference
 

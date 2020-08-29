@@ -110,3 +110,7 @@ To your instance profile, add `AmazonSSMManagedInstanceCore` or a custom policy 
 ```
 
 The ssm-agent may need to be restarted after any policy changes.
+
+## References
+
+[EC2 Instance Connect vs. SSM Session Manager](https://carriagereturn.nl/aws/ec2/ssh/connect/ssm/2019/07/26/connect.html)
