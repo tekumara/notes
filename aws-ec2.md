@@ -80,6 +80,7 @@ aws ec2 describe-security-groups --group-ids sg-071ce0236a26a309c
 ## Volumes
 
 Create a volume
+
 ```
 aws ec2 create-volume --size 10 --availability-zone us-east-1a --tag-specifications 'ResourceType=volume,Tags=[{Key=Name,Value=oliver-test}]'
 ```
@@ -87,6 +88,15 @@ aws ec2 create-volume --size 10 --availability-zone us-east-1a --tag-specificati
 ## Launch templates
 
 Allow you to supply values for AMI, IAM instance profile, instance type (including spot), subnet, security group, key pair and volumes. You can override these settings as needed when your launch an instance from the template.
+
+## Status checks
+
+Instance Status - software and network configuration, requiring your involvement to repair
+System Status - AWS systems, requiring AWS involvement to repair
+
+When an instance first starts these checks will be in the initializing phase. You'll be able to SSH into your instance being these checks pass.
+
+See [Status checks for your instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html)
 
 ## Troubleshooting
 
