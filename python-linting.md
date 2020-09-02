@@ -34,6 +34,7 @@ autopep8 requires pycodestyle and fixes issues it identifies.
 | not accessed                                                 | ✘        | ✘      | ✘       | ✔       |
 | from module import \* ([F403][f403])                         | ✘        | ✔      | ✘       | ✘       |
 | non-default argument follows default argument ([E999][e999]) | ✔        | ✔      | ✔       | ✔       |
+| pointless-statement                                          | ✔        | ✘      | ✘       | ✘       |
 
 \* _pylint using the VS Code [default pylint rules](https://code.visualstudio.com/docs/python/linting#_default-pylint-rules)_
 
