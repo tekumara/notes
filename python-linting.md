@@ -24,7 +24,7 @@ autopep8 requires pycodestyle and fixes issues it identifies.
 | unused-import ([F401][f401])                                 | ✔        | ✔      | ✘       | ✘       |
 | unused-argument                                              | ✔        | ✘      | ✘       | ✔       |
 | not in ([E713][e713]) (pep8)                                 | ✘        | ✔      | ✘       | ✘       |
-| undefined-variable                                           | ✔        | ½      | ✔       | ✔       |
+| undefined-variable ([F821](f821))                            | ✔        | ½      | ✔       | ✔       |
 | f-string without any placeholders ([F541][f541])             | ✘        | ✔      | ✘       | ✘       |
 | module level import not at top of file ([E402][e402]) (pep8) | ✘        | ✔      | ✘       | ✘       |
 | trailing whitespace ([W291][w291])                           | ✘        | ✔      | ✘       | ✘       |
@@ -35,6 +35,8 @@ autopep8 requires pycodestyle and fixes issues it identifies.
 | from module import \* ([F403][f403])                         | ✘        | ✔      | ✘       | ✘       |
 | non-default argument follows default argument ([E999][e999]) | ✔        | ✔      | ✔       | ✔       |
 | pointless-statement                                          | ✔        | ✘      | ✘       | ✘       |
+| no-name-in-module                                            | ✔        | ✘      | ✘       | ✘       |
+| import-error                                                 | ✔        | ✘      | ✘       | ✘       |
 
 \* _pylint using the VS Code [default pylint rules](https://code.visualstudio.com/docs/python/linting#_default-pylint-rules)_
 
@@ -50,6 +52,7 @@ pylint has syntax-error and flake8 has E999 but they capture different errors. p
 [f401]: https://www.flake8rules.com/rules/F401.html
 [e266]: https://www.flake8rules.com/rules/E266.html
 [e999]: https://www.flake8rules.com/rules/E999.html
+[f821]: https://www.flake8rules.com/rules/F821.html
 
 ## References
 

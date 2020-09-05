@@ -41,7 +41,7 @@ def resource() -> ServiceResource:
     return boto3.resource("ec2")
 ```
 
-The disadvantage of using explicit type hints is it requires shipping the boto3-stubs package with your application.
+The disadvantage of using explicit type hints is it requires shipping the boto3-stubs package with your application, or using `typing.TYPE_CHECKING` to skip the imports in production code.
 
 ## Use mypy_boto3 to generate boto3.client/boto3.resource stubs for implicit usage
 

@@ -9,10 +9,11 @@ nodeenv -p
 ```
 
 This creates:
-* *$VIRTUAL_ENV/include/node/*
-* *$VIRTUAL_ENV/include/src/node_** NB: this can be removed by using `nodeenv -c` which will save ~100MB
-* *node* and *npm* binaries in *$VIRTUAL_ENV/bin/*
-* *$VIRTUAL_ENV/lib/node_modules* containing npm
+
+- *$VIRTUAL_ENV/include/node/*
+- *$VIRTUAL_ENV/include/src/node_** NB: this can be removed by using `nodeenv -c` which will save ~100MB
+- *node* and *npm* binaries in *$VIRTUAL_ENV/bin/*
+- *$VIRTUAL_ENV/lib/node_modules* containing npm
 
 The virtualenv *activate* script is modified to set `NODE_PATH`. Doesn't take immediate effect, so needs to be run after install.
 

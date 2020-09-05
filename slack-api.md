@@ -31,6 +31,7 @@ curl -H 'Authorization: Bearer xoxp-XXXXXXXXXX-XXXXXXXXXXXX-XXXXXXXXXXXX-XXXXXXX
 ```
 
 The channel ID can be found via [conversations.list](https://api.slack.com/methods/conversations.list)
+
 ```
 curl -H 'Authorization: Bearer xoxp-XXXXXXXXXX-XXXXXXXXXXXX-XXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' https://slack.com/api/conversations.list | jq -r '.channels[] | [.id,.name] | @tsv'
 ```
