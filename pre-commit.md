@@ -2,13 +2,13 @@
 
 ## Why?
 
-* Can automatically run hooks during commit
-* Can run hooks only on the changed files
+* Automatically run hooks during git commit or push. Particularly useful when you don't have CI.
+* Run hooks only on the changed files
 * Has some nice formatters for python, eg: [double-quote-string-fixer](https://github.com/pre-commit/pre-commit-hooks#double-quote-string-fixer) to convert double to single quotes.
 
 ## Cache
 
-Non-system hooks are downloaded and cached in *~/.cache/pre-commit/repo**. `additional_dependencies` for local hooks will also be stored here.  
+Non-system hooks are downloaded and cached in *~/.cache/pre-commit/repo**. They run in their own virtualenv. `additional_dependencies` for local hooks will also be stored here.  
 
 ## Gotchas
 

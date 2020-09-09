@@ -2,16 +2,9 @@
 
 pylint has the most checks, many of which are better turned off. The VS Code [default pylint rules](https://code.visualstudio.com/docs/python/linting#_default-pylint-rules) are reasonable.
 
-[pycodestyle](https://github.com/PyCQA/pycodestyle) (formerly pep8) checks code against PEP8.
-autopep8 requires pycodestyle and fixes issues it identifies.
+[flake8](https://pypi.org/project/flake8/) is a wrapper around pyflakes, pycodestyle, and the [McCabe complexity script](https://nedbatchelder.com/blog/200803/python_code_complexity_microtool.html). flake8 generally checks less than pylint, but is faster and has support for additional plugins. [pyflakes](https://github.com/PyCQA/pyflakes) checks for smells, but not style. [pycodestyle](https://github.com/PyCQA/pycodestyle) (formerly pep8) checks style.
 
-[pyflakes](https://github.com/PyCQA/pyflakes) has fewer checks than pylint, and so is faster. It does not check style eg: PEP8.
-
-[pylama](https://github.com/klen/pylama) bundles a lot of Python & JavaScript tools together.
-
-[flake8](https://pypi.org/project/flake8/) is a wrapper around pyflakes, pycodestyle, and [McCabe complexity script](https://nedbatchelder.com/blog/200803/python_code_complexity_microtool.html). It supports additional addons.
-
-[pyright](https://github.com/microsoft/pyright) is Microsoft's Python type checker running on node. It has active support and deployment, is fast, and in strict mode detects a lot of issues other type checkers miss.
+[pyright](https://github.com/microsoft/pyright) is Microsoft's Python type checker (requires node). It has active support and deployment, is fast, and detects issues other type checkers miss.
 
 [pylance](https://github.com/microsoft/pylance-release) is a VS Code language server extension that bundles pyright and other goodies like auto-imports, code completion and additional stubs (eg: pandas, matplotlib)
 
@@ -58,3 +51,9 @@ pylint has syntax-error and flake8 has E999 but they capture different errors. p
 
 - [Pylint checks](http://pylint.pycqa.org/en/latest/technical_reference/features.html)
 - [Flake8 rules](https://www.flake8rules.com/) - detailed, but incomplete, see also [error codes](https://flake8.pycqa.org/en/latest/user/error-codes.html)
+
+## Other tools
+
+[pylama](https://github.com/klen/pylama) bundles a lot of Python & JavaScript tools together.
+
+[autopep8](https://pypi.org/project/autopep8/) fixes issues requires pycodestyle identifies.

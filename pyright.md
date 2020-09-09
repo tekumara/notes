@@ -1,14 +1,14 @@
 # pyright
 
-[pyright](https://github.com/microsoft/pyright) is Microsoft's Python type checker running on node. It has active support and deployment, is fast, and in strict mode detects a lot of issues other type checkers miss.
+[pyright](https://github.com/microsoft/pyright) is Microsoft's Python type checker (requires node). It has active support and deployment, is fast, and in strict mode detects a lot of issues other type checkers miss.
 
 [pylance](https://github.com/microsoft/pylance-release) is a VS Code language server extension that bundles pyright and other goodies like auto-imports, code completion and additional stubs (eg: pandas, matplotlib)
 
 ## typeCheckingMode
 
-pyright.typeCheckingMode can be:
+`pyright.typeCheckingMode` (or `python.analysis.typeCheckingMode` for pylance) can be:
 
-- `off` = all type-checking rules are disabled, but Python syntax and semantic errors are still reported
+- `off` = all type-checking rules are disabled, but Python syntax and semantic errors are still reported and auto-complete suggestions available
 - `basic` = can be used to ease into type checking on existing code-bases. Doesn't check for some things that mypy does, like [incompatible overrides](https://mypy.readthedocs.io/en/stable/common_issues.html#incompatible-overrides).
 - `strict` = new code-bases should use this. Will error when type hints are missing from functions. Finds a lot of things mypy doesn't.
 
