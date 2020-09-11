@@ -54,6 +54,5 @@ pylint has syntax-error and flake8 has E999 but they capture different errors. p
 
 ## Other tools
 
-[pylama](https://github.com/klen/pylama) bundles a lot of Python & JavaScript tools together.
-
-[autopep8](https://pypi.org/project/autopep8/) fixes issues requires pycodestyle identifies.
+- [pylama](https://github.com/klen/pylama) bundles a lot of Python & JavaScript tools together.
+- [autopep8](https://pypi.org/project/autopep8/) fixes issues requires pycodestyle identifies.

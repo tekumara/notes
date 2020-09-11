@@ -1,7 +1,7 @@
 # Python distribution packages
 
 [_import package_](https://packaging.python.org/glossary/#term-import-package): a collection of modules under one directory with a `__init.__.py` file (empty or otherwise)  
-[_distribution package_](https://packaging.python.org/glossary/#term-distribution-package): an archive containing import packages and metadata for release and distribution
+[_distribution package_](https://packaging.python.org/glossary/#term-distribution-package): an archive containing import packages and metadata for release and distribution.
 
 ## Distributions
 
@@ -92,6 +92,10 @@ asak: dist
 	$(venv)/bin/shiv -c asak -o asak -p "/usr/bin/env python3" -r requirements.txt dist/asak*.whl
 	@ echo "Created ./asak"
 ```
+
+## Naming
+
+The distribution package name (ie: in setup.py the `name` field) can contain hyphens. The import packages inside the distribution cannot. PEP8 discourages the use of underscores for import package names, but you will often seen them. Top-level import package names should be unique within site-packages.
 
 ## References
 

@@ -1,6 +1,6 @@
 # pyright
 
-[pyright](https://github.com/microsoft/pyright) is Microsoft's Python type checker (requires node). It has active support and deployment, is fast, and in strict mode detects a lot of issues other type checkers miss.
+[pyright](https://github.com/microsoft/pyright) is Microsoft's Python type checker (requires node). It has active support and deployment, is fast, and detects a lot of issues other type checkers miss.
 
 [pylance](https://github.com/microsoft/pylance-release) is a VS Code language server extension that bundles pyright and other goodies like auto-imports, code completion and additional stubs (eg: pandas, matplotlib)
 
@@ -8,13 +8,13 @@
 
 `pyright.typeCheckingMode` (or `python.analysis.typeCheckingMode` for pylance) can be:
 
-- `off` = all type-checking rules are disabled, but Python syntax and semantic errors are still reported and auto-complete suggestions available
-- `basic` = can be used to ease into type checking on existing code-bases. Doesn't check for some things that mypy does, like [incompatible overrides](https://mypy.readthedocs.io/en/stable/common_issues.html#incompatible-overrides).
-- `strict` = new code-bases should use this. Will error when type hints are missing from functions. Finds a lot of things mypy doesn't.
+- `off` = all type-checking rules are disabled, but Python syntax and semantic errors are still reported and in pylance auto-complete suggestions are made
+- `basic` = use when easing into type checking on existing code-bases, or on code-bases that use libraries with poor quality stubs (eg: pandas). Doesn't check for some things that mypy does, like [incompatible overrides](https://mypy.readthedocs.io/en/stable/common_issues.html#incompatible-overrides).
+- `strict` = new code-bases with high quality stubs should use this. Will error with `reportUnknownParameterType` when type hints are missing from functions. Finds a lot of things mypy doesn't.
 
 See [configOptions.ts](https://github.com/microsoft/pyright/blob/978baa47a55f056523174a00c11f3301a27e7062/server/src/common/configOptions.ts#L257) for the specific rules turned on and their level (eg: warning/error) for each mode.
 
-In strict mode, individual rules can be disabled on a per file basis (see [#601](https://github.com/microsoft/pyright/issues/601)), eg:
+In strict mode, individual rules can be disabled on a per file basis via a comment (see [#601](https://github.com/microsoft/pyright/issues/601)), eg:
 
 ```
 # pyright: reportMissingTypeStubs=false
@@ -79,16 +79,16 @@ Many libraries lack stubs. However their `.py` files can contain partial or comp
 - set `"python.analysis.useLibraryCodeForTypes": true` for the pyright vscode extension. In Pylance this defaults to true.
 - set `"useLibraryCodeForTypes": false` in _pyrightconfig.json_. NB: Setting this to `false` will override Pylance.
 
-Use library code for types is a double-edged sound. On the one hand, it can avoid issues like:
+`useLibraryCodeForTypes` is a double-edged sword. On the one hand, it can avoid issues like:
 
 ```
   12:32 - error: "client" is not a known member of module (reportGeneralTypeIssues)
   12:26 - error: Type of "client" is unknown (reportUnknownMemberType)
 ```
 
-But on the other hand, the type information is inferred and can reveal problems in library. Some of these problems can only be fixed by the third party library author, and/or a type stub.
+But on the other hand, the type information is inferred and can be incorrect. Some of these problems can only be fixed by the third party library author, and/or a type stub.
 
-If you are using Pyright/pylance for type checking, `"useLibraryCodeForTypes": false` is recommended. The feature was added to provide completion suggestions when using Pylance, see [pyright/#945](https://github.com/microsoft/pyright/issues/945#issuecomment-674466348). However, it will also disable "Go to Definition" behaviour, see [pylance-release/#278](https://github.com/microsoft/pylance-release/issues/278)
+If you are using Pyright/pylance for type checking, `"useLibraryCodeForTypes": false` is recommended. The feature was added to provide completion suggestions when using Pylance (see [pyright/#945](https://github.com/microsoft/pyright/issues/945#issuecomment-674466348)). However, it will also disable "Go to Definition" behaviour (see [pylance-release/#278](https://github.com/microsoft/pylance-release/issues/278)).
 
 ## Missing Type Stubs
 
@@ -105,3 +105,7 @@ See [Type Stub Files](https://github.com/microsoft/pyright/blob/master/docs/type
 ## Checking a subset of files
 
 pyright can be supplied a set of files on the the command line, in which case it will ignore _pyrightconfig.json_ and use the default configuration. For this reason, when using pyright in a pre-commit hook you probably want to specify `pass_filenames: false`.
+
+## Pylance bundled stubs
+
+check the issues!
