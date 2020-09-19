@@ -94,7 +94,7 @@ If you are using Pyright/pylance for type checking, `"useLibraryCodeForTypes": f
 
 When pyright is run in strict mode and type stubs are missing it will generate a `reportMissingTypeStubs` error.
 
-This can be fixed by generating type stubs which by default are stored in `typings/`, eg:
+This can be fixed by generating type stubs which by default are stored in _typings/_, eg:
 
 ```
 pyright --createstub botocore
@@ -102,10 +102,12 @@ pyright --createstub botocore
 
 See [Type Stub Files](https://github.com/microsoft/pyright/blob/master/docs/type-stubs.md)
 
+`.pyi` stubs in _typings/_ take precedence over the same stubs in the virtualenv.
+
 ## Checking a subset of files
 
 pyright can be supplied a set of files on the the command line, in which case it will ignore _pyrightconfig.json_ and use the default configuration. For this reason, when using pyright in a pre-commit hook you probably want to specify `pass_filenames: false`.
 
 ## Pylance bundled stubs
 
-check the issues!
+Pylance bundles stubs for pandas, matplotlib and [other libraries](https://github.com/microsoft/pyright/issues/861). This stubs are incomplete. If you encounter a type error using these libraries that looks incorrect, first check the open issues on [microsoft/pylance-release](https://github.com/microsoft/pylance-release) before reporting it.

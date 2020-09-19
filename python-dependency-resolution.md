@@ -30,7 +30,7 @@ poetry is slower than pip-compile but can resolve [cases](https://github.com/jaz
 
 poetry requires that the version of python is specified. It supports [environment markers](https://python-poetry.org/docs/versions/#using-environment-markers).
 
-Has some pathologically [slow cases](https://github.com/python-poetry/poetry/issues/2094) (eg: `poetry add allennlp` on macOS takes 5m 18s)
+Has some pathologically [slow cases](https://github.com/python-poetry/poetry/issues/2094) (eg: `poetry add allennlp` on macOS takes 3mins)
 
 ## pipenv
 

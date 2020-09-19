@@ -30,6 +30,7 @@ pylint has the most checks, many of which are better turned off. The VS Code [de
 | pointless-statement                                          | ✔        | ✘      | ✘       | ✘       |
 | no-name-in-module                                            | ✔        | ✘      | ✘       | ✘       |
 | import-error                                                 | ✔        | ✘      | ✘       | ✘       |
+| no-value-for-parameter (Argument missing for parameter)      | ✔        | ✘      | ✔       | ✔       |
 
 \* _pylint using the VS Code [default pylint rules](https://code.visualstudio.com/docs/python/linting#_default-pylint-rules)_
 

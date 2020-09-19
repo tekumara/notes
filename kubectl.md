@@ -7,13 +7,13 @@
 Clusters, users and contexts are specified in the config files. The first config file in `$KUBECONFIG` contains the `current-context` key which specifies the current context.
 
 `kubectl config get-contexts` list contexts  
-`kubectl config use-context docker-desktop` set current context to *docker-desktop*   
+`kubectl config use-context docker-desktop` set current context to _docker-desktop_  
 `kubectl config view --minify --output 'jsonpath={..namespace}'` show the current namespace
 
 Alternatively using [kubectx](https://github.com/ahmetb/kubectx):
 
 `kubectx` lists contexts and allows you to select one with fzf as the current context  
-`kubectx -c` list current context  
+`kubectx -c` list current context
 
 `kubens` show all namespaces  
 `kubens -c` show the current namespace
@@ -25,7 +25,8 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 ## Inspection
 
 `kubectl version` show client and server versions  
-`kubectl get deployments -n kube-system` show deployments for kube itself  
+`kubectl get deployments -n kube-system` show deployments for kube itself
+`kubectl get service --namespace jhub` get services in the jub namespace  
 `kubectl get pods -n livy -w` watch pods in the namespace livy  
 `kubectl api-resources` show all resource types  
 `kubectl get apiservice` show all apiservice resources  
@@ -35,14 +36,15 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl top pods -A` show CPU/MEM for pods in all namespaces
 
 Show all forwarded ports, ie: [NodePort services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types):
+
 ```
 kubectl get svc -o json --all-namespaces | jq '.items[] | {name:.metadata.name, p:.spec.ports[] } | select( .p.nodePort != null ) | "\(.name): localhost:\(.p.nodePort) -> \(.p.port) -> \(.p.targetPort)"'
 ```
 
-### Accessing the cluster
+### Run interactively
 
-`kubectl run -it --image=alpine helper` starts an pod called *helper* running the alpine image in the cluster
-`kubectl delete pod helper` delete the helper pod 
+`kubectl run -it --image=alpine helper` starts an pod called _helper_ running the alpine image in the cluster
+`kubectl delete pod helper` delete the helper pod
 
 ### Listing all resources
 
@@ -50,6 +52,7 @@ kubectl get svc -o json --all-namespaces | jq '.items[] | {name:.metadata.name, 
 `kubectl get $(kubectl api-resources --verbs=list -o name | paste -sd, -) --ignore-not-found --all-namespaces` actually show all resources
 
 Alternately show all resources using the krew plugin [ketall](https://github.com/corneliusweig/ketall):
+
 ```
 kubectl krew install get-all
 kubectl get-all
@@ -58,13 +61,15 @@ kubectl get-all
 ## Patch
 
 Set the contents of the args array
+
 ```
-kubectl patch deployment metrics-server -n kube-system -p '{"spec": {"template": {"spec":{"containers":[{"name":"metrics-server","args":["--cert-dir=/tmp","--secure-port=4443"]}]}}}}' 
+kubectl patch deployment metrics-server -n kube-system -p '{"spec": {"template": {"spec":{"containers":[{"name":"metrics-server","args":["--cert-dir=/tmp","--secure-port=4443"]}]}}}}'
 ```
 
 Insert an element into the head of the args array
+
 ```
-kubectl patch deployment metrics-server -n kube-system --type json -p '[{"op": "add", "path": "/spec/template/spec/containers/0/args/0", "value":"--kubelet-insecure-tls"}]' 
+kubectl patch deployment metrics-server -n kube-system --type json -p '[{"op": "add", "path": "/spec/template/spec/containers/0/args/0", "value":"--kubelet-insecure-tls"}]'
 ```
 
 ## Delete
@@ -75,27 +80,28 @@ kubectl patch deployment metrics-server -n kube-system --type json -p '[{"op": "
 
 ### Delete a namespace stuck in the Terminating state
 
-`kubectl get namespaces | grep Terminating` will show namespaces stuck in the *Terminating* state.
+`kubectl get namespaces | grep Terminating` will show namespaces stuck in the _Terminating_ state.
 
 To fix, find apiservices that are unavailable:
 
-`kubectl get apiservices | grep False` 
+`kubectl get apiservices | grep False`
 
 Delete them, and then wait 5 mins.
 
 If that doesn't work, try [knsk.sh](https://github.com/thyarles/knsk)
 
 ## Merge two config files
+
 ```
 (KUBECONFIG=~/.kube/config:~/someotherconfig && kubectl config view --flatten > ~/.kube/config.new)
 ```
-
 
 ## Troubleshooting
 
 ### Container is stuck in state `ContainerCreating`
 
 Usually means there's an issuing downloading the container. Check the pod events:
+
 ```
 kubectl describe pods -n livy
 ```

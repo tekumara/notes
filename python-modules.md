@@ -84,6 +84,18 @@ python -m pytest [...]
 
 This will add the current directory to `sys.path`, see [Calling pytest through python -m pytest](https://docs.pytest.org/en/latest/usage.html#calling-pytest-through-python-m-pytest)
 
+## python and sys.path
+
+> As initialized upon program startup, the first item of this list, path[0], is the directory containing the script that was used to invoke the Python interpreter.
+
+See [sys.path](https://docs.python.org/3/library/sys.html#sys.path)
+
+eg:
+
+- `python script.py` the current directory is `sys.path[0]`
+- `python myscripts/script.py` the myscripts/ dir is `sys.path[0]`
+- `python -m myscripts/script` the current directory is `sys.path[0]`
+
 ## Relative imports
 
 ```

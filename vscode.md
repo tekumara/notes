@@ -25,6 +25,8 @@ To avoid creating terminal windows every time you launch (the default) set `"con
 
 VSCode and its integrated terminal will inherit environment variables from the process that starts VSCode. eg: if you set any `AWS_*` env vars in a shell and then start code, those will be available to your program when VSCode runs/debugs it.
 
+To disable this, set `terminal.integrated.inheritEnv` to false.
+
 ## Refresh
 
 If packages have been updated but Pylance hasn't picked that up yet, try renaming the file (does closing the file and opening it again work?)
