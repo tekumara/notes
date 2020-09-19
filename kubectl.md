@@ -27,7 +27,8 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl version` show client and server versions  
 `kubectl get deployments -n kube-system` show deployments for kube itself
 `kubectl get service --namespace jhub` get services in the jub namespace  
-`kubectl get pods -n livy -w` watch pods in the namespace livy  
+`kubectl get pods -n livy -w` watch pods in the namespace livy
+`kubectl get pods --namespace=jhub -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}'` list pods and their running container images    
 `kubectl api-resources` show all resource types  
 `kubectl get apiservice` show all apiservice resources  
 `kubectl get namespaces` show all namespaces  
