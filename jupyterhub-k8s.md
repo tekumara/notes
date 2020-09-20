@@ -135,7 +135,7 @@ singleuser:
     iam.amazonaws.com/role: arn:aws:iam::0123456789:role/{username}-role
 ```
 
-[Kubespawner will expand](https://github.com/jupyterhub/kubespawner/blob/d05c8978bc154d838bbaf20c31820a4ab78e7acc/kubespawner/spawner.py#L455) `{username}` to the escaped, dns-label safe username.
+`{username}` is expanded to the escaped, dns-label-safe username. See [spawner.py](https://github.com/jupyterhub/kubespawner/blob/d05c8978bc154d838bbaf20c31820a4ab78e7acc/kubespawner/spawner.py#L455). 
 
 z2jh configures Kubespawner via the configuration keys [here](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/blob/76dc891a64f770eb38ab4fa8e9accd69110cb688/jupyterhub/files/hub/jupyterhub_config.py#L111). Kubespawner's configuration documentation is [here](https://jupyterhub-kubespawner.readthedocs.io/en/latest/spawner.html).
 

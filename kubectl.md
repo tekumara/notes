@@ -25,16 +25,17 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 ## Inspection
 
 `kubectl version` show client and server versions  
-`kubectl get deployments -n kube-system` show deployments for kube itself
+`kubectl get deployments -n kube-system` show deployments for kube itself  
 `kubectl get service --namespace jhub` get services in the jub namespace  
-`kubectl get pods -n livy -w` watch pods in the namespace livy
-`kubectl get pods --namespace=jhub -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}'` list pods and their running container images    
+`kubectl get pods -n livy -w` watch pods in the namespace livy  
+`kubectl get pods --namespace=jhub -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}'` list pods and their running container images  
 `kubectl api-resources` show all resource types  
 `kubectl get apiservice` show all apiservice resources  
 `kubectl get namespaces` show all namespaces  
-`kubectl get nodes` describe node details including IP address, capacity, resources requests and limits
-`kubectl top nodes` show CPU/MEM for nodes
-`kubectl top pods -A` show CPU/MEM for pods in all namespaces
+`kubectl get nodes` list node details including IP address, capacity, resources requests and limits  
+`kubectl top nodes` show CPU/MEM for nodes  
+`kubectl top pods -A` show CPU/MEM for pods in all namespaces  
+`kubectl describe rs/hub-67966db58b -n jhub` describe the replicaset hub-67966db58b in namespace jhub
 
 Show all forwarded ports, ie: [NodePort services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types):
 
