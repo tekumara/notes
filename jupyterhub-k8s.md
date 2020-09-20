@@ -1,6 +1,6 @@
 # jupyterhub k8s
 
-Zero to JupyterHub Kubernetes (z2jh) uses [these helm charts](https://github.com/jupyterhub/zero-to-jupyterhub-k8s)
+Zero to JupyterHub Kubernetes (z2jh-k8s) uses [these helm charts](https://github.com/jupyterhub/zero-to-jupyterhub-k8s)
 
 ## Overview
 
@@ -72,7 +72,7 @@ Deployment
 
 - hub: [jupyterhub](https://github.com/jupyterhub/jupyterhub) see [Hub pod](https://zero-to-jupyterhub.readthedocs.io/en/latest/reference/tools.html#hub-pod)
 - proxy: [configurable-http-proxy](https://github.com/jupyterhub/configurable-http-proxy) see [Proxy pod](https://zero-to-jupyterhub.readthedocs.io/en/latest/reference/tools.html#proxy-pod)
-- user-scheduler: kube-scheduler assigns new pods to nodes
+- user-scheduler: [kube-scheduler](https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/) assigns new pods to the most utilized node so [nodes fill up one at a time](http://z2jh.jupyter.org/en/latest/administrator/optimization.html#using-available-nodes-efficiently-the-user-scheduler). This allows the cluster autoscaler to remove unused nodes. There are [2 replicas](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/1272) by default to improve availability on node failure. Only one can be the leader at a time.
 
 DaemonSet
 
@@ -86,7 +86,7 @@ Service
 
 StatefulSet
 
-- [user-placeholder](https://zero-to-jupyterhub.readthedocs.io/en/latest/reference/reference.html#scheduling-userplaceholder) a placeholder container used to avoid the startup time of a new node.
+- [user-placeholder](http://z2jh.jupyter.org/en/latest/administrator/optimization.html#scaling-up-in-time-user-placeholders) a placeholder container used to avoid the startup time of a new node.
 
 ## Users pods
 
@@ -150,3 +150,7 @@ config.yaml is used for customization, see the [Customization Guide](https://zer
 `0/1 nodes are available: 1 Insufficient memory.`
 
 Add more memory to your cluster. When using Docker Desktop increase the default allocation beyond 2GB.
+
+## References
+
+[z2jh-k8s discourse forum](https://discourse.jupyter.org/c/jupyterhub/z2jh-k8s/5)
