@@ -10,13 +10,15 @@ JupyterHub consists of:
 - configurable http proxy (node-http-proxy)
 - multiple single-user Jupyter notebook servers (Python/Jupyter/tornado)
 
-<img src="https://jupyterhub.readthedocs.io/en/stable/_images/jhub-fluxogram.jpeg" alt="jupyterhub" width="404" height="303"/>
+<!-- markdownlint-disable MD033 -->
+<img src="https://zero-to-jupyterhub.readthedocs.io/en/latest/_images/architecture.png" alt="jupyterhub" width="538" height="303"/>
+<!-- markdownlint-enable MD033 -->
 
 See [Technical Overview](https://jupyterhub.readthedocs.io/en/stable/index.html)
 
 ## Install
 
-Create config.yaml
+Create a config.yaml and generate the [proxy authentication token](https://jupyterhub.readthedocs.io/en/stable/getting-started/security-basics.html?highlight=openssl#authentication-token) used for requests between the proxy and the hub:
 
 ```bash
 cat << EOF > config.yaml
@@ -62,7 +64,7 @@ helm upgrade --cleanup-on-fail \
 
 For more info see [Setting up JupyterHub](https://zero-to-jupyterhub.readthedocs.io/en/latest/setup-jupyterhub/setup-jupyterhub.html)
 
-Login via [http://localhost](http://localhost). By default, JupyterHub runs with the dummy authenticator (`dummyauthenticator.DummyAuthenticator`) which allows any username and password combination.
+Login via the proxy-public service. On Docker Desktop this is exposed at [http://localhost](http://localhost). By default, JupyterHub runs with the dummy authenticator (`dummyauthenticator.DummyAuthenticator`) which allows any username and password combination.
 
 ## Components
 
@@ -78,9 +80,9 @@ DaemonSet
 
 Service
 
-- hub:
-- proxy-api
-- proxy-public
+- hub
+- proxy-api: internal to the cluster, used by hub
+- proxy-public: the public facing proxy
 
 StatefulSet
 
@@ -88,7 +90,7 @@ StatefulSet
 
 ## Users pods
 
-User pods run the single user notebook server. They will be created with the name `jupyter-username`. First the jupyterhub/k8s-network-tools image is started as an init container with name `block-cloud-metadata`.It [adds an iptables rule](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/commit/81c26138cbb6cf50c893b492391302dc8bcce180) to block access to the EC2 instance metadata endpoint (like [this](https://aws.amazon.com/premiumsupport/knowledge-center/ecs-container-ec2-metadata/)). Then the default [jupyterhub/k8s-singleuser-sample](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/tree/master/images/singleuser-sample) image runs. This can be configured to be a [custom image](https://zero-to-jupyterhub.readthedocs.io/en/latest/customizing/user-environment.html#choose-and-use-an-existing-docker-image). The pod has a PersistentVolumeClaim.
+User pods run the single user notebook server. They will be created with the name `jupyter-username`. First the jupyterhub/k8s-network-tools image is started as an init container with name `block-cloud-metadata`.It [adds an iptables rule](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/commit/81c26138cbb6cf50c893b492391302dc8bcce180) to block access to the instance metadata endpoint (like [this](https://aws.amazon.com/premiumsupport/knowledge-center/ecs-container-ec2-metadata/)). Then the default [jupyterhub/k8s-singleuser-sample](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/tree/master/images/singleuser-sample) image runs. This can be configured to be a [custom image](https://zero-to-jupyterhub.readthedocs.io/en/latest/customizing/user-environment.html#choose-and-use-an-existing-docker-image). The pod has a PersistentVolumeClaim.
 
 By default, Jupyter will open with the classic UI. To use the JupyterLab UI instead, add the following to config.yaml:
 
@@ -109,13 +111,37 @@ To populate users storage see [About user storage and adding files to it](https:
 
 ## Hub database
 
-See [hub.db](https://zero-to-jupyterhub.readthedocs.io/en/latest/reference/reference.html#hub-db)
+The [Hub database](https://jupyterhub.readthedocs.io/en/stable/reference/database.html) stores the state of launched servers, users and api tokens for accessing servers, amongst [other things](https://github.com/jupyterhub/jupyterhub/blob/196a7fbc651779b7fa237049fc7516dc9a43332f/jupyterhub/orm.py).
+
+By default SQLite is used. PostgreSQL is recommended for production systems and can be configured via [hub.db](https://zero-to-jupyterhub.readthedocs.io/en/latest/reference/reference.html#hub-db).
 
 ## Authentication
 
 JupyterHub supports a [number of authenticators](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/blob/76dc891a64f770eb38ab4fa8e9accd69110cb688/jupyterhub/files/hub/jupyterhub_config.py#L266) including [jupyterhub/oauthenticator](https://github.com/jupyterhub/oauthenticator), as well as custom authenticators.
 
-## Customization
+## HTTPS
+
+By default the proxy is exposed on HTTP. To enable HTTPS, see [HTTPS](https://zero-to-jupyterhub.readthedocs.io/en/latest/administrator/security.html#https).
+
+## Kubespawner
+
+z2jh uses [Kubespawner](https://github.com/jupyterhub/kubespawner) to create user pods. These user pods can be configured using the [singleuser](https://zero-to-jupyterhub.readthedocs.io/en/latest/reference/reference.html#singleuser) config key.
+
+To annotation pods with an IAM role used by [kiam](https://github.com/uswitch/kiam):
+
+```yaml
+singleuser:
+  extraAnnotations:
+    iam.amazonaws.com/role: arn:aws:iam::0123456789:role/{username}-role
+```
+
+[Kubespawner will expand](https://github.com/jupyterhub/kubespawner/blob/d05c8978bc154d838bbaf20c31820a4ab78e7acc/kubespawner/spawner.py#L455) `{username}` to the escaped, dns-label safe username.
+
+z2jh configures Kubespawner via the configuration keys [here](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/blob/76dc891a64f770eb38ab4fa8e9accd69110cb688/jupyterhub/files/hub/jupyterhub_config.py#L111). Kubespawner's configuration documentation is [here](https://jupyterhub-kubespawner.readthedocs.io/en/latest/spawner.html).
+
+Kubespawner supports multiple JupyterHubs across many namespaces in a single cluster.
+
+## Further customization
 
 config.yaml is used for customization, see the [Customization Guide](https://zero-to-jupyterhub.readthedocs.io/en/latest/customizing/index.html) and [Configuration Reference](https://zero-to-jupyterhub.readthedocs.io/en/latest/reference/reference.html)
 
@@ -123,4 +149,4 @@ config.yaml is used for customization, see the [Customization Guide](https://zer
 
 `0/1 nodes are available: 1 Insufficient memory.`
 
-Add more memory to your cluster (when using Docker for Mac, increase that beyond 2GB).
+Add more memory to your cluster. When using Docker Desktop increase the default allocation beyond 2GB.

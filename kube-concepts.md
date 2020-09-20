@@ -14,9 +14,13 @@ A [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deploym
 
 [StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/) like a deployment but for pods that need a unique stable identity. Among other things, can be used with a volume claim to provide stable persistent storage.
 
+A [PodDisruptionBudget](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/) specifies the minimum number of replicas that should exist at a time, and will prevent voluntary disruptions that cause fewer than this number to be available. Involuntary disruptions can still occur.
+
 ## Networking
 
 [Service](https://kubernetes.io/docs/concepts/services-networking/) exposes a set of pods via a network address, either internally with the cluster or externally. When a Service object has a selector, the Service controller will maintain an Endpoint object of internal pod IP addresses targeted by the service. See [Defining a Service](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service). A `ClusterIP` type will expose the service internally. `NodePort` and `LoadBalancer` exposes the service externally. `LoadBalancer` will program an external cloud load balancer.
+
+[Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) control ingress and egress to a pod. A Kubernetes cluster may have partial, full, or no support for network policies. Kubernetes will silently ignore policies that aren’t supported.
 
 ## Storage
 
