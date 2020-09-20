@@ -1,6 +1,6 @@
 # jupyterhub k8s
 
-Zero to JupyterHub Kubernetes uses the [z2jh helm charts](https://github.com/jupyterhub/zero-to-jupyterhub-k8s)
+Zero to JupyterHub Kubernetes (z2jh) uses [these helm charts](https://github.com/jupyterhub/zero-to-jupyterhub-k8s)
 
 ## Install
 
@@ -17,11 +17,11 @@ sed -i '' "s/<RANDOM_HEX>/"$(openssl rand -hex 32)"/" config.yaml
 Add the JupyterHub chart repo:
 
 ```bash
-helm repo add jupyterhub https://jupyterhub.github.io/helm-chart/
+helm repo add jupyterhub https://jupyterhub.gi  thub.io/helm-chart/
 helm repo update
 ```
 
-If using helm 2:
+Deploy using helm 2:
 
 ```bash
 RELEASE=jhub
@@ -34,7 +34,7 @@ helm upgrade \
   --values config.yaml
 ```
 
-If using helm 3:
+Deploy using helm 3:
 
 ```bash
 RELEASE=jhub
@@ -48,15 +48,9 @@ helm upgrade --cleanup-on-fail \
   --values config.yaml
 ```
 
-See [Setting up JupyterHub](https://zero-to-jupyterhub.readthedocs.io/en/latest/setup-jupyterhub/setup-jupyterhub.html)
+For more info see [Setting up JupyterHub](https://zero-to-jupyterhub.readthedocs.io/en/latest/setup-jupyterhub/setup-jupyterhub.html)
 
 Login via http://localhost. By default you'll be able to specify any username, and the password is ignored.
-
-## Troubleshooting
-
-0/1 nodes are available: 1 Insufficient memory.
-
-Add more memory to your cluster (when using Docker for Mac, increase that beyond 2GB).
 
 ## Components
 
@@ -78,10 +72,16 @@ Service
 
 StatefulSet
 
-- [user-placeholder](https://zero-to-jupyterhub.readthedocs.io/en/latest/reference/reference.html#scheduling-userplaceholder) used to keep nodes warm for real users
+- [user-placeholder](https://zero-to-jupyterhub.readthedocs.io/en/latest/reference/reference.html#scheduling-userplaceholder) a placeholder container used to avoid the startup time of a new node.
 
-Users pod will be created with the name `jupyter-username`. The _jupyterhub/k8s-network-tools_ image is started as an init container and then the _jupyterhub/k8s-singleuser-sample_ image runs. The pods have a PersistentVolumeClaim.
+Users pod will be created with the name `jupyter-username`. First the jupyterhub/k8s-network-tools image is started as an init container with name `block-cloud-metadata`.It [adds an iptables rule](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/commit/81c26138cbb6cf50c893b492391302dc8bcce180) to block access to the EC2 instance metadata endpoint (like [this](https://aws.amazon.com/premiumsupport/knowledge-center/ecs-container-ec2-metadata/)). Then the default [jupyterhub/k8s-singleuser-sample](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/tree/master/images/singleuser-sample) image runs. This can be configured to be a [custom image](https://zero-to-jupyterhub.readthedocs.io/en/latest/customizing/user-environment.html#choose-and-use-an-existing-docker-image). The pod has a PersistentVolumeClaim.
 
 ## Customization
 
 config.yaml is used for customization, see the [Customization Guide](https://zero-to-jupyterhub.readthedocs.io/en/latest/customizing/index.html) and [Configuration Reference](https://zero-to-jupyterhub.readthedocs.io/en/latest/reference/reference.html)
+
+## Troubleshooting
+
+`0/1 nodes are available: 1 Insufficient memory.`
+
+Add more memory to your cluster (when using Docker for Mac, increase that beyond 2GB).
