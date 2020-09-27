@@ -24,7 +24,7 @@ See [Including files in source distributions with MANIFEST.in](https://packaging
 
 `setup.py` determines which files are installed from the source dist.
 
-[`packages = find_packages()`](https://setuptools.readthedocs.io/en/latest/setuptools.html#id14) walks the target directory and finds any packages. You probably want to exclude tests otherwise they will be included in the source dist, and installed into site-packages, eg:
+[`packages = find_packages()`](https://setuptools.readthedocs.io/en/stable/setuptools.html#id14) walks the target directory and finds any packages. Packages are only recognized if they include an `__init__.py` file.  You probably want to exclude tests otherwise they will be included in the source dist, and installed into site-packages, eg:
 
 ```
 packages=find_packages(exclude=["tests"]),
