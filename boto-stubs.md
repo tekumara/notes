@@ -28,18 +28,7 @@ ec2_client:Client = boto3.client("ec2")
 print(ec2_client.describe_instances())
 ```
 
-If you store the boto3 client or resource in a variable, or return it from a function, you'll probably want to use the explicit type hints:
-
-```python
-from mypy_boto3_ec2 import ServiceResource
-
-
-resource: ServiceResource = resource()
-
-
-def resource() -> ServiceResource:
-    return boto3.resource("ec2")
-```
+Explicit type hints are needed in PyCharm. They are also needed to annotate function arguments or return values.
 
 The disadvantage of using explicit type hints is it requires shipping the boto3-stubs package with your application, or using `typing.TYPE_CHECKING` to skip the imports in production code.
 

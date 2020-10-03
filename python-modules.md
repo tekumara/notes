@@ -16,6 +16,18 @@ See
 - [Traps for the Unwary in Python’s Import System](http://python-notes.curiousefficiency.org/en/latest/python_concepts/import_traps.html)
 - [Practical Python - 9.1 Packages](https://github.com/dabeaz-course/practical-python/blob/main/Notes/09_Packages/01_Packages.md)
 
+## Import time
+
+At import time, everything in the top level of the script is executed.
+
+Functions and anything under:
+
+```
+if __name__ == '__main__':
+```
+
+will execute when invoked at runtime.
+
 ## Troubleshooting
 
 To see all available modules: `help("modules")`
