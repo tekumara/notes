@@ -1,62 +1,69 @@
 # git branch
 
+## About branches
 
-<pre>!![[Branches|http://progit.org/book/ch3-1.html]]
+From the [Git User's Manual](http://rmaicle.github.io/doc/git-2.13.0/user_manual/chapter_1):
 
-Even if you don't use branches within your local repo/codebase, you will need to understand how they work because interactions with remotes occurs on branches.
+> When we need to be precise, we will use the word "branch" to mean a line of development, and "branch head" (or just "head") to mean a reference to the most recent commit on a branch. However, when no confusion will result, we often just use the term "branch" both for branches and for branch heads.
+>
+> Branches (and tags) are pointers (ie: references) to commits. Because a branch in Git is simply a lightweight movable pointer to a commit it is very cheap. Whatever is the current branch pointer will be automatically advanced to point to future commits.
+>
+> The branch/commit you are currently on is the special pointer called HEAD.
+>
+> All references are named with a slash-separated path name starting with "refs"; the names we’ve been using so far are actually shorthand:
+>
+> - The branch "test" is short for "refs/heads/test".
+> - The tag "v2.6.18" is short for "refs/tags/v2.6.18".
+> - "origin/master" is short for "refs/remotes/origin/master".
+>
+> The full name is occasionally useful if, for example, there ever exists a tag and a branch with the same name.
 
-When we need to be precise, we will use the word &quot;branch&quot; to mean a line of development, and &quot;branch head&quot; (or just &quot;head&quot;) to mean a reference to the most recent commit on a branch. However, when no confusion will result, we often just use the term &quot;branch&quot; both for branches and for branch heads.
+## Basic Usage
 
-Branches (and tags) are pointers (ie: references) to commits. Because a branch in Git is simply a lightweight movable pointer to a commit it is very cheap. Whatever is the current branch pointer will be automatically advanced to point to future commits.
+`git branch -a` to display all branches, including remote branches (tracked locally or not)
 
-The branch/commit you are currently on is the special pointer called HEAD.
+`git branch -r` show remote branches (tracked locally or not)
 
-All references are named with a slash-separated path name starting with &quot;refs&quot;; the names we’ve been using so far are actually shorthand:
+`git show-ref` shows all references, ie: all branches and tags with their SHA1
 
-* The branch &quot;test&quot; is short for &quot;refs/heads/test&quot;.
-* The tag &quot;v2.6.18&quot; is short for &quot;refs/tags/v2.6.18&quot;.
-* &quot;origin/master&quot; is short for &quot;refs/remotes/origin/master&quot;. 
+`git branch BRANCHNAME` creates a new branch reference pointing to the current HEAD.
 
-The full name is occasionally useful if, for example, there ever exists a tag and a branch with the same name.
+`git push origin --delete featureY` delete the origin remote branch _featureX_
 
-In a nutshell you can create a branch with {{{git branch}}}, switch the working directory and that branch context with {{{git checkout}}}, record commit snapshots while in that context, then can switch back and forth easily. When you switch branches, Git replaces your working directory with the snapshot of the latest commit on that branch You merge branches together with git merge. You can easily merge multiple times from the same branch over time, or alternately you can choose to delete a branch immediately after merging it. 
+## Managing branches
 
-''Branch workflow'' - there a many different possible workflows such as this one used by some Git users: have only code that is entirely stable in their master branch — possibly only code that has been or will be released. They have another parallel branch named develop or next that they work from or use to test stability — it isn’t necessarily always stable, but whenever it gets to a stable state, it can be merged into master. It’s used to pull in topic branches (short-lived branches) when they’re ready, to make sure they pass all the tests and don’t introduce bugs. This workflow is explained further [[here|http://progit.org/book/ch3-4.html]].
+Rollback the master branch so it now points to the previous commit
 
-{{{git branch -a}}} to display all branches, including remote branches (tracked locally or not)
+```
+git branch -f master master~1
+```
 
-{{{git branch -r}}} show remote branches (tracked locally or not)
+Branches merged into master
 
-{{{git show-ref}}} shows all references, ie: all branches and tags with their SHA1
-
-{{{git branch BRANCHNAME}}} creates a new branch reference pointing to the current HEAD. 
-
-{{{git branch -f master master~1}}} &quot;rollback&quot; the master branch so it now points to the previous commit
-
-
-
-
-List branches merged into master
 ```
 git branch --merged master | grep -v master
 ```
 
-List branch not merged into master
+Branches not merged into master
+
 ```
-git  --no-merged master
+git branch  --no-merged master
 ```
 
 Delete branches merged into master
+
 ```
 git branch --merged master | grep -v master | xargs git branch -d
 ```
 
-Show any remote-tracking references (ie: origin/*) that no longer exist on the remote.
+Show any remote-tracking references (ie: origin/\*) that no longer exist on the remote.
+
 ```
 git remote prune origin --dry-run
 ```
 
-Delete remote-tracking references (ie: origin/*). Local branches will remain
+Delete remote-tracking references (ie: origin/\*). Local branches will remain
+
 ```
 git remote prune origin
 ```
