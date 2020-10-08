@@ -65,7 +65,16 @@ You can add additional subdirectories to the search path by modifying `python.an
 
 ## Understanding Type Inference
 
-See [Understanding Type Inference](https://github.com/microsoft/pyright/blob/master/docs/type-inference.md)
+Lists with mixed types (eg: `[1, "a"]`):
+
+- In basic mode with be inferred as `List[Unknown]` ie: ignored
+- If `strictListInference: "true"`, will be inferred as as the union of the elements' types, eg: `List[int | str]`
+
+See [List Expression](https://github.com/microsoft/pyright/blob/master/docs/type-inference.md#list-expressions)
+
+`Unknown` is used whenever a type cannot be inferred. It is a special form of `Any` and so will create blind spots in type checking. Its distinct from `Any` so Pyright can warn when types are not declared when the `reportUnknown*` [diagnostics](https://github.com/microsoft/pyright/blob/master/docs/configuration.md#type-check-diagnostics-settings) are enabled.
+
+For more info see [Understanding Type Inference](https://github.com/microsoft/pyright/blob/master/docs/type-inference.md).
 
 ## Import Resolution
 

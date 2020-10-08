@@ -28,6 +28,52 @@ if __name__ == '__main__':
 
 will execute when invoked at runtime.
 
+## python and sys.path
+
+> As initialized upon program startup, the first item of this list, path[0], is the directory containing the script that was used to invoke the Python interpreter.
+
+See [sys.path](https://docs.python.org/3/library/sys.html#sys.path)
+
+eg:
+
+- `python script.py` the current directory is `sys.path[0]`
+- `python myscripts/script.py` the myscripts/ dir is `sys.path[0]`
+- `python -m myscripts/script` the current directory is `sys.path[0]`
+
+## Relative imports
+
+```
+$ python cli.py
+Traceback (most recent call last):
+  File "cli.py", line 10, in <module>
+    from .utils import helper_function
+ModuleNotFoundError: No module named '__main__.utils'; '__main__' is not a package
+```
+
+`.utils` is a relative import and refers to the utils module relative to the current package (ie: current directory).
+Because python is running a script (`cli.py`), `__main__` is the name of the package.
+But `__main__` isn't a package, so the relative import can't be resolved and this error occurs.
+
+If you run this as a module:
+
+```
+$ python -m cli
+...
+    from .utils import helper_function
+ImportError: attempted relative import with no known parent package
+```
+
+This occurs because there is no package when you start python inside the same directory as `cli.py`
+
+Solutions:
+
+- Load `cli` as a module but supply the package name, eg: `python -m data_pipeline.cli`
+- Don't use relative imports, eg: replace `from .utils` -> `from data_pipeline.utils`. This will work both when running as a script or a module.
+
+See [Script vs. Module](https://stackoverflow.com/a/14132912/149412)
+
+The google python style guide [does not recommend](http://google.github.io/styleguide/pyguide.html#224-decision) relative imports.
+
 ## Troubleshooting
 
 To see all available modules: `help("modules")`
@@ -86,7 +132,7 @@ If you start with `python3 -sE` then:
 
 However, dist-packages directories will still be on the path.
 
-## ImportError: No module named X
+### ImportError: No module named X
 
 If you get the above when running `pytest` from the command line, run via the python interpreter:
 
@@ -96,48 +142,6 @@ python -m pytest [...]
 
 This will add the current directory to `sys.path`, see [Calling pytest through python -m pytest](https://docs.pytest.org/en/latest/usage.html#calling-pytest-through-python-m-pytest)
 
-## python and sys.path
+## importlib_metadata.PackageNotFoundError: No package metadata was found for package_X
 
-> As initialized upon program startup, the first item of this list, path[0], is the directory containing the script that was used to invoke the Python interpreter.
-
-See [sys.path](https://docs.python.org/3/library/sys.html#sys.path)
-
-eg:
-
-- `python script.py` the current directory is `sys.path[0]`
-- `python myscripts/script.py` the myscripts/ dir is `sys.path[0]`
-- `python -m myscripts/script` the current directory is `sys.path[0]`
-
-## Relative imports
-
-```
-$ python cli.py
-Traceback (most recent call last):
-  File "cli.py", line 10, in <module>
-    from .utils import helper_function
-ModuleNotFoundError: No module named '__main__.utils'; '__main__' is not a package
-```
-
-`.utils` is a relative import and refers to the utils module relative to the current package (ie: current directory).
-Because python is running a script (`cli.py`), `__main__` is the name of the package.
-But `__main__` isn't a package, so the relative import can't be resolved and this error occurs.
-
-If you run this as a module:
-
-```
-$ python -m cli
-...
-    from .utils import helper_function
-ImportError: attempted relative import with no known parent package
-```
-
-This occurs because there is no package when you start python inside the same directory as `cli.py`
-
-Solutions:
-
-- Load `cli` as a module but supply the package name, eg: `python -m data_pipeline.cli`
-- Don't use relative imports, eg: replace `from .utils` -> `from data_pipeline.utils`. This will work both when running as a script or a module.
-
-See [Script vs. Module](https://stackoverflow.com/a/14132912/149412)
-
-The google python style guide [does not recommend](http://google.github.io/styleguide/pyguide.html#224-decision) relative imports.
+Can occur when the `package_X.egg-info` directory for a linked editable package is missing. Reinstall the package, eg: `pip install -e package_X`
