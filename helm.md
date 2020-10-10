@@ -14,6 +14,7 @@ helm init --service-account=tiller
 ```
 
 Verify
+
 ```
 kubectl get deployments tiller-deploy -n kube-system
 
@@ -25,6 +26,7 @@ helm list
 ```
 
 Uninstall
+
 ```
 kubectl -n kube-system delete deployment tiller-deploy
 kubectl delete clusterrolebinding tiller
@@ -38,7 +40,7 @@ kubectl -n kube-system delete serviceaccount tiller
 `helm list --tiller-namespace slim` list releases in the slim namespace  
 `helm delete --purge slim-api --tiller-namespace slim` delete the release slim-api in the slim namespace
 `helm version -s --tiller-namespace slim` show the server tiller version number
- 
+
 ## Troubleshooting
 
 ### User "system:serviceaccount:kube-system:default" cannot get namespaces in the namespace "default"

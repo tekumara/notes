@@ -54,13 +54,13 @@ aws ec2 get-launch-template-data --instance-id $INSTANCE_ID | jq -r '.LaunchTemp
 List subnets with the Name tag (others ignored):
 
 ```
-aws ec2 describe-subnets | jq '.Subnets[] | {VpcId, Name: (.Tags | .[]? | select(.Key == "Name") | .Value), CidrBlock}'
+aws ec2 describe-subnets | jq '.Subnets[] | {SubnetId, VpcId, Name: (.Tags | .[]? | select(.Key == "Name") | .Value), CidrBlock}'
 ```
 
 List all subnets (as csv sorted by vpc id)
 
 ```
-aws ec2 describe-subnets | jq -r '.Subnets[] | [.VpcId, (.Tags | .[]? | select(.Key == "Name") | .Value), .CidrBlock] | @csv' | sort
+aws ec2 describe-subnets | jq -r '.Subnets[] | [.SubnetId, .VpcId, (.Tags | .[]? | select(.Key == "Name") | .Value), .CidrBlock] | @csv' | sort
 ```
 
 ## Describe security groups

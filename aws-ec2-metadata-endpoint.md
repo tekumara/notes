@@ -1,16 +1,19 @@
 # aws ec2 metadata endpoint
 
 Instance profile
+
 ```
 curl -s http://169.254.169.254/latest/meta-data/iam/info | jq -r .InstanceProfileArn
 ```
 
 Get assumes role
+
 ```
 curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/
 ```
 
 Role credentials
+
 ```
 role=my-top-secret-role
 curl "http://169.254.169.254/latest/meta-data/iam/security-credentials/$role" > /tmp/iam-security-credentials
@@ -20,11 +23,13 @@ export AWS_SESSION_TOKEN=$(jq -r '.Token' /tmp/iam-security-credentials)
 ```
 
 Region & AZ
+
 ```
 curl http://169.254.169.254/latest/meta-data/placement/availability-zone
 ```
 
 Instance type
+
 ```
 curl http://169.254.169.254/latest/meta-data/instance-type
 ```
