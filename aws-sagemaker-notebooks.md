@@ -1,18 +1,26 @@
 # AWS SageMaker Notebook instances
 
-ML instance types: t2, t3, m5, m4, c5, c5d, c4, p2, p3 with support for [elastic inference](https://docs.aws.amazon.com/sagemaker/latest/dg/ei.html).
+SageMaker Notebook instances provided authenticated browser based access to a Jupyter environment managed by AWS.
+
+Features:
+
+- CPU and GPU instance types, with support for [elastic inference](https://docs.aws.amazon.com/sagemaker/latest/dg/ei.html), at a 25-30% premium to EC2
+- Simplified console management of notebook instances
+- Authenticated pre-signed URLs for browser based access
+- Slower than EC2 to start
+- Multiple git repositories can be cloned on startup into the environment using user-supplied credentials stored in AWS Secrets Manager.
+- Lifecycle configurations which customize the environment on creation or startup.
+- An AWS managed image based on Amazon Linux AMI 2018.03
+- User EBS volumes of configurable size
+- An environment configured for building and running Docker containers
+- An older v1 version of JupyterLab
+- Multiple pre-configured conda environments
+- Jupyter logs shipped to CloudWatch
+- Internet and VPC egress (configurable)
+
+## More Details
 
 [Git repos](https://docs.aws.amazon.com/sagemaker/latest/dg/nbi-git-resource.html) are added per AWS account and accessed using a username and password stored in AWS Secrets Manager. Multiple repos can be associated. There are cloned under /home/ec2-user/SageMaker and can be used by the jupyterlab-git extension, see [Use Git Repositories in a Notebook Instance](https://github.com/awsdocs/amazon-sagemaker-developer-guide/blob/master/doc_source/git-nbi-use.md).
-
-[Lifecycle configurations](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-lifecycle-config.html) can be used to run a script when a notebook is started or created. See [these examples](https://github.com/aws-samples/amazon-sagemaker-notebook-instance-lifecycle-config-samples) eg: [stopping notebook instances that are idle](https://github.com/aws-samples/amazon-sagemaker-notebook-instance-lifecycle-config-samples/tree/master/scripts/auto-stop-idle)
-
-Jupyter logs are stored in CloudWatch.
-
-Start time is a little slow - a few minutes.
-
-Notebooks have internet egress.
-
-Docker is installed.
 
 ## Access
 
@@ -20,7 +28,7 @@ Notebook instances accessed via a presigned domain url, eg: `https://<notebook_n
 
 Ports (eg: TensorBoard etc.) on the notebook instance can be accessed via `https://<notebook_name>.notebook.<region>.sagemaker.aws/proxy/<port>`. This is enabled by [nbserverproxy](https://github.com/tekumara/sagemaker/tree/main/nbserverproxy).
 
-Notebook instances also have run the amazon SSM agent.  
+Notebook instances also have run the amazon SSM agent.
 
 ## Volumes
 
@@ -34,7 +42,11 @@ xvda    202:0    0  110G  0 disk
 xvdf    202:80   0    5G  0 disk /home/ec2-user/SageMaker
 ```
 
-Amazon Linux AMI 2018.03
+## Customization
+
+The base image (mounted at /) is Amazon Linux AMI 2018.03 and managed by AWS. Outside of _/home/ec2-user/SageMaker_ any modifications to the filesystem will not persist after shutdown.
+
+[Lifecycle configurations](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-lifecycle-config.html) can be used to run a script when a notebook is started or created. See [these examples](https://github.com/aws-samples/amazon-sagemaker-notebook-instance-lifecycle-config-samples) eg: [stopping notebook instances that are idle](https://github.com/aws-samples/amazon-sagemaker-notebook-instance-lifecycle-config-samples/tree/master/scripts/auto-stop-idle)
 
 ## IAM
 
@@ -77,7 +89,6 @@ amazonei_mxnet_p36        amazonei_tensorflow_p27   chainer_p36       mxnet_p27 
 amazonei_tensorflow2_p27  amazonei_tensorflow_p36   JupyterSystemEnv  mxnet_p36         pytorch_latest_p36  R            tensorflow_p36
 ```
 
-
 ## Jupyterlab extensions
 
 - @jupyterlab/celltags v0.2.0 enabled OK
@@ -97,7 +108,6 @@ amazonei_tensorflow2_p27  amazonei_tensorflow_p36   JupyterSystemEnv  mxnet_p36 
 - nbserverproxy
 - nbexamples.handlers
 - sagemaker_nbi_agent
-
 
 ## References
 

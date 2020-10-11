@@ -2,11 +2,15 @@
 
 A customised version of jupyterlab v1.2.17 (as of Oct 2020) with panes for git, [experiment tracking](https://docs.aws.amazon.com/sagemaker/latest/dg/gs-studio-end-to-end.html) and endpoints.
 
-Notebooks and terminals (aka image terminals) are started in docker containers and accessed by a kernel gateway. Several docker images are provided eg: Data Science, TensorFlow 2. By default the containers start on a ml.t3.medium.
+Notebooks and terminals (aka image terminals) are started in docker containers and accessed by a kernel gateway. These are known as apps. Several docker images are provided eg: Data Science, TensorFlow 2. By default the containers start on a ml.t3.medium. These are what you pay for.
 
-There is one SageMaker domain per account. A domain can have multiple users, each with their own workspace. Anyone with access to the account can open an user's workspace.
+There is one SageMaker domain per account. A domain can have multiple users, each with their own workspace and set of apps. Anyone with access to the account can open an user's workspace.
 
 User workspaces are persisted to EFS. They are mounted at _/home/sagemaker-user_
+
+## Chaning instance types
+
+See [Change an Instance Type](https://docs.aws.amazon.com/sagemaker/latest/dg/notebooks-run-and-manage-switch-instance-type.html)
 
 ## Studio setup
 
@@ -27,6 +31,12 @@ Studio starts Jupyter lab with:
 This delegates kernel management to SageMaker in a fashion [similar to Enterprise Gateway](https://jupyter-enterprise-gateway.readthedocs.io/en/latest/getting-started.html#nb2kg-server-extension).
 
 No access to the ec2 metadata endpoint.
+
+## Access
+
+Studio via a presigned domain url, eg: `https://<id>.studio.<region>.sagemaker.aws/jupyter/default/lab`
+
+Ports (eg: TensorBoard etc.) on the notebook instance can be accessed via `https://<id>.studio.<region>.sagemaker.aws/jupyter/default/proxy/<port>`.
 
 ## jupyterlab extensions
 
@@ -56,12 +66,18 @@ Located at _/opt/conda/share/jupyter/lab/extensions_
 
 ## Conda packages
 
+Installed at _/opt/conda/lib/python3.7/site-packages/_:
+
 - awscli
 - aws-jupyter-proxy
 - sagemaker-jupyter-server-tools
 - sagemaker-nb2kg
 - sagemaker-sharing
-- sagemaker-ui-proxy (depends on jupyter-server-proxy and jupyter-telemetry )
+- sagemaker-ui-proxy (depends on jupyter-server-proxy and jupyter-telemetry): establishes URL handlers for _/graphql(.*)_, _/studio/eventlog_, _/studio/context_
+
+NPM:
+
+- sagemaker-graphql-server
 
 ## Logs
 
