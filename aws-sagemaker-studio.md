@@ -1,12 +1,12 @@
-# SageMaker Studio
+# AWS SageMaker Studio
 
 A customised version of jupyterlab v1.2.17 (as of Oct 2020) with panes for git, [experiment tracking](https://docs.aws.amazon.com/sagemaker/latest/dg/gs-studio-end-to-end.html) and endpoints.
 
-Notebooks and terminals (aka image terminal )can be started in docker containers via KernelGateway. Several docker images a provided eg: Data Science, TensorFlow 2. By default the containers start on a ml.t3.medium.
+Notebooks and terminals (aka image terminals) are started in docker containers and accessed by a kernel gateway. Several docker images are provided eg: Data Science, TensorFlow 2. By default the containers start on a ml.t3.medium.
 
 There is one SageMaker domain per account. A domain can have multiple users, each with their own workspace. Anyone with access to the account can open an user's workspace.
 
-User workspaces are persisted to EFS. They are mounted at /home/sagemaker-user
+User workspaces are persisted to EFS. They are mounted at _/home/sagemaker-user_
 
 ## Studio setup
 
@@ -14,7 +14,7 @@ The system terminal is a command line for Studio itself. Studio runs on Amazon L
 
 Studio runs in a container with internet egress, which can be disabled when running [Studio in a VPC](https://aws.amazon.com/about-aws/whats-new/2020/10/now-launch-amazon-sagemaker-in-your-amazon-vpc/).
 
-Starts jupyter with:
+Studio starts Jupyter lab with:
 
 ```
 /opt/conda/bin/python /opt/conda/bin/jupyter-lab --ip 0.0.0.0 --port 8888                       \
@@ -45,7 +45,7 @@ Located at _/opt/conda/share/jupyter/lab/extensions_
 
 ## jupyter server extensions
 
-- aws_jupyter_proxy
+- [aws_jupyter_proxy](https://github.com/aws/aws-jupyter-proxy)
 - jupyter_server_proxy
 - jupyterlab
 - jupyterlab_git
