@@ -90,7 +90,7 @@ StatefulSet
 
 ## Users pods
 
-User pods run the single user notebook server. They will be created with the name `jupyter-username`. First the jupyterhub/k8s-network-tools image is started as an init container with name `block-cloud-metadata`.It [adds an iptables rule](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/commit/81c26138cbb6cf50c893b492391302dc8bcce180) to block access to the instance metadata endpoint (like [this](https://aws.amazon.com/premiumsupport/knowledge-center/ecs-container-ec2-metadata/)). Then the default [jupyterhub/k8s-singleuser-sample](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/tree/master/images/singleuser-sample) image runs. This can be configured to be a [custom image](https://zero-to-jupyterhub.readthedocs.io/en/latest/customizing/user-environment.html#choose-and-use-an-existing-docker-image). The pod has a PersistentVolumeClaim.
+User pods run the single user notebook server. They will be created with the name `jupyter-username`. First the jupyterhub/k8s-network-tools image is started as an init container with name `block-cloud-metadata`. It [adds an iptables rule](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/commit/81c26138cbb6cf50c893b492391302dc8bcce180) to block access to the instance metadata endpoint (like [this](https://aws.amazon.com/premiumsupport/knowledge-center/ecs-container-ec2-metadata/)). Then the default [jupyterhub/k8s-singleuser-sample](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/tree/master/images/singleuser-sample) image runs. This can be configured to be a [custom image](https://zero-to-jupyterhub.readthedocs.io/en/latest/customizing/user-environment.html#choose-and-use-an-existing-docker-image). The pod has a PersistentVolumeClaim.
 
 By default, Jupyter will open with the classic UI. To use the JupyterLab UI instead, add the following to config.yaml:
 
@@ -135,7 +135,7 @@ singleuser:
     iam.amazonaws.com/role: arn:aws:iam::0123456789:role/{username}-role
 ```
 
-`{username}` is expanded to the escaped, dns-label-safe username. See [spawner.py](https://github.com/jupyterhub/kubespawner/blob/d05c8978bc154d838bbaf20c31820a4ab78e7acc/kubespawner/spawner.py#L455). 
+`{username}` is expanded to the escaped, dns-label-safe username. See [spawner.py](https://github.com/jupyterhub/kubespawner/blob/d05c8978bc154d838bbaf20c31820a4ab78e7acc/kubespawner/spawner.py#L455).
 
 z2jh configures Kubespawner via the configuration keys [here](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/blob/76dc891a64f770eb38ab4fa8e9accd69110cb688/jupyterhub/files/hub/jupyterhub_config.py#L111). Kubespawner's configuration documentation is [here](https://jupyterhub-kubespawner.readthedocs.io/en/latest/spawner.html).
 

@@ -1,38 +1,48 @@
 # jupyter
 
 Install
+
 ```
 pip install jupyter
 ```
 
 Start jupyter, serving from the current directory
+
 ```
 jupyter notebook
 ```
 
 ## Config
 
-See `~/.jupyter/jupyter_notebook_config.py`
+See:
+- _~/.jupyter/jupyter_notebook_config.py_
+- /opt/conda/etc/jupyter/_
+
+
 
 ## Kernels
 
 List kernels
+
 ```
 jupyter kernelspec list
 ```
 
 The default `Python3` kernel will use the current virtualenv:
+
 ```
 Available kernels:
   python3          /Users/tekumara/.virtualenvs/my-venv/share/jupyter/kernels/python3
-```  
+```
 
 User kernels location:
-* mac os: `~/Library/Jupyter/kernels/`
-* linux: `~/.local/share/jupyter/kernels`
+
+- mac os: `~/Library/Jupyter/kernels/`
+- linux: `~/.local/share/jupyter/kernels`
 
 Virtualenv kernels:
-* `~/.virtualenvs/jupyter/share/jupyter/kernels/`
+
+- `~/.virtualenvs/jupyter/share/jupyter/kernels/`
 
 See [Kernelspec](https://jupyter-client.readthedocs.io/en/latest/kernels.html#kernelspecs)
 
@@ -56,4 +66,15 @@ Remove kernel `myenv`
 
 ```
 jupyter kernelspec uninstall myenv
+```
+
+## Extensions
+
+List extensions
+
+```
+jupyter serverextension list
+jupyter-labextension list
+jupyter-nbextension list
+jupyter-bundlerextension list
 ```
