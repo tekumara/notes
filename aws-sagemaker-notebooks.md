@@ -1,6 +1,6 @@
 # AWS SageMaker Notebook instances
 
-SageMaker Notebook instances provided authenticated browser based access to a Jupyter environment managed by AWS.
+SageMaker Notebook instances provide authenticated browser based access to a Jupyter environment running on an EC2 instance managed by AWS.
 
 Features:
 

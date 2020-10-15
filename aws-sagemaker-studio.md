@@ -8,7 +8,7 @@ There is one SageMaker domain per account. A domain can have multiple users, eac
 
 User workspaces are persisted to EFS. They are mounted at _/home/sagemaker-user_
 
-## Chaning instance types
+## Changing instance types
 
 See [Change an Instance Type](https://docs.aws.amazon.com/sagemaker/latest/dg/notebooks-run-and-manage-switch-instance-type.html)
 
