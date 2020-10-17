@@ -11,3 +11,9 @@ Describe key via alias
 ```
 aws kms describe-key --key-id arn:aws:kms:us-east-1:123456789012:alias/my-top-secret-key
 ```
+
+List aliases in the _callers_ account
+
+```
+aws kms list-aliases
+```
