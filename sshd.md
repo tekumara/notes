@@ -62,9 +62,6 @@ Aug 28 12:39:20 ip-10-97-37-75 sshd[3383]: AuthorizedKeysCommand /usr/share/ec2-
 Aug 28 12:39:20 ip-10-97-37-75 sshd[3383]: Failed publickey for ubuntu from 10.97.34.166 port 41798 ssh2: RSA SHA256:LabnPmEHz5pmTRahIBzti3fdfFlnlj23i/ifc56hsEI
 ```
 
-
-
-
 ## Reference
 
 [Ubuntu - OpenSSH Server](https://ubuntu.com/server/docs/service-openssh)

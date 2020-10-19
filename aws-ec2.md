@@ -103,3 +103,7 @@ See [Status checks for your instances](https://docs.aws.amazon.com/AWSEC2/latest
 ### Instance doesn't come up
 
 Make sure the EBS volume is mounted with the correct [device name](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/device_naming.html)
+
+### Client.InternalError: Client error on launch
+
+In Cloudtrail look for `RunInstances` events, and then any events immediately afterwards that have errored, eg: `GenerateDataKeyWithoutPlaintext` events with errorCode `AccessDenied`.
