@@ -35,19 +35,21 @@ Plugins can also be added at runtime via the Extensions View. Runtime-added plug
 
 ## Registry vs Marketplace
 
-The [Open VSX Registry](http://open-vsx.org/) is an open-source registry for VS code extensions:
-
-Microsoft prohibits the use of any non-Microsoft VS Code from accessing their marketplace in their [TOS](http://aka.ms/VSMarketplace-TOU):
+The VS Code Marketplace [TOS](http://aka.ms/VSMarketplace-TOU) prohibit use of marketplace plugins in non-Microsoft VS Code:
 
 > Marketplace Offerings are intended for use only with Visual Studio Products and Services and you may only install and use Marketplace Offerings with Visual Studio Products and Services.
 
-Plugins cannot be installed from the official VS code marketplace although forbidden by their terms of use.
+The [Open VSX Registry](http://open-vsx.org/) is an open-source registry for VS code extensions. Since many of the VS Code marketplace extensions are available open-source, it builds and publishes these for use in in Theia and other non-Microsoft VS code offerings.
 
 ## Python Plugins
 
 Theia ships with the "Python Language Basics" (`vscode.python`) [built-in](https://github.com/theia-ide/vscode-builtin-extensions). This only provides syntax highlighting, and no language server (for "go to definition") or tests.
 
 `ms-python.python` can be installed from the [open vsx registry](https://open-vsx.org/extension/ms-python/python). It usually has a slightly older version than the [official vs code marketplace](https://marketplace.visualstudio.com/items?itemName=ms-python.python).
+
+## Features missing compared to VS Code
+
+- [Show breadcrumbs](https://github.com/eclipse-theia/theia/pull/6371)
 
 ## References
 

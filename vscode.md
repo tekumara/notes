@@ -18,7 +18,22 @@ Command Shift P - Python: Discover Tests
 
 ## Debugging
 
-To debug inside dependencies, add `"justMyCode": false` to the launch config.  
+To debug inside dependencies, add `"justMyCode": false` to the launch config in `launch.json`. To enable this for all tests:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "tests",
+      "type": "python",
+      "request": "test",
+      "justMyCode": false
+    }
+  ]
+}
+```
+
 To avoid creating terminal windows every time you launch (the default) set `"console": "internalConsole"` in the launch config.
 
 ## Environment
