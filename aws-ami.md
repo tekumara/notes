@@ -65,7 +65,7 @@ aws ssm get-parameters --name /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-
 Storage types:
 
 - ebs - backed by a magnetic EBS volume
-- gp2/ssd - backed by a SSD EBS volume
+- gp2/ssd - backed by a SSD EBS volume (recommended)
 - s3 - instance-store backed (ie: temporary locally attached storage)
 
 [Virtualization types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/virtualization_types.html):
