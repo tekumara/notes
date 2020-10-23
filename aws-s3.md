@@ -10,11 +10,17 @@ Each prefix is limited to 5500 rps. Prefixes used to be determined by the start 
 
 ## Metadata
 
+Bucket tags:
+
+```
+aws s3api get-bucket-tagging --bucket dt-apps-terraform-state-ps-paas-test | jq -r '.TagSet[] | [.Key, .Value] | @tsv' | column -t
+```
+
+Object metadata (will be written to stdout):
+
 ```
 aws s3api get-object --bucket BUCKET --key KEY --version-id VERSION outfile
 ```
-
-Metdata will be written to stdout
 
 ## Multiple versions
 

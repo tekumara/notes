@@ -49,11 +49,12 @@ The url can be a git repo, in which case `:revision` is the git sha for `:tag`.
 Other commands:
 `brew audit --strict --online foo` to test formulae for adherence to Homebrew house style (will install gems on first run)
 `brew audit --new-formula foo` foo highlights more potential issues than the standard audit.
+`brew create https://example.com/foo-0.1.tar.gz` downloads the tar, creates a new formulae, and opens it in the editor
 
 Docs:
 
-- https://docs.brew.sh/Formula-Cookbook#grab-the-url
-- https://www.rubydoc.info/github/Homebrew/brew/master/Formula
+- [Formula Cookbook](https://docs.brew.sh/Formula-Cookbook)
+- [Class: Formula](https://www.rubydoc.info/github/Homebrew/brew/master/Formula)
 
 ### Troubleshooting
 
