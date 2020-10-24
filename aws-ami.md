@@ -52,7 +52,7 @@ aws ssm get-parameters-by-path --path /aws/service/ami-amazon-linux-latest/ | jq
 To get the latest amazon linux 2 GP2 AMI:
 
 ```
-aws ssm get-parameters --name /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-gp2
+aws ssm get-parameters --name /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
 ```
 
 ## AMI types
