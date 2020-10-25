@@ -120,3 +120,21 @@ pyright can be supplied a set of files on the the command line, in which case it
 ## Pylance bundled stubs
 
 Pylance bundles stubs for pandas, matplotlib and [other libraries](https://github.com/microsoft/pyright/issues/861). This stubs are incomplete. If you encounter a type error using these libraries that looks incorrect, first check the open issues on [microsoft/pylance-release](https://github.com/microsoft/pylance-release) before reporting it.
+
+## TypedDict
+
+eg:
+
+```python
+class Config(TypedDict):
+    vpc: Dict[str, str]
+```
+
+A dictionary must have the field vpc to be of type `Config`.
+
+A [non-total type](https://mypy.readthedocs.io/en/stable/more_types.html#totality) does not require all fields to be present, eg:
+
+```python
+class Config(TypedDict, total = False):
+    vpc: Dict[str, str]
+```
