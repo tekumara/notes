@@ -19,54 +19,82 @@ To install the version of python 3 provided by the distro:
 
 ```
 sudo apt-get update
-sudo apt-get install python3 python3-dev python3-venv
+sudo apt-get install -y python3 python3-dev python3-venv
 ```
 
 Use [pyenv](pyenv.md) to install version newer than the default provided by the distro.
 
 ### Installing a newer version via the package manager (not recommended)
 
-To install a later version, eg: python 3.8 on ubuntu 18.04:
+The Ubuntu package manager (apt) owns and manages the _/usr/bin_ and _/usr/lib_ dirs. apt will install the default (and usually outdated) version of python3 into _/usr/bin_ and point the _/usr/bin/python3_ symlink at it. Python packages installed via apt go into _/usr/lib/python3/dist-packages_ with wheels built for the default python version, and entry point binaries that use the _/usr/bin/python3_ symlink (ie: the default version). Do not change this symlink because it will lead to an incompatibility between the wheels, the default python interpreter, and packages installed by apt.
+
+To install a later version, eg: the latest python 3.8 on an older ubuntu distro:
 
 ```
-sudo apt-get install python3.8 python3.8-dev python3.8-venv
+# install add-apt-repository
+sudo apt-get install -y software-properties-common
+
+# add deadsnakes ppa because it has the latest minor versions
+sudo add-apt-repository ppa:deadsnakes/ppa
+
+sudo apt-get install -y python3.8 python3.8-dev python3.8-venv
 ```
 
-This will create a `/usr/bin/python3.8` interpreter. `/usr/bin/python3` will still point to the distro's default version of python 3 (or won't exist if you haven't installed python3). Python packages installed via the python package manager go into _/usr/lib/python3/dist-packages_ with wheels built for the default python version. 
+This will create a `/usr/bin/python3.8` interpreter. `/usr/bin/python3` will still point to the distro's default version of python 3.
 
-This only works if:
-
-- you directly use _/usr/bin/python3.8_ eg:
-  - when creating a virtualenv: `virtualenv --python=/usr/bin/python3.8 venv`
-  - as python3 in your shell using `alias python3=/usr/bin/python3.8`
-- AND you don't install packages, specifically ones with binaries, globally, eg: `export PIP_REQUIRE_VIRTUALENV=true`
-
-## Updating /usr/bin/python3
-
-Python packages installed via the python package manager go into _/usr/lib/python3/dist-packages_. This includes built wheels specific to the distro's default python version. While it is possible to symlink _/usr/bin/python3_ to a later version (eg: using the alternatives system) it is not recommended because it can break packages in _/usr/lib/python3/dist-packages_.
-
-Use the alternatives system to symlink _/usr/bin/python_ to python3.8:
+Create a symlink in _/usr/local/bin_ which will take precedence on the path:
 
 ```
-sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
-sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
+sudo ln -s /usr/bin/python3.8 /usr/local/bin/python3
+# update hash table of paths
+hash -r
 ```
 
-python3.8 has the higher priority and will be auto chosen. To manually change the selection: `sudo update-alternatives --config python3`
+You can now create virtualenvs (which include pip): `python3 -m venv`
 
-## pip3
+## Install pip
 
-`pip3` is installed via `python3-pip` into _/usr/bin/pip3_ and _/usr/lib/python3/dist-packages_. It runs using _/usr/bin/python_ and will install system packages into _/usr/local/lib/python3.X/dist-packages_ and user packages into _~/.local/lib/python3.X/site-packages_ where X depends on which version of python _/usr/bin/python_ points to.
+NB: This is not recommended. For most use-case, virtualenvs and pipx are better.
 
-The `python3-pip` version of pip is outdated, so you'll probably want to install a newer version:
+Install pip3 (which installs python3):
 
 ```
-/usr/bin/pip3 install --upgrade pip
+sudo apt-get install -y python3-pip
 ```
 
-This will install the latest version into _/usr/local/lib/python3.X/dist-packages_ and _/usr/local/bin/pip_ and _/usr/local/bin/pip3_.
+This installs the pip package into _/usr/lib/python3/dist-packages_ and the `pip3` entry point binary at _/usr/bin/pip3_.
+It's a rather old version (ie: 9.0.1) so you'll want to upgrade it.
 
-## Install pip (python 2) on Ubuntu
+pip will install install system packages into _/usr/local/lib/python3.X/dist-packages_ and user packages into _~/.local/lib/python3.X/site-packages_ where X depends on the version of the python interpreter being run. When using the `pip3` binary, this is the default interpreter, ie: _/usr/bin/python3_
+
+To use pip with a specific interpreter, run pip as a module:
+
+```
+# install into /usr/local/lib/python3.8/dist-packages/
+sudo python3.8 -m pip install pipx
+```
+
+Or as non-root:
+
+```
+# install into ~/.local/lib/python3.8/site-packages
+python3.8 -m pip install pipx
+
+# add ~/.local/bin_ to your PATH if its not already
+python3.8 -m pipx ensurepath
+```
+
+Binaries will be created in the adjacent _bin/_ directory and reference the python3.8 interpreter.
+
+The `python3-pip` version of pip is outdated, if you want to install a newer version for a specific python interpreter:
+
+```
+sudo /usr/local/bin/python3 -m pip install --upgrade pip
+```
+
+This will install the latest version into _/usr/local/lib/python3.X/dist-packages_ and _/usr/local/bin/pip_ and _/usr/local/bin/pip3_ using the _/usr/local/bin/python3_ interpreter.
+
+To install pip, which depends on python 2:
 
 ```
 sudo apt-get install python-pip
