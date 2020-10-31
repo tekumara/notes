@@ -52,3 +52,7 @@ Uninstall tiller, create a serviceaccount, bind it to cluster-admin, and then re
 
 Specify the tiller namespace, eg:
 `helm list --tiller-namespace slim`
+
+## Error: error installing: the server could not find the requested resource
+
+See https://github.com/helm/helm/issues/6374
