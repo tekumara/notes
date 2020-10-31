@@ -3,6 +3,7 @@
 ## Install
 
 Install Docker Desktop, which uses its own hypervisor ([HyperKit](https://github.com/moby/hyperkit) based on xhyve):
+
 ```
 brew cask install docker
 ```
@@ -16,7 +17,7 @@ Docker Desktop (aka docker-for-mac) is more integrated and recommended than the 
 
 Desktop Desktop for mac doesn't install any manpages.
 
-See https://github.com/cmosetick/docker-manpages-osx or
+See [cmosetick/docker-manpages-osx](https://github.com/cmosetick/docker-manpages-osx) or
 
 ```
 git clone https://github.com/docker/docker-ce.git
@@ -31,14 +32,17 @@ echo "MANPATH $PWD/man" | sudo tee -a /private/etc/man.conf
 ## LinuxKit
 
 Docker Desktop runs as a [LinuxKit](https://github.com/linuxkit/linuxkit) [HyperKit](https://github.com/moby/hyperkit) process. Because of this you won't see docker container processes in `ps`. To connect to the LinuxKit host, either
-* the nsenter1 image (recommended): `docker run -it --rm --privileged --pid=host justincormack/nsenter1`
-* screen: 
+
+- the nsenter1 image (recommended): `docker run -it --rm --privileged --pid=host justincormack/nsenter1`
+- screen:
+
   ```
   screen ~/Library/Containers/com.docker.docker/Data/vms/0/tty
   ```
-  NB: 
-  * to exit, kill the screen (Ctrl-a k). If you detach (Ctrl-a d), make sure your reattach to the same screen. If you attach a second screen you'll get garbled text. Killing all sessions will resolve the issue, see [[Screen]]  
-  * screen contains extra debug output that you probably don't need, scrollback doesn't work by default, and `less` doesn't use the whole screen. 
+
+  NB:
+  - to exit, kill the screen (Ctrl-a k). If you detach (Ctrl-a d), make sure your reattach to the same screen. If you attach a second screen you'll get garbled text. Killing all sessions will resolve the issue, see [[Screen]]
+  - screen contains extra debug output that you probably don't need, scrollback doesn't work by default, and `less` doesn't use the whole screen.
 
 More info on both options [here](https://gist.github.com/BretFisher/5e1a0c7bcca4c735e716abf62afad389)
 
@@ -65,10 +69,10 @@ Logs: `~/Library/Containers/com.docker.docker/Data/log/vm/`
 `docker system prune`removes all stopped containers, unused networks, dangling images, and build cache
 `docker image prune -a --filter 'until=720h'` remove all images earlier than a month ago
 
-`docker system df` will show docker disk utilization  
-`docker system df -v` show image, container and volumes size, shared size (ie: shared layers), unique size (ie: unique layers).
+`docker system df` will show docker disk utilization summary - images, containers, volumes  
+`docker system df -v` a break-down at the individual image/container/volume level including shared size (ie: shared layers), unique size (ie: unique layers).
 
-Docker Desktop stores Linux containers and images in a single, large “disk image” file, located at `~/Library/Containers/com.docker.docker/Data/vms/0/data` 
+Docker Desktop stores Linux containers and images in a single, large “disk image” file, located at `~/Library/Containers/com.docker.docker/Data/vms/0/data`
 
 `ls -klsh ~/Library/Containers/com.docker.docker/Data/vms/0/data` will show the actual disk usage vs maximum:
 
@@ -76,7 +80,8 @@ Docker Desktop stores Linux containers and images in a single, large “disk ima
 total 68167208
  68167208 -rw-r--r--  1 tekumara  staff   104G 21 Jun 17:23 Docker.raw
 ```
-Actual usage is 68MB, max is 104G
 
-See also: 
+Actual usage is 68MB, max is 104G. To increase the max: Docker - Preferences - Resources - Disk image size
+
+See also:
 [Disk utilization in Docker for Mac](https://docs.docker.com/docker-for-mac/space/)

@@ -27,7 +27,9 @@
 `sudo nsenter -t PID -n netstat -tanp` run netstat inside the namespace of process PID (which is running in a container) [ref](https://stackoverflow.com/a/40352004/149412)
 `docker stats --format "table {{printf \"%.25s\" .Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.NetIO}}\t{{.BlockIO}}" --no-stream` show relevant stats, truncating the name because it can be long
 
-`docker ps --format "table {{.Image}}\t{{.Ports}}\t{{.Names}}"` containers with nicer formatting 
+`docker ps --format "table {{.Image}}\t{{.Ports}}\t{{.Names}}"` containers with nicer formatting
+`docker container rm CONTAINER` remove container
+`docker network connect NETWORK CONTAINER` add additional network to a container
 
 ## Modify existing container config
 
