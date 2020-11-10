@@ -45,7 +45,7 @@ Install an editable version which points to the source in its original location,
 pip install -e ../spark_data_testing
 ```
 
-This will create a `spark-data-testing.egg-link` file in your site-packages dir. It has the effect of placing your source directory on `PYTHONPATH`.
+This will create a `spark-data-testing.egg-link` file in your site-packages dir. It has the effect of placing your source directory on `PYTHONPATH`. All packages under the source directory will be accessible, even if they are not included in the source dist.
 
 See [Local Project Installs](https://pip.pypa.io/en/stable/reference/pip_install/#local-project-installs)
 

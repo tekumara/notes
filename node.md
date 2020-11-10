@@ -12,6 +12,10 @@ sudo apt-get install -y nodejs
 # Using Debian, as root
 curl -sL https://deb.nodesource.com/setup_lts.x | bash -
 apt-get install -y nodejs
+
+# Using Amazon Linux
+curl -sL https://rpm.nodesource.com/setup_lts.x | sudo bash -
+sudo yum install -y nodejs
 ```
 
 NB: will install python2.7 if not present.

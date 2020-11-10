@@ -65,6 +65,8 @@ Scalars are numeric metrics (eg: loss, accuracy) logged during a run and stored 
 Guild dynamically adds images saved to the run directory as TensorBoard Image summaries (tf.summary.image).
 Guild dynamically writes summaries for flags and scalars to a `.hparams` events file so they can be compared in the HParams tab.
 
+`guild tensorboard --export-scalars scalars.csv` will export all scalars to a csv file.
+
 ## Notebooks
 
 Example of running in a notebook:

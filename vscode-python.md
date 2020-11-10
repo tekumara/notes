@@ -38,6 +38,10 @@ To disable this, set `terminal.integrated.inheritEnv` to false.
 
 If packages have been updated but Pylance hasn't picked that up yet, try renaming the file (does closing the file and opening it again work?)
 
+## Multi-Cursor
+
+Option+Click will allow you to set multiple cursor points. This can be changed to Cmd+Click via _Selection -> Switch to Cmd+Click for Multi-Cursor_
+
 ## Vscode vs IntelliJ
 
 [Vscode can't open symbols in python dependencies](https://stackoverflow.com/questions/59450270/vscode-open-symbols-in-python-dependencies)
