@@ -98,6 +98,28 @@ When an instance first starts these checks will be in the initializing phase. Yo
 
 See [Status checks for your instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html)
 
+## Encrypted volumes
+
+In order to launch an on-demand instance with an encrypted volume, the role will need a policy that allows:
+
+```
+        - Effect: Allow
+          Action:
+                - kms:GenerateDataKeyWithoutPlaintext
+                - kms:CreateGrant
+          Resource: !Ref EBSKmsKeyId
+```
+
+Or alternatively, for a service-linked role (eg: AWSServiceRoleForEC2Spot) create a grant on the key:
+
+```
+aws kms create-grant \
+   --region us-east-1 \
+   --key-id arn:aws:kms:us-east-1:123456789012:key/f6c206f9-9f53-5d2e-b40f-9c8892546738 \
+   --grantee-principal arn:aws:iam::123456789012:role/aws-service-role/spot.amazonaws.com/AWSServiceRoleForEC2Spot  \
+   --operations "GenerateDataKeyWithoutPlaintext" "CreateGrant"
+```
+
 ## Troubleshooting
 
 ### Instance doesn't come up
