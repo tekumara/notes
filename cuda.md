@@ -8,7 +8,7 @@ The [CUDA toolkit](https://developer.nvidia.com/cuda-toolkit) provides GPU-accel
 
 ## Install CUDA
 
-TensorFlow provides these [instructions for installing CUDA 10.1, cuDNN 7 on Ubunutu 18.04](https://www.tensorflow.org/install/gpu#ubuntu_1804_cuda_101) which download ~2.5GB:
+TensorFlow provides these [instructions for installing CUDA 10.1, cuDNN 7 on Ubunutu 18.04](https://www.tensorflow.org/install/gpu#ubuntu_1804_cuda_101):
 
 ```
 # Add NVIDIA package repositories
@@ -20,17 +20,19 @@ wget http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1
 sudo apt install ./nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
 sudo apt-get update
 
-# Install NVIDIA driver kernel module (~150MB)
-sudo apt-get install --no-install-recommends nvidia-driver-450
-
-
-# Install development and runtime libraries (~4GB)
+# Install NVIDIA driver kernel module, development and runtime libraries (~2.5GB download)
 sudo apt-get install --no-install-recommends \
     cuda-10-1 \
     libcudnn7=7.6.5.32-1+cuda10.1  \
     libcudnn7-dev=7.6.5.32-1+cuda10.1
 
 # Reboot. Check that GPUs are visible using the command: nvidia-smi
+```
+
+Test:
+
+```
+python -c "import tensorflow as tf; hello = tf.constant('hello world');"
 ```
 
 Make sure you reboot at the end, because the final cuda package install updates the nvidia driver.
@@ -45,6 +47,18 @@ For other combinations see:
 ## Container images
 
 [nvidia/container-images/cuda](https://gitlab.com/nvidia/container-images/cuda) contains [Dockerfiles](https://gitlab.com/nvidia/container-images/cuda/-/tree/master/dist) for many distros and versions, eg: [nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04](https://gitlab.com/nvidia/container-images/cuda/-/blob/master/dist/10.1/ubuntu18.04-x86_64/runtime/cudnn7/Dockerfile)
+
+To test (requires the Nvidia Container Toolkit to be installed):
+
+```
+docker run --gpus all --rm nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04 nvidia-smi
+```
+
+To diagnose:
+
+```
+nvidia-container-cli -k -d /dev/tty info
+```
 
 See also:
 
