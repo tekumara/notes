@@ -52,9 +52,26 @@ hash -r
 
 You can now create virtualenvs (which include pip): `python3 -m venv`
 
-## Install pip
+Caveat: _/usr/lib/python3/dist-packages_ will be on the PYTHONPATH for all python3 interpreters.
 
-NB: This is not recommended. For most use-case, virtualenvs and pipx are better.
+## Install pip directly
+
+```
+# install pip directly, rather than installing the deb package which depends on and installs the distro's
+# older python3 package
+# use sudo to make sure it is installed into dist-packages ie: /usr/local/lib/python3.7/dist-packages/
+curl -s https://bootstrap.pypa.io/get-pip.py | sudo -H /usr/bin/python3.7
+```
+
+pip will install system packages into _/usr/local/lib/python3.X/dist-packages_ and user packages into _~/.local/lib/python3.X/site-packages_ where X depends on the version of the python interpreter being run. Entrypoints will be created in the adjacent _bin/_ directory and reference the python3.X interpreter. When run as root using ie: `sudo pip` system packages will be installed.
+
+Beware: _/usr/local/bin_ is a shared directory and can have entrypoints from different python versions.
+
+To run a module (eg: `pip`) using a specific python version: `/usr/lib/python3.7 -m pip`
+
+## Install pip via the pip package
+
+NB: This is not recommended. For most use-case, use the approach above, virtualenvs or pipx.
 
 Install pip3 (which installs python3):
 
@@ -62,31 +79,9 @@ Install pip3 (which installs python3):
 sudo apt-get install -y python3-pip
 ```
 
-This installs the pip package into _/usr/lib/python3/dist-packages_ and the `pip3` entry point binary at _/usr/bin/pip3_.
-It's a rather old version (ie: 9.0.1) so you'll want to upgrade it.
+This installs the pip package into _/usr/lib/python3/dist-packages_ and the `pip3` entry point binary at _/usr/bin/pip3_. The `pip3` binary uses the _/usr/bin/python3_ interpreter.
 
-pip will install install system packages into _/usr/local/lib/python3.X/dist-packages_ and user packages into _~/.local/lib/python3.X/site-packages_ where X depends on the version of the python interpreter being run. When using the `pip3` binary, this is the default interpreter, ie: _/usr/bin/python3_
-
-To use pip with a specific interpreter, run pip as a module:
-
-```
-# install into /usr/local/lib/python3.8/dist-packages/
-sudo python3.8 -m pip install pipx
-```
-
-Or as non-root:
-
-```
-# install into ~/.local/lib/python3.8/site-packages
-python3.8 -m pip install pipx
-
-# add ~/.local/bin_ to your PATH if its not already
-python3.8 -m pipx ensurepath
-```
-
-Binaries will be created in the adjacent _bin/_ directory and reference the python3.8 interpreter.
-
-The `python3-pip` version of pip is outdated, if you want to install a newer version for a specific python interpreter:
+The `python3-pip` version of pip is outdated (ie: 9.0.1), if you want to install a newer version for a specific python interpreter:
 
 ```
 sudo /usr/local/bin/python3 -m pip install --upgrade pip
