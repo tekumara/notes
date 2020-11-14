@@ -6,40 +6,22 @@ The [CUDA toolkit](https://developer.nvidia.com/cuda-toolkit) provides GPU-accel
 
 [cuDNN](https://developer.nvidia.com/cudnn) - a GPU-accelerated library of primitives for deep neural networks.
 
-## Install CUDA
+## Install CUDA on Ubuntu
 
-TensorFlow provides these [instructions for installing CUDA 10.1, cuDNN 7 on Ubunutu 18.04](https://www.tensorflow.org/install/gpu#ubuntu_1804_cuda_101):
+First install the nvidia kernel drivers.
 
-```
-# Add NVIDIA package repositories
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-repo-ubuntu1804_10.1.243-1_amd64.deb
-sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
-sudo dpkg -i cuda-repo-ubuntu1804_10.1.243-1_amd64.deb
-sudo apt-get update
-wget http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
-sudo apt install ./nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
-sudo apt-get update
+Then install CUDA, either
 
-# Install NVIDIA driver kernel module, development and runtime libraries (~2.5GB download)
-sudo apt-get install --no-install-recommends \
-    cuda-10-1 \
-    libcudnn7=7.6.5.32-1+cuda10.1  \
-    libcudnn7-dev=7.6.5.32-1+cuda10.1
+1. directly, eg: the [AWS Deep Learning AMI](https://aws.amazon.com/marketplace/pp/B07Y3VDBNS))
+2. via apt, eg: [nvidia/container-images/cuda](https://gitlab.com/nvidia/container-images/cuda/-/tree/master/dist/10.1/ubuntu18.04-x86_64)).
 
-# Reboot. Check that GPUs are visible using the command: nvidia-smi
-```
-
-Test:
+Test
 
 ```
 python -c "import tensorflow as tf; hello = tf.constant('hello world');"
 ```
 
-Make sure you reboot at the end, because the final cuda package install updates the nvidia driver.
-
-Check the [tensorflow repo issues](https://github.com/tensorflow/tensorflow/issues) for troubleshooting.
-
-For other combinations see:
+See:
 
 - [CUDA Toolkit Archive](https://developer.nvidia.com/cuda-toolkit-archive)
 - [cuDNN archive](https://developer.nvidia.com/rdp/cudnn-archive)
