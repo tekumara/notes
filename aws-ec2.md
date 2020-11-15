@@ -89,6 +89,18 @@ aws ec2 create-volume --size 10 --availability-zone us-east-1a --tag-specificati
 
 Allow you to supply values for AMI, IAM instance profile, instance type (including spot), subnet, security group, key pair and volumes. You can override these settings as needed when your launch an instance from the template.
 
+List launch templates
+
+```
+aws ec2 describe-launch-templates
+```
+
+Describe default version
+
+```
+aws ec2 describe-launch-template-versions --launch-template-name compute-ubuntu --versions '$Default' | jq '.LaunchTemplateVersions[0]'
+```
+
 ## Status checks
 
 Instance Status - software and network configuration, requiring your involvement to repair
@@ -129,3 +141,7 @@ Make sure the EBS volume is mounted with the correct [device name](https://docs.
 ### Client.InternalError: Client error on launch
 
 In Cloudtrail look for `RunInstances` events, and then any events immediately afterwards that have errored, eg: `GenerateDataKeyWithoutPlaintext` events with errorCode `AccessDenied`.
+
+##  An error occurred (Unsupported) when calling the StartInstances operation: The requested configuration is currently not supported. Please check the documentation for supported configurations.
+
+If EBS optimized is enabled and you change the instance type to t2.*, you'll get this error when trying to start the instance.

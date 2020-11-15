@@ -53,7 +53,25 @@ dpkg-query -W python python3.5
 Show package version and dependencies
 
 ```
-dpkg-query -W -f='${binary:Package}\t${Version}\t${Depends}\n' kafkacat`
+dpkg-query -W -f='${binary:Package}\t${Version}\t${Depends}\n' curl
+```
+
+Show package dependents
+
+```
+apt-cache rdepends curl
+```
+
+Show package dependents that are currently installed
+
+```
+apt-cache rdepends --installed curl
+```
+
+Show transitive dependencies at a dot graph
+
+```
+debtree curl
 ```
 
 List packages matching wildcard
@@ -76,7 +94,7 @@ Search for package or package description
 apt-cache search "Text-to-search"`
 ```
 
-Show all package versions available across all repos, with the repo url
+Show all package versions, and thier url, across all repos
 
 ```
 apt-cache showpkg PACKAGENAME

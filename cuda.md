@@ -6,6 +6,8 @@ The [CUDA toolkit](https://developer.nvidia.com/cuda-toolkit) provides GPU-accel
 
 [cuDNN](https://developer.nvidia.com/cudnn) - a GPU-accelerated library of primitives for deep neural networks.
 
+The [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/overview.html) allows docker containers to use GPUs.
+
 ## Install CUDA on Ubuntu
 
 First install the nvidia kernel drivers.
@@ -14,6 +16,8 @@ Then install CUDA, either
 
 1. directly, eg: the [AWS Deep Learning AMI](https://aws.amazon.com/marketplace/pp/B07Y3VDBNS))
 2. via apt, eg: [nvidia/container-images/cuda](https://gitlab.com/nvidia/container-images/cuda/-/tree/master/dist/10.1/ubuntu18.04-x86_64)).
+
+See [NVIDIA CUDA Installation Guide for Linux](https://docs.nvidia.com/cuda/archive/10.1/cuda-installation-guide-linux/index.html#ubuntu-installation)
 
 Test
 

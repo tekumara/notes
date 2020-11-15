@@ -1,5 +1,6 @@
 # AMIs
 
+
 ## [Deep Learning Base AMI (Ubuntu 18.04) Version 31.0](https://aws.amazon.com/marketplace/pp/B077GCZ4GR)
 
 - us-east-1 ami-063f381b07ea97834
@@ -9,9 +10,12 @@
 - Default CUDA version is 10.0 (ie: the _/usr/local/cuda_ symlink)
 - Libraries: cuDNN, NCCL, Intel MKL-DNN
 - Docker version 19.03.13, Nvidia Container Toolkit v1.3.0
+- [Elastic Fabric Adapter (EFA)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html) network device, can be used on [supported instance types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html#efa-instance-types)
 - Python 3.6.9
 - [GPU monitoring in cloudwatch](https://aws.amazon.com/blogs/machine-learning/monitoring-gpu-utilization-with-amazon-cloudwatch/) installed in \_~/tools/GPUCloudWatchMonitor/gpumon.py
 - SSM agent
+
+For more info see the [release notes](https://aws.amazon.com/releasenotes/aws-deep-learning-base-ami-ubuntu-18-04-version-31-0/)
 
 ## [Deep Learning AMI (Ubuntu) v12.0](https://aws.amazon.com/marketplace/pp/B077GCH38C)
 

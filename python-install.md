@@ -52,7 +52,23 @@ hash -r
 
 You can now create virtualenvs (which include pip): `python3 -m venv`
 
-Caveat: _/usr/lib/python3/dist-packages_ will be on the PYTHONPATH for all python3 interpreters.
+**Caveat**: _/usr/lib/python3/dist-packages_ will be on the PYTHONPATH.
+
+deadsnake/deb python packages contain a [modified version of site.py](https://github.com/deadsnakes/python3.7/blob/4dc651768517acccad5f5081fff2de3e4d5900cd/debian/patches/distutils-install-layout.diff#L243) which adds _/usr/lib/python3/dist-packages_ to PYTHONPATH. Any `python3-*` deb packages will install into _/usr/lib/python3/dist-packages_ and will appear on the PYTHONPATH of this version. To have a completely isolated version of python, install from source, eg: like [python-build](https://github.com/pyenv/pyenv/tree/master/plugins/python-build) or [docker-library/python](https://github.com/docker-library/python).
+
+## Python builds
+
+Python can be built with [profile guided optimizations (PGO)](https://github.com/deadsnakes/python3.7#profile-guided-optimization) by using the `--enable-optimizations` flag. This increases the build time but improves runtime performance. The [profiling workloads can be configured](https://github.com/docker-library/python/issues/160#issuecomment-509426916).
+
+To see what args were used to build the interpreter:
+
+```
+import sysconfig; sysconfig.get_config_var('CONFIG_ARGS')
+```
+
+The default ubuntu python packages don't have `--enable-optimizations`. The deadsnakes ppa packages and the python docker images do.
+
+`--enable-shared` builds a shared library (eg: libpython3.6m.so.1.0) that can be dynamically linked by programs that embed python. This is enabled in the ubuntu packages (distro default & deadsnakes ppa) and the official docker image.
 
 ## Install pip directly
 
