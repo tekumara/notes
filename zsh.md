@@ -6,7 +6,7 @@ All man pages: `man zshall`
 
 `echo $ZSH_VERSION` current shell's version  
 `/bin/zsh --version` macOS version  
-`/usr/local/bin/zsh --version` homebrew version  
+`/usr/local/bin/zsh --version` homebrew version
 
 ## Use Homebrew zsh
 
@@ -25,18 +25,20 @@ chsh -s /usr/local/bin/zsh
 ## zshrc
 
 User config files ([ref](https://unix.stackexchange.com/questions/71253/what-should-shouldnt-go-in-zshenv-zshrc-zlogin-zprofile-zlogout))
+
 ```
 .zshenv → [.zprofile if login] → [.zshrc if interactive] → [.zlogin if login] → [.zlogout sometimes]
 ```
 
 See
-* [ArchLinux Zsh - Startup/Shutdown files](https://wiki.archlinux.org/index.php/Zsh#Startup/Shutdown_files)
-* [An Introduction to the Z Shell - Startup Files](http://zsh.sourceforge.net/Intro/intro_3.html)
 
-System config files on macOS:  
+- [ArchLinux Zsh - Startup/Shutdown files](https://wiki.archlinux.org/index.php/Zsh#Startup/Shutdown_files)
+- [An Introduction to the Z Shell - Startup Files](http://zsh.sourceforge.net/Intro/intro_3.html)
 
-*/etc/zprofile*  
-*/etc/zshrc* - sets a few things like the location of zsh_history
+System config files on macOS:
+
+_/etc/zprofile_  
+_/etc/zshrc_ - sets a few things like the location of zsh_history
 
 ## completion
 
@@ -63,22 +65,23 @@ code <TAB>(eval):1: command not found: _code
 
 A completion that used to exist has been removed.
 To fix remove the completions:
+
 ```
 rm ~/.zcompdump
 ```
 
 ## plugins
 
-* {name}.plugin.zsh (antigen style)
-* {name}/init.zsh (prezto style)
-* *zsh (zsh style)
-* *sh (shell style)  
+- {name}.plugin.zsh (antigen style)
+- {name}/init.zsh (prezto style)
+- \*zsh (zsh style)
+- \*sh (shell style)
 
 [ref](https://github.com/jedahan/zr/pull/29/files)
 
 ## options
 
-`setopt` lists options. 
+`setopt` lists options.
 
 [Z Shell Manual - Options](http://zsh.sourceforge.net/Doc/Release/Options.html)
 

@@ -66,7 +66,9 @@ Logs: `~/Library/Containers/com.docker.docker/Data/log/vm/`
 
 ## Disk usage
 
-`docker system prune`removes all stopped containers, unused networks, dangling images, and build cache
+`docker system prune` removes all stopped containers, unused networks, dangling images, and build cache
+`docker container prune` remove all stopped containers
+`docker iamge prune` remove all dangling images
 `docker image prune -a --filter 'until=720h'` remove all images earlier than a month ago
 
 `docker system df` will show docker disk utilization summary - images, containers, volumes  

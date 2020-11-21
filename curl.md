@@ -2,7 +2,8 @@
 
 ## Usage
 
-`-o/--output <file>` Write output to `<file>` instead of stdout  
+`-o/--output <file>` Write output to `<file>` instead of stdout
+`-O` write to local file using name extracted from the URL
 `-s/--silent` Silent or quiet mode. Don’t show progress meter or error messages. Makes curl mute.  
 `-w <format>` write out the following
 
@@ -12,6 +13,7 @@
 `-v` show request and response headers  
 `-L` follow location redirects  
 `-f` on server errors, fail silently with no output and exit code 22
+`-S` when used with `-s` show an error message if curl fails
 
 [man page](http://curl.haxx.se/docs/manpage.html)
 

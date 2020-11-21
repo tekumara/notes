@@ -3,13 +3,13 @@
 ## Features
 
 [Base](https://github.com/sorin-ionescu/prezto/blob/a3a51bdf6c485ff60153e80b66915626fcbacd4f/runcoms/zpreztorc#L32):
-* [environment](https://github.com/sorin-ionescu/prezto/tree/master/modules/environment) - bracketed paste, url quote magic, unsetopt HUP
+* [environment](https://github.com/sorin-ionescu/prezto/tree/master/modules/environment) - general shell options, quote pasted urls, colorize man pages (termcap), unsetopt HUP
 * [terminal](https://github.com/sorin-ionescu/prezto/tree/master/modules/terminal) - sets terminal window title to the current directory (the pure theme does this anyway)
 * [editor](https://github.com/sorin-ionescu/prezto/tree/master/modules/editor) - sets editor specific key bindings options and variables.
 * [history](https://github.com/sorin-ionescu/prezto/tree/master/modules/histhistory) - set share history across sessions and other options
-* [directory](https://github.com/sorin-ionescu/prezto/tree/master/modules/directory) - sets directory options and defines directory aliases.
-* [utility](https://github.com/sorin-ionescu/prezto/tree/master/modules/utility) - coloured directory listings (ie: `ls -G`), `ll`, highlighting, spell correction
-* [completion](https://github.com/sorin-ionescu/prezto/tree/master/modules/completion) - zsh-completions
+* [directory](https://github.com/sorin-ionescu/prezto/tree/master/modules/directory) - sets directory options (eg: EXTENDED_GLOB)and prevents > from overwriting existing files.
+* [utility](https://github.com/sorin-ionescu/prezto/tree/master/modules/utility) - coloured directory listings (ie: `ls -G`), `ll`, safe ops that ask the user for confirmation before performing a destructive operation, spell correction
+* [completion](https://github.com/sorin-ionescu/prezto/tree/master/modules/completion) - [zsh-completions](https://github.com/zsh-users/zsh-completions) with customisation.
 * [prompt](https://github.com/sorin-ionescu/prezto/tree/master/modules/prompt) - nice prompts, eg: [pure](https://github.com/sindresorhus/pure)
 
 Others:

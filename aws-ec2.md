@@ -112,7 +112,7 @@ See [Status checks for your instances](https://docs.aws.amazon.com/AWSEC2/latest
 
 ## Encrypted volumes
 
-In order to launch an on-demand instance with an encrypted volume, the role will need a policy that allows:
+In order to launch an on-demand instance with an encrypted volume, the role launching the instance will need a policy that allows:
 
 ```
         - Effect: Allow
@@ -131,6 +131,8 @@ aws kms create-grant \
    --grantee-principal arn:aws:iam::123456789012:role/aws-service-role/spot.amazonaws.com/AWSServiceRoleForEC2Spot  \
    --operations "GenerateDataKeyWithoutPlaintext" "CreateGrant"
 ```
+
+The instance profile used by the instance does not need access to the KMS key.
 
 ## Troubleshooting
 

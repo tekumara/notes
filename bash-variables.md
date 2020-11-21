@@ -8,7 +8,7 @@ Variables assigned in _.bashrc_ will be only available to the current shell, and
 
 Set a variable in the context of the current shell only:
 
-```
+```bash
 # foo1 is not exported, so isn't in the environment of a subprocess
 foo1=bar && python -c 'import os; print(os.environ["foo1"])'
 
@@ -24,22 +24,25 @@ env | grep -i foo1
 
 Set a shell variable and make it available to child processes:
 
-```
+```bash
 export foo2=bar && python -c 'import os; print(os.environ["foo2"])'
+bar
+
+echo $foo2
 bar
 ```
 
 Modify the environment of a subprocess started from the shell:
 
-```
+```bash
 foo3=bar python -c 'import os; print(os.environ["foo3"])'
 bar
 
 # equivalent
-env foo3=bar python -c 'import os; print(os.environ["foo3"])
+env foo3=bar python -c 'import os; print(os.environ["foo3"])'
 bar
 
-# NB: foo is not set in the shell
+# NB: but foo3 is not set in the shell
 echo $foo3
 
 # Take the COLUMNS shell var and export it to a subprocess that doesn't write to a terminal (eg: is piped)
@@ -49,7 +52,7 @@ os.terminal_size(columns=151, lines=24)
 
 Note that `echo` is a bash builtin so behaves differently:
 
-```
+```bash
 # echo can see shell variables
 foo4=bar && echo $foo4
 bar
