@@ -24,7 +24,7 @@ sudo apt-get install -y python3 python3-dev python3-venv
 
 Use [pyenv](pyenv.md) to install version newer than the default provided by the distro.
 
-### Installing a newer version via the package manager (not recommended)
+### Installing a newer version via the package manager
 
 The Ubuntu package manager (apt) owns and manages the _/usr/bin_ and _/usr/lib_ dirs. apt will install the default (and usually outdated) version of python3 into _/usr/bin_ and point the _/usr/bin/python3_ symlink at it. Python packages installed via apt go into _/usr/lib/python3/dist-packages_ with wheels built for the default python version, and entry point binaries that use the _/usr/bin/python3_ symlink (ie: the default version). Do not change this symlink because it will lead to an incompatibility between the wheels, the default python interpreter, and packages installed by apt.
 
@@ -52,9 +52,11 @@ hash -r
 
 You can now create virtualenvs (which include pip): `python3 -m venv`
 
-**Caveat**: _/usr/lib/python3/dist-packages_ will be on the PYTHONPATH.
+## Dist packages
 
-deadsnake/deb python packages contain a [modified version of site.py](https://github.com/deadsnakes/python3.7/blob/4dc651768517acccad5f5081fff2de3e4d5900cd/debian/patches/distutils-install-layout.diff#L243) which adds _/usr/lib/python3/dist-packages_ to PYTHONPATH. Any `python3-*` deb packages will install into _/usr/lib/python3/dist-packages_ and will appear on the PYTHONPATH of this version. To have a completely isolated version of python, install from source, eg: like [python-build](https://github.com/pyenv/pyenv/tree/master/plugins/python-build) or [docker-library/python](https://github.com/docker-library/python).
+deadsnake/deb python packages contain a [modified version of site.py](https://github.com/deadsnakes/python3.7/blob/4dc651768517acccad5f5081fff2de3e4d5900cd/debian/patches/distutils-install-layout.diff#L243) which uses the dist-packages rather than site-packages subdirectory. This means _/usr/lib/python3/dist-packages_ appears on PYTHONPATH. Any `python3-*` deb packages will install into _/usr/lib/python3/dist-packages_.
+
+Any python installations with a prefix other than _/usr_ will be isolated from this distribution installed packages, eg: installations in _/usr/local_ or virtualenvs.
 
 ## Python builds
 
@@ -66,9 +68,13 @@ To see what args were used to build the interpreter:
 import sysconfig; sysconfig.get_config_var('CONFIG_ARGS')
 ```
 
-The default ubuntu python packages don't have `--enable-optimizations`. The deadsnakes ppa packages and the python docker images do.
+NB: this is loaded from _<sys.prefix>/python3.X/\_sysconfigdata_m_linux_x86_64-linux-gnu.py_
 
-`--enable-shared` builds a shared library (eg: libpython3.6m.so.1.0) that can be dynamically linked by programs that embed python. This is enabled in the ubuntu packages (distro default & deadsnakes ppa) and the official docker image.
+The default ubuntu python packages aren't built with `--enable-optimizations`. The deadsnakes ppa packages and the [python docker images](https://github.com/docker-library/python) do.
+
+`--enable-shared` builds a shared library (eg: libpython3.6m.so.1.0) that can be dynamically linked by programs that embed python. This is enabled in the ubuntu packages (distro default & deadsnakes ppa) and the official docker image. The python docker images used `--enable-shared`.
+
+[python-build](https://github.com/pyenv/pyenv/tree/master/plugins/python-build) will install python from source.
 
 ## Install pip directly
 
