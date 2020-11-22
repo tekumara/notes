@@ -7,8 +7,8 @@
 `-s/--silent` Silent or quiet mode. Don’t show progress meter or error messages. Makes curl mute.  
 `-w <format>` write out the following
 
-* `%{time_total}` time until the transfer completed, in secs
-* `%{size_download}` size of the response (header and body), in bytes
+- `%{time_total}` time until the transfer completed, in secs
+- `%{size_download}` size of the response (header and body), in bytes
 
 `-v` show request and response headers  
 `-L` follow location redirects  
@@ -75,6 +75,26 @@ Basic auth, password:
 
 ```bash
 curl -u user:pass https://protected.url
+```
+
+## Script Usage
+
+When running in a script disable the progress bar, show errors, set error exit code, and follow redirects:
+
+```
+curl -fsSL myapp | sh
+```
+
+When downloading a file in a script, using the name in the URL:
+
+```
+curl -fsSLO "https://myapp.net/myapp.tar.gz"
+```
+
+Or specify your own file name
+
+```
+curl -fsSLo archive.gz "https://myapp.net/myapp.tar.gz"
 ```
 
 ## Detailed timings
