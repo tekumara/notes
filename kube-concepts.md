@@ -8,7 +8,7 @@
 
 [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/) guarantees the availability of a specified number of pods.
 
-A [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) describes the creation or update of a ReplicaSet.
+A [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) describes the creation or update of a ReplicaSet. It defines a new ReplicaSet and old ReplicaSet.
 
 [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) - a pod that runs across all (or a subset of) nodes.
 
@@ -18,9 +18,16 @@ A [PodDisruptionBudget](https://kubernetes.io/docs/concepts/workloads/pods/disru
 
 ## Networking
 
-[Service](https://kubernetes.io/docs/concepts/services-networking/) exposes a set of pods via a network address, either internally with the cluster or externally. When a Service object has a selector, the Service controller will maintain an Endpoint object of internal pod IP addresses targeted by the service. See [Defining a Service](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service). A `ClusterIP` type will expose the service internally. `NodePort` and `LoadBalancer` exposes the service externally. `LoadBalancer` will program an external cloud load balancer.
+[Service](https://kubernetes.io/docs/concepts/services-networking/) exposes a set of pods via a network address, either internally with the cluster or externally. When a Service object has a selector, the Service controller will maintain an Endpoints object of internal pod IP addresses targeted by the service. See [Defining a Service](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service).A `ClusterIP` type will expose the service internally. A ClusterIP is made routable within the cluster with iptables, and is not routable from outside the cluster. `NodePort` and `LoadBalancer` exposes the service externally. `LoadBalancer` will program an external cloud load balancer.
+
+An [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) resource configures an [Ingress Controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) with a path-based/virtual host routing rule, and optional SSL/TLS termination. It can be used to expose HTTP/S routes from outside the cluster to services within the cluster. 
+
 
 [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) control ingress and egress to a pod. A Kubernetes cluster may have partial, full, or no support for network policies. Kubernetes will silently ignore policies that aren’t supported.
+
+
+See also:
+- [Connecting Applications with Services](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/)
 
 ## Storage
 

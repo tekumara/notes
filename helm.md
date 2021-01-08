@@ -37,9 +37,16 @@ kubectl -n kube-system delete serviceaccount tiller
 
 `helm install` install a chart  
 `helm upgrade --install` upgrade a release, or install if a release of this name doesn't exist  
-`helm list --tiller-namespace slim` list releases in the slim namespace  
-`helm delete --purge slim-api --tiller-namespace slim` delete the release slim-api in the slim namespace
-`helm version -s --tiller-namespace slim` show the server tiller version number
+`helm --tiller-namespace slim list` list current releases in the slim namespace
+`helm --tiller-namespace slim history slim-api` list the history of releases of slim-api
+`helm --tiller-namespace slim get slim-api` describe release slim-api
+`helm --tiller-namespace slim delete --purge slim-api` delete the release slim-api in the slim namespace
+`helm --tiller-namespace slim version -s` show the server tiller version number
+`helm --tiller-namespace slim rollback slim-api 0` rollback to previous release of slim-api
+`helm repo list` list chart repos
+`helm repo update` get lastest version of charts from repos
+`helm inspect $repo/$chart` inspect chart $chart from repo $repo
+`helm template mychart --values values.yaml` produce a template
 
 ## Troubleshooting
 
