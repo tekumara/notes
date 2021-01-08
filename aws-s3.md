@@ -133,7 +133,7 @@ a70b8bf27f12d16678031c31cb9c485edc3404af6d850ea0ce414ed11f7a7c4e my-amazing-buck
 
 ## Object-level logging
 
-Log data events (eg: GetObject and PutObject) to CloudTrail. \$0.10 per 100,000 events + S3 bucket costs. In addition you can then create Cloudwatch rules, trigger alerts/lambdas etc. They don't contain IP addresses:
+Log data events (eg: GetObject and PutObject) to CloudTrail. \$0.10 per 100,000 events + S3 bucket costs. In addition you can then create Cloudwatch rules, trigger alerts/lambdas etc.
 
 ```
 {"requestID": "E88A8280F1A9D9F9", "responseElements": null, "sharedEventID": "4f20382f-7c5a-4b50-8092-3d6b65e42921", "recipientAccountId": "123456789012", "readOnly": false, "additionalEventData": {"x-amz-id-2": "QAyufnNHbCgGd5A7XnQfK43BseLBD4p16pZGOAoI2xyaEbYoJycfep0H2SXldFRcTywS+H4hZ1k="}, "userAgent": "s3.amazonaws.com", "eventTime": "2018-07-04T04:29:24Z", "resources": [{"type": "AWS::S3::Object", "ARN": "arn:aws:s3:::my-amazing-bucket/s3-logs-my-amazing-bucket2018-07-04-04-29-24-42BE2810684123A8"}, {"type": "AWS::S3::Bucket", "accountId": "123456789012", "ARN": "arn:aws:s3:::my-amazing-bucket"}], "eventName": "PutObject", "eventType": "AwsApiCall", "requestParameters": {"bucketName": "my-amazing-bucket", "key": "s3-logs-my-amazing-bucket2018-07-04-04-29-24-42BE2810684123A8", "accessControlList": {"x-amz-grant-full-control": "id=\"3272ee65a908a7677109fedda345db8d9554ba26398b2ca10581de88777e2b61\", id=\"a70b8bf27f12d16678031c31cb9c485edc3404af6d850ea0ce414ed11f7a7c4e\""}}, "eventVersion": "1.05", "eventID": "8b7b0930-f689-40f1-905b-c09bad9a4f8a", "awsRegion": "ap-southeast-2", "eventSource": "s3.amazonaws.com", "sourceIPAddress": "s3.amazonaws.com", "userIdentity": {"type": "AWSService", "invokedBy": "s3.amazonaws.com"}}

@@ -20,4 +20,4 @@ To change another branch to point to another commit, without affecting the curre
 
 eg:
 
-`git branch -f other some_other_commit`
+`git branch -f mybranch some_other_commit`
