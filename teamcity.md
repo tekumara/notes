@@ -20,6 +20,30 @@ To take effect this change must be merged to the default branch, or change the d
 
 See [Defining Settings to Apply to Builds](https://www.jetbrains.com/help/teamcity/2020.1/storing-project-settings-in-version-control.html#Defining+Settings+to+Apply+to+Builds) for a list of which changes can and can't take effect on the build.
 
+VCS changes to build configurations that aren't triggered will not be updated in the UI until they next run.
+
 ## View current build configuration settings
 
 From Build Configuration Home -> More -> Settings. See also View DSL.
+
+## Triggers and dependencies
+
+A trigger is needed to start a build, but if a build has dependencies it will wait in the queue with status "Build dependencies have not been built yet" until its dependency complete and then it runs. See the "Dependencies" tab on the queued build, or the Build Chains page of the Build Configuration for details.
+
+## Troubleshooting
+
+### Pending changes are not detected
+
+First check the VCS root and see when the period scheduler last ran (via Edit configuration - General Settings - Version Control Settings), eg:
+
+```
+(git) awesome-app belongs to Team Awesome / Amazing App
+    Commit hook is inactive 
+    Latest check for changes: 14:54 (periodical run by the schedule)
+    Changes checking interval: 1m
+```
+
+Manually trigger a check for changes via _Actions - Check for pending changes_ (might take a minute or two). This should bring the periodic scheduler back to life.
+
+If the commit hook is inactive, reinstate it.
+
