@@ -1,4 +1,14 @@
-# ps (GNU)
+# ps
+
+## ps (BSD)
+
+Show RSS
+
+```
+ps -m -o pid,vsz,rss,%mem,command
+```
+
+## ps (GNU)
 
 Human-friendly memory stats ([ref]()):
 

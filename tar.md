@@ -53,7 +53,7 @@ spark-apps/application_1522545774711_0002
 decompress in the current directory, and keep the original file:
 
 ```
-tar -zxvf archive_name.tar.gz
+tar -zxvf /tmp/archive_name.tar.gz
 ```
 
 decompress (in this case bzip2)
@@ -66,6 +66,12 @@ decompress to /tmp
 
 ```
 tar -xvf archive_name.tar.gz -C /tmp
+```
+
+decompress a single file (stackit) from the archive
+
+```
+tar zxf /tmp/stackit.tar.gz -C /usr/bin stackit    
 ```
 
 decompress first lines of a tar.bz2
