@@ -31,7 +31,7 @@ aws iam list-roles | jq '.Roles[] | [.RoleName, .AssumeRolePolicyDocument]'
 ## Policies
 
 Inline policies are embedded in the role. Managed policies are separate and can be attached to multiple roles.
-The type of a policy is visible in the AWS consol on the role to which it is attached.
+The type of a policy is visible in the AWS console on the role to which it is attached.
 
 Managed policies are [versioned](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-versioning.html). The default version is the currently active version, ie: the version in affect for all principal entities (users, groups, and roles) the managed policy is attached to.
 

@@ -125,9 +125,13 @@ To list resources in a stack
 aws cloudformation describe-stack-resources --stack-name mystack
 ```
 
+## Drift detection
+
+
+
 ## YAML
 
-## Outputs
+### Outputs
 
 Get output of nameservers (note - doesn't include the final dot)
 

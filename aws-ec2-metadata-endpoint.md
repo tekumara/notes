@@ -6,7 +6,7 @@ Instance profile
 curl -s http://169.254.169.254/latest/meta-data/iam/info | jq -r .InstanceProfileArn
 ```
 
-Get assumes role
+Get assumed role
 
 ```
 curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/
