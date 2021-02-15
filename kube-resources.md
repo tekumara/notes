@@ -2,16 +2,16 @@
 
 Requests are what the container is guaranteed. Limits are the maximum amount containerd/docker will allow the container to use.
 
-Pods are scheduled based on the sum of the requests of its contianers. The scheduler and kubelet ensures the sum of requests of all containers is within the node's allocatable capacity, ie: scheduling is based on request not limits.
+Pods are scheduled based on requests not limits. The scheduler and kubelet ensures the sum of requests of all containers is within the node's allocatable capacity.
 
 Memory:
-If a container exceeds the memory limit, the process using the most memoy in the container will be OOM killed by the kernel.
+If a container exceeds the memory limit, the process using the most memory in the container will be OOM killed by the kernel.
 If a container exceeds memory requested, the pod may be evicted when another pod needs that memory.
 
 CPU:
 A container will be throttled if it exceeds its CPU limit, but will not be killed.
 
-When requests < limits, a pod can opportunistically use resources if they are not being used by other containers. This is called "burstable". This allows over-subscription, but a burstable pod can negatively affect neighbouring pods when it starts to consume more resources.
+When requests < limits, a pod can opportunistically use resources if they are not being used by other containers. This is called "burstable". This allows over-subscription, but when a pod bursts (up to its limit) it can negatively affect neighbouring pods.
 
 See
 

@@ -53,10 +53,6 @@ Show deployment status
 kubectl get deployment slim-api -o jsonpath="{range .status.conditions[*]}{.lastUpdateTime}{'\t'}{.reason}{'\t'}{.message}{'\n'}{end}"
 ```
 
-Show probes:
-
-
-
 ### Run interactively
 
 `kubectl run -it --image=alpine helper` starts an pod called _helper_ running the alpine image in the cluster
