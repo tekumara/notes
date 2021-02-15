@@ -20,7 +20,7 @@ Features:
 
 ## More Details
 
-[Git repos](https://docs.aws.amazon.com/sagemaker/latest/dg/nbi-git-resource.html) are added per AWS account and accessed using a username and password stored in AWS Secrets Manager. Multiple repos can be associated. There are cloned under /home/ec2-user/SageMaker and can be used by the jupyterlab-git extension, see [Use Git Repositories in a Notebook Instance](https://github.com/awsdocs/amazon-sagemaker-developer-guide/blob/master/doc_source/git-nbi-use.md).
+[Git repos](https://docs.aws.amazon.com/sagemaker/latest/dg/nbi-git-resource.html) are added per AWS account and accessed using a username and password stored in AWS Secrets Manager. Multiple repos can be associated. There are cloned under _/home/ec2-user/SageMaker_ and can be used by the jupyterlab-git extension, see [Use Git Repositories in a Notebook Instance](https://github.com/awsdocs/amazon-sagemaker-developer-guide/blob/master/doc_source/git-nbi-use.md).
 
 ## Access
 
@@ -28,7 +28,7 @@ Notebook instances accessed via a presigned domain url, eg: `https://<notebook_n
 
 Ports (eg: TensorBoard etc.) on the notebook instance can be accessed via `https://<notebook_name>.notebook.<region>.sagemaker.aws/proxy/<port>`. This is enabled by [nbserverproxy](https://github.com/tekumara/sagemaker/tree/main/nbserverproxy).
 
-Notebook instances also have run the amazon SSM agent.
+Notebook instances also run the amazon SSM agent.
 
 ## Volumes
 
