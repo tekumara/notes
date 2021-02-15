@@ -17,3 +17,14 @@ List aliases in the _callers_ account
 ```
 aws kms list-aliases
 ```
+
+## Grant cross-account access to a key for decryption
+
+```
+              - kms:Decrypt
+              - kms:GenerateDataKey
+              - kms:DescribeKey
+            Effect: Allow
+```
+
+[ref](https://aws.amazon.com/premiumsupport/knowledge-center/cross-account-access-denied-error-s3/)

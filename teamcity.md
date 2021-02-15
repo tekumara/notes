@@ -30,6 +30,8 @@ From Build Configuration Home -> More -> Settings. See also View DSL.
 
 A trigger is needed to start a build, but if a build has dependencies it will wait in the queue with status "Build dependencies have not been built yet" until its dependency complete and then it runs. See the "Dependencies" tab on the queued build, or the Build Chains page of the Build Configuration for details.
 
+The Finish Build Trigger starts a build configuration with another completes. It is usually used with snapshot dependencies (see why [here](https://www.jetbrains.com/help/teamcity/2020.1/configuring-finish-build-trigger.html)). Without a snapshot dependency it will run on the default branch. I've found it also doesn't trigger at all without a snapshot dependency.
+
 ## Troubleshooting
 
 ### Pending changes are not detected
