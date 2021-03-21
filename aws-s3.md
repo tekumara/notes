@@ -172,6 +172,18 @@ aws s3 ls --recursive s3://bucket/cool-things/jan
 aws s3 ls --recursive --exclude "*" --include "jan*" s3://bucket/cool-things/
 ```
 
+## Sync
+
+To improve the perf of a sync:
+```
+aws configure set default.s3.max_concurrent_requests 1000
+aws configure set default.s3.max_queue_size 100000
+```
+
+Should achieve about 700 MiB/s on a m5.large.
+
+
+
 ## Downloading from the console
 
 For private buckets the object URL will return "AccessDenied". Use the download button instead.

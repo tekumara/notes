@@ -1,5 +1,11 @@
 # kubectl
 
+## Install
+
+Alpine: `apk add kubectl --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing`
+macOS: `brew install kubernetes-cli`
+Linux binary: `curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"`
+
 ## Contexts & namespaces
 
 `$KUBECONFIG` can be set to a colon separated list of config files. If unset it will default to `~/.kube/config`
@@ -38,8 +44,10 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl top nodes` show CPU/MEM usage for nodes
 `kubectl top pods` show CPU/MEM usage for pods in current namespace
 `kubectl top pods -A` show CPU/MEM usage for pods in all namespaces  
-`kubectl describe rs/hub-67966db58b -n jhub` describe the replicaset hub-67966db58b in namespace `kubectl get events -n jhub --sort-by='{.lastTimestamp}'` show events sorted by last seen timestamp
+`kubectl describe rs/hub-67966db58b -n jhub` describe the replicaset hub-67966db58b in namespace  
+`kubectl get events --sort-by='{.lastTimestamp}'` show events sorted by last seen timestamp. NB: by default events are only kept by the api server for 1 hour
 `kubectrl describe ingress` describe ingress objects
+`kubectl rollout restart deployment awesome-api` do a rolling restart of a deployment
 
 Show all forwarded ports, ie: [NodePort services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types):
 

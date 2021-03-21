@@ -31,7 +31,7 @@ sed -i '' "s/<RANDOM_HEX>/"$(openssl rand -hex 32)"/" config.yaml
 Add the JupyterHub chart repo:
 
 ```bash
-helm repo add jupyterhub https://jupyterhub.gi  thub.io/helm-chart/
+helm repo add jupyterhub https://jupyterhub.github.io/helm-chart/
 helm repo update
 ```
 
@@ -44,7 +44,7 @@ NAMESPACE=jhub
 helm upgrade \
   --install $RELEASE jupyterhub/jupyterhub \
   --namespace $NAMESPACE \
-  --version=0.9.0 \
+  --version=0.11.1 \
   --values config.yaml
 ```
 
@@ -58,7 +58,7 @@ helm upgrade --cleanup-on-fail \
   --install $RELEASE jupyterhub/jupyterhub \
   --namespace $NAMESPACE \
   --create-namespace \
-  --version=0.9.0 \
+  --version=0.11.1 \
   --values config.yaml
 ```
 
