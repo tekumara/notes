@@ -13,3 +13,19 @@ Black will format dependencies in setup.py into a single line, which will cause 
 Requirements.txt are recommended for applications (and should contain pinned versions), setup.py is recommended for libraries. Rule of thumb: requirements.txt should contain only ==, while setup.py should be liberal and use anything except ==.
 
 - [setup.py vs requirements.txt](https://caremad.io/posts/2013/07/setup-vs-requirement/)
+
+## Specifying git repos
+
+eg:
+
+```
+awesome_lib @ git+ssh://git@github.com/awesome-lib.git
+```
+
+or on a branch:
+
+```
+awesome_lib @ git+ssh://git@github.com/awesome-lib.git@feature1
+```
+
+NB: if you have already the package, delete it first so pip will detect the missing and install the version from the branch
