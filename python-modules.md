@@ -5,7 +5,7 @@
 - A file ending in .py is a module
 - In Python 2.7, a collection of modules under one directory with a `__init.__.py` file (empty or otherwise) is a package
 - In Python 3.3, any directory on `sys.path` with a name that matches an imported package name will contribute modules and sub-packages to that package.
-- `PYTHONPATH` - augment the default search path (`sys.path`) for modules
+- `PYTHONPATH` - augment the default search path (`sys.path`) that python uses to locate modules
 - Any directory with a `__main__.py` is treated as an executable
 - `python -m package` will execute `package/__main__.py` if it exists
 - The `zipimport` module will treat a zip file as a module, ie: if it contains a `__init__.py` it will be considered a package, it if has a `__main__.py` it will be considered an executable.
@@ -15,6 +15,10 @@ See
 - [PyBay2016 - Cindy Sridharan - The Python Deployment Albatross](https://speakerdeck.com/pybay/2016-cindy-sridharan-the-python-deployment-albatross)
 - [Traps for the Unwary in Python’s Import System](http://python-notes.curiousefficiency.org/en/latest/python_concepts/import_traps.html)
 - [Practical Python - 9.1 Packages](https://github.com/dabeaz-course/practical-python/blob/main/Notes/09_Packages/01_Packages.md)
+
+## PYTHONPATH
+
+PYTHONPATH can contain a directory of modules (ie: .py files) or .zip/.egg files. Python will unpack the .zip file and locate any packages within it ie: directories containing a _\_\_init\_\_.py_ file. The name of the .zip file is irrelevant.
 
 ## Import time
 

@@ -3,9 +3,9 @@
 TypedDict is a plain dictionary with type hints. ie: it's mutable
 NamedTuple is immutable
 
-Dataclasses don't use __slots__.
+"Dataclasses don't use __slots__.
 They are bigger, slower, and more complex than NamedTuples.
-But they offer mutability and customizability. 
+But they offer mutability and customizability." 
 [ref](https://twitter.com/raymondh/status/1175992038879219712?s=20)
 
 ## [R0903(too-few-public-methods), Mordor]
