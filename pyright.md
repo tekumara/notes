@@ -138,3 +138,16 @@ A [non-total type](https://mypy.readthedocs.io/en/stable/more_types.html#totalit
 class Config(TypedDict, total = False):
     vpc: Dict[str, str]
 ```
+
+## Ignore
+
+Add `# type: ignore` to the end of a line to disable type checking, or the top of the file to disable type-checking for the whole module.
+
+For multi-line statements, use PEP8's implied line continuation inside parentheses: eg:
+
+```python
+  return (
+      df1._jdf.showString(NUM_ROWS, TRUNCATE, VERTICAL) + "\n" +  # type: ignore
+      df2._jdf.showString(NUM_ROWS, TRUNCATE, VERTICAL)           # type: ignore
+  )
+```
