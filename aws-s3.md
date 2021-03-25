@@ -4,9 +4,21 @@
 
 S3 bucket names must be globally unique across all regions and accounts. The S3 console will show a global list of buckets across all regions for the account, but each bucket is actually stored in only a single region which you need to specify when creating a bucket.
 
+List all buckets in an account across all regions:
+
+```
+aws s3api list-buckets | jq -r '.Buckets[] | .Name'
+```
+
+Show a bucket's region:
+
+```
+aws s3api get-bucket-location --bucket $BUCKET
+```
+
 ## Limits and Prefixes
 
-Each prefix is limited to 5500 rps. Prefixes used to be determined by the start of the object name, now they are automatic which means you don't need to deliberately name your objects with distinct prefixes. Prefixes will split and merge behind the scenes in response to actual load. Contact Amazon and they can tell you how many prefixes your bucket as.
+Each prefix (shard) is limited to 5500 rps. Prefixes used to be determined by the start of the object name, now they are automatic which means you don't need to deliberately name your objects with distinct prefixes. Prefixes will split and merge behind the scenes in response to actual load. Contact Amazon and they can tell you how many prefixes your bucket as.
 
 ## Metadata
 
@@ -100,7 +112,8 @@ aws s3api get-bucket-policy --bucket $bucket --query Policy --output text | jq .
 
 ## Objects created by another account
 
-Transitive rights to objects created by other accounts, in a bucket you owned, can't be granted to third account. Instead use roles, see [Example 4: Bucket owner granting cross-account permission to objects it does not own](https://docs.aws.amazon.com/AmazonS3/latest/dev/example-walkthroughs-managing-access-example4.html#access-policies-walkthrough-example4-step3)
+By default transitive rights to objects created by other accounts, in a bucket you owned, can't be granted to third account. Instead use roles, see [Example 4: Bucket owner granting cross-account permission to objects it does not own](https://docs.aws.amazon.com/AmazonS3/latest/dev/example-walkthroughs-managing-access-example4.html#access-policies-walkthrough-example4-step3).
+[Amazon S3 Object Ownership](https://aws.amazon.com/about-aws/whats-new/2020/10/amazon-s3-object-ownership-enables-bucket-owners-to-automatically-assume-ownership-of-objects-uploaded-to-their-buckets/) allows bucket owners to automatically assume ownership.
 
 ## Missing objects
 
@@ -115,17 +128,15 @@ In order to receive a 404 Not Found, grant `s3:ListBucket` to the bucket (note: 
                 - arn:aws:s3:::my-bucket
 ```
 
-https://aws.amazon.com/premiumsupport/knowledge-center/s3-troubleshoot-403/
+See [How do I troubleshoot 403 Access Denied errors from Amazon S3?](https://aws.amazon.com/premiumsupport/knowledge-center/s3-troubleshoot-403/)
 
 ## Server access logging
 
-Log all access attempts to S3. You pay for the S3 storage fees for the log files.
+Log all access attempts to S3 with their IP address. You pay for the S3 storage fees for the log files.
 
-"Amazon S3 uses a special log delivery account, called the Log Delivery group, to write access logs. These writes are subject to the usual access control restrictions. You must grant the Log Delivery group write permission on the target bucket by adding a grant entry in the bucket's access control list (ACL). If you use the Amazon S3 console to enable logging on a bucket, the console both enables logging on the source bucket and updates the ACL on the target bucket to grant write permission to the Log Delivery group."
+> Amazon S3 uses a special log delivery account, called the Log Delivery group, to write access logs. These writes are subject to the usual access control restrictions. You must grant the Log Delivery group write permission on the target bucket by adding a grant entry in the bucket's access control list (ACL). If you use the Amazon S3 console to enable logging on a bucket, the console both enables logging on the source bucket and updates the ACL on the target bucket to grant write permission to the Log Delivery group.
 
-The logs contain the HTTP access logs for the S3 bucket, with IP addresses, eg:
-
-object 2018-07-04-04-29-24-42BE2810684123A8
+eg: object _2018-07-04-04-29-24-42BE2810684123A8_:
 
 ```
 a70b8bf27f12d16678031c31cb9c485edc3404af6d850ea0ce414ed11f7a7c4e my-amazing-bucket [03/Jul/2018:06:47:25 +0000] 120.130.116.3 arn:aws:sts::123456789012:assumed-role/Developer F46FB89A472A0A21 REST.GET.LOCATION - "GET /my-amazing-bucket?location HTTP/1.1" 200 - 142 - 53 - "-" "CloudCustodian/0.8.28.2 Python/2.7.12 Linux/4.9.93-41.60.amzn1.x86_64 exec-env/AWS_Lambda_python2.7 Botocore/1.10.35" -
@@ -133,7 +144,7 @@ a70b8bf27f12d16678031c31cb9c485edc3404af6d850ea0ce414ed11f7a7c4e my-amazing-buck
 
 ## Object-level logging
 
-Log data events (eg: GetObject and PutObject) to CloudTrail. \$0.10 per 100,000 events + S3 bucket costs. In addition you can then create Cloudwatch rules, trigger alerts/lambdas etc.
+Log data events (eg: GetObject and PutObject) to CloudTrail. \$0.10 per 100,000 events + S3 bucket costs. In addition you can then create Cloudwatch rules, trigger alerts/lambdas etc. They don't contain IP addresses:
 
 ```
 {"requestID": "E88A8280F1A9D9F9", "responseElements": null, "sharedEventID": "4f20382f-7c5a-4b50-8092-3d6b65e42921", "recipientAccountId": "123456789012", "readOnly": false, "additionalEventData": {"x-amz-id-2": "QAyufnNHbCgGd5A7XnQfK43BseLBD4p16pZGOAoI2xyaEbYoJycfep0H2SXldFRcTywS+H4hZ1k="}, "userAgent": "s3.amazonaws.com", "eventTime": "2018-07-04T04:29:24Z", "resources": [{"type": "AWS::S3::Object", "ARN": "arn:aws:s3:::my-amazing-bucket/s3-logs-my-amazing-bucket2018-07-04-04-29-24-42BE2810684123A8"}, {"type": "AWS::S3::Bucket", "accountId": "123456789012", "ARN": "arn:aws:s3:::my-amazing-bucket"}], "eventName": "PutObject", "eventType": "AwsApiCall", "requestParameters": {"bucketName": "my-amazing-bucket", "key": "s3-logs-my-amazing-bucket2018-07-04-04-29-24-42BE2810684123A8", "accessControlList": {"x-amz-grant-full-control": "id=\"3272ee65a908a7677109fedda345db8d9554ba26398b2ca10581de88777e2b61\", id=\"a70b8bf27f12d16678031c31cb9c485edc3404af6d850ea0ce414ed11f7a7c4e\""}}, "eventVersion": "1.05", "eventID": "8b7b0930-f689-40f1-905b-c09bad9a4f8a", "awsRegion": "ap-southeast-2", "eventSource": "s3.amazonaws.com", "sourceIPAddress": "s3.amazonaws.com", "userIdentity": {"type": "AWSService", "invokedBy": "s3.amazonaws.com"}}
@@ -175,14 +186,13 @@ aws s3 ls --recursive --exclude "*" --include "jan*" s3://bucket/cool-things/
 ## Sync
 
 To improve the perf of a sync:
+
 ```
 aws configure set default.s3.max_concurrent_requests 1000
 aws configure set default.s3.max_queue_size 100000
 ```
 
 Should achieve about 700 MiB/s on a m5.large.
-
-
 
 ## Downloading from the console
 
