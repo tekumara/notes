@@ -66,10 +66,14 @@ Logs: `~/Library/Containers/com.docker.docker/Data/log/vm/`
 
 ## Disk usage
 
-`docker system prune` removes all stopped containers, unused networks, dangling images, and build cache
+Unused images are images that aren't associated with a container.
+
+`docker images -f dangling=true` list [dangling images](https://docs.docker.com/engine/reference/commandline/images/#show-untagged-images-dangling), ie: images without a tag and no child images.
+
+`docker system prune` removes all stopped containers, unused networks, dangling images, and dangling build cache objects
 `docker container prune` remove all stopped containers
-`docker iamge prune` remove all dangling images
-`docker image prune -a --filter 'until=720h'` remove all images earlier than a month ago
+`docker image prune` remove all dangling images
+`docker image prune -a --filter 'until=1440h'` remove all unused images created earlier than 60 days ago
 
 `docker system df` will show docker disk utilization summary - images, containers, volumes  
 `docker system df -v` a break-down at the individual image/container/volume level including shared size (ie: shared layers), unique size (ie: unique layers).
@@ -85,5 +89,4 @@ total 68167208
 
 Actual usage is 68MB, max is 104G. To increase the max: Docker - Preferences - Resources - Disk image size
 
-See also:
-[Disk utilization in Docker for Mac](https://docs.docker.com/docker-for-mac/space/)
+See also: [Disk utilization in Docker for Mac](https://docs.docker.com/docker-for-mac/space/)
