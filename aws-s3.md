@@ -48,28 +48,53 @@ Get specific version
 aws s3api get-object --bucket BUCKET --key KEY --version-id VERSION outfile
 ```
 
-## Permissions
+## Permissions & Ownership
 
-To see the display name and canonical user id for an account: `aws s3api list-buckets | jq '.Owner'`
-
-To see an object ACL, including the owner: `aws s3api get-object-acl --bucket BUCKET --key KEY`
-
-- If you get Access Denied then you don't have read object permissions. This can happen if a user in another account has uploaded an object to your bucket without giving the bucker owner permissions. You'll be able to list the object but not read it or see its permissions. See this [Stack Overflow question](https://stackoverflow.com/questions/34055084/s3-user-cannot-access-object-in-his-own-s3-bucket-if-created-by-another-user)
-
-- If you get Access Denied, you can still view the owner via the AWS web console (but not details of server side encryption - it will say `Access denied`)
-
-- To grant the bucket owner full control (do this from the account that created the object): `aws s3api put-object-acl --acl bucket-owner-full-control --bucket BUCKET --key KEY`
-
-- To remove encryption, and grant the bucket owner full control: `aws s3 cp --acl bucket-owner-full-control s3://bucket/key s3://bucket/key`
-
-- To remove encryption on every object in a bucket, and grant the bucket owner full control: `aws s3 cp --acl bucket-owner-full-control --recursive s3://bucket/ s3://bucket/ --storage-class STANDARD`
-
-To see bucket level default encryption: `aws s3api get-bucket-encryption --bucket BUCKET`. Default encryption will be applied to any subsequent PUT requests without encryption, and won't change the encryption status of existing objects.
-
-To see object level encryption `aws s3api head-object --bucket BUCKET --key KEY`
-eg:
+Get the display name and canonical user id for an account
 
 ```
+aws s3api list-buckets | jq '.Owner'
+```
+
+Get an object ACL, including the owner
+```
+aws s3api get-object-acl --bucket BUCKET --key KEY
+```
+
+If you get Access Denied then you don't have read object permissions. You can still view the owner via the AWS web console (but not details of server side encryption - it will say `Access denied`). This can happen if a user in another account has uploaded an object to your bucket without giving the bucker owner permissions. You'll be able to list the object but not read it or see its permissions. See this [Stack Overflow question](https://stackoverflow.com/questions/34055084/s3-user-cannot-access-object-in-his-own-s3-bucket-if-created-by-another-user)
+
+Grant the bucket owner full control (do this from the account that created the object)
+```
+aws s3api put-object-acl --acl bucket-owner-full-control --bucket BUCKET --key KEY
+```
+
+Remove encryption, and grant the bucket owner full control:
+```
+aws s3 cp --acl bucket-owner-full-control s3://bucket/key s3://bucket/key
+```
+
+Remove encryption on every object in a bucket, and grant the bucket owner full control:
+```
+aws s3 cp --acl bucket-owner-full-control --recursive s3://bucket/ s3://bucket/ --storage-class STANDARD
+```
+
+## Encryption
+
+Default encryption will be applied to any subsequent PUT requests without encryption, and won't change the encryption status of existing objects.
+
+Get bucket level default encryption:
+```
+aws s3api get-bucket-encryption --bucket $bucket
+```
+
+Set bucket level default encryption with a KMS key:
+```
+aws s3api put-bucket-encryption --bucket $bucket --server-side-encryption-configuration '{"Rules": [{"ApplyServerSideEncryptionByDefault": {"SSEAlgorithm": "aws:kms","KMSMasterKeyID":"arn:aws:kms:us-east-1:1234567890:alias/top-secret-key"}}]}'
+```
+
+Get object level encryption
+```
+aws s3api head-object --bucket BUCKET --key KEY
 {
     "AcceptRanges": "bytes",
     "ContentType": "binary/octet-stream",
@@ -82,7 +107,7 @@ eg:
 }
 ```
 
-If your role doesn't have KMS privileges, GetObject calls will fail with AccessDenied. Add the following policy to your role:
+If your role doesn't have KMS privileges, GetObject and PutObject calls will fail with AccessDenied. Add the following policy to your role:
 
 ```
 {
@@ -104,7 +129,7 @@ If your role doesn't have KMS privileges, GetObject calls will fail with AccessD
 }
 ```
 
-To see the bucket policy
+Get the bucket policy
 
 ```
 aws s3api get-bucket-policy --bucket $bucket --query Policy --output text | jq .
@@ -206,4 +231,13 @@ To create a bucket and block all public access:
 bucket=delete-me-please
 aws s3 mb s3://$bucket
 aws s3api put-public-access-block --bucket $bucket --public-access-block-configuration "BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true"
+```
+
+## Delete a bucket
+
+```
+# delete all objects
+aws s3 rm "s3://$bucket" --recursive
+# delete bucket
+aws s3api delete-bucket --bucket $bucket
 ```
