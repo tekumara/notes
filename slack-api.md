@@ -1,5 +1,20 @@
 # Slack API
 
+## Linking
+
+To link to a channel (desktop app):
+
+```
+slack://channel?id=<CHANNEL-ID>&team=<TEAM-ID>
+```
+Use view-source to see your channel id and team id.
+
+To link to a channel (web):
+
+```
+https://<organization>.slack.com/messages/<channel>/
+```
+
 ## Authentication
 
 See https://api.slack.com/web#authentication

@@ -49,7 +49,7 @@ cdr/code-server config is compatible for VS code. Theia has a different format.
 
 cdr/code-server doesn't automatically clone a repo, or have a yaml file for specifying what to run on startup. Gitpod builds docker images on demand.
 
-If cdr/code-server is Jupyter, the gitpod is Binder.
+If cdr/code-server is Jupyter, then gitpod is Binder.
 
 cdr/code-server can be installed as a Chrome App (aka PWA). When used as an app, the keybindings match VS code.
 
