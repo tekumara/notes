@@ -35,3 +35,8 @@ Format document OPT CMD l
 Go to file SHIFT CMD o
 Go to Symbol in Workspace  CMD o
 Navigate forward/backwards CMD OPT right / CMD OPT left
+
+
+## Other
+
+Select column CMD SHIFT L

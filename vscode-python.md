@@ -29,6 +29,7 @@ To debug inside dependencies, add `"justMyCode": false` to the launch config in 
 To avoid creating terminal windows every time you launch (the default) set `"console": "internalConsole"` in the launch config.
 
 To run a fastapi/uvicorn app
+
 ```json
 {
   "version": "0.2.0",
