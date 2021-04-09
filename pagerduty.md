@@ -1,36 +1,37 @@
-# Restricting shifts to specific hours
+# PagerDuty
+
+## Restricting shifts to specific hours
 
 See [Scheduling Gaps](https://support.pagerduty.com/docs/schedules#section-scheduling-gaps) however, we during the gaps when no responder is on call incidents will not be triggered.
 
 One option is to use the [Defined Support Hours](https://support.pageraduty.com/docs/dynamic-notifications#section-defined-support-hours) configuration. Incidents will always trigger but their urgency will be determined by the time of day, and users can adjust their low urgency notifications to be non intrusive. See also https://support.pagerduty.com/docs/service-settings#section-use-case-2-support-hours
 
-# Low vs High Urgency
+## Low vs High Urgency
 
 The responder notification setting determines urgency, and can be [configured on the service](https://support.pagerduty.com/docs/service-settings#section-step-1-configure-service):
-* Notify responders until someone responds, escalate as needed (use high-urgency notification rules)
-* Notify responders, do not escalate (use low-urgency notification rules)
-https://support.pagerduty.com/docs/service-settings
+
+- Notify responders until someone responds, escalate as needed (use high-urgency notification rules)
+- Notify responders, do not escalate (use low-urgency notification rules) see [Configurable Service Settings](https://support.pagerduty.com/docs/service-settings)
 
 Alternatively [Dynamic Notifications](https://support.pagerduty.com/v1/docs/dynamic-notifications) can be used to set urgency as set by the trigger, or via event rules.
 
 [User profiles](https://support.pagerduty.com/docs/service-settings#section-step-2-configure-user-profiles) can be configured to handle the different levels of urgency differently.
 
-# Disable/suppression
+## Disable/suppression
 
-Disabling a service means it doesn't create any alerts of incidents.
+Disabling a service means it doesn't create any alerts or incidents.
 
 Suppressing an event means it won't create an incident (or send emails/slack message) but it will still appear under [alerts](https://seek-jobs.pagerduty.com/alerts).
 To suppress all events, create an Event Rule 'Summary exists' performs 'Suppress'
 
-
-# CET
+## CET
 
 You can use ES6 syntax (eg: string interpolation)
 
-`client_url` - provides a link on the event that you can use to take you to the source of the issue
+`client_url` - provides a link on the event that you can use to take you to the source of the issue  
 `client` - used for the link text, eg: "View in client"
 
-# Testing
+## Testing an integration
 
 Eg: sending an SNS notification for an EMR step failure CloudWatch rule
 
@@ -49,7 +50,6 @@ curl -XPOST -H'Content-Type: text/plain; charset=UTF-8' 'https://events.pagerdut
 ```
 
 eg: sending an SNS subscription confirmation
-
 
 ```
 curl -XPOST -H'Content-Type: text/plain; charset=UTF-8' 'https://events.pagerduty.com/integration/$GUID/enqueue' -d '{
