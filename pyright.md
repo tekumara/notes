@@ -139,6 +139,8 @@ class Config(TypedDict, total = False):
     vpc: Dict[str, str]
 ```
 
+A dictionary can be inferred as a TypedDict we supplied as a function argument, but requires an explicit annotation when assigned to a variable ([ref](https://github.com/microsoft/pyright/issues/1727#issuecomment-813123780)).
+
 ## Ignore
 
 Add `# type: ignore` to the end of a line to disable type checking, or the top of the file to disable type-checking for the whole module.

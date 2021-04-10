@@ -81,6 +81,8 @@ kubectl get-all
 
 ## Patch
 
+kubectl patch --type=json uses [JSON Patch](https://tools.ietf.org/html/rfc6902), which in turn uses [JSON Pointer](https://tools.ietf.org/html/rfc6901) for identifying JSON values (eg: `/foo/0` = the first element of the foo array)
+
 Set the contents of the args array
 
 ```

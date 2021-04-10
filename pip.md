@@ -70,3 +70,13 @@ pip install 'git+ssh://git@github.com/tekumara/lab.git#egg=ebse&subdirectory=ebs
 ## Wheels
 
 When no wheels are found for an sdist or VCS repo, pip will attempt to build a wheel automatically and insert it into the wheel cache.
+
+## Updating depedencies
+
+Show outdated deps and their latest versions:
+
+```
+pip list --outdated
+```
+
+[pipupgrade](https://github.com/achillesrasquinha/pipupgrade) can automatically update requirements.txt
