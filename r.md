@@ -6,6 +6,17 @@
 brew install r
 ```
 
+## Packages
+
+eg: to install and read Excel files using [openxlsx](https://www.rdocumentation.org/packages/openxlsx/versions/4.2.3)
+
+```
+install.packages("openxlsx", dependencies = TRUE)
+library("openxlsx")
+xlsxFile <- "https://github.com/awalker89/openxlsx/raw/master/inst/readTest.xlsx"
+head(read.xlsx(xlsxFile))
+```
+
 ## Repo setup
 
 In `%R_HOME%\etc\Rprofile.site`:

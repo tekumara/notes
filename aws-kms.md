@@ -28,3 +28,10 @@ aws kms list-aliases
 ```
 
 [ref](https://aws.amazon.com/premiumsupport/knowledge-center/cross-account-access-denied-error-s3/)
+
+
+## Troubleshooting
+
+com.amazonaws.services.kms.model.AWSKMSException: The ciphertext refers to a customer master key that does not exist, does not exist in this region, or you are not allowed to access.
+
+The key policy does not grant your user/role access.
