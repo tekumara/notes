@@ -162,18 +162,23 @@ time-one-min-ago:
 
 ## Wildcards
 
-Wildcards will match a pattern to an explicit subdirectory level, eg:
+Wildcards can be used to match a pattern to an explicit subdirectory level, eg:
 
 ```
+# match match every file in `src` but not any subdirectories
+src/*
+
 # match match every file in `src` and the first level of subdirectories
-$(wildcard src/*/*)
+src/*/*
 
 # match every file in `src` and two levels of subdirectories
-$(wildcard src/*/*/*)
+src/*/*/*
 
-# rescursively match all subdirectory levels
+# recursively match all subdirectory levels, and also match hidden files
 $(shell find src)
 ```
+
+The wildcard function, eg: `$(wildcard src/*)` is the same as explicit wildcards, except for in the empty case. See [Pitfalls of Using Wildcards](https://www.gnu.org/software/make/manual/html_node/Wildcard-Pitfall.html#Wildcard-Pitfall)
 
 ## List all targets
 
@@ -185,6 +190,12 @@ list:
 	| sort \
 	| egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
 ```
+
+## Debug
+
+`make --just-print` just print the commands that would be executed
+
+See [Chapter 12. Debugging Makefiles](https://www.oreilly.com/library/view/managing-projects-with/0596006101/ch12.html)
 
 ## Reference
 
