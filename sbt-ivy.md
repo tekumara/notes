@@ -69,3 +69,7 @@ Add the following section, after the above section like the following, for deps 
 ### (update) java.lang.IllegalArgumentException: org.tukaani#xz;1.0!xz.jar origin location must be absolute: file:/Users/tekumara/.m2/repository/org/tukaani/xz/1.0/xz-1.0.jar
 
 Clear the ivy cache, eg: `rm ~/.ivy2/cache/org.tukaani/xz/*1.0*`
+
+### commons-io#commons-io;2.6: org.apache.commons#commons-parent;42!commons-parent.pom(pom.original) origin location must be absolute: file:/Users/tekumara/.m2/repository/org/apache/commons/commons-parent/42/commons-parent-42.pom
+
+Clear the ivy cache, eg: `rm -rf ~/.ivy2/cache/org.apache.commons/commons-parent`

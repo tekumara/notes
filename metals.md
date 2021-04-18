@@ -6,13 +6,23 @@ Metals is a BSP client that integrates with build servers. It is also a language
 
 ![BSP and LSP](https://www.scala-lang.org/resources/img/blog/bsp.png)
 
-sbt also [implements the BSP](https://www.scala-lang.org/blog/2020/10/27/bsp-in-sbt.html). And so Metals can integrate with Bloop or [sbt](https://scalameta.org/metals/blog/2020/11/06/sbt-BSP-support.html).
+## Linking and running Scala Native projects
 
-## Running main
+Bloop doesn't support running Scala Native projects. `Metals: run main class in the current file` or clicking the run code lens with throw:
 
-Bloop doesn't support native linking or running the main file. It will error in the following ways:
+```
+Caused by: scala.meta.internal.metals.MetalsBspException: BSP connection failed in the attempt to get: DebugSessionAddress.  Unsupported platform: Native
+```
 
-* `Metals: run main class in the current file` throws a BuildTargetContainsNoMainException
-* Clicking the run code lens throws "scala.meta.internal.metals.MetalsBspException: BSP connection failed in the attempt to get: DebugSessionAddress. Unsupported platform: Native"
+Switch to sbt instead, as follows.
 
-Switch from Bloop to sbt using `Metals: Switch build server`. If sbt isn't recognised then first generate a _.bsp/sbt.json_ config file using `Metals: Attempt to generate bsp config for build tool`.
+## Using sbt with Metals
+
+sbt also [implements the BSP](https://www.scala-lang.org/blog/2020/10/27/bsp-in-sbt.html) but Metals uses Bloop by default.
+
+To switch to sbt:
+
+1. Generate a _.bsp/sbt.json_ config file using `Metals: Attempt to generate bsp config for build tool`.
+1. Switch from Bloop to sbt using `Metals: Switch build server`.
+
+See [sbt BSP support](https://scalameta.org/metals/blog/2020/11/06/sbt-BSP-support.html) for more information (and also a good description of Metals, BSP, LSP)l
