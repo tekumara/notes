@@ -8,6 +8,8 @@ pylint has the most checks, many of which are better turned off. The VS Code [de
 
 [pylance](https://github.com/microsoft/pylance-release) is a VS Code language server extension that bundles pyright and other goodies like auto-imports, code completion and additional stubs (eg: pandas, matplotlib)
 
+**Recommendation**: flake8 + pyright. Good coverage at speed.
+
 ## Comparative analysis
 
 | error                                                        | pylint\* | flake8 | pyright | pylance |
@@ -56,4 +58,4 @@ pylint has syntax-error and flake8 has E999 but they capture different errors. p
 ## Other tools
 
 - [pylama](https://github.com/klen/pylama) bundles a lot of Python & JavaScript tools together.
-- [autopep8](https://pypi.org/project/autopep8/) fixes issues requires pycodestyle identifies.
+- [autopep8](https://pypi.org/project/autopep8/) fixes issues pycodestyle identifies.
