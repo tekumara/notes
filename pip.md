@@ -7,30 +7,6 @@
 - `pip uninstall` will not remove transitive packages or any scripts installed into _~/.local/bin_. [pip-autoremove](https://github.com/invl/pip-autoremove) will.
 - `pip show $package` will show immediate dependencies of a package (but not recursively, use [pipdeptree](https://github.com/naiquevin/pipdeptree) for this) and the location of a package
 
-Install using a named urlspec from a git branch with dev extras:
-
-```
-pip install 'aec[dev] @ git+https://github.com/seek-oss/aec.git@master'
-```
-
-Inst
-
-## Troubleshooting
-
-```
-ERROR: aec 0.1 has requirement boto3==1.9.130, but you'll have boto3 1.10.45 which is incompatible.
-```
-
-or
-
-```
-pkg_resources.ContextualVersionConflict: (boto3 1.10.45 (/Users/tekumara/.virtualenvs/aec/lib/python3.6/site-packages), Requirement.parse('boto3==1.9.130'), {'aec'})
-```
-
-The package _aec_ in the current environment expects a different version of _boto3_ from the one you have just installed. The required versions are specified in _\$package_name.egg-info/requires.txt_. If this is an editable package this will be located in the source code directory.
-
-It may be that _requires.txt_ is out-of-sync from the editable package's _setup.py_. In which case reinstalling will update it, ie: `pip install -e .`
-
 ## Local project installs
 
 Install a copy of the package located at ../spark_data_testing into your site-packages dir:
@@ -57,9 +33,15 @@ Any URL may use the `#egg=name` prefix to explicitly state the project name. Whe
 
 ## VCS installs
 
-A VCS install uses the contents of the repo as the sdist, from which to build a wheel.
+A VCS install uses the contents of the repo as the sdist, from which to build a wheel. The repo is cloned first.
 
-To install from a subdirectory in a git repo using ssh:
+Install using a named urlspec from a git branch with dev extras:
+
+```
+pip install 'aec[dev] @ git+https://github.com/seek-oss/aec.git@master'
+```
+
+Install from a subdirectory in a git repo using ssh:
 
 ```
 pip install 'git+ssh://git@github.com/tekumara/lab.git#egg=ebse&subdirectory=ebs_encrypter'
@@ -71,7 +53,15 @@ pip install 'git+ssh://git@github.com/tekumara/lab.git#egg=ebse&subdirectory=ebs
 
 When no wheels are found for an sdist or VCS repo, pip will attempt to build a wheel automatically and insert it into the wheel cache.
 
-## Updating depedencies
+## Cache
+
+The wheel cache is located at `$(pip cache dir)\wheels`. It can be inspected via `pip cache list`.
+
+The http cache (aka package index page cache) is located at `$(pip cache dir)\http`. Use the file system to inspect it.
+
+See [pip documentation: Caching](https://pip.pypa.io/en/stable/cli/pip_install/#caching)
+
+## Updating dependencies
 
 Show outdated deps and their latest versions:
 
