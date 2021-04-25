@@ -8,7 +8,7 @@ Metals is a BSP client that integrates with build servers. It is also a language
 
 ## Linking and running Scala Native projects
 
-Bloop doesn't support running Scala Native projects. `Metals: run main class in the current file` or clicking the run code lens with throw:
+Bloop doesn't support running Scala Native projects. `Metals: run main class in the current file` or clicking the run code lens will throw:
 
 ```
 Caused by: scala.meta.internal.metals.MetalsBspException: BSP connection failed in the attempt to get: DebugSessionAddress.  Unsupported platform: Native
@@ -25,4 +25,4 @@ To switch to sbt:
 1. Generate a _.bsp/sbt.json_ config file using `Metals: Attempt to generate bsp config for build tool`.
 1. Switch from Bloop to sbt using `Metals: Switch build server`.
 
-See [sbt BSP support](https://scalameta.org/metals/blog/2020/11/06/sbt-BSP-support.html) for more information (and also a good description of Metals, BSP, LSP)l
+See [sbt BSP support](https://scalameta.org/metals/blog/2020/11/06/sbt-BSP-support.html) for more information (and also a good description of Metals, BSP, LSP etc.)

@@ -5,7 +5,7 @@ SSM provides SSH access for instances based on IAM roles (no need to manage SSH 
 Install the [session manager plugin for the AWS CLI](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html):
 
 ```
-brew cask install session-manager-plugin
+brew install session-manager-plugin
 session-manager-plugin --version
 ```
 
@@ -14,6 +14,8 @@ Show managed instances that have SSM agent installed and are accessible:
 ```
 aws ssm describe-instance-information
 ```
+
+If your instance is not visible see the Troubleshooting section below.
 
 Port forward 8888
 
@@ -39,7 +41,11 @@ sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/late
 Restart the ssm agent
 
 ```
+# Amazon Linux
 sudo systemctl restart amazon-ssm-agent
+
+# Ubuntu
+sudo systemctl restart snap.amazon-ssm-agent.amazon-ssm-agent.service
 ```
 
 ## SSH Tunnelling
@@ -64,13 +70,9 @@ Time to first byte seems the same over forwarding as direct.
 
 ## Troubleshooting
 
-Try to connect as `ssm-user` via the AWS Console - AWS Systems Manager - Session Manager - Start session - and select a target instance.
-Try to connect as `ssm-user` via the CLI, eg: `aws ssm start-session --target i-0850c1b15772106cc`
-Try to connect as `ec2-user` via SSH tunnelling, eg: `ssh -v -i ~/.ssh/ec2.pem ec2-user@i-0850c1b15772106cc`
-
 Instance does not appear as a target instance in `AWS Systems Manager - Session Manager - Start session` or `aws ssm describe-instance-information`?
-
-Check /var/log/amazon/ssm/amazon-ssm-agent.log for errors.
+- Check /var/log/amazon/ssm/amazon-ssm-agent.log for errors.
+- Check the EC2 IAM Instance profile policy (see below).
 
 Can't connect from the command line?
 
@@ -79,6 +81,10 @@ $ aws ssm start-session --target i-0850c1b15772106cc
 An error occurred (TargetNotConnected) when calling the StartSession operation: i-0850c1b15772106cc is not connected.
 ssh_exchange_identification: Connection closed by remote host
 ```
+
+Try to connect as `ssm-user` via the AWS Console - AWS Systems Manager - Session Manager - Start session - and select a target instance.
+Try to connect as `ssm-user` via the CLI, eg: `aws ssm start-session --target i-0850c1b15772106cc`
+Try to connect as `ec2-user` via SSH tunnelling, eg: `ssh -v -i ~/.ssh/ec2.pem ec2-user@i-0850c1b15772106cc`
 
 Make sure you are in the right AWS region, as set in the environment variable `AWS_DEFAULT_REGION` or `~/.aws/config`
 
@@ -109,7 +115,7 @@ To your instance profile, add `AmazonSSMManagedInstanceCore` or a custom policy 
 }
 ```
 
-The ssm-agent may need to be restarted after any policy changes.
+The ssm-agent will probably need to be restarted after any IAM changes.
 
 ## References
 
