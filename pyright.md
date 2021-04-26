@@ -121,35 +121,10 @@ pyright can be supplied a set of files on the the command line, in which case it
 
 Pylance bundles stubs for pandas, matplotlib and [other libraries](https://github.com/microsoft/pyright/issues/861). This stubs are incomplete. If you encounter a type error using these libraries that looks incorrect, first check the open issues on [microsoft/pylance-release](https://github.com/microsoft/pylance-release) before reporting it.
 
-## TypedDict
+## Alternatives to pyright
 
-eg:
+Pyre can't find modules ([#279](https://github.com/facebook/pyre-check/issues/279)) without specifying the `search_path` pointing to site-packages. It's slow (11 secs) and doesn't find any issues out-of-the-box.
 
-```python
-class Config(TypedDict):
-    vpc: Dict[str, str]
-```
+Mypy has > 1k open issues.
 
-A dictionary must have the field vpc to be of type `Config`.
-
-A [non-total type](https://mypy.readthedocs.io/en/stable/more_types.html#totality) does not require all fields to be present, eg:
-
-```python
-class Config(TypedDict, total = False):
-    vpc: Dict[str, str]
-```
-
-A dictionary can be inferred as a TypedDict we supplied as a function argument, but requires an explicit annotation when assigned to a variable ([ref](https://github.com/microsoft/pyright/issues/1727#issuecomment-813123780)).
-
-## Ignore
-
-Add `# type: ignore` to the end of a line to disable type checking, or the top of the file to disable type-checking for the whole module.
-
-For multi-line statements, use PEP8's implied line continuation inside parentheses: eg:
-
-```python
-  return (
-      df1._jdf.showString(NUM_ROWS, TRUNCATE, VERTICAL) + "\n" +  # type: ignore
-      df2._jdf.showString(NUM_ROWS, TRUNCATE, VERTICAL)           # type: ignore
-  )
-```
+Pyright strict mode detects the most errors. Issues in pyright are quickly addressed. One drawback is it requires node and doesn't have a pypi distribution [#819](https://github.com/microsoft/pyright/issues/819).
