@@ -1,8 +1,32 @@
-<div title="Ivy CLI" creator="YourName" modifier="YourName" created="201804120734" tags="Ivy" changecount="1">
-<pre>Using Ivy to download an artifact and all its dependencies
-{{{
+# Ivy CLI
+
+## Install
+
+Ubuntu
+
+```
 sudo apt-get install ivy
-java -jar /usr/share/java/ivy-2.3.0.jar -dependency org.apache.hadoop hadoop-aws 2.8.1 -retrieve &quot;lib/[artifact]-[revision](-[classifier]).[ext]&quot;
-}}}
-[[ref|https://stackoverflow.com/a/15456621/149412]]</pre>
-</div>
+alias ivy=`java -jar /usr/share/java/ivy-2.3.0.jar`
+```
+
+macOS:
+
+```
+brew install ivy
+```
+
+## Usage
+
+Resolve
+
+````
+ivy -dependency org.apache.spark spark-core_2.12 3.0.1
+```
+
+Download an artifact and all its dependencies to _lib/_
+
+```
+ivy -dependency org.apache.hadoop hadoop-aws 2.8.1 -retrieve "lib/[artifact]-[revision](-[classifier]).[ext]"
+```
+
+[ref](https://stackoverflow.com/a/15456621/149412)
