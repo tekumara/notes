@@ -11,7 +11,7 @@ class Config(TypedDict):
 
 A dictionary must have the field vpc to be of type `Config`.
 
-A [non-total type](https://mypy.readthedocs.io/en/stable/more_types.html#totality) does not require all fields to be present, eg:
+A [non-total TypedDict](https://mypy.readthedocs.io/en/stable/more_types.html#totality) does not require all fields to be present, eg:
 
 ```python
 class Config(TypedDict, total = False):

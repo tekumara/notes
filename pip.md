@@ -47,11 +47,16 @@ Install from a subdirectory in a git repo using ssh:
 pip install 'git+ssh://git@github.com/tekumara/lab.git#egg=ebse&subdirectory=ebs_encrypter'
 ```
 
-[ref](https://pip.pypa.io/en/stable/reference/pip_install/#vcs-support)
+References:
+
+- [pip install - VCS Support](https://pip.pypa.io/en/stable/cli/pip_install/#vcs-support)
+- [PEP 508 -- Dependency specification for Python Software Packages](https://www.python.org/dev/peps/pep-0508/)
 
 ## Wheels
 
-When no wheels are found for an sdist or VCS repo, pip will attempt to build a wheel automatically and insert it into the wheel cache.
+When no wheels are found for an sdist or VCS repo, pip will attempt to build a wheel automatically using the build system and insert it into the wheel cache.
+
+pip builds in a isolated environment that includes any requirements defined in `[build-system]` in _pyproject.toml_ (or the latest version of setuptools and wheel if now is specified). See [PEP 517 and 518 support](https://pip.pypa.io/en/stable/cli/pip/#pep-517-and-518-support).
 
 ## Cache
 
