@@ -3,12 +3,27 @@
 ## mvn commands
 
 `mvn help:effective-pom`  
-`mvn install -DskipTests=true`  
+`mvn install -DskipTests=true`
 
 ## List dependencies
 
 - `mvn dependency:tree`
 - `mvn dependency:list`
+
+Show dependency tree for just the `core` project (module)
+
+```
+mvn dependency:tree -pl core
+
+# or alternatively
+cd core && mvn dependency:tree
+```
+
+Show dependency tree for profile `hadoop-3.2`
+
+```
+mvn dependency:tree -Phadoop-3.2
+```
 
 NB:
 

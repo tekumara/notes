@@ -7,10 +7,10 @@
 ```
 
 For a particular configuration
+
 ```
 ./gradlew dependencies --configuration runtimeOnly
 ```
-
 
 ## Daemon
 
@@ -30,7 +30,8 @@ To see info level logs `gradle --info`
 ./gradlew <task> --dry-run
 ```
 
-To see the task dependency tree, install https://github.com/dorongold/gradle-task-tree: 
+To see the task dependency tree, install [dorongold/gradle-task-tree](https://github.com/dorongold/gradle-task-tree):
+
 ```
 plugins {
     id "com.dorongold.task-tree" version "1.4"
@@ -52,10 +53,13 @@ Should be added to source control ([ref](http://stackoverflow.com/questions/2034
 ## publish local
 
 In the dependency:
+
 ```
 ./gradlew publishToMavenLocal
 ```
+
 Then add the following to the dependent consumer:
+
 ```
 repositories {
         mavenLocal()
@@ -79,8 +83,8 @@ task myApp(type: JavaExec) {
 
 eg: `./gradlew -Dexec.args="foo" myApp`
 
-
 ## Mute all gradle output
+
 ```
 ./gradlew --console plain --quiet
 ```
@@ -96,7 +100,8 @@ mainClassName = 'myapp.Main'
 
 To build: `./gradlew installApp`
 
-Will create 
+Will create
+
 ```
 build/install/myapp
   bin

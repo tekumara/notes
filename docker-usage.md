@@ -24,7 +24,7 @@
 `docker run -d --name gmetad1 -p 0.0.0.0:7001:80 -v /tmp/ganglia:/var/lib/ganglia gmetad-gangliaweb` create and start a new container, mapping host:7001 -> container:80 and mounting the host directory /tmp/ganglia at /var/lib/ganglia inside the container  
 `docker run --rm -it -e TERM=xterm-256color -e USER=ada.lovelaceubuntu:18.04` run container and set the env vars USER and TERM
 `docker build -t REPO:TAG .` build an image from the Dockerfile in the current directory with tag REPO:TAG. All files in the current directory are tar'd and sent to the Docker daemon  
-`docker cp <containerId>:/file/path/within/container /host/path/target` copy file from container to the host  
+`docker cp <containerId>:/file/path/within/container /host/path/target` copy file or directory from container to the host  
 `sudo nsenter -t PID -n netstat -tanp` run netstat inside the namespace of process PID (which is running in a container) [ref](https://stackoverflow.com/a/40352004/149412)
 `docker stats --format "table {{printf \"%.25s\" .Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.NetIO}}\t{{.BlockIO}}" --no-stream` show relevant stats, truncating the name because it can be long
 
