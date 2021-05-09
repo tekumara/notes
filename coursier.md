@@ -25,3 +25,7 @@ coursier fetch com.amazonaws:aws-java-sdk-bundle:1.11.271:jar
 ```
 
 Coursier stores artifacts in _~/Library/Caches/Coursier_
+
+## Issues
+
+[Exclusions under \<dependencies\> not applied transitively](https://github.com/coursier/coursier/issues/2034)
