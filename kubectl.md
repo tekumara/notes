@@ -63,7 +63,9 @@ kubectl get deployment slim-api -o jsonpath="{range .status.conditions[*]}{.last
 
 ### Run interactively
 
-`kubectl run -it --image=alpine helper` starts an pod called _helper_ running the alpine image in the cluster
+`kubectl run -it --image=alpine helper` starts an pod called _helper_ running the alpine image in the cluster with requests/limits of 250m cpu 1Gi mem
+`kubectl run -it --image=ubuntu --requests "cpu=50m" helper` starts an ubuntu pod with 
+`kubectl run it --image=ubuntu -o yaml --dry-run=client` show the deployment object buy don't apply it
 `kubectl delete pod helper` delete the helper pod
 `kubectl cp $namespace/$pod:/app/heaptrack.gunicorn.2983.gz heaptrack.gunicorn.2983.gz` copy file from pod to local dir
 

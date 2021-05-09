@@ -254,3 +254,48 @@ botocore.exceptions.ClientError: An error occurred (IllegalLocationConstraintExc
 # delete all objects in a bucket and the bucket itself
 aws s3 rb --force "s3://$bucket"
 ```
+
+## Deny access using a bucket policy
+
+This will take precedence over an IAM policy:
+
+```
+{
+    "Version": "2012-10-17",
+    "Id": "Policy1619743014342",
+    "Statement": [
+        {
+            "Sid": "Stmt1619743011846",
+            "Effect": "Deny",
+            "Principal": {
+                "AWS": [
+                    "arn:aws:iam::123456789012:role/AwesomeRole1",
+                    "arn:aws:iam::123456789012:role/AwesomeRole2"
+                ]
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::awesome-bucket/*"
+        }
+    ]
+}
+```
+
+To block all access:
+
+```
+BUCKET=awesome-bucket && aws s3api put-bucket-policy --bucket $BUCKET --policy '{
+    "Version": "2012-10-17",
+    "Id": "Policy1619743014342",
+    "Statement": [
+        {
+            "Sid": "Stmt1619743011846",
+            "Effect": "Deny",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::'"$BUCKET"'/*"
+        }
+    ]
+}'
+```

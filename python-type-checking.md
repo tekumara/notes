@@ -20,6 +20,8 @@ class Config(TypedDict, total = False):
 
 A dictionary can be inferred as a TypedDict when supplied as a function argument, but requires an explicit annotation when assigned to a variable ([ref](https://github.com/microsoft/pyright/issues/1727#issuecomment-813123780)).
 
+A TypedDict is not compatible with `Dict[str, Any]` because it is considered a mutable invariant collection, see [mypy #4976](https://github.com/python/mypy/issues/4976).
+
 ## Ignore
 
 Add `# type: ignore` to the end of a line to disable type checking, or the top of the file to disable type-checking for the whole module.
@@ -78,6 +80,27 @@ See [mypy - Casts and type assertions](https://mypy.readthedocs.io/en/stable/cas
 Overloading allows a function to have multiple type signatures. This can allow a more precise description of a flexible function than using Union types. At runtime there is still only one implementation of the function (unlike other languages like Java which will select the appropriate method at compile time).
 
 See [mypy - Function overloading](https://mypy.readthedocs.io/en/stable/more_types.html#function-overloading)
+
+## Troubleshooting
+
+```
+
+def first_name(names: pd.Series[str]) -> List[str]:
+    pass
+
+TypeError: 'type' object is not subscriptable
+```
+
+This runtime error occurs because the runtime tries to evaluate the expression `pd.Series[int]`. Series does not extend `Generic`, unlike the [python pandas stubs](https://github.com/microsoft/python-type-stubs/blob/main/pandas/core/series.pyi#L51) which do. `Generic` provides a metaclass that overloads the indexing operator to a no-op.
+
+The solution here is to wrap the type annotation in quotes. The annotation remains visible to the type checker, but avoids the runtime error because the expression is now a string. eg:
+
+```
+def first_name(names: "pd.Series[str]") -> List[str]:
+    pass
+```
+
+([ref])(https://github.com/python/typing/issues/410#issuecomment-293263300)
 
 ## References
 
