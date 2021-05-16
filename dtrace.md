@@ -9,6 +9,10 @@
 `sudo dtruss pip` start `pip` and show syscalls NB: pip will run as root
 `sudo dtruss -p <pid> -f` follow children as they are forked. This is useful for watching processes started from the shell. Use `echo $$` to get the shell's pid. However it will show the shell's syscalls too, which gets noisy.
 
+## iosnoop
+
+`sudo iosnoop -n python3` show disk I/O (block, size, filename) for the python3 process. NB: does not show `stat64` calls.
+
 ## Misc
 
 `dtrace -qwn 'proc:::exec-success /execname=="java"/{trace(pid);stop();exit(0)}` stop a process when it starts to get its pid [ref](see https://stackoverflow.com/a/22029929/149412)
