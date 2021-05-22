@@ -17,6 +17,12 @@ aws ssm describe-instance-information
 
 If your instance is not visible see the Troubleshooting section below.
 
+Start a session
+
+```
+aws ssm start-session --target $instance-id
+```
+
 Port forward 8888
 
 ```
@@ -71,6 +77,7 @@ Time to first byte seems the same over forwarding as direct.
 ## Troubleshooting
 
 Instance does not appear as a target instance in `AWS Systems Manager - Session Manager - Start session` or `aws ssm describe-instance-information`?
+
 - Check /var/log/amazon/ssm/amazon-ssm-agent.log for errors.
 - Check the EC2 IAM Instance profile policy (see below).
 

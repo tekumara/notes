@@ -52,6 +52,12 @@ To modify an existing spark session to use S3A for S3 urls, for example `spark` 
 spark.sparkContext._jsc.hadoopConfiguration().set("fs.s3.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
 ```
 
+To test, try and load this public dataset inside pyspark:
+
+```
+df = spark.read.csv("s3://ebirdst-data/ebirdst_run_names.csv")
+```
+
 ## Config file
 
 [Spark configuration](https://spark.apache.org/docs/latest/configuration.html#dynamically-loading-spark-properties) values can be specified on the command line, when creating a SparkContext, or in _$SPARK_HOME/conf/spark-defaults.conf_.
@@ -67,16 +73,23 @@ spark.hadoop.fs.s3a.aws.credentials.provider org.apache.hadoop.fs.s3a.TemporaryA
 
 Spark expects to find binaries at _$SPARK_HOME/bin_ and configuration at _$SPARK_HOME/conf/spark-defaults.conf_.
 
-SPARK_HOME will default to _$VIRTUAL_ENV/lib/python*/site-packages/pyspark/_ if not set.
+SPARK*HOME will default to *$VIRTUAL*ENV/lib/python\*/site-packages/pyspark/* if not set.
 
 ## Errors
 
 ### java.net.BindException: Cannot assign requested address: Service 'sparkDriver' failed after 16 retries (on a random free port)!
 
-Occurs when `getent hosts `hostname`returns a network address. Add an entry in`/etc/hosts/` pointing your hostname to 127.0.0.1 or set SPARK_LOCAL_IP, eg:
+Occurs when `getent hosts $(hostname)` returns nothing or a non-localhost address. Add an entry in`/etc/hosts/` pointing your hostname to 127.0.0.1 or set SPARK_LOCAL_IP, eg:
 
 ```
 SPARK_LOCAL_IP=127.0.0.1 pyspark
+```
+
+Or set `spark.driver.host`:
+
+``
+SparkConf conf = new SparkConf().setMaster("local[*]").set("spark.driver.host", "localhost");
+
 ```
 
 ### Java gateway process exited before sending its port number
@@ -86,3 +99,4 @@ Check the `JAVA_HOME` environment variable is set correctly to JDK8.
 ## No module named pyspark.daemon
 
 Make sure your spark application doesn't have a package called `pyspark` as it will override the pyspark packages.
+```

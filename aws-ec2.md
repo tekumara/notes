@@ -20,6 +20,12 @@ Get system log. NB: there's a delay before this appears.
 aws ec2 get-console-output --instance-id  $instance_id --output text
 ```
 
+If you are on the instance, to view the cloud init logs
+
+```
+less /var/log/cloud-init-output.log
+```
+
 ## Describe instances
 
 Describe instances as a table, filtered by the `Name` tag
