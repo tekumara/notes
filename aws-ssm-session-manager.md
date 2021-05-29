@@ -1,11 +1,15 @@
-# SSM sessions
+# Session Manager
 
-SSM provides SSH access for instances based on IAM roles (no need to manage SSH keys), plus audits access via cloudtrail, and can log sessions to cloudwatch.
+Session Manager provides a websocket session to EC2 instances, audits access via cloudtrail, and can log the content of sessions to cloudwatch. It allows IAM-based authentication to a shell on an instance without the need to manage SSH keys.
+
+Session Manager is low throughput, see [https://globaldatanet.com/blog/scp-performance-with-ssm-agent](https://globaldatanet.com/blog/scp-performance-with-ssm-agent). This could be a good thing if you'd like to limit data exfiltration.
+
+## Usage
 
 Install the [session manager plugin for the AWS CLI](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html):
 
 ```
-brew install session-manager-plugin
+brew install session-manager-plugin --no-quarantine
 session-manager-plugin --version
 ```
 
@@ -17,17 +21,79 @@ aws ssm describe-instance-information
 
 If your instance is not visible see the Troubleshooting section below.
 
-Start a session
+Start a session as ssm-user with the Bourne shell (sh)
 
 ```
-aws ssm start-session --target $instance-id
+aws ssm start-session --target $instance_id
 ```
 
-Port forward 8888
+Port forward 8888 only (no ssh)
 
 ```
-aws ssm start-session --target i-0f9116c8efe421cd4 --document-name AWS-StartPortForwardingSession --parameters '{"portNumber":["8888"],"localPortNumber":["8888"]}'
+aws ssm start-session --target $instance_id --document-name AWS-StartPortForwardingSession --parameters '{"portNumber":["8888"],"localPortNumber":["8888"]}'
 ```
+
+## About sessions
+
+By default:
+
+- sessions time out after 20 minutes of inactivity see [Specify an idle session timeout value](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-preferences-timeout.html)
+
+- sessions are launched using the credentials of a system-generated ssm-user account, which has sudoers. To start sessions as an alternative user, see [Enable run as support for Linux and macOS instances](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-preferences-run-as.html)
+
+## Session manager preference documents
+
+Session Manager uses [session documents](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-ssm-docs.html) to determine which type of session to start, such as a port forwarding session, a session to run an interactive command, or a session to create an SSH tunnel.
+
+A Session document can be of the following session types:
+
+- `Standard_Stream` streams to the ssm-agent which handles login. A session started without a document creates a `Standard_Stream` session type.
+- `Port` streams to the given port on the host. A session started with the `AWS-StartSSHSession` document streams to port 22 by default, or any other port specified by the parameter portNumber.
+- `InteractiveCommands`
+- `NonInteractiveCommands`
+
+To see the content of the AWS-StartSSHSession document:
+
+```
+aws ssm get-document --name AWS-StartSSHSession --query 'Content' --output text
+```
+
+For more info see:
+
+- [Create Session Manager preferences (command line)](https://docs.aws.amazon.com/systems-manager/latest/userguide/getting-started-create-preferences-cli.html)
+- [Session document schema](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-schema.html)
+
+## SSH Tunnelling
+
+Session Manager [supports SSH and SCP tunnelling](https://aws.amazon.com/about-aws/whats-new/2019/07/session-manager-launches-tunneling-support-for-ssh-and-scp/) using the AWS-StartSSHSession session document. This document starts a Port session to port 22 (can be changed) on the host. This allows you to connect to sshd and authenticate as any ssh enabled user.
+
+To connect to port 22 on the instance:
+
+```
+aws ssm start-session --target $instance_id --document-name AWS-StartSSHSession
+```
+
+Connecting directly is not useful without an ssh client. To tell your ssh client to use this session as ProxyCommand, add the following to `.ssh/config`:
+
+```
+Host i-* mi-*
+    User ec2-user
+    ProxyCommand sh -c "aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
+    ForwardAgent yes
+    ServerAliveInterval 120
+    # also port forward 8888 on the host
+    LocalForward 8888 localhost:8888
+    IdentityFile ~/.ssh/ec2-pem
+```
+
+You can then use ssh directly as follows: `ssh i-040c0af6a7a4ba0a7`
+Or, with port forwarding: `ssh -L 8888:localhost:8888 i-040c0af6a7a4ba0a7`
+
+Time to first byte seems the same over tunneling as direct.
+
+SSH tunnelling can be used with VSCode remote SSH.
+
+## Troubleshooting
 
 ## Checking and managing the SSM agent
 
@@ -54,34 +120,14 @@ sudo systemctl restart amazon-ssm-agent
 sudo systemctl restart snap.amazon-ssm-agent.amazon-ssm-agent.service
 ```
 
-## SSH Tunnelling
-
-Session Manager [supports SSH and SCP tunnelling](https://aws.amazon.com/about-aws/whats-new/2019/07/session-manager-launches-tunneling-support-for-ssh-and-scp/).
-
-Add the following to your `.ssh/config`:
-
-```
-Host i-* mi-*
-    User ec2-user
-    ProxyCommand sh -c "aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
-    ForwardAgent yes
-    ServerAliveInterval 120
-    IdentityFile ~/.ssh/ec2-pem
-```
-
-You can then use ssh directory as follows: `ssh i-040c0af6a7a4ba0a7`
-Or, with port forwarding: `ssh -L 8888:localhost:8888 i-040c0af6a7a4ba0a7`
-
-Time to first byte seems the same over forwarding as direct.
-
-## Troubleshooting
+### Instance not visible
 
 Instance does not appear as a target instance in `AWS Systems Manager - Session Manager - Start session` or `aws ssm describe-instance-information`?
 
 - Check /var/log/amazon/ssm/amazon-ssm-agent.log for errors.
 - Check the EC2 IAM Instance profile policy (see below).
 
-Can't connect from the command line?
+### Can't connect from the command line
 
 ```
 $ aws ssm start-session --target i-0850c1b15772106cc
@@ -126,4 +172,5 @@ The ssm-agent will probably need to be restarted after any IAM changes.
 
 ## References
 
-[EC2 Instance Connect vs. SSM Session Manager](https://carriagereturn.nl/aws/ec2/ssh/connect/ssm/2019/07/26/connect.html)
+- [EC2 Instance Connect vs. SSM Session Manager](https://carriagereturn.nl/aws/ec2/ssh/connect/ssm/2019/07/26/connect.html)
+- [GitHub - aws/amazon-ssm-agent](https://github.com/aws/amazon-ssm-agent)
