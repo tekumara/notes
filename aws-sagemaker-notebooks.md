@@ -42,6 +42,8 @@ xvda    202:0    0  110G  0 disk
 xvdf    202:80   0    5G  0 disk /home/ec2-user/SageMaker
 ```
 
+The jupyter lab notebook dir (aka root dir) is /home/ec2-user/SageMaker
+
 ## Customization
 
 The base image (mounted at /) is Amazon Linux AMI 2018.03 and managed by AWS. Outside of _/home/ec2-user/SageMaker_ any modifications to the filesystem will not persist after shutdown.
@@ -84,9 +86,9 @@ Config file: _~/.jupyter/jupyter_notebook_config.py_
 
 ```
 $ ls /home/ec2-user/anaconda3/envs/JupyterSystemEnv
-amazonei_mxnet_p27        amazonei_tensorflow2_p36  chainer_p27       mxnet_latest_p37  python2             pytorch_p27  tensorflow2_p36
-amazonei_mxnet_p36        amazonei_tensorflow_p27   chainer_p36       mxnet_p27         python3             pytorch_p36  tensorflow_p27
-amazonei_tensorflow2_p27  amazonei_tensorflow_p36   JupyterSystemEnv  mxnet_p36         pytorch_latest_p36  R            tensorflow_p36
+amazonei_mxnet_p27 amazonei_tensorflow2_p36 chainer_p27 mxnet_latest_p37 python2 pytorch_p27 tensorflow2_p36
+amazonei_mxnet_p36 amazonei_tensorflow_p27 chainer_p36 mxnet_p27 python3 pytorch_p36 tensorflow_p27
+amazonei_tensorflow2_p27 amazonei_tensorflow_p36 JupyterSystemEnv mxnet_p36 pytorch_latest_p36 R tensorflow_p36
 ```
 
 ## Jupyterlab extensions
