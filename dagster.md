@@ -24,19 +24,27 @@ A set of abstractions for pipelines that enables the definition and separation o
 - [Testability](https://docs.dagster.io/concepts/testing)
 - [Dynamic Dags](https://github.com/dagster-io/dagster/issues/462)
 - [Versioning and memoization/caching (Experimental)](https://docs.dagster.io/guides/dagster/memoization)
+- [k8s requests/limits](https://github.com/dagster-io/dagster/issues/3483#issuecomment-754305435)
+- launch remote processes, eg: [AWS batch](<(https://dagster.slack.com/archives/CCCR6P2UR/p1614041404042600)>)) or a specialised step launcher eg: the [EMR PySpark step launcher](https://docs.dagster.io/integrations/pyspark#submitting-pyspark-solids-on-emr)
 
 Not supported
 
-- [Namespaces per run](https://github.com/dagster-io/dagster/issues/3445)
-- Flexible compute per task - not a first class concept. Instead, solids can request resources and run tasks in other systems like AWS batch ([example](<(https://dagster.slack.com/archives/CCCR6P2UR/p1614041404042600)>))
+- [Service accounts per run](https://github.com/dagster-io/dagster/issues/3445)
 
 ## Deployments and execution frameworks
 
-Dagster running on [Kubernetes](https://docs.dagster.io/deployment/guides/kubernetes/deploying-with-helm) using the [K8sRunLauncher](https://docs.dagster.io/_apidocs/libraries/dagster-k8s#dagster_k8s.K8sRunLauncher) which creates a Kubernetes Job per pipeline run using the image specified in the [User Code Deployment](https://docs.dagster.io/deployment/guides/kubernetes/deploying-with-helm#user-code-deployment). These images contain a dagster repository. Jobs and pods are not automatically deleted so users can inspect results.
+Dagster running on [Kubernetes](https://docs.dagster.io/deployment/guides/kubernetes/deploying-with-helm) using the [K8sRunLauncher](https://docs.dagster.io/_apidocs/libraries/dagster-k8s#dagster_k8s.K8sRunLauncher) which creates a Kubernetes Job or CronJob per pipeline run using the image specified in the [User Code Deployment](https://docs.dagster.io/deployment/guides/kubernetes/deploying-with-helm#user-code-deployment). These images contain a dagster repository. Jobs and pods are not automatically deleted so users can inspect results.
 
 Alternatively the [CeleryK8sRunLauncher](https://docs.dagster.io/deployment/guides/kubernetes/deploying-with-helm-advanced#celery) can be used to provide step level isolation and to limit the number of concurrent connections to a resource. The [Run Worker](https://docs.dagster.io/deployment/guides/kubernetes/deploying-with-helm-advanced#run-worker) submits steps to the celery queue. The Celery workers poll for tasks and tasks launch a Kubernetes Job to execute the step.
 
 Dagster can also run pipelines on [dask](https://docs.dagster.io/deployment/guides/dask) and [airflow](https://docs.dagster.io/deployment/guides/airflow)
+
+## Integrations
+
+[Integrations](https://docs.dagster.io/integrations) include:
+
+- Spark
+- Papermill
 
 ## Dagit (UI)
 
