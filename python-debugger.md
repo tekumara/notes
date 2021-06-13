@@ -37,3 +37,33 @@ Set a breakpoint at in pandas.io.common at line 334:
 ```
 b /Users/tekumara/.virtualenvs/s3fs052/lib/python3.7/site-packages/pandas/io/common.py:334
 ```
+
+## Troubleshooting
+
+### Debugging stdin
+
+pdb takes over stdin, so if you pipe stdin to run you program pdb will error, eg:
+
+```
+echo foobar | python myapp
+...
+*** NameError: name 'foobar' is not defined
+```
+
+Alternatively you may see:
+
+```
+(Pdb) *** SyntaxError: invalid syntax
+```
+
+Direct pdb to use a fifo instead:
+
+```
+import pdb
+mypdb=pdb.Pdb(stdin=open('fifo_stdin','r'), stdout=open('fifo_stdout','w'))
+...
+mypdb.set_trace()
+...
+```
+
+See [How to debug python CLI that takes stdin?](https://stackoverflow.com/a/26975795/149412)

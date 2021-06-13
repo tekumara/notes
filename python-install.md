@@ -54,9 +54,9 @@ You can now create virtualenvs (which include pip): `python3 -m venv`
 
 ## Dist packages
 
-deadsnake/deb python packages contain a [modified version of site.py](https://github.com/deadsnakes/python3.7/blob/4dc651768517acccad5f5081fff2de3e4d5900cd/debian/patches/distutils-install-layout.diff#L243) which uses the dist-packages rather than site-packages subdirectory. This means _/usr/lib/python3/dist-packages_ appears on PYTHONPATH. Any `python3-*` deb packages will install into _/usr/lib/python3/dist-packages_.
+deadsnake/deb python packages contain a [modified version of site.py](https://github.com/deadsnakes/python3.7/blob/4dc651768517acccad5f5081fff2de3e4d5900cd/debian/patches/distutils-install-layout.diff#L243) which uses the dist-packages rather than site-packages subdirectory. This means _/usr/lib/python3/dist-packages_ appears on `sys.path`. _python3-*_ deb packages will be installed into _/usr/lib/python3/dist-packages_.
 
-Any python installations with a prefix other than _/usr_ will be isolated from this distribution installed packages, eg: installations in _/usr/local_ or virtualenvs.
+Any python installations with a prefix other than _/usr_ will be isolated from distribution installed packages, eg: installations in _/usr/local_ or virtualenvs.
 
 ## Python builds
 

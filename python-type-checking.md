@@ -22,6 +22,20 @@ A dictionary can be inferred as a TypedDict when supplied as a function argument
 
 A TypedDict is not compatible with `Dict[str, Any]` because it is considered a mutable invariant collection, see [mypy #4976](https://github.com/python/mypy/issues/4976).
 
+## Collections and variance
+
+Mutable collections have invariant type parameters because the contents of the collection can change.
+Immutable collection types support covariant type parameters, so derived classes are allowed.
+
+| Mutable Type      | Immutable Type     |
+| ----------------- | -------------------|
+| List              | Sequence, Iterable |
+| Dict              | Mapping            |
+| Set               | AbstractSet        |
+| n/a               | Tuple              |
+
+See [pyright: Understanding Typing - Generic Types](https://github.com/microsoft/pyright/blob/0f9d308827e014f2b9b65cd4864cc0b889c53236/docs/type-concepts.md#generic-types)
+
 ## Ignore
 
 Add `# type: ignore` to the end of a line to disable type checking, or the top of the file to disable type-checking for the whole module.
