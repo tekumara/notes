@@ -10,9 +10,60 @@ Multi-tenant
 Multi-cluster
 Extensible - can call other services (and protect them with resource pools)
 
+## Concepts
+
+- [Task](https://docs.flyte.org/en/latest/concepts/tasks.html#divedeep-tasks) - an independent unit of processing, with or without side-effects.
+- [Workflow](https://docs.flyte.org/en/latest/concepts/workflows_nodes.html) - a graph of nodes. Defined in protobuf. Workflows can refer to tasks or workflows outside their own project or domain.
+- [Nodes](https://docs.flyte.org/en/latest/concepts/workflows_nodes.html) - a node can be a task, another workflow, or a branch node.
+- [Launch plans](https://docs.flyte.org/en/latest/concepts/launchplans_schedules.html) are used to execution a workflow. Can specify bound inputs and a [schedule](https://docs.flyte.org/en/latest/concepts/launchplans_schedules.html#schedules). There can be multiple versions of a launch plan, but only one active launch plan and its schedule. Inactive launch plans can still be triggered manually.
+- [Projects](https://docs.flyte.org/en/latest/concepts/projects.htm) - a grouping of tasks and workflows. Resources limits can be set per project.
+- [Domains](https://docs.flyte.org/en/latest/concepts/domains.html) - used to denote different deployment environments, eg: staging, production.
+- [Plugins](https://docs.flyte.org/en/latest/concepts/architecture.html#data-plane) - a plugin handles a type of task, eg: Hive, Spark, AWS Batch etc.
+
+## Architecture
+
+FlyteKit - SDK for describing workflows in python, compiling them to Protobuf, and submission and execution.
+
+[FlyteAdmin](https://docs.flyte.org/en/latest/concepts/admin.html) - serves the main Flyte API over gRPC and HTTP. It processes all client requests from FlyteKit, FlyteConsole, and FlyteCLI. It uses postgres for persistence and launches workflows on the data plane ie: kubernetes
+
+flyteworkflow is a kubernetes CRD which represents the flyte workflow DAG.
+
+FlytePropeller is a kubernetes operator that looks for flyteworkflow CRDs and launches pods to execute them.
+
+[FlyteConsole](https://docs.flyte.org/en/latest/concepts/console.html) - UI for viewing workflows, tasks, executions. Can launch executions. Pretty basic.
+
+Flyte-cli - Python CLI for interacting with admin + data catalog.
+Flytectl - Go CLI for interacting with admin + data catalog.
+
+Kubernetes dashboard is used to show logs when using the sandbox.
+
+[Cloudwatch events](https://github.com/flyteorg/flyte/blob/master/helm/values-eks.yaml#L322) are used to run workflows on a schedule.
+
+[Cluster resource manager](https://github.com/flyteorg/flyte/blob/master/helm/values-eks.yaml#L365) for automatic configuration and management of namespaces etc.
+
+## Containers
+
+Each node runs inside a pod. Data management (ie: download/upload of inputs/outputs) is handled either by:
+
+- flytekit
+- [raw containers](https://docs.flyte.org/projects/cookbook/en/latest/auto/core/containerization/raw_container.html) (copilot) - inputs/outputs side-loaded at a specific path, see [DataLoadingConfig](https://docs.flyte.org/projects/flyteidl/en/latest/protos/docs/core/core.html?highlight=copilot#dataloadingconfig)
+
+[Pod tasks](https://docs.flyte.org/projects/cookbook/en/latest/auto/integrations/kubernetes/pod/pod.html) can run multiple containers for a task.
+
+## Features
+
+- [Caching / Memoization](https://docs.flyte.org/en/latest/howto/enable_and_use_memoization.html)
+- [User stats via statsd](https://docs.flyte.org/en/latest/concepts/observability.html#user-stats-with-flyte)
+- [Data Catalog](https://docs.flyte.org/en/latest/concepts/catalog.html) indexes parameterized, strongly-typed data artifacts across revisions. It also powers Flyte's memoization system.
+- [Authentication](https://docs.flyte.org/en/latest/howto/authentication/index.html)
+- [Secrets injection](https://docs.flyte.org/projects/cookbook/en/latest/auto/core/containerization/use_secrets.html)
+- [Fast registration](https://docs.flyte.org/en/latest/howto/fast_registration.html) to rerun without rebuilding a container
+- [Task logging](https://github.com/flyteorg/flyte/blob/master/helm/values-eks.yaml#L302) to cloudwatch and/or kubernetes logs.
+- [Workflow notifications](https://github.com/flyteorg/flyte/blob/master/helm/values-eks.yaml#L344) via SNS
+
 ## Install
 
-This will install a k3s cluster in docker (requires privileged mode), using dind (docker in docker) so images can be built and registered directly with the cluster, and then deploy flyte to it.
+This will start a k3s cluster in docker and then deploy flyte to it. It requires privileged mode, so dind (docker in docker) can be used to build images.
 
 ```
 git clone git@github.com:flyteorg/flytesnacks.git
@@ -20,11 +71,9 @@ cd flytesnacks
 
 # start ghcr.io/flyteorg/flyte-sandbox:dind
 make start
-
-# access flyteconsole
 ```
 
-Now you can access flyteconsole on [localhost:30081/console](http://localhost:30081/console)
+You can access flyteconsole on [localhost:30081/console](http://localhost:30081/console). Workflows under _cookbook/_ are registered in the flytesnacks project development domain.
 
 To inspect the k3s cluster:
 
@@ -36,7 +85,7 @@ docker exec -it flyte-sandbox bash
 k3s kubectl get po -A --watch
 ```
 
-syncresources -
+[syncresources](https://github.com/flyteorg/flyte/blob/master/kustomize/base/admindeployment/clustersync/cron.yaml) - a cronjob that runs `flyteadmin --config /etc/flyte/config/*.yaml clusterresource sync` every minute. This [syncs](https://github.com/flyteorg/flyteadmin/blob/2d81c1eec24cffb43346b56fc0017fd29db33a38/cmd/entrypoints/clusterresource.go#L71) cluster resources.
 
 ## Install sandbox to existing cluster
 
