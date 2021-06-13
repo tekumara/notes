@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -uoe pipefail
+set -euo pipefail
 
 function die() {
     >&2 echo -e "$@"

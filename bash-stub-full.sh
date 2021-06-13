@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -uoE pipefail
+set -Euo pipefail
 
 function usage() {
     die "Archive and upload spark ui event logs for prosperity
