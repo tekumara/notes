@@ -28,8 +28,8 @@ Toggle mouse mode: `Ctrl b m`
 
 - this is equivalent to `set -g mouse on` or `set -g mouse off`
 - when mouse mode is off (default):
-  *mouse selection will copy
-  *on the command line the scroll wheel will scroll the shell history, or in vim, the vim window
+  - mouse selection will copy
+  - on the command line the scroll wheel will scroll the shell history, or in vim, the vim window
 - when mouse mode is on, the scroll wheel will scroll the terminal history, and mouse selection won't work
 
 ## Latest version

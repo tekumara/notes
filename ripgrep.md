@@ -13,7 +13,7 @@ Try disabling the `.gitignore` logic: `rg --no-ignore ..`
 `--files` prints the names of any files that would be searched, without actually performing the search. This is useful to determine whether a particular file is being searched or not.
 
 [Globs](https://github.com/BurntSushi/ripgrep/tree/master/globset) determine which files to include or exclude in the search.
-eg: 
+eg:
 
 ```
 # list names of all files in any `ansible/` subdirectory (ignoring files in .gitignore).
@@ -35,14 +35,16 @@ code/proj2/ansible/common.yml
 
 # search hidden files and directories for the text `checktime`, excluding multiple paths
 rg -g '!{.Trash,Library,.rustup}' --hidden checktime
+
+# ignore javascript files
+rg -g '!*.js'
 ```
 
 In above examples the implicit path to search is `.` (the current directory).
-If you supply files or directory as a path (explicity or expanded) eg: `rg -g 'ansible/*' --files *` they will take precendence over the glob ([[issue #725|https://github.com/BurntSushi/ripgrep/issues/725]])
-</pre>
-</div>
+If you supply files or directory as a path (explicitly or expanded) eg: `rg -g 'ansible/*' --files *` they will take precedence over the glob ([issue #725](https://github.com/BurntSushi/ripgrep/issues/725))
 
 ## Install Ubuntu
+
 There's no Ubuntu package yet.
 
 Install via cargo: `cargo install ripgrep`
@@ -66,4 +68,3 @@ sudo cp /tmp/ripgrep*/complete/rg.bash-completion /usr/share/bash-completion/com
 #zsh completions
 sudo cp /tmp/ripgrep*/complete/_rg /usr/share/zsh/functions/Completion/Zsh/
 ```
-

@@ -6,7 +6,7 @@ Notebooks with
 - Spark UI
 - publish
 - comments
-- integration with MLFlow
+- [Managed MLFlow](https://databricks.com/product/managed-mlflow)
 - git integration
 
 Spark clusters with
@@ -15,6 +15,7 @@ Spark clusters with
 - Ganglia
 - Spark UI
 - [custom containers](https://docs.databricks.com/clusters/custom-containers.html)
+- [Databricks Runtime ML](https://docs.databricks.com/runtime/mlruntime.html)
 
 [Jobs](https://docs.databricks.com/jobs.html)
 
@@ -44,3 +45,7 @@ eg: m5.16xlarge 64 CPUs, 256GB per hour:
   - Standard All-Purpose Compute: $4.38
   - Premium All-Purpose Compute: $6.03
   - Enterprise All-Purpose Compute: $7.12
+
+## Try for free
+
+

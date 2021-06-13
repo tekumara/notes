@@ -8,7 +8,7 @@
 `docker images` list of images  
 `docker inspect CONTAINER` see details of a container, eg: path & args of the command, network ports, env  
 `docker inspect -f '{{.State.Pid}}' CONTAINER` get the PID of the process running in docker  
-`docker inspect -f '{{.HostConfig.Memory}}' CONTAINER` to see the container memory limit in bytes   
+`docker inspect -f '{{.HostConfig.Memory}}' CONTAINER` to see the container memory limit in bytes  
 `docker inspect -f '{{ json .NetworkSettings }}' CONTAINER | jq .` network settings including exposed ports and bridged IP address  
 `docker image inspect REPO:TAG` see details of an image  
 `docker image inspect python:3.6-slim | jq '.[0].Size'` see size of image
@@ -31,7 +31,15 @@
 `docker ps --format "table {{.Image}}\t{{.Ports}}\t{{.Names}}"` containers with nicer formatting
 `docker container rm CONTAINER` remove container
 `docker network connect NETWORK CONTAINER` add additional network to a container
+`docker inspect CONTAINER | jq '.[].HostConfig.RestartPolicy'` check [restart policy](https://docs.docker.com/config/containers/start-containers-automatically/)
+`docker update --restart no CONTAINER` set restart policy to default of no, so the container doesn't start when the daemon starts up
 
 ## Modify existing container config
 
 Docker stores container metadata in `/var/lib/docker/containers/[CONTAINER_ID]/`. On a Mac, Docker runs as an LinuxKit xhyve process. You need to connect to that first and then proceed to modify the container metadata ([ref](https://www.softwareab.net/wordpress/docker-macosx-modify-hostconfig-existing-container/))
+
+## Troubleshooting
+
+### ERROR: error while removing network: network X id Y has active endpoints
+
+Stop any containers using the network before trying to delete it.

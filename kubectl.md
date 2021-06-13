@@ -46,8 +46,9 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl top pods -A` show CPU/MEM usage for pods in all namespaces  
 `kubectl describe rs/hub-67966db58b -n jhub` describe the replicaset hub-67966db58b in namespace  
 `kubectl get events --sort-by='{.lastTimestamp}'` show events sorted by last seen timestamp. NB: by default events are only kept by the api server for 1 hour
-`kubectrl describe ingress` describe ingress objects
+`kubectl describe ingress` describe ingress objects
 `kubectl rollout restart deployment awesome-api` do a rolling restart of a deployment
+`kubectl logs -f $PODNAME` stream logs
 
 Show all forwarded ports, ie: [NodePort services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types):
 
@@ -71,7 +72,7 @@ kubectl get deployment slim-api -o jsonpath="{range .status.conditions[*]}{.last
 
 ### Listing all resources
 
-`kubectl get all --all-namespaces` show "all" kubernetes objects in all namespaces. The "all" type is a pseudo-type that's deprecated, and doesn't cover all resource types (eg: it omits secrets). Resource types included are: pods, services, daemonsets, deployments, replicasets (see [#151](https://github.com/kubernetes/kubectl/issues/151#issuecomment-544247961))  
+`kubectl get all --all-namespaces` show "all" kubernetes objects in all namespaces. The "all" type is a pseudo-type that's deprecated, and doesn't cover all resource types (eg: it omits secrets, roles, service accounts, rolebindings). Resource types included are: pods, services, daemonsets, deployments, replicasets (see [#151](https://github.com/kubernetes/kubectl/issues/151#issuecomment-544247961))  
 `kubectl get $(kubectl api-resources --verbs=list -o name | paste -sd, -) --ignore-not-found --all-namespaces` actually show all resources
 
 Alternately show all resources using the krew plugin [ketall](https://github.com/corneliusweig/ketall):

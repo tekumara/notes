@@ -2,17 +2,28 @@
 
 ## Linking
 
-To link to a channel (desktop app):
-
-```
-slack://channel?id=<CHANNEL-ID>&team=<TEAM-ID>
-```
-Use view-source to see your channel id and team id.
-
 To link to a channel (web):
 
 ```
-https://<organization>.slack.com/messages/<channel>/
+https://<WORKSPACE_NAME>.slack.com/messages/<CHANNEL-NAME>/
+```
+
+This will resolve to
+
+```
+https://app.slack.com/client/T<TEAM-ID>/C<CHANNEL-ID>
+```
+
+To link to a channel (desktop app):
+
+```
+https://WORKSPACE_NAME.slack.com/archives/C<CHANEL_ID>
+```
+
+or
+
+```
+slack://channel?id=<CHANNEL-ID>&team=<TEAM-ID>
 ```
 
 ## Authentication
