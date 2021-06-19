@@ -95,7 +95,7 @@ Many libraries lack stubs. However their `.py` files can contain partial or comp
   12:26 - error: Type of "client" is unknown (reportUnknownMemberType)
 ```
 
-But on the other hand, the type information is inferred and can be incorrect. Some of these problems can only be fixed by the third party library author, and/or a type stub. Inference from source files can also be slow and can result in a sluggish experience for complex libraries like [tensorflow](https://github.com/microsoft/pyright/issues/1404#issuecomment-765814403).  
+But on the other hand, the type information is inferred and can be incorrect. Some of these problems can only be fixed by the third party library author, and/or a type stub. Inference from source files can also be slow and can result in a sluggish experience for complex libraries like [tensorflow](https://github.com/microsoft/pyright/issues/1404#issuecomment-765814403).
 
 If you are using Pyright/pylance for type checking, `"useLibraryCodeForTypes": false` is recommended. The feature was added to provide completion suggestions when using Pylance (see [pyright/#945](https://github.com/microsoft/pyright/issues/945#issuecomment-674466348)). However, it will also disable "Go to Definition" behaviour (see [pylance-release/#278](https://github.com/microsoft/pylance-release/issues/278)).
 
@@ -103,15 +103,25 @@ If you are using Pyright/pylance for type checking, `"useLibraryCodeForTypes": f
 
 When pyright is run in strict mode and type stubs are missing it will generate a `reportMissingTypeStubs` error.
 
-This can be fixed by generating type stubs which by default are stored in _typings/_, eg:
+This can be fixed by generating draft type stubs which by default are stored in _typings/_, eg:
 
 ```
 pyright --createstub botocore
 ```
 
-See [Type Stub Files](https://github.com/microsoft/pyright/blob/master/docs/type-stubs.md)
+These stubs are a first draft intended for type-checking and are meant to be manually improved. `--createstub` emits a comment with the return type for functions if it can be inferred. Whilst these may be incorrect they can reduce the manual work needed (see [#1916](https://github.com/microsoft/pyright/issues/1916)). 
 
-`.pyi` stubs in _typings/_ take precedence over the same stubs in the virtualenv.
+`--createstub` differ from `useLibraryCodeForTypes` which is intended to create low-quality type information that's usually insufficient for type checking but may be sufficient for completion suggestions. ([ref](https://github.com/microsoft/pyright/issues/1970#issuecomment-858669967))
+
+Compared to [stubgen](https://mypy.readthedocs.io/en/stable/stubgen.html) from mypy:
+- `--createstub` does a better job at inferring function return types
+- stubgen does a better job at inferring some function args
+- `--createstub` includes docstrings in the generated stubs
+
+Reference:
+- See [Type Stub Files](https://github.com/microsoft/pyright/blob/master/docs/type-stubs.md)
+
+NB: `.pyi` stubs in _typings/_ take precedence over the same stubs in the virtualenv.
 
 ## Checking a subset of files
 
