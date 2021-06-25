@@ -13,11 +13,20 @@ Install:
 
 ```
 curl -fsSL https://code-server.dev/install.sh | sh -s --
+
+# start service
 sudo systemctl enable --now code-server@$USER
 
 # status & logs
 sudo systemctl status code-server@ubuntu.service
 journalctl -u code-server@ubuntu.service
+
+
+# stop
+sudo systemctl stop code-server@ubuntu.service
+
+# check config
+cat ~/.config/code-server/config.yaml
 ```
 
 Setup code-server with [caddy and lets encrypt](https://github.com/cdr/code-server/blob/v3.8.0/doc/guide.md#lets-encrypt):

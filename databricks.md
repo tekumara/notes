@@ -47,5 +47,3 @@ eg: m5.16xlarge 64 CPUs, 256GB per hour:
   - Enterprise All-Purpose Compute: $7.12
 
 ## Try for free
-
-

@@ -6,6 +6,17 @@ To show all users of a cloud9 environment, and when they last accessed it:
 aws cloud9 describe-environment-memberships --environment-id $ENVIRONMENT_ID
 ```
 
+## Preview
+
+Use Tools -> Preview -> Preview Running Application to open a web browser to port 8080 of your cloud9 instance.
+To view ports 8081 or 8082 append then to the URL, eg:
+
+```
+https://1234567890.vfs.cloud9.us-east-1.amazonaws.com:8081
+```
+
+See [Preview a running application](https://docs.aws.amazon.com/cloud9/latest/user-guide/app-preview.html#app-preview-preview-app)
+
 ## network access
 
 When using SSH (as opposed to SSM) Cloud9 connects to your EC2 instance from the following CIDR ranges:

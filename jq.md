@@ -6,7 +6,7 @@
 
 `to_entries` - splits object into an array, one object per key eg:`{"a": 1, "b": 2} ==> [{"key":"a", "value":1}, {"key":"b", "value":2}]`
 
-`to_entries[]` - splits and unwraps, eg: `{"a": 1, "b": 2} ==&gt; {"key":"a", "value":1}\n{"key":"b", "value":2}`
+`to_entries[]` - splits and unwraps, eg: `{"a": 1, "b": 2} ==> {"key":"a", "value":1}\n{"key":"b", "value":2}`
 
 `to_entries[0].value` - to get the value of the first key in an object (useful when you don't know what the key is called or it can change)
 
@@ -120,18 +120,21 @@ Convert date string to epoch timestamp
 
 ```
 echo '[ { "name": "apple", "created_at": "Fri Jan 02 01:29:31 +0000 2020" }, { "name": "orange", "created_at": "Thu Nov 22 22:51:23 +0000 2019" }]' | jq '.[] .created_at |= (strptime("%a %b %d %H:%M:%S %z %Y")|mktime)
-``
+```
 
 Sort date string chronologically descending
-```
 
+```
 echo '[ { "name": "apple", "created_at": "Fri Jan 02 01:29:31 +0000 2020" }, { "name": "orange", "created_at": "Thu Nov 22 22:51:23 +0000 2019" }]' | jq 'sort_by(.created_at | strptime("%a %b %d %H:%M:%S %z %Y") | mktime) | reverse'
-
 ```
 
+Extract python version using regex match
+
+```
+echo '["aec-cli-1.0.2.tar.gz","t1000-1.0.1-pre-proxyfix2.tar.gz","boto3-1.17.97.tar.gz","t1000-0.1.dev204+gc88c6ba.tar.gz","slimcontacts-1.2.4-CE-6.tar.gz"]' | jq '.[] | (capture("-(?<version>[0-9.]+[-+a-zA-Z0-9]*).tar.gz").version)'
+```
 
 ## Refs
 
 https://github.com/stedolan/jq/wiki/Cookbook
 
-```

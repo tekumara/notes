@@ -125,9 +125,16 @@ To list resources in a stack
 aws cloudformation describe-stack-resources --stack-name mystack
 ```
 
-## Drift detection
+## Troubleshooting
 
+### Cloudformation tries to recreate an existing resource
 
+This can happen when a resource has been disassociated from the stack but still exist.
+
+Resources can be disassociated when they are removed from the template, the stack is updated and:
+
+- the resource had `DeletionPolicy: Retain` set. When this happen the stack events will show `DELETED_SKIPPED`
+- deletion was attempted but failed three times (eg: because of an authorization failure)
 
 ## YAML
 
