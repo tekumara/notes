@@ -62,7 +62,7 @@ pip builds in a isolated environment that includes any requirements defined in `
 
 The wheel cache is located at `$(pip cache dir)\wheels`. It can be inspected via `pip cache list`.
 
-The http cache (aka package index page cache) is located at `$(pip cache dir)\http`. Use the file system to inspect it.
+The http cache (aka package index page cache) is located at `$(pip cache dir)\http`. Use the file system to inspect it. Each repository has caches packages separately.
 
 See [pip documentation: Caching](https://pip.pypa.io/en/stable/cli/pip_install/#caching)
 

@@ -80,6 +80,20 @@ List packages matching wildcard
 dpkg-query -l "python*"
 ```
 
+## Inspect .deb file
+
+List contents
+
+```
+dpkg -c file.deb
+```
+
+Manually extract
+
+```
+dpkg-deb -xv file.deb /dest/path/
+```
+
 ## Inspect repo cache
 
 Display package details for packages, including those available in repos that aren't installed
