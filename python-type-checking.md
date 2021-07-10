@@ -2,6 +2,8 @@
 
 ## TypedDict
 
+I'd probably default to NamedTuples or Dataclasses, and use TypedDicts for special situations that require interoperability (eg: with pandas) or backwards compatibility.
+
 eg:
 
 ```python
@@ -18,6 +20,22 @@ class Config(TypedDict, total = False):
     vpc: Dict[str, str]
 ```
 
+To specify which fields are required and which ones aren't, use inheritance:
+
+```python
+class _RequiredRunArgs(TypedDict, total=True):
+    MaxCount: int
+    MinCount: int
+
+class RunArgs(_RequiredRunArgs, total=False):
+    BlockDeviceMappings: List["BlockDeviceMappingTypeDef"]
+    ImageId: str
+    InstanceType: InstanceTypeType
+...
+```
+
+NB: [PEP 655](https://www.python.org/dev/peps/pep-0655/) introduces a new syntax for this in Python 3.10.
+
 A dictionary can be inferred as a TypedDict when supplied as a function argument, but requires an explicit annotation when assigned to a variable ([ref](https://github.com/microsoft/pyright/issues/1727#issuecomment-813123780)).
 
 A TypedDict is not compatible with `Dict[str, Any]` because it is considered a mutable invariant collection, see [mypy #4976](https://github.com/python/mypy/issues/4976).
@@ -27,12 +45,12 @@ A TypedDict is not compatible with `Dict[str, Any]` because it is considered a m
 Mutable collections have invariant type parameters because the contents of the collection can change.
 Immutable collection types support covariant type parameters, so derived classes are allowed.
 
-| Mutable Type      | Immutable Type     |
-| ----------------- | -------------------|
-| List              | Sequence, Iterable |
-| Dict              | Mapping            |
-| Set               | AbstractSet        |
-| n/a               | Tuple              |
+| Mutable Type | Immutable Type     |
+| ------------ | ------------------ |
+| List         | Sequence, Iterable |
+| Dict         | Mapping            |
+| Set          | AbstractSet        |
+| n/a          | Tuple              |
 
 See [pyright: Understanding Typing - Generic Types](https://github.com/microsoft/pyright/blob/0f9d308827e014f2b9b65cd4864cc0b889c53236/docs/type-concepts.md#generic-types)
 
