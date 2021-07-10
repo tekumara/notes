@@ -22,6 +22,39 @@ See [Defining Settings to Apply to Builds](https://www.jetbrains.com/help/teamci
 
 VCS changes to build configurations that aren't triggered will not be updated in the UI until they next run.
 
+## Kotlin DSL Sources / API Docs
+
+To download the sources for the Kotlin Teamcity DSL classes run:
+
+```
+mvn -U dependency:sources
+```
+
+See also the [public teamcity server kotlin dsl api docs](https://teamcity.jetbrains.com/app/dsl-documentation/index.html).
+
+## Generating the build configuration XML
+
+To generate XML configs in ./teamcity/target/generated-configs
+
+```
+mvn teamcity-configs:generate -f .teamcity/pom.xml
+```
+
+This requires having a pluginRepository configured that hosts `org.jetbrains.teamcity:teamcity-configs-maven-plugin:2020.2.2`, eg:
+
+```xml
+  <pluginRepositories>
+    <pluginRepository>
+      <id>central</id>
+      <name>teamcity-repository</name>
+      <url>https://download.jetbrains.com/teamcity-repository</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+```
+
 ## View current build configuration settings
 
 From Build Configuration Home -> More -> Settings. See also View DSL.
@@ -40,7 +73,7 @@ First check the VCS root and see when the period scheduler last ran (via Edit co
 
 ```
 (git) awesome-app belongs to Team Awesome / Amazing App
-    Commit hook is inactive 
+    Commit hook is inactive
     Latest check for changes: 14:54 (periodical run by the schedule)
     Changes checking interval: 1m
 ```
@@ -49,3 +82,6 @@ Manually trigger a check for changes via _Actions - Check for pending changes_ (
 
 If the commit hook is inactive, reinstate it.
 
+## References
+
+[Kotlin DSL](https://www.jetbrains.com/help/teamcity/kotlin-dsl.html)
