@@ -1,26 +1,23 @@
 # determined-ai
 
-Determined AI provides cluster management for model training, and offer the following [benefits](https://docs.determined.ai/latest/topic-guides/benefits-of-determined.html):
+Determined AI provides cluster management for reproducible containerised model training. It offers the following [benefits](https://docs.determined.ai/latest/topic-guides/benefits-of-determined.html):
 
-- a multi-user platform for shared access to scarce GPU resources (particularly useful on-prem) using fair-sharing with pre-emption. Pre-empted training tasks checkpoint their state before terminating gracefully.
-- elastic scaling in the cloud
-- scheduling of notebooks, tensorboards, commands and shells on CPUs and training on GPUs
+- a multi-user platform for shared access to scarce compute resources (particularly useful on-prem)
+- automatic checkpointing of training state which enables fair-sharing with pre-emption and the use of spot instances
+- kubernetes and EC2 clusters with elastic scaling
+- scheduling of notebooks, tensorboards, commands and shells on CPUs
+- training on CPUs and GPUs
+- PyTorch and Tensorflow/Keras support primarily and a [generic api](https://github.com/rb-determined-ai/determined/blob/sprinkle-spec/sprinkle/user-facing/low-level.md) to integrate other frameworks
 - [multi-machine distributed training](https://docs.determined.ai/latest/topic-guides/effective-distributed-training.html#effective-distributed-training) built on top of [horovod](https://github.com/horovod/horovod) which uses [NVIDIA/nccl](https://github.com/NVIDIA/nccl) and [facebookincubator/gloo](https://github.com/facebookincubator/gloo)
 - state-of-the-art hyperparameter tuning algorithm ([ASHA](https://arxiv.org/abs/1810.05934))
 - a high-performance random-access data layer ([yogadl](https://docs.determined.ai/latest/how-to/data-layer.html)) that locally caches data read from cloud storage. Enables transparent data sharding across multiple-machines, and resuming training mid-epoch.
-- experiment tracking
-- team based - resources and experiment results are shared and accessible to any team member with access
-
-On the roadmap:
-
-- model store
-- spot instances on AWS
-- RBAC
-- better CPU support - currently all the CPUs on a CPU-only agent are treated as a single slot
+- integrated experiment tracking and reproducibility with [visualisations](https://www.youtube.com/watch?v=YsEE-eiWkeE) in the determined ui and tensorboard
+- a [model registry](https://docs.determined.ai/latest/tutorials/model-registry.html)
+- team based resources and experiment results are shared and accessible to any team member with access
 
 Enterprise edition:
 
-- Okta integration (SAML, SCIM)
+- Okta integration ([OAuth 2.0](https://docs.determined.ai/latest/topic-guides/oauth.html), [SAML](https://docs.determined.ai/latest/topic-guides/saml.html), [SCIM](https://docs.determined.ai/latest/topic-guides/scim.html))
 - Support & product development
 - More high-end offerings to come
 
@@ -115,7 +112,7 @@ See [Topic Guides > Users](https://docs.determined.ai/latest/topic-guides/users.
 
 ## Batching and Training Units
 
-Training, validation and checkpointing periods can be expressed in the following [training Units](https://docs.determined.ai/latest/reference/experiment-config.html#experiment-configuration-training-units):
+Training, validation and checkpointing periods can be expressed in the following [training units](https://docs.determined.ai/latest/reference/experiment-config.html#experiment-configuration-training-units):
 
 - `records`: a record is a single labelled example
 - `batches`: a batch is a group of records. The number of records in a batch is configured by `global_batch_size`.
@@ -135,7 +132,6 @@ Every experiment must specify `global_batch_size`. The batch size per slot is `g
 `max_length` how many batches to train
 `min_validation_period` how often validation will occur during a trial. By default, validation occurs at the end of a trial.
 `min_checkpoint_period` if set, take periodic checkpoints during a trial. By default checkpoints are taken when a trial is suspended, completed, or the searcher takes a decision
-
 
 For more info see [Experiment Configuration](https://docs.determined.ai/latest/reference/experiment-config.html))
 
