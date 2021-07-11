@@ -8,24 +8,24 @@ Determined AI provides cluster management for reproducible containerised model t
 - scheduling of notebooks, tensorboards, commands and shells on CPUs
 - training on CPUs and GPUs
 - PyTorch and Tensorflow/Keras support primarily and a [generic api](https://github.com/rb-determined-ai/determined/blob/sprinkle-spec/sprinkle/user-facing/low-level.md) to integrate other frameworks
+- a [structured way](https://www.determined.ai/blog/standardized-models-with-determined) of defining model training for reproducibility and scalability
 - [multi-machine distributed training](https://docs.determined.ai/latest/topic-guides/effective-distributed-training.html#effective-distributed-training) built on top of [horovod](https://github.com/horovod/horovod) which uses [NVIDIA/nccl](https://github.com/NVIDIA/nccl) and [facebookincubator/gloo](https://github.com/facebookincubator/gloo)
 - state-of-the-art hyperparameter tuning algorithm ([ASHA](https://arxiv.org/abs/1810.05934))
 - a high-performance random-access data layer ([yogadl](https://docs.determined.ai/latest/how-to/data-layer.html)) that locally caches data read from cloud storage. Enables transparent data sharding across multiple-machines, and resuming training mid-epoch.
-- integrated experiment tracking and reproducibility with [visualisations](https://www.youtube.com/watch?v=YsEE-eiWkeE) in the determined ui and tensorboard
+- integrated experiment tracking with [visualisations](https://www.youtube.com/watch?v=YsEE-eiWkeE) in the determined ui and tensorboard
 - a [model registry](https://docs.determined.ai/latest/tutorials/model-registry.html)
-- team based resources and experiment results are shared and accessible to any team member with access
+- group based access to compute resources and experiment results
 
 Enterprise edition:
 
 - Okta integration ([OAuth 2.0](https://docs.determined.ai/latest/topic-guides/oauth.html), [SAML](https://docs.determined.ai/latest/topic-guides/saml.html), [SCIM](https://docs.determined.ai/latest/topic-guides/scim.html))
 - Support & product development
-- More high-end offerings to come
 
 ## Network connectivity
 
-`det shell open` uses SSH, so require network level access
+`det shell open` uses SSH, so requires network level access.
 
-Notebook access is HTTP proxied via the master, eg: http://master:8080/proxy/80d46f5d-f41c-4dda-ae5c-9c276f61b8f0/
+Notebooks are HTTP proxied via the master, eg: http://master:8080/proxy/80d46f5d-f41c-4dda-ae5c-9c276f61b8f0/
 
 CLI commands use WebSockets to communicate with the master.
 
