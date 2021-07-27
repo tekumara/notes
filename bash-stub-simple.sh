@@ -3,7 +3,7 @@
 set -euo pipefail
 
 function die() {
-    >&2 echo -e "$@"
+    >&2 printf "\n%s\n\n" "$@"
     exit 1
 }
 
