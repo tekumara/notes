@@ -1,26 +1,24 @@
 # flyte
 
-Fabric for connecting disparate compute (custom containers, Spark, Flink, AWS Batch etc.)
-Multi-tenant
-Multi-cluster
+Kubernetes native fabric for connecting disparate compute (custom containers, Spark, Flink, AWS Batch etc.) and positioned for both Data and ML workflows.
+
+
 Extensible - can call other services (and protect them with resource pools)
 Schedule and workflow decoupled
-Kubernetes native
-Positioned for both Data and ML workflows
 
 ## Features
 
-- [Caching / Memoization](https://docs.flyte.org/en/stable/howto/enable_and_use_memoization.html)
+- Multi-tenancy enabled via [projects and domains](https://docs.flyte.org/en/latest/concepts/control_plane.html#control-plane). Supports multiple clusters.
+- [Caching / Memoization](https://docs.flyte.org/projects/cookbook/en/latest/auto/core/flyte_basics/task_cache.html) of tasks based on inputs, signature and version. Cached outputs are stored in S3.
 - [User stats via statsd](https://docs.flyte.org/en/stable/concepts/observability.html#user-stats-with-flyte)
-- [Data Catalog](https://docs.flyte.org/en/stable/concepts/catalog.html) indexes parameterized, strongly-typed data artifacts across revisions. It also powers Flyte's memoization system.
 - [Authentication](https://docs.flyte.org/en/stable/howto/authentication/index.html) - OIDC
 - [Secrets injection](https://docs.flyte.org/projects/cookbook/en/stable/auto/core/containerization/use_secrets.html)
-- [Fast registration](https://docs.flyte.org/projects/cookbook/en/latest/auto/deployment/fast_registration.html) to rerun workflows without rebuilding a container. Workflows should start in < 1 min.
+- [Fast registration](https://docs.flyte.org/projects/cookbook/en/latest/auto/deployment/fast_registration.html) can launch a task < 1 minute, by rerunning the task without rebuilding the container.
 - [Task logging](https://github.com/flyteorg/flyte/blob/master/helm/values-eks.yaml#L302) to cloudwatch and/or kubernetes logs.
 - [Workflow notifications](https://github.com/flyteorg/flyte/blob/master/helm/values-eks.yaml#L344) via SNS
 - [Scheduled workflows](https://docs.flyte.org/projects/cookbook/en/latest/auto/deployment/lp_schedules.html) via CloudWatch Events
-- [Type system](https://docs.flyte.org/projects/cookbook/en/latest/auto/core/type_system/index.html) inputs and outputs to tasks are strong typed.
-
+- [Type system](https://docs.flyte.org/projects/cookbook/en/latest/auto/core/type_system/index.html) ensures inputs and outputs to tasks are strong typed and tracked.
+- [Data Catalog](https://docs.flyte.org/en/stable/concepts/catalog.html) indexes parameterized, strongly-typed data artifacts across revisions. It also powers Flyte's memoization system.
 
 ### vs argo
 
@@ -82,6 +80,8 @@ Kubernetes dashboard is used to show logs when using the sandbox.
 
 [Cluster resource manager](https://github.com/flyteorg/flyte/blob/master/helm/values-eks.yaml#L365) for automatic configuration and management of namespaces etc.
 
+[Execution queues](https://docs.flyte.org/en/latest/deployment/cluster_config/general.html) hold dynamic and map tasks for execution.
+
 ## Containers
 
 Each node runs inside a pod. Data management (ie: download/upload of inputs/outputs) is handled either by:
@@ -90,3 +90,10 @@ Each node runs inside a pod. Data management (ie: download/upload of inputs/outp
 - [raw containers](https://docs.flyte.org/projects/cookbook/en/stable/auto/core/containerization/raw_container.html) (copilot) - inputs/outputs side-loaded at a specific path, see [DataLoadingConfig](https://docs.flyte.org/projects/flyteidl/en/stable/protos/docs/core/core.html?highlight=copilot#dataloadingconfig) and [Flyte copilot](https://docs.google.com/document/d/1ZsCDOZ5ZJBPWzCNc45FhNtYQOxYHz0PAu9lrtDVnUpw/edit#)
 
 [Pod tasks](https://docs.flyte.org/projects/cookbook/en/stable/auto/integrations/kubernetes/pod/pod.html) can run multiple containers for a task.
+
+## Integrations
+
+- [Spark on kubernetes](https://docs.flyte.org/projects/cookbook/en/stable/auto/integrations/kubernetes/k8s_spark/index.html)
+
+
+See [Integrations](https://docs.flyte.org/projects/cookbook/en/stable/integrations.html)
