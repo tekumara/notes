@@ -1,24 +1,26 @@
 # flyte
 
-Kubernetes native fabric for connecting disparate compute (custom containers, Spark, Flink, AWS Batch etc.) and positioned for both Data and ML workflows.
+Flyte is a a strongly typed framework for authoring tasks and workflows, and executing them in a Kubernetes cluster. It is positioned for both Data and ML workflows and can integration with Spark, AWS Batch, SageMaker, Kubeflow and more.
 
-
-Extensible - can call other services (and protect them with resource pools)
-Schedule and workflow decoupled
+Its unique aspect is the Flyte [type system](https://docs.flyte.org/projects/cookbook/en/latest/auto/core/type_system/index.html) which strongly types inputs and outputs to tasks and transports them as protobuf messages. This type system powers features like lineage and caching.
 
 ## Features
 
-- Multi-tenancy enabled via [projects and domains](https://docs.flyte.org/en/latest/concepts/control_plane.html#control-plane). Supports multiple clusters.
+- Multi-tenancy enabled via [projects and domains](https://docs.flyte.org/en/latest/concepts/control_plane.html#control-plane).
+- [Multi-cluster](https://docs.flyte.org/projects/cookbook/en/latest/auto/deployment/multiple_k8s.html) support for extreme scale.
 - [Caching / Memoization](https://docs.flyte.org/projects/cookbook/en/latest/auto/core/flyte_basics/task_cache.html) of tasks based on inputs, signature and version. Cached outputs are stored in S3.
 - [User stats via statsd](https://docs.flyte.org/en/stable/concepts/observability.html#user-stats-with-flyte)
+- [System stats](https://docs.flyte.org/en/latest/deployment/cluster_config/monitoring.html) via prometheus endpoint + grafana dashboards
 - [Authentication](https://docs.flyte.org/en/stable/howto/authentication/index.html) - OIDC
 - [Secrets injection](https://docs.flyte.org/projects/cookbook/en/stable/auto/core/containerization/use_secrets.html)
 - [Fast registration](https://docs.flyte.org/projects/cookbook/en/latest/auto/deployment/fast_registration.html) can launch a task < 1 minute, by rerunning the task without rebuilding the container.
 - [Task logging](https://github.com/flyteorg/flyte/blob/master/helm/values-eks.yaml#L302) to cloudwatch and/or kubernetes logs.
-- [Workflow notifications](https://github.com/flyteorg/flyte/blob/master/helm/values-eks.yaml#L344) via SNS
+- [Workflow notifications](https://docs.flyte.org/en/latest/deployment/cluster_config/notifications.html) via email, Pagerduty, Slack
+- Workflows can be triggered via an API call
 - [Scheduled workflows](https://docs.flyte.org/projects/cookbook/en/latest/auto/deployment/lp_schedules.html) via CloudWatch Events
 - [Type system](https://docs.flyte.org/projects/cookbook/en/latest/auto/core/type_system/index.html) ensures inputs and outputs to tasks are strong typed and tracked.
 - [Data Catalog](https://docs.flyte.org/en/stable/concepts/catalog.html) indexes parameterized, strongly-typed data artifacts across revisions. It also powers Flyte's memoization system.
+- [Extensible](https://docs.flyte.org/projects/cookbook/en/latest/auto/core/extend_flyte/index.html) - plugins can be written to call other services (with concurrency controlled via a [resource manager](https://github.com/flyteorg/flyteplugins/blob/master/go/tasks/pluginmachinery/core/resource_manager.go#L38))
 
 ### vs argo
 
@@ -94,6 +96,5 @@ Each node runs inside a pod. Data management (ie: download/upload of inputs/outp
 ## Integrations
 
 - [Spark on kubernetes](https://docs.flyte.org/projects/cookbook/en/stable/auto/integrations/kubernetes/k8s_spark/index.html)
-
 
 See [Integrations](https://docs.flyte.org/projects/cookbook/en/stable/integrations.html)

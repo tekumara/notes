@@ -4,7 +4,7 @@ flytekit includes the follow python entrypoints:
 
 - `flyte-cli` - deprecated general CLI, use flytectl instead
 - `pyflyte` - compiles workflows and tasks, and docker image name, to protobuf
-- `pyflyte-execute` - runs inside a container containing the task code, and executes serialised python tasks
+- `pyflyte-execute` - [executes python tasks](https://docs.flyte.org/projects/flytekit/en/latest/design/execution.html) on the cluster inside a container with the python code, marshalling inputs and outputs.
 
 See [Command Line Interfaces](https://docs.flyte.org/projects/flytekit/en/latest/design/clis.html#command-line-interfaces)
 
