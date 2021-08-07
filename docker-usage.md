@@ -6,7 +6,7 @@
 `docker ps -a` list all containers (not just running ones)  
 `docker ps -lq` show the latest created container id  
 `docker images` list of images  
-`docker inspect CONTAINER` see details of a container, eg: path & args of the command, network ports, env  
+`docker inspect CONTAINER` see details of a container, eg: path & args of the command, network ports, env, mounts 
 `docker inspect -f '{{.State.Pid}}' CONTAINER` get the PID of the process running in docker  
 `docker inspect -f '{{.HostConfig.Memory}}' CONTAINER` to see the container memory limit in bytes  
 `docker inspect -f '{{ json .NetworkSettings }}' CONTAINER | jq .` network settings including exposed ports and bridged IP address  

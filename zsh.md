@@ -93,3 +93,7 @@ The `PATH` variable and the `path` array are automatically synchronized ([ref](h
 
 Poorman's: `for i in $(seq 1 10); do /usr/bin/time zsh -i -c exit; done`
 rust's hyperfine: `hyperfine --warmup 3 'zsh -i -c exit;'`
+
+## history
+
+With fzf, when history sharing across shells is enabled (setopt SHARE_HISTORY), history written by shell A won't be available in shell B until re-rendering the prompt in B (e.g. by pressing Enter at the prompt). ([ref](https://github.com/junegunn/fzf/pull/2251))

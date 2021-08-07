@@ -8,7 +8,7 @@ Install the Remote - SSH extension.
 
 If you're have trouble connecting, try the equivalent ssh command in the shell in verbose mode, eg: `ssh -vvv`.
 
-When vscode connects to a host, it establishes dynamic port forwarding (`-D`) which acts as a SOCKS proxy server. Vscode then starts a remote server on the host and connects to it via the SOCKS proxy. 
+When vscode connects to a host, it establishes dynamic port forwarding (`-D`) which acts as a SOCKS proxy server. Vscode then starts a remote server on the host and connects to it via the SOCKS proxy.
 
 ### Port forwarding
 
