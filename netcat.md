@@ -1,26 +1,26 @@
 # Netcat
 
-Start ngrok
-
-```
-ngrok tcp --region=au 8888
-```
-
 Listen on port 8888 (macOSX):
 
 ```
 nc -l localhost 8888
 ```
 
-Connect to ngrok
+Connect to port 25
 
 ```
-nc 0.tcp.au.ngrok.io 16344
+nc myhost 25
+```
+
+Bidirectional forward from stdin/stdout to port 5556:
+
+```
+socat TCP4-LISTEN:5556,reuseaddr,fork EXEC:"aws ssm start-session --target %h --document-name AWS-StartSSHSession"
 ```
 
 ## Copy a file
 
-Start a netcat listening on the source:
+Start netcat listening on the source:
 `nc -l <port> < myfile`
 
 Receive it on the destination:

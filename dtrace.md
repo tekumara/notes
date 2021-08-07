@@ -8,6 +8,7 @@
 `sudo dtruss -n python3` show syscalls of any current or future python3 processes
 `sudo dtruss pip` start `pip` and show syscalls NB: pip will run as root
 `sudo dtruss -p <pid> -f` follow children as they are forked. This is useful for watching processes started from the shell. Use `echo $$` to get the shell's pid. However it will show the shell's syscalls too, which gets noisy.
+`sudo fs_usage -w` show filesystem sys calls and page faults (includes fstat64 calls)
 
 ## iosnoop
 
