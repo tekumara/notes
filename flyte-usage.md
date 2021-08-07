@@ -23,3 +23,25 @@ Register
 ```
 flytectl register files --project flytesnacks --domain development --archive flyte-package.tgz --version v1
 ```
+
+Create execution spec from launchplan
+
+```
+flytectl get launchplan -p flytesnacks -d development pima_diabetes.diabetes.diabetes_xgboost_model --execFile exec.yaml
+```
+
+Execute:
+
+```
+flytectl create execution --project flytesnacks --domain development --execFile exec.yaml
+```
+
+Monitor execution:
+
+```
+flytectl get execution --project flytesnacks --domain development $execution_name
+```
+
+## Troubleshooting
+
+### task with different structure already exists

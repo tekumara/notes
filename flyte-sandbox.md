@@ -2,11 +2,11 @@
 
 ## Install sandbox
 
-This will start a docker container running a k3s cluster with flyte deployed to it. It requires privileged mode, so dind (docker in docker) can be used to build images.
+This will start a [docker container](https://github.com/flyteorg/flyte/blob/2438f30f3c94c49866eefd992937fec8bea9718e/docker/sandbox/Dockerfile) running a k3s cluster with flyte deployed to it. It requires privileged mode, so dind (docker in docker) can be used to build images.
 
 ```
 brew install flyteorg/homebrew-tap/flytectl
-flytectl sandbox start --source $HOME/code3/flyteorg/flytesnacks
+flytectl sandbox start --source $HOME/code3/flytesnacks
 export KUBECONFIG=$KUBECONFIG:$HOME/.kube/config:$HOME/.flyte/k3s/k3s.yaml
 export FLYTECTL_CONFIG=$HOME/.flyte/config-sandbox.yaml
 ```
@@ -17,7 +17,7 @@ You can access flyteconsole on [localhost:30081/console](http://localhost:30081/
 
 `--source mydir` mounts _mydir_ at _/root_ in the sandbox docker container. _/root_ is the working directory when building images inside the sandbox, ie: in `flytectl sandbox exec -- docker build .` the _._ is _/root_.
 
-Register all flytesnacks cookbook examples in the flytesnacks project, development domain:
+Register all flytesnacks cookbook examples in the flytesnacks project, development domain follow [Setting up your environment to run the examples](https://docs.flyte.org/projects/cookbook/en/latest/#setting-up-your-environment-to-run-the-examples) or
 
 ```
 flytectl register examples -d development -p flytesnacks
@@ -62,7 +62,7 @@ docker start flyte-sandbox
 
 [syncresources](https://github.com/flyteorg/flyte/blob/master/kustomize/base/admindeployment/clustersync/cron.yaml) - a cronjob that runs `flyteadmin --config /etc/flyte/config/*.yaml clusterresource sync` every minute. This [syncs](https://github.com/flyteorg/flyteadmin/blob/2d81c1eec24cffb43346b56fc0017fd29db33a38/cmd/entrypoints/clusterresource.go#L71) cluster resources.
 
-[flyte-pod-webhook]()
+[flyte-pod-webhook](https://github.com/flyteorg/flytepropeller/blob/b2af2cdb411c25be5659160cb97b0a3ab6234f61/pkg/webhook/pod.go) - intercepts prod creations events for injecting things like secrets.
 
 ## Install sandbox to existing cluster
 
