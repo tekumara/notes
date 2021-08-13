@@ -1,26 +1,14 @@
 # Homebrew
 
-Search for taps via brew, and cask, will give different results, eg:
-
-```
-brew search java
-brew cask search java
-```
-
 Get info
 
-```
-brew info javarepl
-brew cask info java8
-```
-
-`brew cask outdated` old casks  
-`brew cask reinstall <caskname>` reinstall/upgrade to latest version  
-`brew tap caskroom/versions` Alternate cask versions
-
+`brew info javarepl` show formula info
+`brew outdated` old formulas  
+`brew reinstall <name>` reinstall/upgrade to latest version  
 `brew uses --recursive --installed go` show all installed packages that require `go`
 `brew log -p helm@2` show history of the helm@2 formula
 `brew list coreutils` show all installed files of a keg
+`brew tap caskroom/versions` Alternate cask versions
 
 Show package owner of msbuild
 
@@ -30,7 +18,7 @@ ll `which msbuild`
 
 ## Brew update stalled
 
-If after the first install of cask, brew is stalled on "Updating Homebrew" run `brew update --debug --verbose` and wait until git syncs.
+If after the first install of a packge, brew is stalled on "Updating Homebrew" run `brew update --debug --verbose` and wait until git syncs.
 
 ## Creating a formula
 

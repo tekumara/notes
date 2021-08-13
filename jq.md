@@ -134,6 +134,10 @@ Extract python version using regex match
 echo '["aec-cli-1.0.2.tar.gz","t1000-1.0.1-pre-proxyfix2.tar.gz","boto3-1.17.97.tar.gz","t1000-0.1.dev204+gc88c6ba.tar.gz","slimcontacts-1.2.4-CE-6.tar.gz"]' | jq '.[] | (capture("-(?<version>[0-9.]+[-+a-zA-Z0-9]*).tar.gz").version)'
 ```
 
+Convert json string to json
+
+echo '"{\"Version\":\"2012-10-17\"}"' | jq -r '. | fromjson'
+
 ## Refs
 
 https://github.com/stedolan/jq/wiki/Cookbook
