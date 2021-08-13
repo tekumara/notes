@@ -4,6 +4,9 @@ ssh-agent can load private keys and then provide them to clients like SSH. This 
 
 `ssh-add -l` list fingerprints of all loaded keys/identities.  
 `ssh-keygen -lf ~/.ssh/id_rsa` shows you the fingerprint of the key in the file `~/.ssh/id_rsa`
+`ssh-add -L` list public keys loaded
+`ssh-add -L | ssh-keygen -E md5 -lf /dev/stdin` list MD5 hash of all public keys loaded (useful to compare with Github Enterprise fingerprints)
+`ssh-keygen -c  -f ~/.ssh/id_rsa` update the comment on the key. The comment appears in `ssh-add -l`.
 
 Mac OS X:
 
