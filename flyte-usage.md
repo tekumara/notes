@@ -45,3 +45,5 @@ flytectl get execution --project flytesnacks --domain development $execution_nam
 ## Troubleshooting
 
 ### task with different structure already exists
+
+Existing tasks cannot be deleted. So instead, register the task with a new version. Version strings are arbitrary.
