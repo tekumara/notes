@@ -135,3 +135,15 @@ kubectl describe pods -n livy
 ### error: metrics not available yet
 
 If you see this when running `kubectrl top nodes` then you need to install and enable the metrics server.
+
+### evicted
+
+Check the pod events:
+
+```
+kubectl describe pods -n projectcontour
+```
+
+### The node had condition: [DiskPressure]
+
+Free disk space on the node.

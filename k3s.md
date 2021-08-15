@@ -47,6 +47,12 @@ To generate kubeconfig for all clusters
 k3d kubeconfig get --all
 ```
 
+To merge kubeconfig for all clusters into _~/.kube/config_:
+
+```
+k3d kubeconfig merge --all -d
+```
+
 To stop cluster
 
 ```
@@ -69,11 +75,13 @@ To import an image from the local docker-daemon into the default k3d cluster:
 k3d image import myapp:latest
 ```
 
-Alternatively you could [run a registry](https://k3d.io/usage/guides/registries/#using-a-local-registry):
+Alternatively you could [run a k3d managed registry](https://k3d.io/usage/guides/registries/#using-a-local-registry):
 
 ```
 k3d cluster create NAME --registry-create
 ```
+
+This creates a [registry container](https://docs.docker.com/registry/introduction/), configures your k3d cluster to use it, and exposes its port to your host so you can push to it from the host.
 
 ### Connecting to services in the cluster (docker-for-mac)
 
