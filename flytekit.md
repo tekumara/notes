@@ -83,3 +83,29 @@ Welcome to Flyte CLI! Version: 0.20.1
   }
 }
 ```
+
+## Troubleshooting
+
+### ValueError: Type <class 'inspect.\_empty'> not supported currently in Flytekit. Please register a new transformer
+
+Input params to a task need to be typed.
+
+### AttributeError: type object 'OpenFlightsData' has no attribute '**annotations**'
+
+OpenFlightsData is a `collections.namedtuple` instead of a `typing.NamedTuple`.
+
+### TypeError: issubclass() arg 1 must be a class
+
+Flyte does not support the Any type in a task signature. Convert it to a [supported type](https://docs.flyte.org/projects/cookbook/en/latest/auto/core/type_system/flyte_python_types.html).
+
+### Transformer for type <class 'tuple'> is restricted currently
+
+NamedTuples cannot be used as input types, see [#1337](https://github.com/flyteorg/flyte/issues/1337)
+
+### ValueError: parquet must have string column names
+
+Make sure your Dataframe has named columns, rather than the default which uses integers for column names.
+
+### ValueError: DataFrames of type <class 'list'> are not supported currently
+
+When using FlyteSchema, make sure to convert outputs to a DataFrame first.

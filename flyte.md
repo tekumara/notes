@@ -2,7 +2,7 @@
 
 Flyte is a a strongly typed framework for authoring tasks and workflows, and executing them in a Kubernetes cluster. It is positioned for both Data and ML workflows and can integration with Spark, AWS Batch, SageMaker, Kubeflow and more.
 
-Its unique aspect is the Flyte [type system](https://docs.flyte.org/projects/cookbook/en/latest/auto/core/type_system/index.html) which strongly types inputs and outputs to tasks and transports them as protobuf messages. This type system powers features like lineage and caching.
+Its unique aspect is the Flyte [type system](https://docs.flyte.org/projects/cookbook/en/latest/auto/core/type_system/index.html) which strongly types inputs and outputs to tasks and marshalls them between tasks via S3 storage. The storage format depends on the type and may be protobuf (primitive types), raw files (Blob type), or parquet (FlyteSchema). This type system powers features like lineage and caching.
 
 ## Features
 

@@ -13,7 +13,12 @@ export FLYTECTL_CONFIG=$HOME/.flyte/config-sandbox.yaml
 
 (from [Getting Started: Scale](https://docs.flyte.org/en/stable/getting_started_scale.html))
 
-You can access flyteconsole on [localhost:30081/console](http://localhost:30081/console).
+You can access:
+
+- flyteconsole on [localhost:30081/console](http://localhost:30081/console).
+- kubernetes dashboard on [localhost:30082](http://localhost:30082/).
+- minio on localhost:30084
+- kubernetes api on localhost:30086
 
 `--source mydir` mounts _mydir_ at _/root_ in the sandbox docker container. _/root_ is the working directory when building images inside the sandbox, ie: in `flytectl sandbox exec -- docker build .` the _._ is _/root_.
 
@@ -22,6 +27,10 @@ Register all flytesnacks cookbook examples in the flytesnacks project, developme
 ```
 flytectl register examples -d development -p flytesnacks
 ```
+
+References:
+
+- [Sandbox overview](https://docs.flyte.org/en/latest/deployment/sandbox.html)
 
 ## Inspect the k3s cluster
 
@@ -36,6 +45,9 @@ docker exec -it flyte-sandbox bash
 
 # watch k3s pods
 k3s kubectl get po -A --watch
+
+# see which docker images the sandbox has in its registry
+docker images
 ```
 
 ## Other
@@ -64,7 +76,9 @@ docker start flyte-sandbox
 
 [flyte-pod-webhook](https://github.com/flyteorg/flytepropeller/blob/b2af2cdb411c25be5659160cb97b0a3ab6234f61/pkg/webhook/pod.go) - intercepts prod creations events for injecting things like secrets.
 
-## Install sandbox to existing cluster
+## Deploy sandbox to an existing k8s cluster
+
+See [Deploying your own Flyte Sandbox environment to a K8s cluster](https://docs.flyte.org/en/latest/deployment/sandbox.html#deploying-your-own-flyte-sandbox-environment-to-a-k8s-cluster)
 
 ```
 # install flyte sandbox

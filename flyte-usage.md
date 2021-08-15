@@ -47,3 +47,5 @@ flytectl get execution --project flytesnacks --domain development $execution_nam
 ### task with different structure already exists
 
 Existing tasks cannot be deleted. So instead, register the task with a new version. Version strings are arbitrary.
+
+When using the flytesnacks makefiles the VERSION env var determines the version, and if not specified is set to git HEAD sha.
