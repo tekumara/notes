@@ -4,19 +4,11 @@ flytekit includes the follow python entrypoints:
 
 - `flyte-cli` - deprecated general CLI, use flytectl instead
 - `pyflyte` - compiles workflows and tasks, and docker image name, to protobuf
-- `pyflyte-execute` - [executes python tasks](https://docs.flyte.org/projects/flytekit/en/latest/design/execution.html) on the cluster inside a container with the python code, marshalling inputs and outputs.
+- `pyflyte-execute` - [executes python tasks](https://docs.flyte.org/projects/flytekit/en/latest/design/execution.html) on the cluster inside a container with the python code, marshalling inputs and outputs as protobuf/files/parquet.
 
 See [Command Line Interfaces](https://docs.flyte.org/projects/flytekit/en/latest/design/clis.html#command-line-interfaces)
 
 ## debug task proto
-
-```
-flyte-cli parse-proto -f serialized_task.pb -p flyteidl.admin.task_pb2.TaskSpec
-```
-
-## python tasks
-
-Python tasks are serialised into protobufs by `pyflyte`, registered via `flytectl`, and executed inside a container that contains the task code by `pyflyte-execute`. `pyflyte-execute` is responsible for serialised and deserialising inputs as outputs (as protobuf).
 
 ```
 $ flyte-cli parse-proto -f /tmp/0_myapp.workflows.example.say_hello_1.pb -p flyteidl.admin.task_pb2.TaskSpec
@@ -82,6 +74,11 @@ Welcome to Flyte CLI! Version: 0.20.1
     }
   }
 }
+```
+
+For workflows:
+```
+flyte-cli parse-proto -f /tmp/5_aircraft.02_etl_flow.main_2.pb -p flyteidl.admin.workflow_pb2.WorkflowSpec | less
 ```
 
 ## Troubleshooting

@@ -21,6 +21,7 @@ Its unique aspect is the Flyte [type system](https://docs.flyte.org/projects/coo
 - [Type system](https://docs.flyte.org/projects/cookbook/en/latest/auto/core/type_system/index.html) ensures inputs and outputs to tasks are strong typed and tracked.
 - [Data Catalog](https://docs.flyte.org/en/stable/concepts/catalog.html) indexes parameterized, strongly-typed data artifacts across revisions. It also powers Flyte's memoization system.
 - [Extensible](https://docs.flyte.org/projects/cookbook/en/latest/auto/core/extend_flyte/index.html) - plugins can be written to call other services (with concurrency controlled via a [resource manager](https://github.com/flyteorg/flyteplugins/blob/master/go/tasks/pluginmachinery/core/resource_manager.go#L38))
+- Composable - tasks can be easily reused and composed across many workflows. This makes it easy for downstream tasks to be triggered by upstream tasks (even when tasks are owned by different teams).
 
 ### vs argo
 

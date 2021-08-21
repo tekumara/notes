@@ -12,11 +12,13 @@ Build image in sandbox (assumes sandbox has mounted a source dir)
 flytectl sandbox exec -- docker build . --tag myapp:v1
 ```
 
-Package (serialise to protobuf)
+Package (serialise to protobuf) tasks and worklows in _myapp.workflows_ to _flyte-package.tgz_
 
 ```
 pyflyte --pkgs myapp.workflows package --image myapp:v1
 ```
+
+NB: options to pyflyte (eg: `--pkgs`) will be read from _flytekit.config_ if present.
 
 Register
 
