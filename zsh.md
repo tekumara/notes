@@ -97,3 +97,17 @@ rust's hyperfine: `hyperfine --warmup 3 'zsh -i -c exit;'`
 ## history
 
 With fzf, when history sharing across shells is enabled (setopt SHARE_HISTORY), history written by shell A won't be available in shell B until re-rendering the prompt in B (e.g. by pressing Enter at the prompt). ([ref](https://github.com/junegunn/fzf/pull/2251))
+
+## prompt
+
+Minimal prompt:
+
+```
+PROMPT="$ "
+```
+
+Remove hostname from pure prompt:
+
+```
+prompt_pure_state[username]=
+```

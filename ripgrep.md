@@ -2,6 +2,8 @@
 
 ## Usage
 
+`--files` prints the names of any files that would be searched, without actually performing the search. This is useful to determine whether a particular file is being searched or not.
+
 ### Ripgrep appears to ignore top-level folder
 
 If ripgrep isn't searching files it's probably because its obeying a `.gitignore` directive.
@@ -11,8 +13,6 @@ Try disabling the `.gitignore` logic: `rg --no-ignore ..`
 Or use `-u` to disable smart search, eg: `rg -uuu` which is roughly equivalent to `grep -r`
 
 ### Globs
-
-`--files` prints the names of any files that would be searched, without actually performing the search. This is useful to determine whether a particular file is being searched or not.
 
 [Globs](https://github.com/BurntSushi/ripgrep/tree/master/globset) determine which files to include or exclude in the search.
 eg:

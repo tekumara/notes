@@ -18,7 +18,7 @@ aws s3api get-bucket-location --bucket $BUCKET
 
 ## Limits and Prefixes
 
-Each prefix (shard) is limited to 5500 rps. Prefixes used to be determined by the start of the object name, now they are automatic which means you don't need to deliberately name your objects with distinct prefixes. Prefixes will split and merge behind the scenes in response to actual load. Contact Amazon and they can tell you how many prefixes your bucket as.
+Each prefix (shard) is limited to 5500 rps. Prefixes used to be determined by the start of the object name, now they are automatic which means you don't need to deliberately name your objects with distinct prefixes. Prefixes will split and merge behind the scenes in response to actual load. Contact Amazon and they can tell you how many prefixes your bucket as. For rare reads, the TTFB might be slow.
 
 ## Metadata
 
