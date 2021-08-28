@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-function die() {
-    >&2 printf "\n%s\n\n" "$@"
+die() {
+    echo -e ERROR: "$@" >&2
     exit 1
 }
 
