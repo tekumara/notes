@@ -77,6 +77,7 @@ Welcome to Flyte CLI! Version: 0.20.1
 ```
 
 For workflows:
+
 ```
 flyte-cli parse-proto -f /tmp/5_aircraft.02_etl_flow.main_2.pb -p flyteidl.admin.workflow_pb2.WorkflowSpec | less
 ```
