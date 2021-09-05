@@ -49,6 +49,9 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl describe ingress` describe ingress objects
 `kubectl rollout restart deployment awesome-api` do a rolling restart of a deployment
 `kubectl logs -f $PODNAME` stream logs
+`kubectl get ingress -n flyteexamples-development -o jsonpath='{range .items[*]}{"\n"}http://localhost:30081{.spec.rules[*].http.paths[*].path}{end}'` show ingress paths (ignores host)
+`kubectl auth can-i --list` show all the actions I have in the current namespace
+`kubectl get role app-admin -o yaml` show details of a role
 
 Show all forwarded ports, ie: [NodePort services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types):
 
@@ -65,7 +68,7 @@ kubectl get deployment slim-api -o jsonpath="{range .status.conditions[*]}{.last
 ### Run interactively
 
 `kubectl run -it --image=alpine helper` starts an pod called _helper_ running the alpine image in the cluster with requests/limits of 250m cpu 1Gi mem
-`kubectl run -it --image=ubuntu --requests "cpu=50m" helper` starts an ubuntu pod with 
+`kubectl run -it --image=ubuntu --requests "cpu=50m" helper` starts an ubuntu pod with
 `kubectl run it --image=ubuntu -o yaml --dry-run=client` show the deployment object buy don't apply it
 `kubectl delete pod helper` delete the helper pod
 `kubectl cp $namespace/$pod:/app/heaptrack.gunicorn.2983.gz heaptrack.gunicorn.2983.gz` copy file from pod to local dir
@@ -84,8 +87,6 @@ kubectl get-all
 
 ## Patch
 
-kubectl patch --type=json uses [JSON Patch](https://tools.ietf.org/html/rfc6902), which in turn uses [JSON Pointer](https://tools.ietf.org/html/rfc6901) for identifying JSON values (eg: `/foo/0` = the first element of the foo array)
-
 Set the contents of the args array
 
 ```
@@ -97,6 +98,8 @@ Insert an element into the head of the args array
 ```
 kubectl patch deployment metrics-server -n kube-system --type json -p '[{"op": "add", "path": "/spec/template/spec/containers/0/args/0", "value":"--kubelet-insecure-tls"}]'
 ```
+
+`--type json` in the above uses [JSON Patch](https://tools.ietf.org/html/rfc6902), which in turn uses [JSON Pointer](https://tools.ietf.org/html/rfc6901) for identifying JSON values (eg: `/foo/0` = the first element of the foo array)
 
 ## Delete
 

@@ -4,7 +4,7 @@
 
 The main limitation is it doesn't share its host's local image registry ([see below](#local-image-registry)) so images aren't cached, and it requires extra steps to access locally built images.
 
-It can be run using k3d or multipass or [docker-compose](https://gitlab.com/mur-at-public/kube).
+It can be run using k3d or multipass or [docker-compose](https://github.com/k3s-io/k3s/blob/master/docker-compose.yml) (see [also](https://gitlab.com/mur-at-public/kube)).
 
 ## k3d (recommended)
 
@@ -147,3 +147,7 @@ mv ~/.kube/config ~/.kube/config.old
 Multipass can start/stop a VM quickly, although not as quickly as k3d does a container (eg: 12 secs vs 1 sec).
 k3d offers an option to copy images from the host to the k3s server, ie: `k3d image import`
 Multipass VMs run on a bridged network accessible from the macOS host, so port publishing isn't required. This makes for a simpler network setup.
+
+## kubelet
+
+k3s runs kubelet with [these args](https://github.com/k3s-io/k3s/blob/master/pkg/daemons/agent/agent_linux.go#L62). On startup the kubelet args will also be written to the k3s logs (eg: _/var/log/k3s.log_)
