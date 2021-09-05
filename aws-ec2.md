@@ -140,6 +140,10 @@ aws kms create-grant \
 
 The instance profile used by the instance does not need access to the KMS key.
 
+## LaunchTime
+
+The LaunchTime of an EC2 instance is the time it was started, not the time it was first created.  
+
 ## Troubleshooting
 
 ### Instance doesn't come up

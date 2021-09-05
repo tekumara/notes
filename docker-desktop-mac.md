@@ -74,6 +74,7 @@ Unused images are images that aren't associated with a container.
 `docker container prune` remove all stopped containers
 `docker image prune` remove all dangling images
 `docker image prune -a --filter 'until=1440h'` remove all unused images created earlier than 60 days ago
+`docker image rm $repo:$tag` remove specifc image
 
 `docker system df` will show docker disk utilization summary - images, containers, volumes  
 `docker system df -v` a break-down at the individual image/container/volume level including shared size (ie: shared layers), unique size (ie: unique layers).
