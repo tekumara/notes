@@ -34,6 +34,8 @@
 `docker inspect CONTAINER | jq '.[].HostConfig.RestartPolicy'` check [restart policy](https://docs.docker.com/config/containers/start-containers-automatically/)
 `docker update --restart no CONTAINER` set restart policy to default of no, so the container doesn't start when the daemon starts up
 
+`docker context ls` show current docker host
+
 ## Modify existing container config
 
 Docker stores container metadata in `/var/lib/docker/containers/[CONTAINER_ID]/`. On a Mac, Docker runs as an LinuxKit xhyve process. You need to connect to that first and then proceed to modify the container metadata ([ref](https://www.softwareab.net/wordpress/docker-macosx-modify-hostconfig-existing-container/))
