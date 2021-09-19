@@ -40,6 +40,7 @@ Storing Argo DAG history only a recent feature.
 Flyte supports ETL workloads and was Lyft's response to Airflow limitations including:
 
 - multi-tenancy (ie: different workloads can run in different namespaces, rather than having ML and ETL jobs share scheduler resources)
+- multi-cluster eg: single flyteadmin, multi-flytepropeller
 - multi-repo / multi-container
 - enhanced interactivity (UI and APIs for triggering)
 - DAG versioning (ie: multiple versions of the same DAG can run with different inputs and on different schedules)

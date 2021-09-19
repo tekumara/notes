@@ -53,6 +53,12 @@ To merge kubeconfig for all clusters into _~/.kube/config_:
 k3d kubeconfig merge --all -d
 ```
 
+To write kubeconfig for cluster foobar to _~/.k3d/kubeconfig-foobar.yaml_
+
+```
+k3d kubeconfig write foobar
+```
+
 To stop cluster
 
 ```

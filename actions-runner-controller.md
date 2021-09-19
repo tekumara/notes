@@ -1,6 +1,6 @@
 # actions-runner-controller
 
-A k8s self-hosted Github actions runner for k8s.
+Ephemeral self-hosted Github actions runner for k8s with DinD.
 
 By default the controller creates a Pod which waits for a job. When the job completes the pod is recycled.
 
