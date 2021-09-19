@@ -1,4 +1,6 @@
-# dtrace
+# tracing on mac os
+
+## Call stacks
 
 `sample PID 60 1 -file sample.txt` profile call stacks for 60 secs every 1ms
 
@@ -8,15 +10,17 @@
 `sudo dtruss -n python3` show syscalls of any current or future python3 processes
 `sudo dtruss pip` start `pip` and show syscalls NB: pip will run as root
 `sudo dtruss -p <pid> -f` follow children as they are forked. This is useful for watching processes started from the shell. Use `echo $$` to get the shell's pid. However it will show the shell's syscalls too, which gets noisy.
+
+## File system
+
 `sudo fs_usage -w` show filesystem sys calls and page faults (includes fstat64 calls)
-
-## iosnoop
-
+`lsof -c ssh-agent` files ssh-agent has open
+`lsof /media/LittleMac` process that have ssh key open
 `sudo iosnoop -n python3` show disk I/O (block, size, filename) for the python3 process. NB: does not show `stat64` calls.
 
 ## Misc
 
-`dtrace -qwn 'proc:::exec-success /execname=="java"/{trace(pid);stop();exit(0)}` stop a process when it starts to get its pid [ref](see https://stackoverflow.com/a/22029929/149412)
+`dtrace -qwn 'proc:::exec-success /execname=="java"/{trace(pid);stop();exit(0)}` stop a process when it starts to get its pid. To resume: `kill -CONT <pid>` ([ref](see https://stackoverflow.com/a/22029929/149412))
 
 ## system integrity protection is on, some features will not be available / dtrace: invalid probe specifier
 
