@@ -14,7 +14,7 @@ aws cloudformation validate-template --template-body file://./infra/cloudformati
 [create-stack](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/create-stack.html) - creates a new stack directly, doesn't use change sets
 [update-stack](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/update-stack.html) - updates an existing stack directly, doesn't use change sets. Unlike `deploy` can specify a stack policy.
 [create-change-set](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/create-change-set.html) - creates a changeset
-[set-stack-policy](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/set-stack-policy.html) - sets the policy on an existing stacl
+[set-stack-policy](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/set-stack-policy.html) - sets the policy on an existing stack
 
 eg:
 

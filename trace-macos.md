@@ -13,10 +13,15 @@
 
 ## File system
 
-`sudo fs_usage -w` show filesystem sys calls and page faults (includes fstat64 calls)
-`lsof -c ssh-agent` files ssh-agent has open
-`lsof /media/LittleMac` process that have ssh key open
-`sudo iosnoop -n python3` show disk I/O (block, size, filename) for the python3 process. NB: does not show `stat64` calls.
+`lsof -c ssh-agent` files ssh-agent currently has open
+`sudo opensnoop -f ~/.ssh/github` tail file opens
+`sudo fs_usage -w` tail filesystem sys calls and page faults (includes fstat64 calls)
+`sudo iosnoop -n python3` tail disk I/O (block, size, filename) for the python3 process. NB: does not show `stat64` calls, or cached file access.
+
+## Processes
+
+`sudo execsnoop -v` tail new process execution
+`sudo dtrace -s /usr/bin/newproc.d` tail new process execution with command line args
 
 ## Misc
 
