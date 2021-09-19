@@ -82,6 +82,10 @@ Manually trigger a check for changes via _Actions - Check for pending changes_ (
 
 If the commit hook is inactive, reinstate it.
 
+### Pending changes are not being processed
+
+
+
 ## References
 
 [Kotlin DSL](https://www.jetbrains.com/help/teamcity/kotlin-dsl.html)
