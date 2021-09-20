@@ -8,13 +8,14 @@ Alternatively make your whole stack into a module with all of its config coming 
 
 ## Backend per environment
 
-This requires a re-initialising local state for each environment:
+This requires re-initialising local state when switching between environments:
 
 ```
 terraform init -reconfigure -backend-config=backends/$env.conf
 ```
 
-`-reconfigure` is needed to ignore existing state from other backends.
+- `-reconfigure` overwrites existing local state (from other previously used backends)
+- `-backend-config` points to the environment's backend. A file per backend/environment is needed.
 
 ## Single backend with Workspaces
 
