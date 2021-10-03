@@ -47,12 +47,11 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl describe rs/hub-67966db58b -n jhub` describe the replicaset hub-67966db58b in namespace  
 `kubectl get events --sort-by='{.lastTimestamp}'` show events sorted by last seen timestamp. NB: by default events are only kept by the api server for 1 hour
 `kubectl describe ingress` describe ingress objects
-`kubectl rollout restart deployment awesome-api` do a rolling restart of a deployment
 `kubectl logs -f $PODNAME` stream logs
 `kubectl get ingress -n flyteexamples-development -o jsonpath='{range .items[*]}{"\n"}http://localhost:30081{.spec.rules[*].http.paths[*].path}{end}'` show ingress paths (ignores host)
 `kubectl auth can-i --list` show all the actions I have in the current namespace
 `kubectl get role app-admin -o yaml` show details of a role
-`kubectl exec -i -t $pod -- /bin/bash` get interactive shell
+
 
 Show all forwarded ports, ie: [NodePort services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types):
 
@@ -69,10 +68,17 @@ kubectl get deployment slim-api -o jsonpath="{range .status.conditions[*]}{.last
 ### Run interactively
 
 `kubectl run -it --image=alpine helper` starts an pod called _helper_ running the alpine image in the cluster with requests/limits of 250m cpu 1Gi mem
-`kubectl run -it --image=ubuntu --requests "cpu=50m" helper` starts an ubuntu pod with
-`kubectl run it --image=ubuntu -o yaml --dry-run=client` show the deployment object buy don't apply it
+`kubectl run -it --image=alpine helper --overrides='{ "spec": { "serviceAccount": "your-sa-here" } }'` run _helper_ with your service account
 `kubectl delete pod helper` delete the helper pod
+--overrides='{ "spec": { "serviceAccount": "your-sa-here" }  }'
+`kubectl run -it --image=ubuntu --requests "cpu=50m" helper` starts an ubuntu pod with
+`kubectl run -it --image=ubuntu -o yaml --dry-run=client` show the deployment object buy don't apply it
 `kubectl cp $namespace/$pod:/app/heaptrack.gunicorn.2983.gz heaptrack.gunicorn.2983.gz` copy file from pod to local dir
+
+
+
+`kubectl exec -i -t $pod -- /bin/bash` get interactive shell
+
 
 ### Listing all resources
 
@@ -107,6 +113,7 @@ kubectl patch deployment metrics-server -n kube-system --type json -p '[{"op": "
 `kubectl delete namespace livy` delete the livy namespace and all resources
 `kubectl delete -f <file.yml>` delete the resources in the file
 `kubectl delete deployment slim-api` delete a deployment
+`kubectl rollout restart deployment awesome-api` do a rolling restart of a deployment
 
 ### Delete a namespace stuck in the Terminating state
 

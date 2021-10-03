@@ -6,7 +6,7 @@
 `docker ps -a` list all containers (not just running ones)  
 `docker ps -lq` show the latest created container id  
 `docker images` list of images  
-`docker inspect CONTAINER` see details of a container, eg: path & args of the command, network ports, env, mounts 
+`docker inspect CONTAINER` see details of a container, eg: path & args of the command, network ports, env, mounts
 `docker inspect -f '{{.State.Pid}}' CONTAINER` get the PID of the process running in docker  
 `docker inspect -f '{{.HostConfig.Memory}}' CONTAINER` to see the container memory limit in bytes  
 `docker inspect -f '{{ json .NetworkSettings }}' CONTAINER | jq .` network settings including exposed ports and bridged IP address  
@@ -40,8 +40,28 @@
 
 Docker stores container metadata in `/var/lib/docker/containers/[CONTAINER_ID]/`. On a Mac, Docker runs as an LinuxKit xhyve process. You need to connect to that first and then proceed to modify the container metadata ([ref](https://www.softwareab.net/wordpress/docker-macosx-modify-hostconfig-existing-container/))
 
+## Image size
+
+Get compressed size of image on remote repository
+
+```
+docker manifest inspect $repo:$tag | jq '[.layers[].size] | add'
+```
+
+Get uncompressed size of local image
+
+```
+docker image inspect $image | jq '.[].Size' 
+```
+
 ## Troubleshooting
 
 ### ERROR: error while removing network: network X id Y has active endpoints
 
 Stop any containers using the network before trying to delete it.
+
+### ^C doesn't quit cleanly
+
+The docker container's entrypoint needs to handle SIGINT command to quit cleanly.
+
+Use `/bin/bash` or [tini](https://github.com/krallin/tini) as an entrypoint for programs that don't (eg: `make`). Or use docker compose `init: true` to install tini.
