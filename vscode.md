@@ -13,7 +13,7 @@ When vscode connects to a host, it establishes dynamic port forwarding (`-D`) wh
 ### Port forwarding
 
 - User forwarded: added by the user in the Ports View, and forwarded via the SOCKS proxy.
-- Auto forwarded: auto forwarding from applications stared in the terminal.
+- Auto forwarded: auto port forwarding when vscode sees "http://localhost:xxxx" in the terminal or debug console. See setting `remote.autoForwardPortsSource` in the release notes [here](https://github.com/microsoft/vscode-docs/blob/49f6cab2a0435a7704ebfc208852f23a880265f6/remote-release-notes/v1_54.md#port-forwarding-source-is-output) and [here](https://github.com/microsoft/vscode-docs/search?q=auto+port+forward). 
 - Statically forwarded: ports configured in _~/.ssh/config_ via the `LocalForward` statement.
 
 ### Extensions

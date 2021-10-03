@@ -34,3 +34,11 @@ HashiCorp recommends an admin service account for the state bucket see [Multi-ac
 References:
 
 - [Workspaces](https://www.terraform.io/docs/language/state/workspaces.html)
+
+## Render bucket policy
+
+```
+terraform plan -var-file vars-prod.tfvars -out=plan
+terraform show -json plan | jq > plan.json
+jq '.planned_values.root_module.resources[] | select(.address=="aws_s3_bucket_policy.flows_bucket_policy") | .values.policy | fromjson' plan.json
+```

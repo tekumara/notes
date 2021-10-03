@@ -82,9 +82,17 @@ Manually trigger a check for changes via _Actions - Check for pending changes_ (
 
 If the commit hook is inactive, reinstate it.
 
-### Pending changes are not being processed
+### Pending changes but builds are not queued
 
+Check the [trigger rules](https://www.jetbrains.com/help/teamcity/configuring-build-triggers.html) used to add builds to the queue.
 
+### VCS trigger rules are ignored
+
+Check how the build was triggered on the Build page. It may be because of a snapshot dependency rather than a vcs trigger.
+
+### Build is triggered twice
+
+If a build has a VCS trigger and a snapshot dependency it will be triggered twice.
 
 ## References
 
