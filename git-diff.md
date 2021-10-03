@@ -1,3 +1,4 @@
+
 # Git diff
 
 `git diff main HEAD` diff between main and the current branch.
