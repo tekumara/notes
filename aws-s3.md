@@ -144,8 +144,29 @@ aws s3api get-bucket-policy --bucket $bucket --query Policy --output text | jq .
 
 ## Objects created by another account
 
+Objects created by another account aren't accessible to the owning account.
+
 By default transitive rights to objects created by other accounts, in a bucket you owned, can't be granted to third account. Instead use roles, see [Example 4: Bucket owner granting cross-account permission to objects it does not own](https://docs.aws.amazon.com/AmazonS3/latest/dev/example-walkthroughs-managing-access-example4.html#access-policies-walkthrough-example4-step3).
-[Amazon S3 Object Ownership](https://aws.amazon.com/about-aws/whats-new/2020/10/amazon-s3-object-ownership-enables-bucket-owners-to-automatically-assume-ownership-of-objects-uploaded-to-their-buckets/) allows bucket owners to automatically assume ownership.
+
+### Amazon S3 Object Ownership
+
+[Amazon S3 Object Ownership](https://aws.amazon.com/about-aws/whats-new/2020/10/amazon-s3-object-ownership-enables-bucket-owners-to-automatically-assume-ownership-of-objects-uploaded-to-their-buckets/) allows bucket owners to automatically assume ownership when an object is created with the `bucket-owner-full-control` canned ACL.
+
+To create an object with the canned ACL:
+
+```python
+bucket.put_object(
+    ACL='bucket-owner-full-control',
+    Key=key,
+    Body=data.encode('utf-8')
+)
+```
+
+or
+
+```
+aws s3 cp file.txt s3://DOC-EXAMPLE-BUCKET --acl bucket-owner-full-control
+```
 
 ## Missing objects
 

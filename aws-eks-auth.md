@@ -55,3 +55,17 @@ spec:
 ```
 
 If you do not provide the serviceAccountName value the deployment will utilise the default ServiceAccount in the namespace.
+
+## Assuming a role
+
+```
+aws sts assume-role-with-web-identity \
+ --role-arn $AWS_ROLE_ARN \
+ --role-session-name mh9test \
+ --web-identity-token file://$AWS_WEB_IDENTITY_TOKEN_FILE \
+ --duration-seconds 3600 > /tmp/irp-cred.txt
+export AWS_ACCESS_KEY_ID="$(cat /tmp/irp-cred.txt | jq -r ".Credentials.AccessKeyId")"
+export AWS_SECRET_ACCESS_KEY="$(cat /tmp/irp-cred.txt | jq -r ".Credentials.SecretAccessKey")"
+export AWS_SESSION_TOKEN="$(cat /tmp/irp-cred.txt | jq -r ".Credentials.SessionToken")"
+rm /tmp/irp-cred.txt
+```

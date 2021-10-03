@@ -24,16 +24,29 @@ List grants
 aws kms list-grants --key-id arn:aws:kms:us-east-1:123456789012:key/569bba03-c7df-4d96-82e8-cc564ef91e66
 ```
 
-## Grant cross-account access to a key for decryption
+## Minimal policy for writing to S3 
 
 ```
-              - kms:Decrypt
-              - kms:GenerateDataKey
-              - kms:DescribeKey
-            Effect: Allow
+      - kms:Encrypt
+      - kms:GenerateDataKey
+    Effect: Allow
 ```
 
-[ref](https://aws.amazon.com/premiumsupport/knowledge-center/cross-account-access-denied-error-s3/)
+See also [ref](https://aws.amazon.com/premiumsupport/knowledge-center/cross-account-access-denied-error-s3/)
+
+## Default key policy
+
+```
+    - Effect: Allow
+      Action:
+        - kms:Encrypt
+        - kms:Decrypt
+        - kms:ReEncrypt*
+        - kms:GenerateDataKey*
+        - kms:DescribeKey
+```
+
+See [Allows key users to use the KMS key](https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html#key-policy-default-allow-users)
 
 ## Troubleshooting
 
