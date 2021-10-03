@@ -1,4 +1,4 @@
-# Python interfaces 
+# Python interfaces
 
 ## ABC
 
@@ -8,8 +8,4 @@ An Abstract Base Class (ABC) formalises the inspection of an object. An ABC desc
 
 The `typing.Protocol` class enables structural subtyping. A protocol is an implicit base class. Any class that matches the protocol's defined members is considered to be a subclass for type analysis.
 
-See the example [here](https://stackoverflow.com/a/50255847/149412) 
-
-
-
-
+See the example [here](https://stackoverflow.com/a/50255847/149412)

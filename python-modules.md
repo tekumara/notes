@@ -89,6 +89,8 @@ help()
 module_name
 ```
 
+To see location: `module_name.__file__`
+
 ### ImportError: cannot import name X
 
 Make sure you don't have circular module imports. Moving one of the imports to be local to its invocation might help, or better yet, remove the circular dependency.

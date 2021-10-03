@@ -5,8 +5,10 @@
 mutability is good when you want to build up a complex datastructure because you can do it incrementally (ie: like the builder pattern)
 
 dataclasses can also be immutable, eg:
-```
 
+```
+@dataclass(frozen=True)
+class Magic:
 ```
 
 ## Alternative
