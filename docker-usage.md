@@ -42,6 +42,9 @@ Docker stores container metadata in `/var/lib/docker/containers/[CONTAINER_ID]/`
 
 ## Image size
 
+`docker manifest inspect` works on compressed tarballs stored on the registry.
+`docker image inspect` works on uncompressed (aka RootFS) layers stored locally.
+
 Get compressed size of image on remote repository
 
 ```
@@ -51,7 +54,13 @@ docker manifest inspect $repo:$tag | jq '[.layers[].size] | add'
 Get uncompressed size of local image
 
 ```
-docker image inspect $image | jq '.[].Size' 
+docker image inspect $image | jq '.[].Size'
+```
+
+Get commands and uncompressed size of each layer
+
+```
+docker history $image
 ```
 
 ## Troubleshooting
