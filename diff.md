@@ -20,23 +20,34 @@ diff -d
 
 ## Diff and patch
 
-```
-#create diff file
-diff -uN build.xml "build mod.xml" > unified.diff
+Create diff file
 
-#apply patch
+```
+diff -uN build.xml "build mod.xml" > unified.diff
+```
+
+Apply patch
+
+```
 patch build.xml < unified.diff
 ```
 
 ## Colordiff
 
-```
-sudo apt-get install colordiff
-```
+Install:
+
+- Ubuntu: `sudo apt-get install colordiff`
+- Mac: `brew install colordiff`
 
 Replace `diff` commands with `colordiff`.
 
 [Cool ways to Diff two HTTP Requests in your terminal!](https://gist.github.com/Nijikokun/d6606c036d89d3b1574c)
+
+## Binary diff
+
+```
+colordiff -y <(xxd file1) <(xxd file2)
+```
 
 ## Diff within a line/character level diff
 
@@ -50,7 +61,9 @@ Or horizontal
 
 With colour:
 
-`wdiff -w "$(tput bold;tput setaf 1)" -x "$(tput sgr0)" -y "$(tput bold;tput setaf 2)" -z "$(tput sgr0)" file1 file2`
+```
+wdiff -w "$(tput bold;tput setaf 1)" -x "$(tput sgr0)" -y "$(tput bold;tput setaf 2)" -z "$(tput sgr0)" file1 file2
+```
 
 [ref](http://unix.stackexchange.com/a/11144/2680)
 
@@ -64,7 +77,7 @@ diff <(grep 24473 base/similar-headings.cosim | sort) <(grep 24473 stopword/simi
 
 ## CSV diff
 
-This uses comma as a word seperator in the diff:
+This uses comma as a word separator in the diff:
 
 ```
 git diff --color-words --word-diff-regex="[^[:space:],]+" x.csv y.csv
