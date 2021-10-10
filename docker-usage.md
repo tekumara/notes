@@ -63,6 +63,20 @@ Get commands and uncompressed size of each layer
 docker history $image
 ```
 
+## Volumes
+
+List contents of a volume
+
+```
+docker run --rm -i -v=dt-slim-api_terraform:/vol busybox find /vol
+```
+
+Delete a volume
+
+```
+docker volume rm $volume 
+```
+
 ## Troubleshooting
 
 ### ERROR: error while removing network: network X id Y has active endpoints

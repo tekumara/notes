@@ -41,6 +41,7 @@ Docker Desktop runs as a [LinuxKit](https://github.com/linuxkit/linuxkit) [Hyper
   ```
 
   NB:
+
   - to exit, kill the screen (Ctrl-a k). If you detach (Ctrl-a d), make sure your reattach to the same screen. If you attach a second screen you'll get garbled text. Killing all sessions will resolve the issue, see [[Screen]]
   - screen contains extra debug output that you probably don't need, scrollback doesn't work by default, and `less` doesn't use the whole screen.
 
@@ -78,6 +79,8 @@ Unused images are images that aren't associated with a container.
 
 `docker system df` will show docker disk utilization summary - images, containers, volumes  
 `docker system df -v` a break-down at the individual image/container/volume level including shared size (ie: shared layers), unique size (ie: unique layers).
+
+`docker system df -v | grep $volume` to show size of specific volume or alternatively: `docker run --rm -it -v /:/vm-root alpine du -sHh /vm-root/$(docker volume inspect --format '{{ .Mountpoint }}' $volume)`
 
 Docker Desktop stores Linux containers and images in a single, large “disk image” file, located at `~/Library/Containers/com.docker.docker/Data/vms/0/data`
 

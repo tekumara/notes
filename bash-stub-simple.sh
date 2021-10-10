@@ -4,7 +4,7 @@ set -euo pipefail
 
 die() {
     echo -e ERROR: "$@" >&2
-    exit 1
+    exit 42
 }
 
 ecr_repository_name=${1:-}
