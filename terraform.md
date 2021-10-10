@@ -17,6 +17,8 @@ terraform init -reconfigure -backend-config=backends/$env.conf
 - `-reconfigure` overwrites existing local state (from other previously used backends)
 - `-backend-config` points to the environment's backend. A file per backend/environment is needed.
 
+Initialising takes about 7 secs.
+
 ## Single backend with Workspaces
 
 Workspaces are namespaces that partition state within a **single** backend. You probably want to use this for local backends.

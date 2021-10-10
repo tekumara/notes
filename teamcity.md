@@ -63,9 +63,25 @@ From Build Configuration Home -> More -> Settings. See also View DSL.
 
 A trigger is needed to start a build, but if a build has dependencies it will wait in the queue with status "Build dependencies have not been built yet" until its dependency complete and then it runs. See the "Dependencies" tab on the queued build, or the Build Chains page of the Build Configuration for details.
 
-The Finish Build Trigger starts a build configuration with another completes. It is usually used with snapshot dependencies (see why [here](https://www.jetbrains.com/help/teamcity/2020.1/configuring-finish-build-trigger.html)). Without a snapshot dependency it will run on the default branch. I've found it also doesn't trigger at all without a snapshot dependency.
+The VCS trigger will trigger a build when the specified branch and path is changed in git. When all the builds in a build chain have the same VCS trigger the builds will queue (see above).
+
+The [Finish Build Trigger](https://www.jetbrains.com/help/teamcity/configuring-finish-build-trigger.html) starts a build configuration when another completes. When using the Finish Build Trigger you should probably also use snapshot dependencies to avoid races. If a branch filter is not specified in Kotlin, this trigger runs on the default branch (ie: `+:<default>`) only.
+
+I've found it also doesn't trigger at all without a snapshot dependency (still true?)
+
+## Failed to start vs cancelled builds
+
+[Failed to start builds](https://www.jetbrains.com/help/teamcity/build-state.html#Failed+to+Start+Builds) usually indicate a configuration error.
+
+## Sequence vs sequential
+
+`sequence` is part of [teamcity-pipelines-dsl](https://github.com/JetBrains/teamcity-pipelines-dsl) and was merged into TeamCity version 2019.2 as [`sequential`](https://www.jetbrains.com/help/teamcity/kotlin-dsl.html#Build+Chain+DSL+Extension).
 
 ## Troubleshooting
+
+### Build settings have not been finalized
+
+TeamCity is generating settings for the project from Kotlin.
 
 ### Pending changes are not detected
 
@@ -82,9 +98,11 @@ Manually trigger a check for changes via _Actions - Check for pending changes_ (
 
 If the commit hook is inactive, reinstate it.
 
-### Pending changes but builds are not queued
+### Pending changes but builds are triggered
 
-Check the [trigger rules](https://www.jetbrains.com/help/teamcity/configuring-build-triggers.html) used to add builds to the queue.
+Make sure the build configuration has a trigger. Check the [trigger rules](https://www.jetbrains.com/help/teamcity/configuring-build-triggers.html) used to understand when they fire.
+
+Sometimes just updating the trigger is enough to get it working again.
 
 ### VCS trigger rules are ignored
 
