@@ -11,3 +11,9 @@ Remove stopped containers and networks and volumes
 ```
 docker compose down -v
 ```
+
+Remove orphaned services
+
+```
+docker compose down --remove-orphans
+```

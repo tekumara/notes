@@ -85,6 +85,8 @@ Stop any containers using the network before trying to delete it.
 
 ### ^C doesn't quit cleanly
 
-The docker container's entrypoint needs to handle SIGINT command to quit cleanly.
+The docker container's entrypoint needs to handle SIGINT command to quit cleanly. Commands like `make` don't do this.
 
-Use `/bin/bash` or [tini](https://github.com/krallin/tini) as an entrypoint for programs that don't (eg: `make`). Or use docker compose `init: true` to install tini.
+Either:
+* Use `/bin/bash` or [tini](https://github.com/krallin/tini) as an entrypoint
+* Run the container with an init (defaults to tini), eg: `docker run --init` or if using docker compose set `init: true`.
