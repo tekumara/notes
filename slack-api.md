@@ -26,6 +26,9 @@ or
 slack://channel?id=<CHANNEL-ID>&team=<TEAM-ID>
 ```
 
+The workspace URL can be found by clicking the workspace name in the Top Left corner of the Slack desktop app.
+The channel ID can be found a channel's details page at the bottom of the About tab.
+
 ## Authentication
 
 See https://api.slack.com/web#authentication
