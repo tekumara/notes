@@ -5,7 +5,7 @@
 1. Poor documentation on the Kotlin DSL and how it maps to the UI.
 1. The mapping of Kotlin pipelines to UI is unintuitive. Sometimes the UI applies patches and it's not clear why.
 1. The UI isn't consistent - features of the UI will change based on configuration, eg: sometimes the Parameters for a build are visible, sometimes not, and there's no indication of the different states.
-1. Teamcity is generally non-intuitive - a specific example is Tokens are meant to be inheritable from  parent projects, but not automatically. Instead you have to manually copy them to child projects. 
+1. Teamcity is generally non-intuitive - a specific example is Tokens are meant to be inheritable from parent projects, but not automatically. Instead you have to manually copy them to child projects.
 1. Error messages don't have explanations, and the code is not open-source so can't be understood, eg: "Unsupported change of build features in the build configuration" - what does this mean?
 1. Basic features require explicit configuration, eg: status checks, vcs triggers. These just work in other systems.
 1. Low visibility when things go wrong, eg: status checks fail.

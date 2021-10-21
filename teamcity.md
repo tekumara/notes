@@ -79,6 +79,10 @@ I've found it also doesn't trigger at all without a snapshot dependency (still t
 
 ## Troubleshooting
 
+### Verbose build logs
+
+On the Build logs tab change _All Messages_ -> _Verbose_.
+
 ### Build settings have not been finalized
 
 TeamCity is generating settings for the project from Kotlin.
@@ -111,6 +115,29 @@ Check how the build was triggered on the Build page. It may be because of a snap
 ### Build is triggered twice
 
 If a build has a VCS trigger and a snapshot dependency it will be triggered twice.
+
+### Failed to perform checkout .... failed to remove ... permission denied
+
+If you run docker/docker-compose directly, the container runs as root, it bind mounts the checkout directory and writes to it, then the files will be created as root. When the agent tries to perform `git clean` it won't be able to remove the root owned files and the checkout will fail.
+
+To resolve this:
+
+- mount and write to a docker volume instead of the checkout directory
+- set the docker run user to $UID (ie: the teamcity user) so files are owned by teamcity
+
+Script build steps use the docker wrapper and so don't have this problem. As a final build step the docker wrapper [chowns all writable paths, include the checkout directory](https://www.jetbrains.com/help/teamcity/docker-wrapper.html#Restoring+File+Ownership+on+Linux) using:
+
+```
+docker run -u 0:0 --rm --entrypoint chown $volume_mounts busybox -R $uid:$gid $writable_paths
+```
+
+You'll see this in the verbose logs:
+
+```
+Docker wrapper: restore directory ownership
+11:41:31
+    Set ownership to 1001/1001 for "/opt/buildagent/work/6dc2c78e898ab533" "/opt/buildagent/temp/agentTmp" "/opt/buildagent/temp/buildTmp" "/opt/buildagent/system"
+```
 
 ## References
 
