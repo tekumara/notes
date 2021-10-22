@@ -8,7 +8,7 @@ When Synchronization is enabled, project settings & build configurations will be
 
 ### Use settings from VCS
 
-When `Use settings from VCS` is enabled, build configuration changes in a commit will be applied to that build. Only a subset of changes can be applied. They are generally changes that effect a single build. Changes that can't be applied will warn with:
+When `Use settings from VCS` is enabled, build configuration changes in a commit will be applied to the UI once the build is triggered. Changes to VCS roots, snapshot dependencies, or added/deleted/renamed build configurations can only be applied from the default branch. Changes that can't be applied will warn with:
 
 ```
 Unsupported change of build features in the build configuration 'Hello World' has been detected in the settings taken from VCS, the current settings from TeamCity server will be used instead
@@ -16,11 +16,17 @@ Unsupported change of build features in the build configuration 'Hello World' ha
 Inapplicable versioned settings found, yet all other build settings from VCS were successfully loaded
 ```
 
-To take effect this change must be merged to the default branch, or change the default branch to point to this branch.
+or
+
+```
+      Unsupported change of version control settings in the build configuration 'Awesome Project' has been detected in the settings taken from VCS, the current settings from TeamCity server will be used instead
+        Added version control setting: https://github..com/app/awesome#refs/heads/main
+      Inapplicable versioned settings found, yet all other build settings from VCS were successfully loaded
+```
+
+To test these changes, use the Edit VCS Root page to change the VCS root to point to your feature branch. It might take a minute for you changes to appear in the TeamCity UI. Restore main/master as the default branch after testing.
 
 See [Defining Settings to Apply to Builds](https://www.jetbrains.com/help/teamcity/2020.1/storing-project-settings-in-version-control.html#Defining+Settings+to+Apply+to+Builds) for a list of which changes can and can't take effect on the build.
-
-VCS changes to build configurations that aren't triggered will not be updated in the UI until they next run.
 
 ## Kotlin DSL Sources / API Docs
 
@@ -138,6 +144,12 @@ Docker wrapper: restore directory ownership
 11:41:31
     Set ownership to 1001/1001 for "/opt/buildagent/work/6dc2c78e898ab533" "/opt/buildagent/temp/agentTmp" "/opt/buildagent/temp/buildTmp" "/opt/buildagent/system"
 ```
+
+### There are no compatible agents which can run this build
+
+Check the Agents Compatibility page. Both explicit and implicit requirements must be met.
+
+If the `build.vcs.number` implicit requirement is not met check that you have a VCS root defined. `build.vcs.number` is a [predefined build parameter](https://www.jetbrains.com/help/teamcity/predefined-build-parameters.html#Server+Build+Properties) that exists if there is only a single VCS root in the configuration.
 
 ## References
 
