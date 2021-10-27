@@ -8,7 +8,9 @@ When Synchronization is enabled, project settings & build configurations will be
 
 ### Use settings from VCS
 
-When `Use settings from VCS` is enabled, build configuration changes in a commit will be applied to the UI once the build is triggered. Changes to VCS roots, snapshot dependencies, or added/deleted/renamed build configurations can only be applied from the default branch. Changes that can't be applied will warn with:
+When `Use settings from VCS` is enabled, build configuration changes in a commit will be applied to the UI once the build is triggered. Changes to VCS roots, snapshot dependencies, or added/deleted/renamed build configurations can only be applied from the default branch See [Defining Settings to Apply to Builds](https://www.jetbrains.com/help/teamcity/2021.1/storing-project-settings-in-version-control.html#Defining+Settings+to+Apply+to+Builds) for a list of which changes can and can't take effect on the build.
+
+Changes that can't be applied will warn with:
 
 ```
 Unsupported change of build features in the build configuration 'Hello World' has been detected in the settings taken from VCS, the current settings from TeamCity server will be used instead
@@ -25,8 +27,6 @@ or
 ```
 
 To test these changes, use the Edit VCS Root page to change the VCS root to point to your feature branch. It might take a minute for you changes to appear in the TeamCity UI. Restore main/master as the default branch after testing.
-
-See [Defining Settings to Apply to Builds](https://www.jetbrains.com/help/teamcity/2020.1/storing-project-settings-in-version-control.html#Defining+Settings+to+Apply+to+Builds) for a list of which changes can and can't take effect on the build.
 
 ## Kotlin DSL Sources / API Docs
 

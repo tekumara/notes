@@ -18,12 +18,10 @@ To link to a channel (desktop app):
 
 ```
 https://WORKSPACE_NAME.slack.com/archives/C<CHANEL_ID>
-```
 
-or
-
-```
 slack://channel?id=<CHANNEL-ID>&team=<TEAM-ID>
+
+https://WORKSPACE_NAME.slack.com/archives/CHANNEL_NAME
 ```
 
 The workspace URL can be found by clicking the workspace name in the Top Left corner of the Slack desktop app.
