@@ -12,7 +12,7 @@
 
 Convert all key values pairs into rows, in a table with a header
 
-```
+```json
 echo '{"a": 1, "bbbbbbbbbbbbbb": 2}' | jq -r '["h1", "h2"], (to_entries[] | [.key, .value]) |@tsv' | column -t
 h1              h2
 a               1
@@ -21,7 +21,7 @@ bbbbbbbbbbbbbb  2
 
 Select all the values for a given key from all objects in an array
 
-```
+```json
 echo '{"top" : [ { "snapshot":"A", "state": "1" }, { "snapshot":"B", "state": "2" }]}' | jq '.top[].snapshot'
 "A"
 "B"
@@ -29,7 +29,7 @@ echo '{"top" : [ { "snapshot":"A", "state": "1" }, { "snapshot":"B", "state": "2
 
 Use -r to remove the quotes ([ref](https://github.com/stedolan/jq/wiki/FAQ)):
 
-```
+```json
 echo '{"top" : [ { "snapshot":"A", "state": "1" }, { "snapshot":"B", "state": "2" }]}' | jq -r '.top[].snapshot'
 A
 B
@@ -37,7 +37,7 @@ B
 
 Choose an element in an array based on a key value, and return another one of it's keys:
 
-```
+```json
 echo '[ { "snapshot":"A", "state": "1" }, { "snapshot":"B", "state": "2" }]' | jq 'map(select(.snapshot == "A")) | .[0].state'
 "1"
 ```
@@ -46,14 +46,14 @@ echo '[ { "snapshot":"A", "state": "1" }, { "snapshot":"B", "state": "2" }]' | j
 
 Only select elements that are a string, to filter out nulls
 
-```
+```json
 echo '[null,"something"]' | jq '.[] | strings'
 "something"
 ```
 
 Group by:
 
-```
+```json
 echo '[{"k":"a", "v":"one"}, {"k":"a", "v":"two"}, {"k":"b","v":"three"}]' | jq -c 'group_by(.k) | .[] | {k:.[0].k, v: [.[] | .v]}'
 {"k":"a","v":[1,2]}
 {"k":"b","v":[3]}
@@ -65,19 +65,19 @@ echo '[{"k":"a", "v":1}, {"k":"a", "v":2}, {"k":"b","v":3}]' | jq -c 'group_by(.
 
 Join (convert array to string):
 
-```
+```json
 echo '["one","two","three"]' | jq 'join("-")'
 ```
 
 String interpolation:
 
-```
+```json
 echo 42 | jq '"The input was \(.), which is one less than \(.+1)"'
 ```
 
 Select a value in an array of values and output as csv:
 
-```
+```json
 echo '[{"id": 1, "count":100}, {"id": 2, "count":200}, {"id": 3, "count":300}]' | jq -r 'map(select(.id == [1,3][])) | .[] | [.id, .count] | @csv'
 1,100
 3,300
@@ -85,7 +85,7 @@ echo '[{"id": 1, "count":100}, {"id": 2, "count":200}, {"id": 3, "count":300}]' 
 
 Map over all fields, removing any with the key ".1" (useful for removing unnecessary verbose fields):
 
-```
+```json
 echo '{"a": { "1": "a1", "2": "a2" }, "b": { "1": "b1", "2": "b2" }, "c": { "1": "c1", "2": "c2" } }' | jq -c '. | map_values(del (."1"))'
 {"a":{"2":"a2"},"b":{"2":"b2"},"c":{"2":"c2"}}
 ```
@@ -97,7 +97,7 @@ Counting the number of elements in a newline delimited json stream
 
 Select object with a key containing a string:
 
-```
+```json
 echo '[ { "name": "apple" }, { "name": "orange" }]' | jq '.[] | select(.name | contains("ran"))'
 {
   "name": "orange"
@@ -106,31 +106,31 @@ echo '[ { "name": "apple" }, { "name": "orange" }]' | jq '.[] | select(.name | c
 
 Sort by key, input must be an array
 
-```
+```json
 echo '[ { "name": "banana" }, { "name": "apple" }]' | jq 'sort_by(.name)'
 ```
 
 Sort json lines by key, by slurping them into an array first, and then converting back to elements:
 
-```
+```json
 printf '{ "name": "banana" }\n{ "name": "apple" }' | jq -s -c 'sort_by(.name)[]'
 ```
 
 Convert date string to epoch timestamp
 
-```
+```json
 echo '[ { "name": "apple", "created_at": "Fri Jan 02 01:29:31 +0000 2020" }, { "name": "orange", "created_at": "Thu Nov 22 22:51:23 +0000 2019" }]' | jq '.[] .created_at |= (strptime("%a %b %d %H:%M:%S %z %Y")|mktime)
 ```
 
 Sort date string chronologically descending
 
-```
+```json
 echo '[ { "name": "apple", "created_at": "Fri Jan 02 01:29:31 +0000 2020" }, { "name": "orange", "created_at": "Thu Nov 22 22:51:23 +0000 2019" }]' | jq 'sort_by(.created_at | strptime("%a %b %d %H:%M:%S %z %Y") | mktime) | reverse'
 ```
 
 Extract python version using regex match
 
-```
+```json
 echo '["aec-cli-1.0.2.tar.gz","t1000-1.0.1-pre-proxyfix2.tar.gz","boto3-1.17.97.tar.gz","t1000-0.1.dev204+gc88c6ba.tar.gz","slimcontacts-1.2.4-CE-6.tar.gz"]' | jq '.[] | (capture("-(?<version>[0-9.]+[-+a-zA-Z0-9]*).tar.gz").version)'
 ```
 
@@ -140,5 +140,4 @@ echo '"{\"Version\":\"2012-10-17\"}"' | jq -r '. | fromjson'
 
 ## Refs
 
-https://github.com/stedolan/jq/wiki/Cookbook
-
+- [Cookbook](https://github.com/stedolan/jq/wiki/Cookbook)
