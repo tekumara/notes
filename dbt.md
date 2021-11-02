@@ -13,29 +13,31 @@ Store dbt projects in a git repo. This becomes the source of truth for all your 
 
 - models are the core concept in dbt. One model = one table. Every model is a SQL SELECT statement.
 - dbt turns models into tables and views in a warehouse using one of these [materialization strategies](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/materializations):
-  - table - dropped and recreated
-  - view - dropped and recreated
-  - incremental - run on a subset of data
+  - table - drop and recreate every run
+  - view - drop and recreate every run
+  - [incremental](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/configuring-incremental-models) - insert/update a filtered subset of rows from a source
   - ephemeral - i.e. a CTE
-- dbt is declarative. It maintains a copy of the database state and will apply the appropriate migrations (ie: create/delete statements) so your database matches your declared models.
-- models can reference other models and form a DAG. dbt uses the DAG to execute models in the correct sequence, and to perform [partial DAG updates to children/parents of selected models](https://docs.getdbt.com/reference/model-selection-syntax/).
-- metadata - models can have [tags](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/tags/) (e.g., PII, nightly) which can be referenced when running models or in the documentation
-- [documentation](https://blog.getdbt.com/using-dbt-docs/) can be auto-generated from the models into a static website. The docs include descriptions (with markdown support), a visualisation of the DAG, and search functionality. Deploy targets can be any web host, S3, or GitHub pages.
-- [sources](https://docs.getdbt.com/docs/building-a-dbt-project/using-sources) define source tables. You can rerun all models that depend on them, run tests to check their validity, and also check their freshness.
-- [seed data](https://docs.getdbt.com/docs/building-a-dbt-project/seeds) are CSV files in your project (and stored in git) loaded into your warehouse. Useful for mapping tables or loading test data (e.g., without PII) into a test schema ([example](https://github.com/stkbailey/fivethirtyeight-dbt-data)).
-- [snapshots](https://docs.getdbt.com/docs/building-a-dbt-project/snapshots) implement type 2 slowly changing dimensions over mutable source tables
-- [analyses](https://docs.getdbt.com/docs/building-a-dbt-project/analyses) are SQL templates compiled into .sql files, rather than materialized against the warehouse. Compilation resolves all references and substitutions.
-- [packages](https://docs.getdbt.com/docs/guides/building-packages) enable sharing of models and their composition into other projects ([example](https://github.com/stkbailey/fivethirtyeight-dbt-data))
-- [testing](https://docs.getdbt.com/docs/building-a-dbt-project/testing-and-documentation/testing/)
-  - schema tests check constraints are valid
-  - custom data tests are arbitrary SQL statements that fail when returning more than 1 row
+- dbt is declarative and idempotent. It maintains a copy of the database [state](https://docs.getdbt.com/docs/guides/understanding-state) and will apply the appropriate table/view migrations so your database matches your declared models. NB: these are whole table/view migrations, not column-level, ie: delete/create statements, rather than alter
+- models reference other models and form a DAG. dbt uses the DAG to execute models in the correct sequence, and to perform [partial DAG updates to children/parents of selected models](https://docs.getdbt.com/reference/model-selection-syntax/)
+- [defer](https://docs.getdbt.com/reference/node-selection/defer) to other environments (eg: production) when upstream unselected models don't exist in the current environment. This avoids the need for rebuilding or cloning the upstream models.
 - [macros](https://docs.getdbt.com/docs/writing-code-in-dbt/macros) are snippets of SQL reusable across models
 - template with [Jinja](https://docs.getdbt.com/docs/writing-code-in-dbt/getting-started-with-jinja)
   - to create models in different schemas/[environments](https://docs.getdbt.com/docs/guides/managing-environments) (e.g., dev/test/prod)
   - to reference other models or avoid hard coding table names
   - to interpolate from variables provided in config or via the command line
   - to create conditionals, e.g., when running in a test schema only use a subset of data
-  - instead of using the capabilities of your scheduler (e.g., Airflow) to decouple and get the other benefits of dbt
+- [tags](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/tags/) (e.g., nightly) can be used as selection critera when running models or tests and applied to groups of models
+- [meta](https://docs.getdbt.com/reference/resource-configs/meta) (e.g., PII=true) are key/value pairs applied to individual models and appear in the documentation
+- [documentation](https://blog.getdbt.com/using-dbt-docs/) can be auto-generated from the models into a static website. The docs include descriptions (with markdown support), a visualisation of the DAG, and search functionality. Deploy targets can be any web host, S3, or GitHub pages.
+- [sources](https://docs.getdbt.com/docs/building-a-dbt-project/using-sources) define source tables. You can rerun all models that depend on them, run tests to check their validity, and also check their freshness.
+- [seed data](https://docs.getdbt.com/docs/building-a-dbt-project/seeds) are CSV files in your project (and stored in git) loaded into your warehouse. Useful for mapping tables or loading test data (e.g., without PII) into a test schema ([example](https://github.com/stkbailey/fivethirtyeight-dbt-data)).
+- [snapshots](https://docs.getdbt.com/docs/building-a-dbt-project/snapshots) implement type 2 slowly changing dimensions over mutable source tables
+- [analyses](https://docs.getdbt.com/docs/building-a-dbt-project/analyses) are SQL templates compiled into .sql files, rather than materialized against the warehouse. Compilation resolves all references and substitutions.
+- [packages](https://docs.getdbt.com/docs/guides/building-packages) enable sharing of models and their composition into other projects ([example](https://github.com/stkbailey/fivethirtyeight-dbt-data))
+- [exposures](https://docs.getdbt.com/docs/building-a-dbt-project/exposures) define downstream usages, eg: dashboards, an application. This metadata forms part of the generated documentation.
+- [testing](https://docs.getdbt.com/docs/building-a-dbt-project/testing-and-documentation/testing/)
+  - schema tests check constraints are valid
+  - custom data tests are arbitrary SQL statements that fail when returning more than 1 row
 - [supports](https://docs.getdbt.com/docs/supported-databases) Snowflake, Redshift, BigQuery, Postgres and Microsoft SQL Server
 - [partially supports](https://docs.getdbt.com/docs/supported-databases) Presto and Spark (via the thrift-server)
 
