@@ -44,3 +44,38 @@ terraform plan -var-file vars-prod.tfvars -out=plan
 terraform show -json plan | jq > plan.json
 jq '.planned_values.root_module.resources[] | select(.address=="aws_s3_bucket_policy.flows_bucket_policy") | .values.policy | fromjson' plan.json
 ```
+
+## Escape hatches
+
+[External Data Source](https://registry.terraform.io/providers/hashicorp/external/latest/docs/data-sources/data_source) will call an external program to generate data when referenced.
+
+[null_resource](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) will be recreated when trigger values change.
+
+[local_exec Provisioner](https://www.terraform.io/docs/language/resources/provisioners/local-exec.html) invokes a local executable after a resource is created. If `when = destroy` is specified, the provisioner will run when the resource it is defined within is destroyed (see [Destroy-Time Provisioners](https://www.terraform.io/docs/language/resources/provisioners/syntax.html#destroy-time-provisioners)).
+
+## Avoiding secrets in state
+
+Data sources and resources store their values in state.
+
+Instead of retrieving the sensitive value using a data source, pass it in as a variable and use it only in provider, provisioner, and connection blocks. This works because those features do not require storage in state.
+
+Alternatively, fetch the secret in one of those blocks, eg: a local_exec provisioner:
+
+```
+resource "aws_db_instance" "rds_example" {
+
+   ...
+   rds details etc ...
+   ...
+   password = "temporarypasswordOverriddenBelow"
+   ...
+
+    provisioner "local-exec" {
+        command = "bash -c 'DBPASS=$$(openssl rand -base64 16) ; aws rds modify-db-instance --db-instance-identifier ${self.id} --master-user-password $${DBPASS} --apply-immediately"
+    }
+}
+```
+
+## Taints
+
+`terraform taint` will make a resource for recreation. Useful for rotating a random_password or tls_private_key resource.

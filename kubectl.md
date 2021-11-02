@@ -48,10 +48,10 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl get events --sort-by='{.lastTimestamp}'` show events sorted by last seen timestamp. NB: by default events are only kept by the api server for 1 hour
 `kubectl describe ingress` describe ingress objects
 `kubectl logs -f $PODNAME` stream logs
+`kubectl logs -lapp=awesome-app --since=0s` dump logs in the last 0 secs from all pods with the label awesome-app
 `kubectl get ingress -n flyteexamples-development -o jsonpath='{range .items[*]}{"\n"}http://localhost:30081{.spec.rules[*].http.paths[*].path}{end}'` show ingress paths (ignores host)
 `kubectl auth can-i --list` show all the actions I have in the current namespace
 `kubectl get role app-admin -o yaml` show details of a role
-
 
 Show all forwarded ports, ie: [NodePort services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types):
 
@@ -70,15 +70,12 @@ kubectl get deployment slim-api -o jsonpath="{range .status.conditions[*]}{.last
 `kubectl run -it --image=alpine helper` starts an pod called _helper_ running the alpine image in the cluster with requests/limits of 250m cpu 1Gi mem
 `kubectl run -it --image=alpine helper --overrides='{ "spec": { "serviceAccount": "your-sa-here" } }'` run _helper_ with your service account
 `kubectl delete pod helper` delete the helper pod
---overrides='{ "spec": { "serviceAccount": "your-sa-here" }  }'
+--overrides='{ "spec": { "serviceAccount": "your-sa-here" } }'
 `kubectl run -it --image=ubuntu --requests "cpu=50m" helper` starts an ubuntu pod with
 `kubectl run -it --image=ubuntu -o yaml --dry-run=client` show the deployment object buy don't apply it
 `kubectl cp $namespace/$pod:/app/heaptrack.gunicorn.2983.gz heaptrack.gunicorn.2983.gz` copy file from pod to local dir
 
-
-
 `kubectl exec -i -t $pod -- /bin/bash` get interactive shell
-
 
 ### Listing all resources
 
