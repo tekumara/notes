@@ -42,3 +42,7 @@ An error occurred (InvalidRequestException) when calling the CreateSecret operat
 ```
 
 Wait until the secret is deletion (even when deleting with `--force-delete-without-recovery` the deletion happens asynchronously so you may need to wait a minute or so).
+
+```
+You can't access a secret from a different AWS account if you encrypt the secret with the default KMS service key.
+```

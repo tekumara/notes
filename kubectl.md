@@ -52,6 +52,7 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl get ingress -n flyteexamples-development -o jsonpath='{range .items[*]}{"\n"}http://localhost:30081{.spec.rules[*].http.paths[*].path}{end}'` show ingress paths (ignores host)
 `kubectl auth can-i --list` show all the actions I have in the current namespace
 `kubectl get role app-admin -o yaml` show details of a role
+`kubectl get pod helper -o jsonpath='{.status.podIPs}` get pod ip
 
 Show all forwarded ports, ie: [NodePort services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types):
 
@@ -142,7 +143,7 @@ kubectl describe pods -n livy
 
 ### error: metrics not available yet
 
-If you see this when running `kubectrl top nodes` then you need to install and enable the metrics server.
+If you see this when running `kubectl top nodes` then you need to install and enable the metrics server.
 
 ### evicted
 

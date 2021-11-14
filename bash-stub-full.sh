@@ -18,7 +18,7 @@ die() {
     set +x
     [ "$exit_status" -eq "0" ] && exit_status=1
     local msg="$1"
-    >&2 echo -e "$msg"
+    echo -e "$msg" >&2
     exit "${exit_status}"
 }
 
