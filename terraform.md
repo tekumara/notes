@@ -51,7 +51,13 @@ jq '.planned_values.root_module.resources[] | select(.address=="aws_s3_bucket_po
 
 [null_resource](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) will be recreated when trigger values change.
 
-[local_exec Provisioner](https://www.terraform.io/docs/language/resources/provisioners/local-exec.html) invokes a local executable after a resource is created. If `when = destroy` is specified, the provisioner will run when the resource it is defined within is destroyed (see [Destroy-Time Provisioners](https://www.terraform.io/docs/language/resources/provisioners/syntax.html#destroy-time-provisioners)).
+[local_exec Provisioner](https://www.terraform.io/docs/language/resources/provisioners/local-exec.html) invokes a local executable after a resource is created. It is not called on modification. If `when = destroy` is specified, the provisioner will run when the resource it is defined within is destroyed (see [Destroy-Time Provisioners](https://www.terraform.io/docs/language/resources/provisioners/syntax.html#destroy-time-provisioners)).
+
+If local_exec fails then the resource will be tainted, and therefore recreated. If it's an expense resource to recreate, then use local_exec instead a `null_resource`. The other advantage is the `null_resource` can be explicitly tainted and just the local-exec will be rerun.
+
+## Scope
+
+Locals are scoped to the whole module (ie: directory they're in)
 
 ## Avoiding secrets in state
 
@@ -79,3 +85,9 @@ resource "aws_db_instance" "rds_example" {
 ## Taints
 
 `terraform taint` will make a resource for recreation. Useful for rotating a random_password or tls_private_key resource.
+
+eg:
+
+```
+terraform taint 'module.warehouses["PROD_JAFFLES_WH"].snowflake_warehouse.warehouse'
+```
