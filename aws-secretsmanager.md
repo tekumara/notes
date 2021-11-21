@@ -35,6 +35,20 @@ Force immediate deletion
 aws secretsmanager delete-secret --secret-id topsecret --force-delete-without-recovery
 ```
 
+## Cross-account access
+
+Secrets can be fetched cross-account using an ARN containing the secret's friendly name (ie: the name without the random suffix) eg:
+
+```
+aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:012345678901:secret:ssh/key
+```
+
+When granting access in an IAM policy we can use a wildcard:
+
+```
+arn:aws:secretsmanager:us-east-1:012345678901:secret:ssh/key-??????
+```
+
 ## Troubleshooting
 
 ```

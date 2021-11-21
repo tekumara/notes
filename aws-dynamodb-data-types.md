@@ -6,8 +6,8 @@ The SDK has a [withJSON](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/c
 
 See
 
-* https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AppendixSampleTables.html
-* https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/dynamodbv2/document/Item.html
+- https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AppendixSampleTables.html
+- https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/dynamodbv2/document/Item.html
 
 ## Examples
 
