@@ -68,15 +68,14 @@ paste after - `p`
 
 `ciw` to replace the word under the cursor ([ref](https://stackoverflow.com/questions/1379198/how-to-delete-a-word-and-go-into-insert-mode-in-vim))
 
-To paste in the middle on a line at the current cursor position, enter insert mode, and press `Ctrl-R"}} to paste the unnamed buffer.
+To paste in the middle on a line at the current cursor position, enter insert mode, and press Ctrl-R to paste the unnamed buffer.
 
 ## File operations
 
 open file: `:e <filename>`  
 reload the current file: `:e`
-close file without exiting: `:bd`   
+close file without exiting: `:bd`  
 save as `:w myfile.txt`
-
 
 ## Editing
 

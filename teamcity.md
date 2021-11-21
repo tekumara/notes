@@ -108,7 +108,7 @@ Manually trigger a check for changes via _Actions - Check for pending changes_ (
 
 If the commit hook is inactive, reinstate it.
 
-### Pending changes but builds are triggered
+### Pending changes but builds are not triggered
 
 Make sure the build configuration has a trigger. Check the [trigger rules](https://www.jetbrains.com/help/teamcity/configuring-build-triggers.html) used to understand when they fire.
 
