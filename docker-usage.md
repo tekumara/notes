@@ -36,6 +36,14 @@
 
 `docker context ls` show current docker host
 
+Expose host ssh agent to container using the [magic mount point](https://github.com/docker/for-mac/issues/410#issuecomment-577064671):
+
+```
+docker run --rm -it --entrypoint /bin/bash -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock ubuntu:20.04
+```
+
+The container will need to run as root otherwise you'll get `Error connecting to agent: Permission denied`
+
 ## Modify existing container config
 
 Docker stores container metadata in `/var/lib/docker/containers/[CONTAINER_ID]/`. On a Mac, Docker runs as an LinuxKit xhyve process. You need to connect to that first and then proceed to modify the container metadata ([ref](https://www.softwareab.net/wordpress/docker-macosx-modify-hostconfig-existing-container/))
@@ -74,7 +82,7 @@ docker run --rm -i -v=dt-slim-api_terraform:/vol busybox find /vol
 Delete a volume
 
 ```
-docker volume rm $volume 
+docker volume rm $volume
 ```
 
 ## Troubleshooting
@@ -88,5 +96,6 @@ Stop any containers using the network before trying to delete it.
 The docker container's entrypoint needs to handle SIGINT command to quit cleanly. Commands like `make` don't do this.
 
 Either:
-* Use `/bin/bash` or [tini](https://github.com/krallin/tini) as an entrypoint
-* Run the container with an init (defaults to tini), eg: `docker run --init` or if using docker compose set `init: true`.
+
+- Use `/bin/bash` or [tini](https://github.com/krallin/tini) as an entrypoint
+- Run the container with an init (defaults to tini), eg: `docker run --init` or if using docker compose set `init: true`.

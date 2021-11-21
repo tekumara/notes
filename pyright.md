@@ -109,16 +109,18 @@ This can be fixed by generating draft type stubs which by default are stored in 
 pyright --createstub botocore
 ```
 
-These stubs are a first draft intended for type-checking and are meant to be manually improved. `--createstub` emits a comment with the return type for functions if it can be inferred. Whilst these may be incorrect they can reduce the manual work needed (see [#1916](https://github.com/microsoft/pyright/issues/1916)). 
+These stubs are a first draft intended for type-checking and are meant to be manually improved. `--createstub` emits a comment with the return type for functions if it can be inferred. Whilst these may be incorrect they can reduce the manual work needed (see [#1916](https://github.com/microsoft/pyright/issues/1916)).
 
 `--createstub` differ from `useLibraryCodeForTypes` which is intended to create low-quality type information that's usually insufficient for type checking but may be sufficient for completion suggestions. ([ref](https://github.com/microsoft/pyright/issues/1970#issuecomment-858669967))
 
 Compared to [stubgen](https://mypy.readthedocs.io/en/stable/stubgen.html) from mypy:
+
 - `--createstub` does a better job at inferring function return types
 - stubgen does a better job at inferring some function args
 - `--createstub` includes docstrings in the generated stubs
 
 Reference:
+
 - See [Type Stub Files](https://github.com/microsoft/pyright/blob/master/docs/type-stubs.md)
 
 NB: `.pyi` stubs in _typings/_ take precedence over the same stubs in the virtualenv.
@@ -130,6 +132,17 @@ pyright can be supplied a set of files on the the command line, in which case it
 ## Pylance bundled stubs
 
 Pylance bundles stubs for pandas, matplotlib and [other libraries](https://github.com/microsoft/pyright/issues/861). This stubs are incomplete. If you encounter a type error using these libraries that looks incorrect, first check the open issues on [microsoft/pylance-release](https://github.com/microsoft/pylance-release) before reporting it.
+
+## Exporting symbols from a typed library
+
+Python doesn't have an explicit export keyword. Instead conventions has arisen on how to specify which modules and symbols in a library are its [public interface](https://github.com/microsoft/pyright/blob/main/docs/typed-libraries.md#library-interface). These include the following in in _\_\_init\_\_.py_:
+
+- specifying exported symbols via the `__all__` symbol
+- using a redundant module or symbol alias during the import, eg: `from . import box as box`. See [rich #1596](https://github.com/willmcgugan/rich/pull/1596/files).
+
+[pyright 1.1.168](https://github.com/microsoft/pyright/releases/tag/1.1.168) and later errors with `reportPrivateImportUsage` when trying to import symbols that it considers private (ie: haven't be declared as above) from a type stubs or a py.typed library.
+
+For more info see this [comment](https://github.com/microsoft/pyright/issues/2277#issuecomment-937468789).
 
 ## Alternatives to pyright
 
