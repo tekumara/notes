@@ -54,9 +54,11 @@ References:
 
 ## Wheels
 
-When no wheels are found for an sdist or VCS repo, pip will attempt to build a wheel automatically using the build system and insert it into the wheel cache.
+When no wheels are found for an sdist or VCS repo, and the wheel package is installed, pip will attempt to build a wheel automatically using the build system, insert it into the wheel cache, and install the wheel metadata into an adjacent _dist-info_ directory.
 
 pip builds in a isolated environment that includes any requirements defined in `[build-system]` in _pyproject.toml_ (or the latest version of setuptools and wheel if now is specified). See [PEP 517 and 518 support](https://pip.pypa.io/en/stable/cli/pip/#pep-517-and-518-support).
+
+If the wheel package is not installed pip will fallback to `setup.py install` which will copy the source files and create source package metadata in an adjacent _egg-info_ directory.
 
 ## Cache
 
