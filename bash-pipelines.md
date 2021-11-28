@@ -63,7 +63,9 @@ bcompare <(unzip -l play.zip | sort) <(unzip -l play.old.zip | sort)
 
 Similarly you can use `>(command)` if you want to pipe something into a command.
 
-([ref](http://stackoverflow.com/a/3800207/149412))
+See:
+- [Chapter 23. Process Substitution](https://tldp.org/LDP/abs/html/process-sub.html)
+- [Stack Overflow](http://stackoverflow.com/a/3800207/149412)
 
 ## Redirections
 

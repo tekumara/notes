@@ -39,6 +39,12 @@ See [Managed policies and inline policies](https://docs.aws.amazon.com/IAM/lates
 
 ## Managed policies
 
+List all managed policies
+
+```
+aws iam list-policies
+```
+
 List managed policies attached to the role
 
 ```
@@ -54,13 +60,31 @@ aws iam get-policy --policy-arn $(ARN)
 Get managed policy document v1
 
 ```
-aws iam get-policy-version --policy-arn $(ARN) --version-id v1
+aws iam get-policy-version --policy-arn $(ARN) --version-id v1 | jq .PolicyVersion.Document
 ```
 
 List all policy versions
 
 ```
 aws iam list-policy-versions --policy-arn $(ARN)
+```
+
+Create new managed policy
+
+```
+aws iam create-policy --policy-name my-policy --policy-document file:///tmp/policy.json
+```
+
+Update managed policy
+
+```
+aws iam create-policy-version --policy-arn $arn --policy-document file:///tmp/policy.json
+```
+
+Set default version of policy
+
+```
+aws iam set-default-policy-version --policy-arn $arn --version-id v1
 ```
 
 ## Inline policies
