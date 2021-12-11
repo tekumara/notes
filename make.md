@@ -93,6 +93,22 @@ See also:
 
 No difference between `$(var)` and `${var}`. Its recommended to be consistent. Note that `${var}` can be used in bash, whereas `$(var)` can't. [ref](https://stackoverflow.com/questions/25185607/whats-the-difference-between-parenthesis-and-curly-bracket-syntax-in-ma)
 
+## Undefined variables
+
+To warn on undefined variables:
+
+```
+MAKEFLAGS += --warn-undefined-variables
+```
+
+NB: `$(value varname)` resolves to empty string if varname is undefined, and won't ever print a warning.
+
+To select the value of the first defined variable or return empty string:
+
+```
+TAG=$(or $(value TAG),$(value tag))
+```
+
 ## Shell
 
 Allows you to run shell commands and have their values stored in a variable, eg: `FILES:=$(shell ls)`
@@ -104,6 +120,25 @@ https://www.gnu.org/software/make/manual/html_node/Shell-Function.html
 ## Phony
 
 If you want a target to be called regardless of if there is file with the target name in the same directory, use `.PHONY: mytarget` or `.PHONY: *` to make always execute all targets. https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html
+
+## Ignore timestamp of dependency
+
+To trigger a target only when a dependency does not exist:
+eg:
+
+```
+dbt_packages: packages.yml | $(venv)
+```
+
+Will trigger `dbt_packages` when `$(venv)` does not exist, but if $(venv) is newer `dbt_packages` won't be triggered.
+
+## Errors
+
+```
+awk '/^##.*$/,/^[~\/\.a-zA-Z_-]+:/' $(MAKEFILE_LIST)
+```
+
+`Makefile:17: warning: undefined variable /'` - need to use `$$` instead of `$`
 
 ## Comments
 
@@ -160,6 +195,10 @@ time-one-min-ago:
     echo $(timemillis)
 ```
 
+## Missing seperator
+
+Make sure the target line begins with a tab.
+
 ## Wildcards
 
 Wildcards can be used to match a pattern to an explicit subdirectory level, eg:
@@ -193,11 +232,43 @@ list:
 
 ## Debug
 
-`make --just-print` just print the commands that would be executed
+Show debug
+
+```
+make --debug=v install
+```
+
+Print the commands that would be executed
+
+```
+make --just-print
+```
 
 See [Chapter 12. Debugging Makefiles](https://www.oreilly.com/library/view/managing-projects-with/0596006101/ch12.html)
+
+## Ignore target
+
+```
+make -o FILE test
+```
+
+`FILE` is never remade when it's dependencies are newer.
 
 ## Reference
 
 [Index of Concepts](https://www.gnu.org/software/make/manual/html_node/Concept-Index.html)
 [Heredoc in a Makefile](https://stackoverflow.com/questions/5873025/heredoc-in-a-makefile/7377522#7377522) - describes the use of the `.ONESHELL` target.
+
+## cat build.sh > build
+
+When I run `make build` on my macOS laptop it gets right to the end and then errors with:
+
+```
+cat build.sh >build
+/bin/sh: build: Is a directory
+make: *** [build] Error 1
+```
+
+This is because the `build` target has no recipe, and since there's a build.sh file, make runs [a weird SCCS built-in rule](https://stackoverflow.com/questions/43264686/why-does-calling-make-with-a-shell-script-target-create-an-executable-file).
+
+`.PHONY: build` will fix this. Alternatively, add a recipe for the `build` target, or rename `build.sh`
