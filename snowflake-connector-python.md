@@ -38,3 +38,5 @@ conn = snowflake.connector.connect(
     client_store_temporary_credential=True
 )
 ```
+
+If you are using dbt it will import `snowflake-connector-python[secure-local-storage]` and set [client_store_temporary_credential=True](https://github.com/dbt-labs/dbt-snowflake/blob/e1ee1c8d9aa3986d9ed8460750fb932f0131c310/dbt/adapters/snowflake/connections.py#L119) for you.

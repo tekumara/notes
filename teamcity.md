@@ -112,7 +112,14 @@ If the commit hook is inactive, reinstate it.
 
 Make sure the build configuration has a trigger. Check the [trigger rules](https://www.jetbrains.com/help/teamcity/configuring-build-triggers.html) used to understand when they fire.
 
-Sometimes just updating the trigger is enough to get it working again.
+If you have a vcs trigger with a branch filter, include the non-refs path as well as the refs/head path, eg:
+
+```
++:refs/heads/main
++:main
+```
+
+Changes to a branch filter in Kotlin will take effect once the UI has been updated, ie: once the change containing the updated branch filter has been detected and applied by Teamcity, the next change will trigger using the new branch filters.
 
 ### VCS trigger rules are ignored
 

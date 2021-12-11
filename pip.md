@@ -41,6 +41,12 @@ Install using a named urlspec from a git branch with dev extras:
 pip install 'aec[dev] @ git+https://github.com/seek-oss/aec.git@master'
 ```
 
+Install a pip request
+
+```
+pip install 'dbt-snowflake @ git+https://github.com/dbt-labs/dbt-snowflake.git@refs/pull/65/head'
+```
+
 Install from a subdirectory in a git repo using ssh:
 
 ```

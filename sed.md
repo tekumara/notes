@@ -43,7 +43,9 @@ sed -i '/newrelic is optional/d' ./bin/tomcat_ctl.sh
 
 ## Sed on Mac OS X
 
-On Mac OS X sed doesn't support so-called enhanced patterns such as \s, \b, \d. Prefer perl instead. [ref](http://stackoverflow.com/questions/12178924/os-x-sed-e-doesnt-accept-extended-regular-expressions)
+On Mac OS X sed doesn't support so-called enhanced patterns such as `\s`, `\b`, `\d`. Prefer perl instead. [ref](http://stackoverflow.com/questions/12178924/os-x-sed-e-doesnt-accept-extended-regular-expressions)
+
+See `man re_format` for a list of enhanced patterns, which are not supported.
 
 ### Trouble shooting
 
