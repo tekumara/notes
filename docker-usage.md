@@ -10,8 +10,6 @@
 `docker inspect -f '{{.State.Pid}}' CONTAINER` get the PID of the process running in docker  
 `docker inspect -f '{{.HostConfig.Memory}}' CONTAINER` to see the container memory limit in bytes  
 `docker inspect -f '{{ json .NetworkSettings }}' CONTAINER | jq .` network settings including exposed ports and bridged IP address  
-`docker image inspect REPO:TAG` see details of an image  
-`docker image inspect python:3.6-slim | jq '.[0].Size'` see size of image
 `docker exec -it CONTAINER --user root bash` start a shell inside a running container, as the root user  
 `docker logs -f CONTAINER` tail logs  
 `docker run -it --name mycontainer IMAGE [COMMAND]` create and start a new container from an image ([ref](https://docs.docker.com/engine/reference/run/)). To use the image's default command, omit `command`. `-it` is for interactive sessions (keep stdin open and start a psuedo-tty)  
@@ -47,29 +45,6 @@ The container will need to run as root otherwise you'll get `Error connecting to
 ## Modify existing container config
 
 Docker stores container metadata in `/var/lib/docker/containers/[CONTAINER_ID]/`. On a Mac, Docker runs as an LinuxKit xhyve process. You need to connect to that first and then proceed to modify the container metadata ([ref](https://www.softwareab.net/wordpress/docker-macosx-modify-hostconfig-existing-container/))
-
-## Image size
-
-`docker manifest inspect` works on compressed tarballs stored on the registry.
-`docker image inspect` works on uncompressed (aka RootFS) layers stored locally.
-
-Get compressed size of image on remote repository
-
-```
-docker manifest inspect $repo:$tag | jq '[.layers[].size] | add'
-```
-
-Get uncompressed size of local image
-
-```
-docker image inspect $image | jq '.[].Size'
-```
-
-Get commands and uncompressed size of each layer
-
-```
-docker history $image
-```
 
 ## Volumes
 

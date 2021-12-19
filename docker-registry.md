@@ -13,3 +13,16 @@ REPO=tekumara/spark
 TOKEN="$(curl -s "https://auth.docker.io/token?service=registry.docker.io&scope=repository:${REPO}:pull" | jq -r '.token')"
 curl -H "Authorization: Bearer $TOKEN" https://registry-1.docker.io/v2/$REPO/tags/list
 ```
+
+Run a [local registry](https://docs.docker.com/registry/deploying/):
+
+```
+docker run -d -p 5000:5000 --restart=always --name registry registry:2
+```
+
+Upload to the local registry:
+
+```
+docker tag ubuntu:16.04 localhost:5000/my-ubuntu
+docker push localhost:5000/my-ubuntu
+```
