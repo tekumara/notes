@@ -91,3 +91,35 @@ eg:
 ```
 terraform taint 'module.warehouses["PROD_JAFFLES_WH"].snowflake_warehouse.warehouse'
 ```
+
+## Plan and state inspection
+
+To extract the current state as json
+
+```
+terraform show -json
+```
+
+To extract the plan as json
+
+```
+terraform plan -var-file vars-prod.tfvars -out=plan && terraform show -json plan | jq > plan.json
+```
+
+To see a planned bucket policy as json
+
+```
+jq '.planned_values.root_module.resources[] | select(.address=="aws_s3_bucket_policy.myawesome_bucket_policy") | .values.policy | fromjson' plan.json
+```
+
+Or from a child module select the secret policy:
+
+```
+jq '.planned_values.root_module.child_modules[].resources[] | select(.address|endswith("aws_secretsmanager_secret.snowflake_user")) | .values.policy | fromjson' plan.json
+```
+
+To see the current state as json
+
+```
+jq '.values.root_module.child_modules[].resources[]' state.json
+```

@@ -56,7 +56,7 @@ In any of the above (including orderBy), when the number of partitions is not sp
 
 The number of partitions created when shuffling a Dataframe can be controlled by the `spark.sql.shuffle.partitions` configuration parameter and defaults to 200 (regardless of the number of executor cores). Here's how you could set this to 500: `spark.sql("set spark.sql.shuffle.partitions=500")`
 
-The number of partitions when doing a join, reduceByKey or parallelize on an RDD can be set by the `spark.default.parallelism` config parameter and defaults to the total number of cores in the cluster. When run locally (`spark.master = "local[*]"`), this will be the result of `Runtime.getRuntime.availableProcessors()` ie: the number of logical cores, which includes hyper-threads.
+The number of partitions when doing a join, reduceByKey or parallelize on an RDD can be set by the `spark.default.parallelism` config parameter and defaults to the total number of executor cores in the cluster. When run locally (`spark.master = "local[*]"`), this will be the result of `Runtime.getRuntime.availableProcessors()` ie: the number of logical cores, which includes hyper-threads.
 
 ## Writing Dataframes
 

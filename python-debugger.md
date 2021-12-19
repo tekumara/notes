@@ -29,7 +29,7 @@ Commands:
 - `l .` list lines around current line
 - `ll` list source for current function
 - `sticky` after execution print the source for the current function
-- `wa` print stack trace
+- `w` print stack trace
 - `a` print args for current function
 
 Set a breakpoint at in pandas.io.common at line 334:
