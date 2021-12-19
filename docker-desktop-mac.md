@@ -71,6 +71,7 @@ Unused images are images that aren't associated with a container.
 
 `docker images -f dangling=true` list [dangling images](https://docs.docker.com/engine/reference/commandline/images/#show-untagged-images-dangling), ie: images without a tag and no child images.
 
+`docker system prune -a` remove all images including the build cache
 `docker system prune --volumes` removes all stopped containers, unused networks, unused volumes, dangling images, and dangling build cache objects
 `docker container prune` remove all stopped containers
 `docker image prune` remove all dangling images

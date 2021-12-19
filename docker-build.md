@@ -16,7 +16,7 @@ All recursive contents of files and directories in the current directory are sen
 
 See [Dockerfile reference](https://docs.docker.com/engine/reference/builder/) for the instructions that can be used in a Dockerfile. Each instruction creates one layer.
 
-Each instruction in a Dockerfile creates a layer, which is cached. A cached layer is used if the instruction or any context it refers to hasn't changed from when it was created. The files least likely to be changed should be in lower layers, while the files most likely to change should be added last.
+Each instruction in a Dockerfile creates a layer, which is cached. The cache for a layer is hit if the instruction or any context it refers to hasn't changed since it was created. If there's a miss it'll be rebuilt, along with all the later layers. By keeping files that change the least in earlier layers, and the files that change the most in later layers, you can maximise cache hits and decrease rebuild time.
 
 "If you have multiple Dockerfile steps that use different files from your context, COPY them individually, rather than all at once. This ensures that each step’s build cache is only invalidated (forcing the step to be re-run) if the specifically required files change" [ref](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 
@@ -79,17 +79,7 @@ When building the output of dockerfile commands will only be shown on an error e
 
 ## External build cache
 
-With buildkit enabled, docker build can use another image as its layer cache when building.
-[eg:](https://github.com/moby/moby/pull/26839)
-
-```
-docker pull myimage:v1.0
-docker build --cache-from myimage:v1.0 -t myimage:v1.1 .
-=> importing cache manifest from myimage:v1.0
-
-```
-
-or
+With buildkit enabled, docker build can [use another image](https://github.com/moby/moby/pull/26839) as its layer cache when building.
 
 ```
 docker build -t test:latest --cache-from test:latest .
@@ -97,11 +87,11 @@ docker build -t test:latest --cache-from test:latest .
 
 ```
 
-Multiple cache-from images can be specified.
+The image can be on a remote registry in which case layers will be pulled incrementally as needed.
 
-, and that image can be on a remote registry. For this to work, the image must have cache metadata and the registry must support cache [manifest lists](https://docs.docker.com/registry/spec/manifest-v2-2/#manifest-list), see [this discussion](https://github.com/moby/buildkit/issues/699#issuecomment-432902188). [ECR](https://github.com/aws/containers-roadmap/issues/876) and [Artifactory](https://www.jfrog.com/jira/browse/RTFACT-26179) don't.
+For this to work, the image must have been written with a cache manifest. Set `--build-arg BUILDKIT_INLINE_CACHE=1` to write a cache manifest during image building.
 
-> To use an image as a cache source, cache metadata needs to be written into the image on creation. This can be done by setting --build-arg BUILDKIT_INLINE_CACHE=1 when building the image. After that, the built image can be used as a cache source for subsequent builds.
+The registry must also support cache [manifest lists](https://docs.docker.com/registry/spec/manifest-v2-2/#manifest-list), see [this discussion](https://github.com/moby/buildkit/issues/699#issuecomment-432902188). [ECR](https://github.com/aws/containers-roadmap/issues/876) and [Artifactory](https://www.jfrog.com/jira/browse/RTFACT-26179) don't.
 
 ## cache misses between hosts
 
