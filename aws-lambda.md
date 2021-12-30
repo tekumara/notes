@@ -182,7 +182,7 @@ Persistence of requests "in flight"
 | Lambda API | No formal persistence model |
 | SNS | No formal persistence model beyond delivery retry logic that extends up through potentially 23 days when sending to Lambda and SQS |
 | EventBridge | No formal persistence model beyond delivery retry logic that extends up through potentially 24 hours |
-|SQS |By default messages are stored for 4 days. This can be modified to as little as 60 sgpseconds up to 14 days by configuring a queue's MessageRetentionPeriod attribute |
+|SQS |By default messages are stored for 4 days. This can be modified to as little as 60 seconds up to 14 days by configuring a queue's MessageRetentionPeriod attribute |
 
 Retries
 

@@ -142,7 +142,7 @@ The instance profile used by the instance does not need access to the KMS key.
 
 ## LaunchTime
 
-The LaunchTime of an EC2 instance is the time it was started, not the time it was first created.  
+The LaunchTime of an EC2 instance is the time it was started, not the time it was first created.
 
 ## Troubleshooting
 
@@ -154,6 +154,6 @@ Make sure the EBS volume is mounted with the correct [device name](https://docs.
 
 In Cloudtrail look for `RunInstances` events, and then any events immediately afterwards that have errored, eg: `GenerateDataKeyWithoutPlaintext` events with errorCode `AccessDenied`.
 
-##  An error occurred (Unsupported) when calling the StartInstances operation: The requested configuration is currently not supported. Please check the documentation for supported configurations.
+### An error occurred (Unsupported) when calling the StartInstances operation: The requested configuration is currently not supported. Please check the documentation for supported configurations.
 
-If EBS optimized is enabled and you change the instance type to t2.*, you'll get this error when trying to start the instance.
+If EBS optimized is enabled and you change the instance type to t2.\*, you'll get this error when trying to start the instance.

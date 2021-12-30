@@ -6,16 +6,16 @@ Prefered over SSM parameter store because
 
 - the steady limit for SSM GetParameter is 40 and burst is 100 transactions per second. You can enable the `high-throughput-enabled` setting to increase the limit to 1,000 TPS (which costs $0.05 per 10,000 Parameter Store API interactions)
 
-
 AWS Secrets Manager provide a built-in framework for rotating credentials! And allows more 'JSON'-y data instead of strictly a single 'parameter' (yes I know you can put json in there too)
 
-
 SSM costs:
+
 - Standard parameters free
 - $0.05 per advanced parameter per month
 - High throughput enabled: $0.05 per 10,000 Parameter Store API interactions
 
 Secret Manager costs:
+
 - $0.40 per secret per month.
 - costs $0.05 per 10,000 API calls.
 
@@ -27,9 +27,13 @@ Create secret encrypted using the account's default KMS key `aws/secretsmanager`
 aws secretsmanager create-secret --name topsecret --description "top secret!" --secret-string file://topsecret.json
 ```
 
+List
+
 ```
 aws secretsmanager list-secrets | jq -C '.SecretList[] | {ARN, Name, Description, KmsKeyId}'
 ```
+
+Get value
 
 ```
 aws secretsmanager get-secret-value --secret-id topsecret | jq -r .SecretString
@@ -45,6 +49,18 @@ Force immediate deletion
 
 ```
 aws secretsmanager delete-secret --secret-id topsecret --force-delete-without-recovery
+```
+
+Get resource policy
+
+```
+aws secretsmanager get-resource-policy --secret-id topsecret | jq '.ResourcePolicy | fromjson'
+```
+
+Describe secret. Will include a KmsKeyId field only if use a CMK (if using the default key this field won't be present)
+
+```
+aws secretsmanager describe-secret --secret-id topsect
 ```
 
 ## Cross-account access
