@@ -57,19 +57,19 @@ Alternatively use the exec form, eg: `RUN ["/bin/bash", "-c", "echo hello"]` or 
 
 The `--entrypoint` flag can be used to override the default entrypoint. A parameter after the image name can be used to override the default CMD.
 
-## Buildkit
+## BuildKit
 
-[Buildkit](https://github.com/moby/buildkit) was introduced into docker 18.06 as experimental (see [PR #37151](https://github.com/moby/moby/pull/37151)) and is documented [here](https://docs.docker.com/develop/develop-images/build_enhancements/)
+[BuildKit](https://github.com/moby/buildkit) was introduced into Docker 18.06 as experimental (see [PR #37151](https://github.com/moby/moby/pull/37151)) and is documented [here](https://docs.docker.com/develop/develop-images/build_enhancements/)
 
-Buildkit is enabled by default on Docker Desktop for Mac, and docker compose v2 on linux, but not yet for the [docker cli on linux](https://github.com/moby/moby/issues/40379).
+BuildKit is enabled by default on Docker Desktop for Mac, and docker compose v2 on linux, but not yet for the [docker cli on linux](https://github.com/moby/moby/issues/40379).
 
-To enable for the docker cli on linux:
+To enable BuildKit for the docker cli on linux:
 
 ```
 export DOCKER_BUILDKIT=1
 ```
 
-Docker compose v1.25.1 or later versions of v1 will need to be told to use the docker cli, and therefore buildkit:
+Docker compose v1.25.1 or later versions of v1 will need to be told to use the docker cli, and therefore BuildKit when enabled:
 
 ```
 export COMPOSE_DOCKER_CLI_BUILD=1
@@ -79,21 +79,18 @@ When building the output of dockerfile commands will only be shown on an error e
 
 ## External build cache
 
-With buildkit enabled, docker build can [use another image](https://github.com/moby/moby/pull/26839) as its layer cache when building.
+With BuildKit enabled, docker build can [use another image](https://github.com/moby/moby/pull/26839) as its layer cache when building:
 
 ```
-docker build -t test:latest --cache-from test:latest .
-=> importing cache manifest from test:latest
-
+docker build . --cache-from myapp:latest
+=> importing cache manifest from myapp:latest
 ```
 
-The image can be on a remote registry in which case layers will be pulled incrementally as needed.
+When the cache-from image is on a remote registry its layers will be pulled incrementally as needed.
 
 For this to work, the image must have been written with a cache manifest. Set `--build-arg BUILDKIT_INLINE_CACHE=1` to write a cache manifest during image building.
 
-The registry must also support cache [manifest lists](https://docs.docker.com/registry/spec/manifest-v2-2/#manifest-list), see [this discussion](https://github.com/moby/buildkit/issues/699#issuecomment-432902188). [ECR](https://github.com/aws/containers-roadmap/issues/876) and [Artifactory](https://www.jfrog.com/jira/browse/RTFACT-26179) don't.
-
-## cache misses between hosts
+## Cache misses between hosts
 
 [tarsum](https://github.com/moby/moby/blob/7b9275c0da707b030e62c96b679a976f31f929d3/pkg/tarsum/tarsum_spec.md) is the checksum Docker uses on files in the tar archives that make up its layers. Caching is invalidated when a file's tarsum changes.
 
@@ -111,7 +108,7 @@ stat -c '%A %u %g %s %Y %n' *
 stat -f '%Sp %u %g %z %m %N' *
 ```
 
-git [does not track](https://git.wiki.kernel.org/index.php/ContentLimitations) mtime or file permissions, except for the executable bit. The rest of the file permissions will determined by the OS `umask`. umask can differ between hosts, and therefore the cache will be invalidated. There are some workarounds:
+git [does not track](https://git.wiki.kernel.org/index.php/ContentLimitations) mtime or file permissions, except for the executable bit. The rest of the file permissions will be determined by the OS `umask`. umask can differ between hosts, and therefore the cache will be invalidated. There are some workarounds:
 
 - [normalise file permissions before build](https://github.com/moby/moby/issues/32816#issuecomment-910030001)
 - [normalise perms, mtime etc. in Dockerfile](https://gist.github.com/kekru/8ac61cd87536a4355220b56ae2f4b0a9)
@@ -122,14 +119,14 @@ References:
 
 ## docker buildx
 
-[docker buildx](https://docs.docker.com/engine/reference/commandline/buildx/) offers the extended capabilities of buildkit that are otherwise available via [buildctl](https://github.com/moby/buildkit).
+[docker buildx](https://docs.docker.com/engine/reference/commandline/buildx/) offers the extended capabilities of buildkit that are otherwise available via [buildctl](https://github.com/moby/buildkit). See also [docker/buildx](https://github.com/docker/buildx) on Github.
 
 Buildx has [two export modes](https://github.com/moby/buildkit/issues/752):
 
 - `type=registry,mode=max`: export all layers of all intermediate steps in multi-stage builds
-- `mode=min`: export layers for the resulting images and only metadata for the intermediate steps (which is somewhat useful)
+- `mode=min`: export layers for the resulting images and only metadata for the intermediate steps (which is somewhat useful).
 
-https://github.com/docker/buildx
+When exporting the cache from buildx, the registry must support cache [manifest lists](https://docs.docker.com/registry/spec/manifest-v2-2/#manifest-list), see [this discussion](https://github.com/moby/buildkit/issues/699#issuecomment-432902188). [ECR](https://github.com/aws/containers-roadmap/issues/876) and [Artifactory](https://www.jfrog.com/jira/browse/RTFACT-26179) don't.
 
 ## Troubleshooting
 
