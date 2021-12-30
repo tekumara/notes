@@ -2,27 +2,33 @@
 
 ## Rust Install
 
-In Ubuntu and Mac OS X, [install using rustup](https://www.rust-lang.org/tools/install): 
+In Ubuntu and Mac OS X, [install using rustup](https://www.rust-lang.org/tools/install):
+
 ```
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # To configure your current shell run
 source $HOME/.cargo/env
 ```
 
+To upgrade:
+
+```
+rustup update
+```
+
 ## Syntax
 
 ```
-	 let mut body = String::new();
+    let mut body = String::new();
 ```
+
 The `::` syntax in `::new` indicates that `new` is an associated function of the `String` type
 
-
 ```
-	arg.parse::<i32>().map_err(|err| err.to_string()))
+arg.parse::<i32>().map_err(|err| err.to_string()))
 ```
 
 The `::` syntax in `parse::<i32>` indicates the return type so that the compiler knows the type of err. Without it, the compiler can only infer that `err` is `<F as FromStr>`, not the specific type `<i32 as FromStr>`, and so will generate `error[E0619]: the type of this value must be known in this context`
-
 
 Expressions vs statements
 
@@ -37,8 +43,8 @@ Shadowing - can have two variables with the same name (they'll occupy different 
 ## Slices
 
 ```
-	let parsed = Url::parse("https://httpbin.org/cookies/set?k2=v2&k1=v1")?;
-    let cleaned: &str = &parsed[..Position::AfterPath];
+let parsed = Url::parse("https://httpbin.org/cookies/set?k2=v2&k1=v1")?;
+let cleaned: &str = &parsed[..Position::AfterPath];
 ```
 
 ## Formating
@@ -71,18 +77,19 @@ eg: `rust-lldb ./target/debug/guessing-game`
 `n` - step over  
 `c` - continue execution  
 `fr v` - show all local variables  
-`thread list` 
+`thread list`
 
 ## Sublime Text 3 with Rust Enhanced + Rust Autocomplete
 
-Pros 
-* fast compilation on file save
-* shows compilation errors inline
+Pros
+
+- fast compilation on file save
+- shows compilation errors inline
 
 Cons
-* requires the [YcmdCompletion package](https://packagecontrol.io/packages/YcmdCompletion) to see Types
-* can't goto definition on variable method 
 
+- requires the [YcmdCompletion package](https://packagecontrol.io/packages/YcmdCompletion) to see Types
+- can't goto definition on variable method
 
 ## Sublime Text 3 with RLS
 
@@ -93,19 +100,20 @@ https://github.com/rust-lang-nursery/rls/issues/214
 A plugin for Intellij and Clion.
 
 Cons
-* errors aren't inline
-* no debugger. Clion has GDB support, which can be used for debugging, it's experimental but see [#535](https://github.com/intellij-rust/intellij-rust/issues/535#issuecomment-320866757)
-Pros
-* can join from struct/type to impl
+
+- errors aren't inline
+- no debugger. Clion has GDB support, which can be used for debugging, it's experimental but see [#535](https://github.com/intellij-rust/intellij-rust/issues/535#issuecomment-320866757)
+  Pros
+- can join from struct/type to impl
 
 `CTRL - SHIFT - A` Toggle parameter name hints (can also add a keyboard shortcut)
-
 
 ## Cargo
 
 create a new application project called `myapp` including initialising a git repo: `cargo new myapp --bin`
 
 cargo-edit will modify Cargo.toml for you, eg: to add reqwest to Cargo.toml
+
 ```
 cargo install cargo-edit
 cargo add reqwest
@@ -133,4 +141,3 @@ struct Button {
 ```
 
 In Rust, traits are types, but they are “unsized”, which roughly means that they are only allowed to show up behind a pointer like `Box` (which points onto the heap) or `&` (which can point anywhere).
-

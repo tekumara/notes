@@ -44,29 +44,3 @@ rg -g '!*.js'
 
 In above examples the implicit path to search is `.` (the current directory).
 If you supply files or directory as a path (explicitly or expanded) eg: `rg -g 'ansible/*' --files *` they will take precedence over the glob ([issue #725](https://github.com/BurntSushi/ripgrep/issues/725))
-
-## Install Ubuntu
-
-There's no Ubuntu package yet.
-
-Install via cargo: `cargo install ripgrep`
-
-To install the docs, find the latest version https://github.com/BurntSushi/ripgrep/releases and download, eg:
-
-```
-wget -O - https://github.com/BurntSushi/ripgrep/releases/download/0.7.1/ripgrep-0.7.1-x86_64-unknown-linux-musl.tar.gz | tar -zxvf - -C /tmp
-
-#binary, if not installed via cargo
-sudo cp /tmp/ripgrep*/rg /usr/local/bin/
-
-#man pages
-mkdir -p /usr/local/man/man1/
-sudo cp /tmp/ripgrep*/rg.1 /usr/local/man/man1/
-mandb
-
-#bash completions
-sudo cp /tmp/ripgrep*/complete/rg.bash-completion /usr/share/bash-completion/completions/rg
-
-#zsh completions
-sudo cp /tmp/ripgrep*/complete/_rg /usr/share/zsh/functions/Completion/Zsh/
-```
