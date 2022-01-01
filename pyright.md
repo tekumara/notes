@@ -76,6 +76,10 @@ See [List Expression](https://github.com/microsoft/pyright/blob/master/docs/type
 
 For more info see [Understanding Type Inference](https://github.com/microsoft/pyright/blob/master/docs/type-inference.md).
 
+## Type narrowing and type guards
+
+pyright can narrow a type to a more specific type based on the code path taken. See [Type narrowing](https://github.com/microsoft/pyright/blob/main/docs/type-concepts.md#type-narrowing).
+
 ## Import Resolution
 
 Pyright [locates .pyi stubs in several locations](https://github.com/microsoft/pyright/blob/master/docs/import-resolution.md#resolution-order) including typeshed stubs it vendors, your project workspace, and _lib/site-packages_. To find _lib/site-packages_ pyright needs to run inside your virtualenv, or have the `venv` and `venvPath` configured in _pyrightconfig.json_.

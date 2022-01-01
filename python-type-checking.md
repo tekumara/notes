@@ -113,6 +113,23 @@ Overloading allows a function to have multiple type signatures. This can allow a
 
 See [mypy - Function overloading](https://mypy.readthedocs.io/en/stable/more_types.html#function-overloading)
 
+## Subclasess
+
+```
+class B:
+    pass
+
+class A(B):
+    pass
+
+def f(b: B) -> None:
+    pass
+
+f(A)
+```
+
+Produces the type error `"f" has incompatible type "Type[A]"; expected "B"`
+
 ## Troubleshooting
 
 ```
@@ -133,6 +150,18 @@ def first_name(names: "pd.Series[str]") -> List[str]:
 ```
 
 ([ref])(https://github.com/python/typing/issues/410#issuecomment-293263300)
+
+```
+def f(a: A) -> None:
+    pass
+
+f(A)
+
+Argument of type "Type[A]" cannot be assigned to parameter "a" of type "A" in function "f"
+  "Type[type]" is incompatible with "Type[A]"
+```
+
+Pass the instance instead of the type, eg: `f(A())`
 
 ## References
 
