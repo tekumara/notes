@@ -130,7 +130,7 @@ eg:
 dbt_packages: packages.yml | $(venv)
 ```
 
-Will trigger `dbt_packages` when `$(venv)` does not exist, but if $(venv) is newer `dbt_packages` won't be triggered.
+Will trigger `dbt_packages` when `$(venv)` does not exist, but if `$(venv)` is newer `dbt_packages` won't be triggered.
 
 ## Errors
 

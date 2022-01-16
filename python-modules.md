@@ -18,7 +18,7 @@ See
 
 ## PYTHONPATH
 
-PYTHONPATH can contain a directory of modules (ie: .py files) or .zip/.egg files. Python will unpack the .zip file and locate any packages within it ie: directories containing a _\_\_init\_\_.py_ file. The name of the .zip file is irrelevant.
+`PYTHONPATH` can contain a directory of modules (ie: .py files) or .zip/.egg files. Python will unpack the .zip file and locate any packages within it ie: directories containing a _\_\_init\_\_.py_ file. The name of the .zip file is irrelevant.
 
 ## Import time
 
@@ -32,17 +32,21 @@ if __name__ == '__main__':
 
 will execute when invoked at runtime.
 
-## python and sys.path
+## sys.path on startup
+
+From the [sys.path](https://docs.python.org/3/library/sys.html#sys.path) docs:
 
 > As initialized upon program startup, the first item of this list, path[0], is the directory containing the script that was used to invoke the Python interpreter.
 
-See [sys.path](https://docs.python.org/3/library/sys.html#sys.path)
-
 eg:
 
-- `python script.py` the current directory is `sys.path[0]`
-- `python myscripts/script.py` the myscripts/ dir is `sys.path[0]`
-- `python -m myscripts/script` the current directory is `sys.path[0]`
+| command                      | sys.path[0]                                        |
+|------------------------------|----------------------------------------------------|
+| `python`                     | empty string (`''`) so python searches current dir |
+| `python script.py`           | current dir                                        |
+| `python myscripts/script.py` | myscripts/                                         |
+| `python -m myscripts.script` | current dir                                        |
+| `/usr/local/bin/entrypoint` (script with python shebang) | /usr/local/bin |
 
 ## Relative imports
 
