@@ -26,7 +26,7 @@ or
       Inapplicable versioned settings found, yet all other build settings from VCS were successfully loaded
 ```
 
-To test these changes, use the Edit VCS Root page to change the VCS root to point to your feature branch. It might take a minute for you changes to appear in the TeamCity UI. Restore main/master as the default branch after testing.
+To test these changes, use the Edit VCS Root page to change the VCS root to point to your feature branch. It might take a minute for you changes to appear in the TeamCity UI. Restore main/master as the default branch after testing.
 
 ## Kotlin DSL Sources / API Docs
 
@@ -157,6 +157,11 @@ Docker wrapper: restore directory ownership
 Check the Agents Compatibility page. Both explicit and implicit requirements must be met.
 
 If the `build.vcs.number` implicit requirement is not met check that you have a VCS root defined. `build.vcs.number` is a [predefined build parameter](https://www.jetbrains.com/help/teamcity/predefined-build-parameters.html#Server+Build+Properties) that exists if there is only a single VCS root in the configuration.
+
+### Escaping dollar signs in Kotlin
+
+Kotlin will interpolate variables prefixed with a `$` in a multi-line string.
+To include a literal `$` use `${'$'}` ([ref](https://stackoverflow.com/a/32994616/149412))
 
 ## References
 

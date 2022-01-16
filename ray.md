@@ -31,6 +31,7 @@ kubectl -n ray port-forward service/example-cluster-ray-head 10001:10001 &
 
 mkvenv
 pip install ray
-
-
 ```
+
+The helm chart installs the ray operator which creates a head node
+
