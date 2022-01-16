@@ -38,7 +38,13 @@ k3d cluster create --agents 1
 Create a cluster named foobar and forward loadbalancer port 80 to the host
 
 ```
-k3d cluster create foobar -p "8081:80@loadbalancer"
+k3d cluster create foobar -p "8081:80@loadbalancer" --wait
+```
+
+To write kubeconfig for cluster foobar to _~/.k3d/kubeconfig-foobar.yaml_
+
+```
+k3d kubeconfig write foobar
 ```
 
 To generate kubeconfig for all clusters
@@ -53,12 +59,6 @@ To merge kubeconfig for all clusters into _~/.kube/config_:
 k3d kubeconfig merge --all -d
 ```
 
-To write kubeconfig for cluster foobar to _~/.k3d/kubeconfig-foobar.yaml_
-
-```
-k3d kubeconfig write foobar
-```
-
 To stop cluster
 
 ```
@@ -71,23 +71,40 @@ To delete cluster
 k3d cluster delete
 ```
 
-### Local image registry
+### Local image registry (recommended)
 
-k3s doesn't have access to the host's local image registry. Kubernetes running in Docker Desktop does and so can share locally built images.
+k3s doesn't have access to the host's local image registry. (Kubernetes running in Docker Desktop does and so can share locally built images).
 
-To import an image from the local docker-daemon into the default k3d cluster:
-
-```
-k3d image import myapp:latest
-```
-
-Alternatively you could [run a k3d managed registry](https://k3d.io/usage/guides/registries/#using-a-local-registry):
+To [run a k3d managed registry](https://k3d.io/v5.2.2/usage/registries/#using-k3d-managed-registries):
 
 ```
-k3d cluster create NAME --registry-create
+k3d cluster create $clustername --registry-create $registryname:0.0.0.0:5000
 ```
 
-This creates a [registry container](https://docs.docker.com/registry/introduction/), configures your k3d cluster to use it, and exposes its port to your host so you can push to it from the host.
+This creates a [registry container](https://docs.docker.com/registry/introduction/) on the docker network, and configures your k3d cluster to use it. The `0.0.0.0:5000` exposes the registry on port 5000 of your host. This allows the same registry host:port to be used within the cluster as from your host (which is needed for MacOS in particular).
+
+Within the cluster, reference images in the registry using its name, eg: `registryname:5000/myimage:mytag`
+
+On the host, reference images in the registry:
+
+- by localhost, eg: `localhost:5000/myimage:mytag`
+- by registry name, eg: `registryname:5000/myimage:mytag`. Requires `registryname` to be mapped to localhost.
+
+### Image import
+
+Alternatively you can import images into the cluster and avoid the need to run a registry. However, everytime the whole image will be copied so, unlike using a local registry, you want be able to take advantage of skipping already-pushed layers.
+
+To import an image from the local docker-daemon into the foobar k3d cluster:
+
+```
+k3d image import myapp:local -c foobar
+```
+
+To see images available on the server:
+
+```
+docker exec -it k3d-$clustername-server-0 crictl images
+```
 
 ### Connecting to services in the cluster (docker-for-mac)
 
@@ -107,7 +124,9 @@ Additional node ports can be published at the time of cluster creation, eg: to m
 k3d cluster create -p "8081:80@loadbalancer"
 ```
 
-For more info see [Exposing Services](https://k3d.io/usage/guides/exposing_services/)
+k3s installs the traefik loadbalancer. Ingress objects with hosts of the form `myapp.k3d.localhost` will be accessible from the macOS on the host mapped port in a web browser, eg: `http://myapp.k3d.localhost:8081/`. This works because Chrome and Firefox resolve \*.localhost to 127.0.0.1 (NB: the default MacOS resolver does not so curl to \*.localhost will fail).
+
+For more info see [Exposing Services](https://k3d.io/v5.2.2/usage/exposing_services/)
 
 #### Exposing ports after cluster creation
 
@@ -123,6 +142,14 @@ Hopefully this will be easier in the future when [#6](https://github.com/rancher
 
 This will occur if you are already running an API server, eg: Docker Desktop.
 Specify an alternate port, eg: `k3d cluster create --api-port 6444`
+
+#### ErrImagePull after k3d image import using latest tag
+
+See [#920](https://github.com/rancher/k3d/issues/920)
+
+#### Unable to connect to the server: dial tcp: lookup host.docker.internal
+
+`host.docker.internal` is not resolving on the MacOS host, but is specified in the kubeconfig. Update the kubeconfig to use 127.0.0.1 instead of `host.docker.internal`. See [#927](https://github.com/rancher/k3d/issues/927)
 
 ## multipass
 
@@ -156,4 +183,8 @@ Multipass VMs run on a bridged network accessible from the macOS host, so port p
 
 ## kubelet
 
-k3s runs kubelet with [these args](https://github.com/k3s-io/k3s/blob/master/pkg/daemons/agent/agent_linux.go#L62). On startup the kubelet args will also be written to the k3s logs (eg: _/var/log/k3s.log_)
+k3s runs kubelet with [these args](https://github.com/k3s-io/k3s/blob/master/pkg/daemons/agent/agent_linux.go#L62). On startup the kubelet args will also be written to the k3s logs.
+
+## logs
+
+`docker logs -t k3d-clustername-server-0`

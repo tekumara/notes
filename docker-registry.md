@@ -14,15 +14,39 @@ TOKEN="$(curl -s "https://auth.docker.io/token?service=registry.docker.io&scope=
 curl -H "Authorization: Bearer $TOKEN" https://registry-1.docker.io/v2/$REPO/tags/list
 ```
 
+## Local registry
+
 Run a [local registry](https://docs.docker.com/registry/deploying/):
 
 ```
 docker run -d -p 5000:5000 --restart=always --name registry registry:2
 ```
 
-Upload to the local registry:
+Upload:
 
 ```
 docker tag ubuntu:16.04 localhost:5000/my-ubuntu
 docker push localhost:5000/my-ubuntu
 ```
+
+[List repos](https://docs.docker.com/registry/spec/api/#listing-repositories):
+
+```
+curl localhost:5000/v2/_catalog
+```
+
+List tags for a repo
+
+```
+curl localhost:5000/v2/my-ubuntu/tags/list
+```
+
+List tags using skopeo
+
+```
+skopeo list-tags --tls-verify=false docker://localhost:5000/my-ubuntu
+```
+
+## Remote tag image
+
+To tag an image already on the registry see [joshdk/docker-retag](https://github.com/joshdk/docker-retag)
