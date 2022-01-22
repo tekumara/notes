@@ -1,20 +1,21 @@
-# k3s
+# k3d
+
+## k3s
 
 [k3s](https://k3s.io/) is a lightweight Kubernetes distribution with low resource requirements, eg: it doesn't use [resource hungry etcd](https://github.com/etcd-io/etcd/issues/11460). It's great for creating lots of disposable development clusters.
 
-The main limitation is it doesn't share its host's local image registry ([see below](#local-image-registry)) so images aren't cached, and it requires extra steps to access locally built images.
+The main limitation is it doesn't share its host's local image registry ([see below](#local-image-registry)) so it has a separate image cache and requires extra steps to access locally built images.
 
-It can be run using k3d or multipass or [docker-compose](https://github.com/k3s-io/k3s/blob/master/docker-compose.yml) (see [also](https://gitlab.com/mur-at-public/kube)).
+It can be run using [k3d](https://github.com/rancher/k3d) (recommended) or multipass or [docker-compose](https://github.com/k3s-io/k3s/blob/master/docker-compose.yml) (see [also](https://gitlab.com/mur-at-public/kube)).
 
-## k3d (recommended)
+## k3d usage
 
 k3s can be run inside a docker container using k3d
 
 Install:
 
-```
-brew install k3d
-```
+- macOS: `brew install k3d`
+- ubuntu: `curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash`
 
 Create a single node cluster with the default name (`k3s-default`), add a new context (`k3d-k3s-default`) to _~/.kube/config_ and switch to it:
 
@@ -136,6 +137,14 @@ Alternatively stop the cluster, modify the published ports, then start it again,
 
 Hopefully this will be easier in the future when [#6](https://github.com/rancher/k3d/issues/6) is resolved.
 
+## kubelet
+
+k3s runs kubelet with [these args](https://github.com/k3s-io/k3s/blob/master/pkg/daemons/agent/agent_linux.go#L62). On startup the kubelet args will also be written to the k3s logs.
+
+## logs
+
+`docker logs -t k3d-clustername-server-0`
+
 ### Troubleshooting
 
 #### listen tcp 0.0.0.0:6443: bind: address already in use
@@ -151,40 +160,9 @@ See [#920](https://github.com/rancher/k3d/issues/920)
 
 `host.docker.internal` is not resolving on the MacOS host, but is specified in the kubeconfig. Update the kubeconfig to use 127.0.0.1 instead of `host.docker.internal`. See [#927](https://github.com/rancher/k3d/issues/927)
 
-## multipass
+#### Insufficient cpu
 
-k3s can be installed on a multipass Ubuntu VM. You will need a way to copy images built on your host and multipass.
-
-Either:
-
-- (recommended) use https://github.com/matti/k3sup-multipass which runs k3s via `multipass shell`.
-- create a multipass instance with an ssh key, then run k3sup
-
-eg:
-
-```
-k3sup-multipass create flyte
-export KUBECONFIG=$(k3sup-multipass kubeconfig flyte)
-```
-
-To merge a kube config file generated from k3sup-multipass with ~/.kube/config:
-
-```
-sed -i '' 's/default/k3s-test/' ~/.kube/k3s-multipass-test
-mv ~/.kube/config ~/.kube/config.old
-(KUBECONFIG=~/.kube/config.old:~/.kube/k3s-multipass-test && kubectl config view --flatten > ~/.kube/config)
-```
-
-## multipass vs k3d
-
-Multipass can start/stop a VM quickly, although not as quickly as k3d does a container (eg: 12 secs vs 1 sec).
-k3d offers an option to copy images from the host to the k3s server, ie: `k3d image import`
-Multipass VMs run on a bridged network accessible from the macOS host, so port publishing isn't required. This makes for a simpler network setup.
-
-## kubelet
-
-k3s runs kubelet with [these args](https://github.com/k3s-io/k3s/blob/master/pkg/daemons/agent/agent_linux.go#L62). On startup the kubelet args will also be written to the k3s logs.
-
-## logs
-
-`docker logs -t k3d-clustername-server-0`
+Each node runs as a docker container without resource constraints and so has access to all CPUs.
+A single node can allocate pods with CPU requests up to the number of CPUs.
+If CPU requests > number of CPUs then you scheduling will fail with `Insufficient cpu`.
+To resolve, you add an additional node which will double the allocatable CPU (even though you aren't actually increasing the number of actual CPUs).
