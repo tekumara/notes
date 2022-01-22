@@ -12,6 +12,8 @@ The contents of _/home/notebook/work/_ is continually synced to S3. This is perf
 
 The [jupyterlab-git](https://github.com/jupyterlab/jupyterlab-git) extension is also installed.
 
+In order to connect to an EMR cluster the cluster needs to be running JupyterEnterpriseGateway.
+
 ## PySpark kernel
 
 The PySpark kernel is running on the master (inside the Livy process?)

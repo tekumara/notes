@@ -85,6 +85,14 @@ An error occurred (InvalidRequestException) when calling the CreateSecret operat
 
 Wait until the secret is deletion (even when deleting with `--force-delete-without-recovery` the deletion happens asynchronously so you may need to wait a minute or so).
 
-```
+### Sharing secrets cross-account
+
 You can't access a secret from a different AWS account if you encrypt the secret with the default KMS service key.
+
+When accessing the secret use its ARN, otherwise you'll be trying to access a secret in the current account and will see:
+
 ```
+.. not authorized to perform: secretsmanager:GetSecretValue on resource: myapp/top-secret because no identity-based policy allows the secretsmanager:GetSecretValue action
+```
+
+See [How do I share AWS Secrets Manager secrets between AWS accounts?](https://aws.amazon.com/premiumsupport/knowledge-center/secrets-manager-share-between-accounts/)
