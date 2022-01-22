@@ -123,3 +123,9 @@ To see the current state as json
 ```
 jq '.values.root_module.child_modules[].resources[]' state.json
 ```
+
+## Troubleshooting
+
+### X has been deleted
+
+Before the plan terraform will do a refresh and compare the state file against actual AWS resources. If resources in the state file no longer exist, terraform will report the resource "has been deleted". If this seems wrong, check that you are in the right AWS region and account.

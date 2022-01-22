@@ -13,6 +13,8 @@ A container will be throttled if it exceeds its CPU limit, but will not be kille
 
 When requests < limits, a pod can opportunistically use resources if they are not being used by other containers. This is called "burstable". This allows over-subscription, but when a pod bursts (up to its limit) it can negatively affect neighbouring pods.
 
+A pod cannot be scheduled on a node when sum(requests) > allocatable cpu. If this is true of all nodes, then the pod will be stuck in pending with "Insufficient cpu".  
+
 See
 
 - [Managing Resources for Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#requests-and-limits)
@@ -44,4 +46,10 @@ Show request cpu/mem and limit cpu/mem
 
 ```shell
 kubectl get pods -o jsonpath="pod:container{'\t'}req cpu{'\t'}req mem{'\t'}limit cpu{'\t'}limit mem{'\n'}{range .items[*]}{.metadata.name}:{range .spec.containers[*]}{.name}{'\t'}{.resources.requests.cpu}{'\t'}{.resources.requests.memory}{'\t'}{.resources.limits.cpu}{'\t'}{.resources.limits.memory}{'\n'}{end}{end}" | column -t -s $'\t'
+```
+
+Show resources available and allocated across the cluster
+
+```
+kubectl describe nodes
 ```
