@@ -28,19 +28,25 @@ docker history $repo:$tag
 Remove image
 
 ```
-docker image remove ubuntu:16.04
+docker image rm ubuntu:16.04
 ```
 
 Remove all images and build cache
 
 ```
 docker system prune -a
-````
+```
 
 Extract image as tar layers
 
 ```
 docker save ubuntu:20.04 | tar x -C /tmp/
+```
+
+List images sorted by size
+
+```
+docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}:{{.Tag}}" | sort -k 2 -h
 ```
 
 ## References

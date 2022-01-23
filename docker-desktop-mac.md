@@ -69,14 +69,19 @@ Logs: `~/Library/Containers/com.docker.docker/Data/log/vm/`
 
 Unused images are images that aren't associated with a container.
 
-`docker images -f dangling=true` list [dangling images](https://docs.docker.com/engine/reference/commandline/images/#show-untagged-images-dangling), ie: images without a tag and no child images.
-
 `docker system prune -a` remove all images including the build cache
 `docker system prune --volumes` removes all stopped containers, unused networks, unused volumes, dangling images, and dangling build cache objects
 `docker container prune` remove all stopped containers
-`docker image prune` remove all dangling images
-`docker image prune -a --filter 'until=1440h'` remove all unused images created earlier than 60 days ago
-`docker image rm $repo:$tag` remove specifc image
+`docker container prune --filter 'until=1440h'` remove all unused containers created earlier than 60 days ago
+
+`docker images -f dangling=true` list [dangling images](https://docs.docker.com/engine/reference/commandline/images/#show-untagged-images-dangling), ie: untagged images not being used as an intermediate layer.
+`docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}:{{.Tag}}" | sort -k 2 -h` images sorted by size
+
+Unused images are images without a container. After removing containers you can remove their image.
+
+`docker image prune` remove all unused dangling images
+`docker image prune -a --filter 'until=1440h'` remove unused images (dangling or otherwise) created earlier than 60 days ago
+`docker image rm $repo:$tag` remove specific image
 
 `docker system df` will show docker disk utilization summary - images, containers, volumes  
 `docker system df -v` a break-down at the individual image/container/volume level including shared size (ie: shared layers), unique size (ie: unique layers).
@@ -92,6 +97,6 @@ total 68167208
  68167208 -rw-r--r--  1 tekumara  staff   104G 21 Jun 17:23 Docker.raw
 ```
 
-Actual usage is 68MB, max is 104G. To increase the max: Docker - Preferences - Resources - Disk image size
+Actual usage is 68MB, max is 104G. To increase the max: _Docker - Preferences - Resources - Disk image size_
 
 See also: [Disk utilization in Docker for Mac](https://docs.docker.com/docker-for-mac/space/)
