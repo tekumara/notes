@@ -44,7 +44,12 @@ By default pyenv does not build with profile guided optimizations. To do so (whi
 CONFIGURE_OPTS=--enable-optimizations pyenv install 3.6.1
 ```
 
-On Ubuntu use `CONFIGURE_OPTS=--enable-shared` to build a shared library that can be used for embedding python and avoid [#917](https://github.com/pyenv/pyenv/issues/917).
+On Ubuntu use `CONFIGURE_OPTS=--enable-shared` to build a shared library that can be used for embedding python and avoid [#917](https://github.com/pyenv/pyenv/issues/917). This will also [set the RPATH](https://github.com/pyenv/pyenv/issues/65#issuecomment-30998608) so LD_LIBRARY_PATH doesn't need to be updated. See [python-build.md](python-build.md#shared-library) for more info.
+
+For more info on RPATH see:
+
+- [Building Portable Binaries](https://developer.squareup.com/blog/building-portable-binaries/)
+- [setting RPATH for python not working](https://stackoverflow.com/questions/43616505/setting-rpath-for-python-not-working)
 
 ## pyenv-virtualenv
 

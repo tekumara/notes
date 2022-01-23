@@ -54,27 +54,9 @@ You can now create virtualenvs (which include pip): `python3 -m venv`
 
 ## Dist packages
 
-deadsnake/deb python packages contain a [modified version of site.py](https://github.com/deadsnakes/python3.7/blob/4dc651768517acccad5f5081fff2de3e4d5900cd/debian/patches/distutils-install-layout.diff#L243) which uses the dist-packages rather than site-packages subdirectory. This means _/usr/lib/python3/dist-packages_ appears on `sys.path`. _python3-*_ deb packages will be installed into _/usr/lib/python3/dist-packages_.
+deadsnake/deb python packages contain a [modified version of site.py](https://github.com/deadsnakes/python3.7/blob/4dc651768517acccad5f5081fff2de3e4d5900cd/debian/patches/distutils-install-layout.diff#L243) which uses the dist-packages rather than site-packages subdirectory. This means _/usr/lib/python3/dist-packages_ appears on `sys.path`. _python3-\*_ deb packages will be installed into _/usr/lib/python3/dist-packages_.
 
 Any python installations with a prefix other than _/usr_ will be isolated from distribution installed packages, eg: installations in _/usr/local_ or virtualenvs.
-
-## Python builds
-
-Python can be built with [profile guided optimizations (PGO)](https://github.com/deadsnakes/python3.7#profile-guided-optimization) by using the `--enable-optimizations` flag. This increases the build time but improves runtime performance. The [profiling workloads can be configured](https://github.com/docker-library/python/issues/160#issuecomment-509426916).
-
-To see what args were used to build the interpreter:
-
-```
-import sysconfig; sysconfig.get_config_var('CONFIG_ARGS')
-```
-
-NB: this is loaded from _<sys.prefix>/python3.X/\_sysconfigdata_m_linux_x86_64-linux-gnu.py_
-
-The default ubuntu python packages aren't built with `--enable-optimizations`. The deadsnakes ppa packages and the [python docker images](https://github.com/docker-library/python) do.
-
-`--enable-shared` builds a shared library (eg: libpython3.6m.so.1.0) that can be dynamically linked by programs that embed python. This is enabled in the ubuntu packages (distro default & deadsnakes ppa) and the official docker image. The python docker images used `--enable-shared`.
-
-[python-build](https://github.com/pyenv/pyenv/tree/master/plugins/python-build) will install python from source.
 
 ## Install pip directly
 
@@ -116,4 +98,20 @@ To install pip, which depends on python 2:
 ```
 sudo apt-get install python-pip
 sudo pip install virtualenv
+```
+
+## Installing multiple python versions
+
+You can also install multiple python versions from the deadsnakes repo and have them live side by side.
+
+eg: to install python 3.7 after having already installed a later version:
+
+```
+sudo apt-get install -y --no-install-recommends python3.7 python3.7-dev python3.7-venv
+```
+
+To create a virtualenv using python 3.7:
+
+```
+virtualenv -p /usr/bin/python3.7 .venv
 ```

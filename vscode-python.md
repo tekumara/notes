@@ -4,10 +4,6 @@
 
 The integrated terminal will start in the project workspace, source any python virtualenvs, and inherit environment variables from vscode.
 
-## Tests
-
-Command Shift P - Python: Discover Tests
-
 ## Environment
 
 VSCode and its integrated terminal will inherit environment variables from the process that starts VSCode. eg: if you set any `AWS_*` env vars in a shell and then start code, those will be available to your program when VSCode runs/debugs it.
@@ -35,3 +31,7 @@ Vscode file rename doesn't do a git rename (once committed git will identify the
 Intellij can move functions, and their imports, between files. Vscode can't.
 
 Intellij will parse notebook code, find errors, and has go to definition. Vscode doesn't have any python language support for notebook cells.
+
+## Python interpreters
+
+To change interpreter select _Python: Select Interpreter_. If vscode doesn't switch to your interpreter, check _Output -> Python Language Server_ for errors.
