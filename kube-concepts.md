@@ -18,11 +18,17 @@ A [PodDisruptionBudget](https://kubernetes.io/docs/concepts/workloads/pods/disru
 
 ## Networking
 
-[Service](https://kubernetes.io/docs/concepts/services-networking/) exposes a set of pods via a network address, either internally with the cluster or externally. When a Service object has a selector, the Service controller will maintain an Endpoints object of internal pod IP addresses targeted by the service. See [Defining a Service](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service). A `ClusterIP` type will expose the service internally. A ClusterIP is made routable within the cluster with iptables, and is not routable from outside the cluster. The name of a `ClusterIP` service will resolve to its IP address, and its fully qualified name includes the namespace as a domain. `NodePort` and `LoadBalancer` exposes the service externally. `LoadBalancer` will program an external cloud load balancer.
+[Service](https://kubernetes.io/docs/concepts/services-networking/) exposes a set of pods via a network address, either internally with the cluster or externally. When a Service object has a selector, the Service controller will maintain an Endpoints object of internal pod IP addresses targeted by the service. See [Defining a Service](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service).
+
+A `ClusterIP` type will expose the service internally. A ClusterIP is made routable within the cluster with iptables, and is not routable from outside the cluster. The name of a `ClusterIP` service will resolve to its IP address, and its fully qualified name includes the namespace as a domain.
+
+`NodePort` and `LoadBalancer` exposes the service externally. `LoadBalancer` will program an external cloud load balancer.
 
 An [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) resource configures an [Ingress Controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) with a path-based/virtual host routing rule, and optional SSL/TLS termination. It can be used to expose HTTP/S routes from outside the cluster to services within the cluster. It does not expose non-HTTP/S protocols.
 
 [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) control ingress and egress to a pod. A Kubernetes cluster may have partial, full, or no support for network policies. Kubernetes will silently ignore policies that aren’t supported.
+
+A Pod may specify a [containerPort](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#ports). This is informational only. Any port which is listening on the default "0.0.0.0" address inside a container will be accessible from the network.
 
 See also:
 

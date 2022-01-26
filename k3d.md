@@ -8,6 +8,8 @@ The main limitation is it doesn't share its host's local image registry ([see be
 
 It can be run using [k3d](https://github.com/rancher/k3d) (recommended) or multipass or [docker-compose](https://github.com/k3s-io/k3s/blob/master/docker-compose.yml) (see [also](https://gitlab.com/mur-at-public/kube)).
 
+k3d may have a slightly [older version of k3s](https://github.com/rancher/k3d/blob/main/version/version.go#L41).
+
 ## k3d usage
 
 k3s can be run inside a docker container using k3d
@@ -72,6 +74,18 @@ To delete cluster
 k3d cluster delete
 ```
 
+To create a cluster with the latest version of k3s:
+
+```
+k3d cluster create $clustername -i latest
+```
+
+To add two agent nodes after cluster creation:
+
+```
+k3d node create -c $clustername [-i image] --replicas 2 mynewagents
+```
+
 ### Local image registry (recommended)
 
 k3s doesn't have access to the host's local image registry. (Kubernetes running in Docker Desktop does and so can share locally built images).
@@ -107,35 +121,110 @@ To see images available on the server:
 docker exec -it k3d-$clustername-server-0 crictl images
 ```
 
-### Connecting to services in the cluster (docker-for-mac)
+## Networking
 
-Services will be accessible on their external IP, which exists on a Docker bridge network. Unfortunately this bridge network isn't [accessible from a macOS host](https://docs.docker.com/docker-for-mac/networking/#per-container-ip-addressing-is-not-possible) because the docker daemon is run inside a VM.
+### Service LoadBalancer
 
-Only the ports published will be accessible from the macOS host. In this example, you can see that only port 6443 (the api-server) is published to the mac host port 59985:
+k3s implements Service objects of type LoadBalancer using klipper. For each LoadBalancer resource, k3s runs [klipper](https://github.com/k3s-io/klipper-lb) as a `svclb-servicename` DaemonSet in the kube-system namespace. klipper uses [iptables](https://github.com/k3s-io/klipper-lb/blob/master/entry) to forward any requests to the Service's port on that node to the Service's cluster ip and port.
 
-```
-CONTAINER ID   IMAGE                      COMMAND                  CREATED          STATUS          PORTS                             NAMES
-752364b04dec   rancher/k3d-proxy:v4.4.7   "/bin/sh -c nginx-pr…"   25 minutes ago   Up 25 minutes   80/tcp, 0.0.0.0:59985->6443/tcp   k3d-k3s-default-serverlb
-82599fa09c1f   rancher/k3s:latest         "/bin/k3s server --t…"   25 minutes ago   Up 25 minutes                                     k3d-k3s-default-server-0
-```
-
-Additional node ports can be published at the time of cluster creation, eg: to map the ingress port on the loadbalancer -> macOS host port 8081
+k3s uses traefik as the [ingress controller](https://rancher.com/docs/k3s/latest/en/networking/#traefik-ingress-controller). It is deployed via helm. A Service of type LoadBalancer is configured for traefik in the kube-system namespace. To inspect this service:
 
 ```
-k3d cluster create -p "8081:80@loadbalancer"
+kubectl get service -n kube-system traefik -o yaml
 ```
 
-k3s installs the traefik loadbalancer. Ingress objects with hosts of the form `myapp.k3d.localhost` will be accessible from the macOS on the host mapped port in a web browser, eg: `http://myapp.k3d.localhost:8081/`. This works because Chrome and Firefox resolve \*.localhost to 127.0.0.1 (NB: the default MacOS resolver does not so curl to \*.localhost will fail).
+The traefik Service (using klipper) will forward ports 80 and 443 on any node to the cluster ip and port of the traefik Service.
 
-For more info see [Exposing Services](https://k3d.io/v5.2.2/usage/exposing_services/)
+See
+
+- k3d docs: [servicelb (klipper-lb)](https://k3d.io/v5.2.2/usage/k3s/#servicelb-klipper-lb)
+- k3s docs: [Service Load Balancer](https://rancher.com/docs/k3s/latest/en/networking/#service-load-balancer)
+
+### k3d proxy (serverlb) for connecting to services in the cluster
+
+Services will be accessible on their external IP, which exists on a Docker bridge network. This works on Linux, but unfortunately this bridge network isn't [accessible from a macOS host](https://docs.docker.com/docker-for-mac/networking/#per-container-ip-addressing-is-not-possible) because the docker daemon is run inside a VM.
+
+To solve this, k3d creates a nginx proxy container named `k3d-$clustername-serverlb` on the same network as the cluster:
+
+```
+docker ps
+CONTAINER ID   IMAGE                      COMMAND                  CREATED      STATUS          PORTS                             NAMES
+201bdf909726   rancher/k3d-proxy:5.2.2    "/bin/sh -c nginx-pr…"   7 days ago   Up 9 seconds    80/tcp, 0.0.0.0:51470->6443/tcp   k3d-myapp-serverlb
+...
+```
+
+This container exposes host posts to allow access to the cluster from the host. In the k3d [documentation](https://k3d.io/v5.2.2/design/defaults/#k3d-loadbalancer) and [code](https://github.com/rancher/k3d/blob/0b4c4d51aaa59c26595cf54dd8f9124a5ffbb709/pkg/types/loadbalancer.go#L25) this is referred to as the load balancer, or serverlb.
+
+By default only 6443 (the kube api-server) is exposed on a random host port (in this example host port 51470). Additional host ports can be mapped at the time of cluster creation, eg: to map host port 8081 -> port 80 (ingress) on all nodes in the cluster
+
+```
+k3d cluster create $clustername -p "8081:80@servers:*;agents:*"
+```
+
+Port mappings default to proxy ports. A proxy port is created on the serverlb container and will:
+
+- create a nginx listener on the container port, with an upstream targeting the containers in the node filter
+- expose a host port mapped to the listener port
+
+The node filter describes which node containers to route to. The following are equivalent and target all node containers in the cluster:
+
+- `-p "8081:80@servers:*:proxy;agents:*:proxy"`
+- `-p "8081:80@servers:*;agents:*"`
+- `-p "8081:80@loadbalancer"`
+- `-p "8081:80"`
+
+The nginx conf is in _/etc/nginx/nginx.conf_ and is generated by a [confd template](https://github.com/rancher/k3d/blob/main/proxy/templates/nginx.tmpl) using the values in _/etc/confd/values.yaml_.
+
+Ports can be mapped directly rather than via the loadbalancer proxy using the suffix `direct` in a node filter. Unlike proxy ports, these cannot be changed after the cluster has been created.
+
+See
+
+- [v5.0.0 release notes](https://github.com/rancher/k3d/blob/5a00a39323ee8d72da17b112afd86444b3cc4b30/CHANGELOG.md#v500) which describe the node filter syntax
+- [k3d Loadbalancer](https://k3d.io/v5.2.2/design/defaults/#k3d-loadbalancer)
+- [rancher/k3d-proxy](https://registry.hub.docker.com/r/rancher/k3d-proxy)
 
 #### Exposing ports after cluster creation
 
-There are some tricks to expose ports of a running container via forward, after the cluster has been created, see [#89](https://github.com/rancher/k3d/issues/89)
+Docker doesn't allow adding ports to running containers. Containers have to be modified/recreated and restarted with the new ports. k3d can facilitate recreation of the serverlb. NB: other nodes have state so [recreating them breaks the cluster](https://github.com/rancher/k3d/issues/89#issuecomment-990695777).
 
-Alternatively stop the cluster, modify the published ports, then start it again, see [this comment](https://github.com/docker/docker.github.io/issues/4942#issuecomment-435861800).
+See:
 
-Hopefully this will be easier in the future when [#6](https://github.com/rancher/k3d/issues/6) is resolved.
+- [cluster edit](https://github.com/rancher/k3d/pull/670) to modify the serverlb container
+- [node edit](https://github.com/rancher/k3d/pull/615) for nodes (but should only be used on the serverlb node)
+
+To expose port 80 in the cluster (ie: the traefik service) as host 8080:
+
+```
+k3d cluster edit $clustername --port-add 8080:80@loadbalancer
+```
+
+Alternatives
+
+- stop the container, modify the published ports, then start it again, see [this comment](https://github.com/docker/docker.github.io/issues/4942#issuecomment-435861800).
+- [#89](https://github.com/rancher/k3d/issues/89) for a solution using an additional socat container.
+
+Discussion
+
+- [#6](https://github.com/rancher/k3d/issues/6)
+
+### Exposing services via Ingress
+
+k3s installs the traefik ingress controller. Ingress objects can use virtual hosts.
+
+If your DNS resolver resolves \*.localhost to 127.0.0.1, you can use these as virtual hosts in the Ingress object. Linux, Chrome and Firefox will all resolve \*.localhost to 127.0.0.1. (NB: the default MacOS resolver does not so curl to \*.localhost will fail).
+
+For example, if you have:
+
+1. A myapp Service
+1. An Ingress rule for host `myapp.k3d.localhost` to the myapp Service
+1. The port mapping `-p 8081:80@loadbalancer` on your cluster
+1. And your host resolves \*.localhost to 127.0.0.1
+
+Then [http://myapp.k3d.localhost:8081/](http://myapp.k3d.localhost:8081/) on your host will be routed to your Service in the cluster. It looks like this:
+
+docker host port 8081 -> serverlb container port 80 (nginx) -> any node port 80 (traefik service loadbalancer) -> traefik service cluster ip & port (traefik) -> pod
+
+For more info see [Exposing Services](https://k3d.io/v5.2.2/usage/exposing_services/)
 
 ## kubelet
 

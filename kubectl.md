@@ -104,6 +104,12 @@ Insert an element into the head of the args array
 kubectl patch deployment metrics-server -n kube-system --type json -p '[{"op": "add", "path": "/spec/template/spec/containers/0/args/0", "value":"--kubelet-insecure-tls"}]'
 ```
 
+Set annotations (overwrites all existing annotations)
+
+```
+kubectl -n ray patch service example-cluster-ray-head --type json -p '[{"op": "add", "path": "/metadata/annotations", "value": {"traefik.ingress.kubernetes.io/service.serversscheme": "h2c"}}]'
+```
+
 `--type json` in the above uses [JSON Patch](https://tools.ietf.org/html/rfc6902), which in turn uses [JSON Pointer](https://tools.ietf.org/html/rfc6901) for identifying JSON values (eg: `/foo/0` = the first element of the foo array)
 
 ## Delete
