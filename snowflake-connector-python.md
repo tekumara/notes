@@ -40,3 +40,7 @@ conn = snowflake.connector.connect(
 ```
 
 If you are using dbt it will import `snowflake-connector-python[secure-local-storage]` and set [client_store_temporary_credential=True](https://github.com/dbt-labs/dbt-snowflake/blob/e1ee1c8d9aa3986d9ed8460750fb932f0131c310/dbt/adapters/snowflake/connections.py#L119) for you.
+
+## Result batch
+
+The results of SQL queries are stored in S3 across multiple objects. Each object is a [result batch/chunk](https://github.com/snowflakedb/snowflake-connector-python/blob/4384345c3aa72ca2070a88e10cbb16af75af4c5e/src/snowflake/connector/result_batch.py#L208). The S3 object URLs [expire after 6 hours](https://github.com/snowflakedb/snowflake-connector-python/blob/4384345c3aa72ca2070a88e10cbb16af75af4c5e/src/snowflake/connector/result_batch.py#L221). Result batches are either JSON or arrow binary data (see [ArrowResultBatch](https://github.com/snowflakedb/snowflake-connector-python/blob/4384345c3aa72ca2070a88e10cbb16af75af4c5e/src/snowflake/connector/result_batch.py#L541)).

@@ -69,14 +69,37 @@ curl -s https://ip-ranges.amazonaws.com/ip-ranges.json | jq -r '.prefixes[] | se
 
 ## To see what processes are open on what ports
 
-List open internet ports (-i) showing port numbers instead of names (-P) and including other user-owned processes (hence sudo)
-`sudo lsof -i -P`
+Install lsof
+
+```
+sudo apt install lsof
+```
+
+Depending on how lsof was built, it may only show the current user's open files. If the user is root, it may only show root's open files. See [Why does lsof report open files when run as super user that it doesn't report when run with lesser privileges?](https://github.com/lsof-org/lsof/blob/master/00FAQ#L2979)). Try with and without `sudo`.
+
+List open internet ports (-i) showing port numbers instead of names (-P)
+
+```
+sudo lsof -i -P
+```
+
+Listening internet ports
+
+```
+sudo lsof -i -P -sTCP:LISTEN
+```
 
 To see only internet connections for PID 1234
-`sudo lsof -p 1234 -i -a`
+
+```
+sudo lsof -p 1234 -i -a
+```
 
 To see what user-owned process is listening on port 8080
-`sudo lsof -iTCP:8080 -sTCP:LISTEN`
+
+```
+sudo lsof -iTCP:8080 -sTCP:LISTEN
+```
 
 ## nethogs (usage by process)
 
@@ -96,4 +119,4 @@ Like iftop, but a little less useful.
 
 ## bandwhich
 
-[bandwhich](https://github.com/imsnif/bandwhich) shows throughput by process and host 
+[bandwhich](https://github.com/imsnif/bandwhich) shows throughput by process and host

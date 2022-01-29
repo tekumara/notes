@@ -111,3 +111,11 @@ Remove hostname from pure prompt:
 ```
 prompt_pure_state[username]=
 ```
+
+## null glob
+
+To avoid a `no match` error when a glob doesn't expand to anything use the `(N)` qualifier, eg:
+
+```
+files=($HOME/.kube/*.yaml(N) $HOME/.k3d/kubeconfig*.yaml(N))
+```

@@ -35,8 +35,6 @@ pip install ray
 
 The helm chart installs the ray operator which creates a head node
 
+## 
+
 ## Troubleshooting
-
-### ERROR node.py:1286 -- ERROR as
-
-Make sure the version of ray on the client and server match
