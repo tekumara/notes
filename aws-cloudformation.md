@@ -8,6 +8,31 @@ Validate a file:
 aws cloudformation validate-template --template-body file://./infra/cloudformation/resources.yml
 ```
 
+## Create change set
+
+
+```
+aws cloudformation create-change-set --stack-name my-iam-stack --template-body file://./infra/cloudformation/iam.yaml --change-set-name cool-new-stuff --capabilities CAPABILITY_NAMED_IAM
+```
+
+Describe change set by arn
+
+```
+aws cloudformation describe-change-set --change-set-name arn:aws:cloudformation:us-east-1:$ACCOUNTID:changeSet/$CHANGESETNAME/$ID
+```
+
+Describe change set by name
+
+```
+aws cloudformation describe-change-set --change-set-name $CHANGESETNAME --stack-name $STACKNAME
+```
+
+Delete change set by name
+```
+aws cloudformation delete-change-set --change-set-name $CHANGESETNAME --stack-name $STACKNAME
+```
+
+
 ## Deploy
 
 [deploy](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/deploy/index.html) - creates a changeset then executes it, so it can be used to both create and update an existing stack. Has a more friendly way of supplying stack parameters and tags. Can't be used to specify a stack policy.
@@ -53,13 +78,13 @@ aws cloudformation describe-stack-events --stack-name aws-lambda-scala-dev | jq 
 To update a stack and the stack policy:
 
 ```
-    aws cloudformation update-stack                                         \
-        --template-body file://packaged.yml                                 \
-        --stack-name $(stackName)                                           \
-        --capabilities CAPABILITY_IAM                                       \
-        --parameters $(params)                                              \
-        --tags $(tags)                                                      \
-        --stack-policy-body file://src/main/cloudformation/policy.json
+aws cloudformation update-stack                                         \
+    --template-body file://packaged.yml                                 \
+    --stack-name $(stackName)                                           \
+    --capabilities CAPABILITY_IAM                                       \
+    --parameters $(params)                                              \
+    --tags $(tags)                                                      \
+    --stack-policy-body file://src/main/cloudformation/policy.json
 ```
 
 To delete a stack, and wait for it to complete

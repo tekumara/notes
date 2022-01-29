@@ -1,5 +1,12 @@
 # aws ec2 metadata endpoint
 
+IMDSv2
+
+```
+TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` \
+&& curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/meta-data/
+```
+
 Instance profile
 
 ```
@@ -15,7 +22,7 @@ curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/
 Role credentials
 
 ```
-role=my-top-secret-role
+role=$(curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/)
 curl "http://169.254.169.254/latest/meta-data/iam/security-credentials/$role" > /tmp/iam-security-credentials
 export AWS_ACCESS_KEY_ID=$(jq -r '.AccessKeyId' /tmp/iam-security-credentials)
 export AWS_SECRET_ACCESS_KEY=$(jq -r '.SecretAccessKey' /tmp/iam-security-credentials)
