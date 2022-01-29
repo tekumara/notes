@@ -127,13 +127,15 @@ docker exec -it k3d-$clustername-server-0 crictl images
 
 k3s implements Service objects of type LoadBalancer using klipper. For each LoadBalancer resource, k3s runs [klipper](https://github.com/k3s-io/klipper-lb) as a `svclb-servicename` DaemonSet in the kube-system namespace. klipper uses [iptables](https://github.com/k3s-io/klipper-lb/blob/master/entry) to forward any requests to the Service's port on that node to the Service's cluster ip and port.
 
+### Ingress
+
 k3s uses traefik as the [ingress controller](https://rancher.com/docs/k3s/latest/en/networking/#traefik-ingress-controller). It is deployed via helm. A Service of type LoadBalancer is configured for traefik in the kube-system namespace. To inspect this service:
 
 ```
 kubectl get service -n kube-system traefik -o yaml
 ```
 
-The traefik Service (using klipper) will forward ports 80 and 443 on any node to the cluster ip and port of the traefik Service.
+The traefik Service (using klipper) will forward ports 80 and 443 on any node to the web (8000) and websecure (8443) target ports of the traefik pod.
 
 See
 

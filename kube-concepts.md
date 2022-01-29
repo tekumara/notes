@@ -22,7 +22,7 @@ A [PodDisruptionBudget](https://kubernetes.io/docs/concepts/workloads/pods/disru
 
 A `ClusterIP` type will expose the service internally. A ClusterIP is made routable within the cluster with iptables, and is not routable from outside the cluster. The name of a `ClusterIP` service will resolve to its IP address, and its fully qualified name includes the namespace as a domain.
 
-`NodePort` and `LoadBalancer` exposes the service externally. `LoadBalancer` will program an external cloud load balancer.
+`NodePort` and `LoadBalancer` exposes the service externally. Creating a NodePort will open that port on every node in your cluster and route from that port to your service. A `LoadBalancer` will map external IPs to services in the cluster. It is typically used to program an external cloud load balancer.
 
 An [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) resource configures an [Ingress Controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) with a path-based/virtual host routing rule, and optional SSL/TLS termination. It can be used to expose HTTP/S routes from outside the cluster to services within the cluster. It does not expose non-HTTP/S protocols.
 
