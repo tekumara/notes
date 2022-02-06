@@ -3,7 +3,7 @@
 [aws-vault](https://github.com/99designs/aws-vault)
 
 - stores AWS credentials securely in the macOS keychain rather than in plaintext on disk
-- only asks for an MFA token once every 8 hours
+- caches your GetSessionToken credentials so you don't need to repeatedly enter an MFA token
 - can assume roles using short-term (STS) credentials
 - provides easy AWS access key rotation (no need to login to the console)
 - can open a browser tab and sign you into the AWS console

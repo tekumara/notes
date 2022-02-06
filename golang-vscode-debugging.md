@@ -21,7 +21,7 @@ This is useful when you want to manually configure the program's environment, or
 To start delve in headless mode in the project directory:
 
 ```
-dlv debug --headless --listen=:2345 --log
+dlv debug --headless --listen=:12345 --log
 ```
 
 Alternatively you can [run dlv debug as a build task](https://github.com/microsoft/vscode-go/issues/219#issuecomment-449621513)), eg:

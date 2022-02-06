@@ -36,6 +36,12 @@ List the keychain search list
 security list-keychains
 ```
 
+Delete the item of kind "aws-vault session"
+
+```
+security delete-generic-password -D "aws-vault session"
+```
+
 ## Using a keychain
 
 A keychain can be used once unlocked. If a keychain is locked you'll be prompted for the password to unlock it, eg:

@@ -69,3 +69,4 @@ Connect to the debugger using an attach config:
 ## References
 
 - [Python debugging in VS Code](https://code.visualstudio.com/docs/python/debugging)
+- [Why the debug console uses tab for autocompletion selection](https://github.com/microsoft/vscode/issues/108439#issuecomment-871521843)
