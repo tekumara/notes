@@ -1,16 +1,25 @@
-<div title="Find" creator="YourName" modifier="YourName" created="201810130853" modified="201810130854" changecount="3">
-<pre>!Find files
+# Find
 
-{{{find . -iname 'kdeb*'}}}
+Find any file in this dir or its subdirs that matches 'kdeb\*'. NB: wildcard is required and quotes should be used to prevent shell from expanding them.
 
-Find any file in this dir or its subdirs that matches 'kdeb*'. NB: wildcard is required and quotes should be used to prevent shell from expanding them.
+```
+find . -iname 'kdeb*'
+```
 
 To discard all erorrs:
 
-{{{find . -iname 'kdeb*' 2&gt;/dev/null}}}
+```
+find . -iname 'kdeb*' 2>/dev/null
+```
 
-!Execute command on all files in a directory
+Execute command on all files in a directory
 
-eg:
-{{{find . -type f -exec python ~/hackday/scripts/soup.py {} \;}}}</pre>
-</div>
+```
+find . -type f -exec python ~/hackday/scripts/soup.py {} \;
+```
+
+Find a directories at the top level:
+
+```
+find * -type d -maxdepth 0
+```
