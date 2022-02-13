@@ -4,7 +4,10 @@
 
 For handling prod/test environments use variables and a var file for each environment. (Recommended)
 
-Alternatively make your whole stack into a module with all of its config coming through as variables. Then have separate folders for each environment that reference the modules. But requires repeating some things like providers and variables.
+Alternatively make your whole stack into a module with all of its config coming through as variables. Then have either:
+
+- separate folders for each environment that reference the modules. This requires repeating some things like providers and variables.
+- for each module, use a different provider which assumes the appropriate role. This is nicer, but assumes you can hard-code the role.
 
 ## Backend per environment
 
@@ -27,11 +30,18 @@ When using the s3 backend a single bucket is shared between environments. This i
 
 - environments are dependent on the availability of the state bucket's AWS region
 - cross-account access for the bucket (ie: bucket policy, and kms key access)
-- there is a single backend config rather than one per environment (make things a little simpler)
+- there is a single backend config rather than one per environment (make things a little simpler and quicker to initialise)
 
-State objects will be located at `workspace_key_prefix/workspace_name/key` by default `workspace_key_prefix` is `env:` but can be configured.
+State objects will be located at `workspace_key_prefix/workspace_name/key`. By default `workspace_key_prefix` is `env:` but can be configured.
 
-HashiCorp recommends an admin service account for the state bucket see [Multi-account AWS Architecture](https://www.terraform.io/docs/language/settings/backends/s3.html#multi-account-aws-architecture).
+HashiCorp recommends an admin AWS account for the state bucket see [Multi-account AWS Architecture](https://www.terraform.io/docs/language/settings/backends/s3.html#multi-account-aws-architecture) to reduce risk if the production infra is exploited.
+
+## Roles
+
+Terraform allows separate roles for
+
+- read/write state
+- roles in th etarget account to create/update/delete resources.
 
 References:
 
