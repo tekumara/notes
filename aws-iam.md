@@ -1,6 +1,6 @@
 # AWS IAM
 
-## IAM identifers
+## IAM arns
 
 `arn:aws:iam::123456789012:root` the root user ie: the AWS account itself, in this case account `123456789012`
 
@@ -85,6 +85,12 @@ Set default version of policy
 
 ```
 aws iam set-default-policy-version --policy-arn $arn --version-id v1
+```
+
+Remove attached managed policy
+
+```
+aws iam detach-role-policy --role-name $rolename --policy-arn $arn
 ```
 
 ## Inline policies

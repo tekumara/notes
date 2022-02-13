@@ -19,7 +19,7 @@ Subnets may [auto-assign public IP addresses](https://docs.aws.amazon.com/vpc/la
 
 You can still [launch instances with a public IP](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-ip-addressing.html#vpc-public-ip) even if the subnet doesn't auto-assign them.
 
-If you place a load-balancer or EC2 instance in a subnet without an IGW, even if public IP addresses are assigned it will not be accessible via the public IP addresses.
+If you place a load-balancer or EC2 instance in a subnet without an IGW, even if public IP addresses are assigned it will not be accessible via the public IP addresses. See also [this tweet](https://twitter.com/nickpowpow/status/1490787348279267330?s=20&t=xK3yTLtx_plFWoIzzFuxqA).
 
 ### Elastic IPs
 
