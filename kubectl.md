@@ -46,6 +46,8 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl top pods -A` show CPU/MEM usage for pods in all namespaces  
 `kubectl describe rs/hub-67966db58b -n jhub` describe the replicaset hub-67966db58b in namespace  
 `kubectl get events --sort-by='{.lastTimestamp}'` show events sorted by last seen timestamp. NB: by default events are only kept by the api server for 1 hour
+`kubectl get events --sort-by='{.lastTimestamp}' --field-selector involvedObject.name=my-pod-zl6m6` show events for a specific pod
+
 `kubectl describe ingress` describe ingress objects
 `kubectl logs -f $PODNAME` stream logs
 `kubectl logs -lapp=awesome-app --since=0s` dump logs in the last 0 secs from all pods with the label awesome-app
@@ -53,6 +55,7 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl auth can-i --list` show all the actions I have in the current namespace
 `kubectl get role app-admin -o yaml` show details of a role
 `kubectl get pod helper -o jsonpath='{.status.podIPs}` get pod ip
+`kubectl get pod -n kube-system -l app.kubernetes.io/name=traefik -o custom-columns=:metadata.name --no-headers=true` get pod names by selector
 
 Show all forwarded ports, ie: [NodePort services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types):
 
