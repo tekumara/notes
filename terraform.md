@@ -139,3 +139,16 @@ jq '.values.root_module.child_modules[].resources[]' state.json
 ### X has been deleted
 
 Before the plan terraform will do a refresh and compare the state file against actual AWS resources. If resources in the state file no longer exist, terraform will report the resource "has been deleted". If this seems wrong, check that you are in the right AWS region and account.
+
+### Error: Unsupported argument
+
+```
+Error: Unsupported argument
+
+  on vars-prod.tf line 1:
+   1: env = "prod"
+
+An argument named "env" is not expected here.
+```
+
+variables must be specified in a `.tfvars` file.

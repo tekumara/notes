@@ -87,3 +87,7 @@ To open a browser tab and sign you into the AWS console (using a federated token
 ```
 aws-vault login <profile>
 ```
+
+## Troubleshooting
+
+AccessDenied when assuming a role: check the ARN in _~/.aws/config_ is correctly formed.

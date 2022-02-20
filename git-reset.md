@@ -18,4 +18,4 @@ NB: Even a hard reset won't remove untracked files. Use `git clean` instead.
 
 To change another branch to point to another commit, without affecting the current working tree use branch instead:
 
-`git branch -f mybranch some_other_commit`
+`git branch -f master origin/master`
