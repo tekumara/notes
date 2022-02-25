@@ -122,3 +122,9 @@ List details of ec2InstanceRole (NB: make sure the policy version fetched is the
 ```
 aws iam get-role --role-name ecsInstanceRole && aws iam list-attached-role-policies --role-name ecsInstanceRole && aws iam get-policy --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role && aws iam get-policy-version --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role --version-id v6
 ```
+
+## Recreating roles
+
+When a role is added to a resource policy a unique principal id is generated. If the role is deleted and recreated, the resource policy will still contain the role but it will point to the old principal id, which is no longer valid. Attempts to use the new role to access the resource will fail with an AccessDeniedException stated no resource-based policy allows the action. This helps mitigate the risk of someone escalating their privileges by removing and recreating the role or user. If you delete and recreate the role you'll need to edit the resource policy for it to generate a new principal ID.
+
+The same holds for trust policies as described in the warning box [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_policy-examples.html#example-delegate-xaccount-rolesapi).
