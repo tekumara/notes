@@ -20,6 +20,12 @@ or
 nc -luvp 31000
 ```
 
+or watch with iamlive:
+
+```
+iamlive
+```
+
 ## iamlive proxy mode
 
 CSM does not record call parameters, so it's not possible to inspect things like the S3 bucket mode etc.

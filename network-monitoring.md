@@ -95,10 +95,10 @@ To see only internet connections for PID 1234
 sudo lsof -p 1234 -i -a
 ```
 
-To see what user-owned process is listening on port 8080
+To see what user-owned process is using 8080
 
 ```
-sudo lsof -iTCP:8080 -sTCP:LISTEN
+sudo lsof -i:8080
 ```
 
 ## nethogs (usage by process)
