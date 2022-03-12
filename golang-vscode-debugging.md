@@ -35,6 +35,12 @@ dlv debug --headless --listen=:12345 --log -- --help
 In vscode, use a remote attach launch configuration in `launch.json`, eg:
 
 ```
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
         {
             "name": "Connect to external session",
             "type": "go",
@@ -48,6 +54,8 @@ In vscode, use a remote attach launch configuration in `launch.json`, eg:
                 ...
             ]
         }
+    ]
+}
 ```
 
 You'll see a warning popup:
