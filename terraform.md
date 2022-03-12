@@ -29,7 +29,7 @@ Workspaces are namespaces that partition state within a **single** backend. You 
 When using the s3 backend a single bucket is shared between environments. This implies:
 
 - environments are dependent on the availability of the state bucket's AWS region
-- cross-account access for the bucket (ie: bucket policy, and kms key access)
+- cross-account access for the bucket (ie: resource policies for the bucket and kms key, or a role than can be assumed)
 - there is a single backend config rather than one per environment (make things a little simpler and quicker to initialise)
 
 State objects will be located at `workspace_key_prefix/workspace_name/key`. By default `workspace_key_prefix` is `env:` but can be configured.
@@ -92,15 +92,17 @@ resource "aws_db_instance" "rds_example" {
 }
 ```
 
-## Taints
+## Recreating resources
 
-`terraform taint` will make a resource for recreation. Useful for rotating a random_password or tls_private_key resource.
+`terraform apply -replace` will delete and recreate a resource. Useful for rotating a random_password or tls_private_key resource.
 
 eg:
 
 ```
-terraform taint 'module.warehouses["PROD_JAFFLES_WH"].snowflake_warehouse.warehouse'
+terraform apply -replace 'module.warehouses["PROD_JAFFLES_WH"].snowflake_warehouse.warehouse'
 ```
+
+NB: In previous versions of terraform this was known as tainting.
 
 ## Plan and state inspection
 
@@ -152,3 +154,7 @@ An argument named "env" is not expected here.
 ```
 
 variables must be specified in a `.tfvars` file.
+
+### The "for_each" value depends on resource attributes that cannot be determined until apply
+
+Follow the dependency chain backwards and locate resources that don't yet exist or have unknown values.
