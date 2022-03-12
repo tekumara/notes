@@ -77,6 +77,7 @@ kubectl get deployment slim-api -o jsonpath="{range .status.conditions[*]}{.last
 --overrides='{ "spec": { "serviceAccount": "your-sa-here" } }'
 `kubectl run helper -it --image=bitnami/kubectl --command -- /bin/bash` start pod and override command
 `kubectl run helper -it --image=ubuntu --requests "cpu=100m"` starts an ubuntu pod with 100m cpu
+`kubectl run aws-cli -it --image=amazon/aws-cli --command -- /bin/bash` start the aws-cli image
 `kubectl run -it --image=ubuntu -o yaml --dry-run=client` show the deployment object buy don't apply it
 `kubectl cp $namespace/$pod:/app/heaptrack.gunicorn.2983.gz heaptrack.gunicorn.2983.gz` copy file from pod to local dir
 
