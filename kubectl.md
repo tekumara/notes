@@ -34,9 +34,6 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl get deployments -n kube-system` show deployments for kube itself  
 `kubectl get service --namespace jhub` get services in the jub namespace
 `kubectl get endpoints` get endpoints objects, ie: IP addresses of pods for a service
-`kubectl get pods -n livy -w` watch pods in the namespace livy  
-`kubectl get pods --namespace=jhub -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}'` list pods and their running container images
-`kubectl get pods -o wide` list pods and the node they are running on  
 `kubectl api-resources` show all resource types  
 `kubectl get apiservice` show all apiservice resources  
 `kubectl get namespaces` show all namespaces  
@@ -47,15 +44,18 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl describe rs/hub-67966db58b -n jhub` describe the replicaset hub-67966db58b in namespace  
 `kubectl get events --sort-by='{.lastTimestamp}'` show events sorted by last seen timestamp. NB: by default events are only kept by the api server for 1 hour
 `kubectl get events --sort-by='{.lastTimestamp}' --field-selector involvedObject.name=my-pod-zl6m6` show events for a specific pod
-
 `kubectl describe ingress` describe ingress objects
 `kubectl logs -f $PODNAME` stream logs
 `kubectl logs -lapp=awesome-app --since=0s` dump logs in the last 0 secs from all pods with the label awesome-app
 `kubectl get ingress -n flyteexamples-development -o jsonpath='{range .items[*]}{"\n"}http://localhost:30081{.spec.rules[*].http.paths[*].path}{end}'` show ingress paths (ignores host)
 `kubectl auth can-i --list` show all the actions I have in the current namespace
 `kubectl get role app-admin -o yaml` show details of a role
+`kubectl get pods -n livy -w` watch pods in the namespace livy  
+`kubectl get pods -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}'` list pods and their running container images
+`kubectl get pods -o wide` list pods and the node they are running on  
 `kubectl get pod helper -o jsonpath='{.status.podIPs}` get pod ip
 `kubectl get pod -n kube-system -l app.kubernetes.io/name=traefik -o custom-columns=:metadata.name --no-headers=true` get pod names by selector
+`kubectl get pods -o custom-columns=":metadata.name, :spec.serviceAccount"` get service accounts
 
 Show all forwarded ports, ie: [NodePort services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types):
 
@@ -71,11 +71,12 @@ kubectl get deployment slim-api -o jsonpath="{range .status.conditions[*]}{.last
 
 ### Run interactively
 
-`kubectl run -it --image=alpine helper` starts an pod called _helper_ running the alpine image in the cluster with requests/limits of 250m cpu 1Gi mem
-`kubectl run -it --image=alpine helper --overrides='{ "spec": { "serviceAccount": "your-sa-here" } }'` run _helper_ with your service account
+`kubectl run helper -it --image=alpine` starts an pod called _helper_ running the alpine image in the cluster with requests/limits of 250m cpu 1Gi mem
+`kubectl run helper -it --image=alpine --overrides='{ "spec": { "serviceAccount": "your-sa-here" } }'` run _helper_ with your service account
 `kubectl delete pod helper` delete the helper pod
 --overrides='{ "spec": { "serviceAccount": "your-sa-here" } }'
-`kubectl run -it --image=ubuntu --requests "cpu=50m" helper` starts an ubuntu pod with
+`kubectl run helper -it --image=bitnami/kubectl --command -- /bin/bash` start pod and override command
+`kubectl run helper -it --image=ubuntu --requests "cpu=100m"` starts an ubuntu pod with 100m cpu
 `kubectl run -it --image=ubuntu -o yaml --dry-run=client` show the deployment object buy don't apply it
 `kubectl cp $namespace/$pod:/app/heaptrack.gunicorn.2983.gz heaptrack.gunicorn.2983.gz` copy file from pod to local dir
 
