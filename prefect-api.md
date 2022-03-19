@@ -255,6 +255,38 @@ query APIKeys {
 }
 ```
 
+Query current user
+
+```
+query User {
+  user {
+    id
+    username
+    email
+    settings
+    default_membership_id
+    first_name
+    last_name
+    memberships {
+      id
+      tenant {
+        id
+        name
+        slug
+        __typename
+      }
+      role_detail {
+        id
+        name
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+```
+
 ## update projects
 
 ```

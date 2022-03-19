@@ -17,3 +17,9 @@ Remove orphaned services
 ```
 docker compose down --remove-orphans
 ```
+
+Run service with bash
+
+```
+docker compose run app /bin/bash
+```

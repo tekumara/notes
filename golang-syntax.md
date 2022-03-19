@@ -30,7 +30,7 @@ can be shortened to
 func add(x, y int) int { ...
 ```
 
-## Type alias vs type definiton
+## Type alias vs type definition
 
 An alias declaration has the form
 
@@ -45,3 +45,20 @@ type T1 T2
 ```
 
 See [Type alias explained](https://yourbasic.org/golang/type-alias/)
+
+## Embedding structs
+
+```
+type Ball struct {
+    Radius   int
+    Material string
+}
+
+type Football struct {
+    Ball
+}
+```
+
+NB: It is not possible to typecast to the embedding struct. Embedding is not the same as inheritance.
+
+See [Type embedding in Go](https://travix.io/type-embedding-in-go-ba40dd4264df)
