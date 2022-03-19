@@ -30,7 +30,7 @@ When using the s3 backend a single bucket is shared between environments. This i
 
 - environments are dependent on the availability of the state bucket's AWS region
 - cross-account access for the bucket (ie: resource policies for the bucket and kms key, or a role than can be assumed)
-- there is a single backend config rather than one per environment (make things a little simpler and quicker to initialise)
+- there is a single backend config rather than one per environment. This make things a simpler and quicker to initialise because there's no need to reinitialise per environment. It also more flexible and enables single workspace multi account approaches, ie: a single stack with an AWS provider per account and associated resources.
 
 State objects will be located at `workspace_key_prefix/workspace_name/key`. By default `workspace_key_prefix` is `env:` but can be configured.
 

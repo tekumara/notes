@@ -163,6 +163,15 @@ If the `build.vcs.number` implicit requirement is not met check that you have a 
 Kotlin will interpolate variables prefixed with a `$` in a multi-line string.
 To include a literal `$` use `${'$'}` ([ref](https://stackoverflow.com/a/32994616/149412))
 
+### Changes are not detected on tagged commits
+
+On the build config home page in the UI, make sure the dropdown isn't `<All branches>` and refers to a tag.
+
+On your VCS root make sure:
+
+- branch specification is: `+:*`
+- "Enable to use tags in the branch specification" is checked
+
 ## References
 
 [Kotlin DSL](https://www.jetbrains.com/help/teamcity/kotlin-dsl.html)
