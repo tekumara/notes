@@ -24,6 +24,8 @@ apk add gcompat curl
 
 ```
 
+See [awscli version 2 on alpine linux](https://stackoverflow.com/questions/60298619/awscli-version-2-on-alpine-linux)
+
 ## Credentials file
 
 To ignore the credentials file `export AWS_SHARED_CREDENTIALS_FILE=/dev/null` [ref](https://docs.aws.amazon.com/cli/latest/topic/config-vars.html)

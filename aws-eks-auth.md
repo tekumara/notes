@@ -37,7 +37,7 @@ To allow an IAM role to be assumed by an EKS service account, add an `eks.amazon
 
 The EKS API auths using a token which is a [signed STS GetCallerIdentityRequest](https://github.com/hashicorp/terraform-provider-aws/blob/9af0841a9fcafd84ae0a1309ec5c90f0b81015fa/internal/service/eks/token.go#L196)
 
-To generate a token using current credentials:
+To generate a 15 min token using current credentials:
 
 ```
 aws eks get-token --cluster-name $clustername
@@ -48,6 +48,8 @@ or for a specific role you can assume:
 ```
 aws eks get-token --cluster-name $clustername --role-arn $rolearn
 ```
+
+See [EKS Client Authentication](https://medium.com/@rschoening/eks-client-authentication-f17f39228dc)
 
 ## Assuming a role in a pod
 
