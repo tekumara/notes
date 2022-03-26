@@ -12,3 +12,7 @@ For more info see [Core concepts for GitHub Actions](https://help.github.com/en/
 ## Runners
 
 The GitHub ubuntu-latest runner environment is described [here](https://github.com/actions/virtual-environments/blob/ubuntu18/20200430.1/images/linux/Ubuntu1804-README.md)
+
+## Debugging
+
+To [enable step debug logging](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging#enabling-step-debug-logging), create a secret in the repo `ACTIONS_STEP_DEBUG` set to `true`
