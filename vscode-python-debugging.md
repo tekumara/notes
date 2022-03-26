@@ -60,8 +60,8 @@ Connect to the debugger using an attach config:
     "type": "python",
     "request": "attach",
     "connect":{
-    "host": "localhost",
-    "port": 62888
+      "host": "localhost",
+      "port": 62888
     }
 },
 ```

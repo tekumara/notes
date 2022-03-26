@@ -34,3 +34,11 @@ scutil --set ComputerName mymac
 ```
 
 Connect your bluetooth device. After pairing you can revert to the old name if needed for your enterprise connectivity software.
+
+## Quarantine
+
+To remove the quarantine flag:
+
+```
+xattr -d com.apple.quarantine <your-file>
+```

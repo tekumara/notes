@@ -40,13 +40,13 @@ From the [sys.path](https://docs.python.org/3/library/sys.html#sys.path) docs:
 
 eg:
 
-| command                      | sys.path[0]                                        |
-|------------------------------|----------------------------------------------------|
-| `python`                     | empty string (`''`) so python searches current dir |
-| `python script.py`           | current dir                                        |
-| `python myscripts/script.py` | myscripts/                                         |
-| `python -m myscripts.script` | current dir                                        |
-| `/usr/local/bin/entrypoint` (script with python shebang) | /usr/local/bin |
+| command                                                  | sys.path[0]                                        |
+| -------------------------------------------------------- | -------------------------------------------------- |
+| `python`                                                 | empty string (`''`) so python searches current dir |
+| `python script.py`                                       | current dir                                        |
+| `python myscripts/script.py`                             | myscripts/                                         |
+| `python -m myscripts.script`                             | current dir                                        |
+| `/usr/local/bin/entrypoint` (script with python shebang) | /usr/local/bin                                     |
 
 ## Relative imports
 
@@ -102,6 +102,11 @@ Make sure you don't have circular module imports. Moving one of the imports to b
 Check your version of the dependency (or python) has the import.
 
 ### ModuleNotFoundError: No module named X
+
+When the python interpreter runs, it add the current directory to sys.path (ie: PYTHONPATH), eg:
+
+- `python myapp/flows.py` will add _myapp/_ to the sys.path
+- `python -m myapp.flows` will add _./_ to the sys.path
 
 To see where a module is being imported from:
 

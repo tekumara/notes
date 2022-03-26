@@ -16,6 +16,7 @@
 `lsof -c ssh-agent` files ssh-agent currently has open
 `sudo opensnoop -f ~/.ssh/github` tail file opens
 `sudo fs_usage -w` tail filesystem sys calls and page faults (includes fstat64 calls)
+`sudo fs_usage -w -f filesys mds` watch filesystem sys calls made by the `mds_stores` process
 `sudo iosnoop -n python3` tail disk I/O (block, size, filename) for the python3 process. NB: does not show `stat64` calls, or cached file access.
 
 ## Processes
