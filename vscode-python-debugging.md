@@ -1,7 +1,5 @@
 # vscode python debugging
 
-To avoid creating terminal windows every time you launch (the default) set `"console": "internalConsole"` in the launch config.
-
 To debug inside dependencies, add `"justMyCode": false` to the launch config in _launch.json_. To enable this for all tests:
 
 ```json
@@ -37,6 +35,11 @@ To run a fastapi/uvicorn app
   ]
 }
 ```
+
+There are two console modes:
+
+- `"console": "integratedTerminal"` (default) starts a terminal window and runs the program there. Useful if you want to set up environment variables manually in advance.
+- `"console": "internalConsole"` avoids creating terminal windows every time you launch
 
 ## Attach
 

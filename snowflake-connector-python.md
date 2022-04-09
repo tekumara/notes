@@ -14,6 +14,27 @@ python -m build --wheel .
 pip install -e ".[secure-local-storage]"
 ```
 
+## Usage
+
+```python
+import os
+
+import snowflake.connector
+
+with snowflake.connector.connect(
+    user="PROD_JAFFLES_SA",
+    role="PROD_JAFFLES_ADMIN",
+    account='RH90206',
+    region="ap-southeast-2",
+    database="PROD_JAFFLES",
+    warehouse="PROD_JAFFLES_WH",
+    password=os.getenv("SNOWFLAKE_PASSWORD"),
+) as conn:
+    with conn.cursor() as cur:
+        print(cur.execute("select 'hello world';").fetchone())
+
+```
+
 ## Browser-based SSO ID token caching
 
 To [enable ID tokens](https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-use.html#using-connection-caching-to-minimize-the-number-of-prompts-for-authentication-optional) to minimise authentication prompts:

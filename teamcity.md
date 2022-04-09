@@ -172,6 +172,25 @@ On your VCS root make sure:
 - branch specification is: `+:*`
 - "Enable to use tags in the branch specification" is checked
 
+### No Github status checks
+
+Make sure you have the [commit status publisher](https://www.jetbrains.com/help/teamcity/commit-status-publisher.html) feature:
+
+```
+    features {
+        // post status checks to GitHub, see https://www.jetbrains.com/help/teamcity/commit-status-publisher.html
+        commitStatusPublisher {
+            vcsRootExtId = "${DslContext.settingsRoot.id}"
+            publisher = github {
+                githubUrl = "https://github.mycorp.com/api/v3"
+                authType = personalToken {
+                    token = "%github.access.token%"
+                }
+            }
+        }
+    }
+```
+
 ## References
 
 [Kotlin DSL](https://www.jetbrains.com/help/teamcity/kotlin-dsl.html)
