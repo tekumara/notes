@@ -7,6 +7,7 @@
 - Enter scroll mode: Ctrl B [
 - Exit scroll mode: Ctrl C or Esc
 - Help: Ctrl B ?
+
 - Split window horizontally: Ctrl B "
 - Switch to other pane: Ctrl B o
 - List sessions: Ctrl b s
