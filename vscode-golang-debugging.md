@@ -71,3 +71,25 @@ If the above doesn't work try [legacy mode](https://github.com/golang/vscode-go/
 ## Failed to continue - bad access
 
 On panic, debugging fails. This is a known issue, see [MacOS: cannot continue on panic #1371](https://github.com/go-delve/delve/issues/1371)
+
+## Specifying environment variables for tests
+
+Vs Code provides `run test | debug test` links above test functions. These are called code lenses.
+
+To specify environment variables when using the code lenses, add a test envfile to _settings.json_:
+
+```
+"go.testEnvFile": "${workspaceFolder}/.env",
+```
+
+To specify environment variables when using F5 or the Run and Debug panel, add a test envfile to _launch.json_:
+
+```
+        {
+            "name": "Start debugging",
+            "type": "go",
+            "envFile": "${workspaceFolder}/.env"
+        },
+```
+
+This is a known inconsistency, see [#2128](https://github.com/golang/vscode-go/issues/2128)
