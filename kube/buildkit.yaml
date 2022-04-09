@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: helper
+spec:
+  containers:
+  - name: buildkit
+    image: docker.io/moby/buildkit:v0.8.3
+    env:
+    - name: _DIR
+      value: /tmp
+    - name: _PATH
+      value: /usr/sbin:/usr/bin:/sbin:/bin:/bin/aux
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: /tmp
+      name: host-tmp
+  volumes:
+  - hostPath:
+      path: /tmp
+      type: Directory
+    name: host-tmp

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: alpine
+spec:
+  containers:
+  - name: alpine
+    image: alpine:latest
+    # allow attach (which keeps container running)
+    stdin: true
+    # restart the container after attach
+    stdinOnce: false
+    # stdin is a tty
+    tty: true
