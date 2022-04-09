@@ -91,6 +91,14 @@ Create a volume
 aws ec2 create-volume --size 10 --availability-zone us-east-1a --tag-specifications 'ResourceType=volume,Tags=[{Key=Name,Value=oliver-test}]'
 ```
 
+## Snapshots
+
+Describe snapshots in current account
+
+```
+aws ec2 describe-snapshots --owner-ids self | jq '.Snapshots[]|{SnapshotId, Description, State, Progress}'
+```
+
 ## Launch templates
 
 Allow you to supply values for AMI, IAM instance profile, instance type (including spot), subnet, security group, key pair and volumes. You can override these settings as needed when your launch an instance from the template.
@@ -152,7 +160,7 @@ Make sure the EBS volume is mounted with the correct [device name](https://docs.
 
 ### Client.InternalError: Client error on launch
 
-In Cloudtrail look for `RunInstances` events, and then any events immediately afterwards that have errored, eg: `GenerateDataKeyWithoutPlaintext` events with errorCode `AccessDenied`.
+In Cloudtrail look for `RunInstances` events, and then any events immediately afterwards that have errorred, eg: `GenerateDataKeyWithoutPlaintext` events with errorCode `AccessDenied`.
 
 ### An error occurred (Unsupported) when calling the StartInstances operation: The requested configuration is currently not supported. Please check the documentation for supported configurations.
 

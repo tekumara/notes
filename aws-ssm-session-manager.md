@@ -135,6 +135,14 @@ An error occurred (TargetNotConnected) when calling the StartSession operation: 
 ssh_exchange_identification: Connection closed by remote host
 ```
 
+Check the ping status of your instance:
+
+```
+aws ssm describe-instance-information
+```
+
+If it is `ConnectionLost` the instance might have crashed.
+
 Try to connect as `ssm-user` via the AWS Console - AWS Systems Manager - Session Manager - Start session - and select a target instance.
 Try to connect as `ssm-user` via the CLI, eg: `aws ssm start-session --target i-0850c1b15772106cc`
 Try to connect as `ec2-user` via SSH tunnelling, eg: `ssh -v -i ~/.ssh/ec2.pem ec2-user@i-0850c1b15772106cc`

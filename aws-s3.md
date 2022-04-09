@@ -62,7 +62,7 @@ Get an object ACL, including the owner
 aws s3api get-object-acl --bucket BUCKET --key KEY
 ```
 
-If you get Access Denied then you don't have read object permissions. You can still view the owner via the AWS web console (but not details of server side encryption - it will say `Access denied`). This can happen if a user in another account has uploaded an object to your bucket without giving the bucker owner permissions. You'll be able to list the object but not read it or see its permissions. See this [Stack Overflow question](https://stackoverflow.com/questions/34055084/s3-user-cannot-access-object-in-his-own-s3-bucket-if-created-by-another-user)
+If you get Access Denied then you don't have read object permissions. You may still be able to view the owner via the AWS web console (but not details of server side encryption - it will say `Access denied`). This can happen if a user in another account has uploaded an object to your bucket without giving the bucker owner permissions. You'll be able to list the object but not read it or see its permissions. See this [Stack Overflow question](https://stackoverflow.com/questions/34055084/s3-user-cannot-access-object-in-his-own-s3-bucket-if-created-by-another-user)
 
 Grant the bucket owner full control (do this from the account that created the object)
 

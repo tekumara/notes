@@ -39,6 +39,12 @@ Get value
 aws secretsmanager get-secret-value --secret-id topsecret | jq -r .SecretString
 ```
 
+Set secret value from clipboard
+
+```
+pbcopy | aws secretsmanager put-secret-value --secret-id topsecret --secret-string "$(</dev/stdin)"
+```
+
 Mark secret for deletion in 30 days
 
 ```
