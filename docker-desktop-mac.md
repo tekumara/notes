@@ -69,10 +69,10 @@ Logs: `~/Library/Containers/com.docker.docker/Data/log/vm/`
 
 Unused images are images that aren't associated with a container.
 
-`docker system prune -a` remove all images including the build cache
-`docker system prune --volumes` removes all stopped containers, unused networks, unused volumes, dangling images, and dangling build cache objects
 `docker container prune` remove all stopped containers
-`docker container prune --filter 'until=1440h'` remove all unused containers created earlier than 60 days ago
+`docker container prune --filter 'until=1440h'` remove all containers created earlier than 60 days ago
+`docker system prune --volumes` removes all stopped containers, unused networks, unused volumes, dangling images, and dangling build cache objects
+`docker system prune -a` remove all images including the build cache
 
 `docker images -f dangling=true` list [dangling images](https://docs.docker.com/engine/reference/commandline/images/#show-untagged-images-dangling), ie: untagged images not being used as an intermediate layer.
 `docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}:{{.Tag}}" | sort -k 2 -h` images sorted by size

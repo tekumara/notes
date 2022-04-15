@@ -29,7 +29,7 @@ eg:
 - `COPY src /app/` and `COPY src/ /app/` copy the contents of _src_ to _/app/_
 - `COPY . /app/` the contents of the current directory will be copied /app, including directories it contains. Note this will copy the Dockerfile, and so will be recopied everytime the Dockerfile changes which is probably not what you want, so specify individual files/dirs or add the Dockerfile to _.dockerignore_.
 - `COPY system.sh /tmp` copy system.sh to the file _/tmp/system.sh_ because _/tmp_ is an existing directory
-- `COPY system.sh /tmp/setup` copy system.sh to the file _/tmp/setup_ because _/tmp/setup_ is not an existing directory
+- `COPY system.sh /tmp/setup` copy system.sh to the file _/tmp/setup_ if the directory _/tmp/setup/_ doesn't exist, or _/tmp/setup/system.sh_ if it does
 - `COPY system.sh /tmp/setup/` copy system.sh to the file _/tmp/setup/system.sh_
 
 `ADD` can untar and download, but prefer `COPY`
@@ -127,6 +127,12 @@ Buildx has [two export modes](https://github.com/moby/buildkit/issues/752):
 - `mode=min`: export layers for the resulting images and only metadata for the intermediate steps (which is somewhat useful).
 
 When exporting the cache from buildx, the registry must support cache [manifest lists](https://docs.docker.com/registry/spec/manifest-v2-2/#manifest-list), see [this discussion](https://github.com/moby/buildkit/issues/699#issuecomment-432902188). [ECR](https://github.com/aws/containers-roadmap/issues/876) and [Artifactory](https://www.jfrog.com/jira/browse/RTFACT-26179) don't.
+
+Build the ci service in a compose file and push:
+
+```
+docker buildx bake -f docker-compose.dev.yaml --push ci
+```
 
 ## Troubleshooting
 
