@@ -2,7 +2,7 @@
 
 ## Agent install
 
-Apply prefect kube infra:
+Install prefect kube agent:
 
 ```
 prefect agent kubernetes install -k "$(PREFECT__CLOUD__API_KEY)" --rbac --label kube | kubectl apply -f -

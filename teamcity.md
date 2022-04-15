@@ -8,7 +8,7 @@ When Synchronization is enabled, project settings & build configurations will be
 
 ### Use settings from VCS
 
-When `Use settings from VCS` is enabled, build configuration changes in a commit will be applied to the UI once the build is triggered. Changes to VCS roots, snapshot dependencies, or added/deleted/renamed build configurations can only be applied from the default branch See [Defining Settings to Apply to Builds](https://www.jetbrains.com/help/teamcity/2021.1/storing-project-settings-in-version-control.html#Defining+Settings+to+Apply+to+Builds) for a list of which changes can and can't take effect on the build.
+When `Use settings from VCS` is enabled, build configuration changes in a commit will be applied to the UI once the build is triggered. Changes to VCS roots, snapshot dependencies, build triggers, or added/deleted/renamed build configurations can only be applied from the default branch. See [Defining Settings to Apply to Builds](https://www.jetbrains.com/help/teamcity/2021.1/storing-project-settings-in-version-control.html#Defining+Settings+to+Apply+to+Builds) for a list of which changes can and can't take effect on the build.
 
 Changes that can't be applied will warn with:
 
