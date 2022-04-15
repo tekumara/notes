@@ -53,3 +53,12 @@ Describe stack id
 ```
 aws ec2 describe-vpcs --vpc-ids vpc-02832796d9d01cfec | jq -r '.Vpcs[].Tags[] | select(.Key == "aws:cloudformation:stack-id") | .Value'
 ```
+
+## VPC Endpoints
+
+"Packets that originate from the AWS network with a destination on the AWS network stay on the AWS global network, except traffic to or from AWS China Regions....
+In addition, all data flowing across the AWS global network that interconnects our data centers and Regions is automatically encrypted at the physical layer before it leaves our secured facilities."
+
+see [VPC FAQS](https://aws.amazon.com/vpc/faqs/).
+
+However internet data rates are still charged. VPC endpoints are charged differently. They are also useful for restricting what resources something in a VPC can communicate with, and restricting which VPCs can communicate with a resource. eg: you can restrict access to S3 buckets from the internet by denying access except from specific VPC endpoints. You can also add policies to endpoints, and you can restrict access to the Internet but allow access to VPC endpoints, see [Adopting AWS VPC Endpoints at Square](https://developer.squareup.com/blog/adopting-aws-vpc-endpoints-at-square/)
