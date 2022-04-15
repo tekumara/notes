@@ -3,7 +3,13 @@
 [Install](https://docs.sigstore.dev/cosign/installation/):
 
 - macos : `brew install cosign'
-- ubuntu: `version=1.7.1 && wget "https://github.com/sigstore/cosign/releases/download/v${version}/cosign_${version}_amd64.deb" && sudo dpkg -i cosign_*_amd64.deb`
+- ubuntu:
+
+  ```
+  version=1.7.1 && wget "https://github.com/sigstore/cosign/releases/download/v${version}/cosign-linux-amd64"
+  sudo mv cosign-linux-amd64 /usr/local/bin/cosign
+  sudo chmod +x /usr/local/bin/cosign
+  ```
 
 ```
 cosign generate-key-pair
@@ -16,7 +22,7 @@ crane ls localhost:5555/alpine
 latest
 ```
 
-Sign:
+Sign and store sig in registry:
 
 ```
 cosign sign --key cosign.key localhost:5555/alpine:latest
@@ -67,8 +73,18 @@ sget localhost:5555/readme -key cosign.pub > readme
 sget localhost:5555/readme@sha256:0c5834c5243e64acc398983b01bc6272f6fe2f2c2320c425edf00ed9fd8e489c > readme
 ```
 
-Extract AWS KMS public key from private key (see [KMS - AWS](https://github.com/sigstore/cosign/blob/main/KMS.md#aws)):
+## KMS
+
+Extract AWS KMS public key from private key:
 
 ```
 cosign public-key --key awskms:///$arn
 ```
+
+Actions required:
+
+- public-key/sign/verify: `kms:GetPublicKey`, `kms:DescribeKey`
+- sign:`kms:Sign`
+- verify: `kms:Verify` only when using remote verification
+
+For more info see [KMS - AWS](https://github.com/sigstore/cosign/blob/main/KMS.md#aws)

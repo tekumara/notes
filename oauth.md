@@ -1,5 +1,24 @@
 # oauth
 
+## auth flows
+
+There are different types of [flows](https://developer.okta.com/docs/concepts/oauth-openid/#choosing-an-oauth-2-0-flow):
+
+- Interaction Code flow
+- Authorization Code flow
+- Authorization Code flow with PKCE
+- etc.
+
+Some of the OAuth Web application authorization flow requires callbacks, ie: something running on localhost listening for the callback.
+
 OAuth Device authorization flow allows use of a one-time code ([example](https://github.com/cli/cli/pull/1522)). Useful for apps that don't have a web browser, eg: CLI tools.
 
-OAuth Web application authorization flow requires callbacks, ie: something running on localhost listening for the callback.
+## OIDC
+
+OpenID Connect (OIDC) is built on OAuth 2.0 and results in an ID token, in addition to an access and refresh token.
+
+OIDC provider = oauth auth server
+
+## References
+
+[OAuth 2.0 and OpenID Connect Overview](https://developer.okta.com/docs/concepts/oauth-openid/)

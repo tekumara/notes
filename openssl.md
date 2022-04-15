@@ -6,11 +6,13 @@
 
 ## Standard formats
 
-[PKCS8](https://en.wikipedia.org/wiki/PKCS_8) is a [structured format](https://en.wikipedia.org/wiki/PKCS) for storing keys. [PKCS1](https://en.wikipedia.org/wiki/PKCS_1) was the first version of the format and often used by default for RSA keys.
+[PKCS8](https://en.wikipedia.org/wiki/PKCS_8) is a [structured format](https://en.wikipedia.org/wiki/PKCS) for storing keys irrespective of their algorithm. [PKCS1](https://en.wikipedia.org/wiki/PKCS_1) was the first version of the format and used for RSA keys specifically. openssl defaults to PKCS1 for RSA keys. For more info see [this explanation](https://stackoverflow.com/a/57260862/149412).
 
 ## Encodings
 
-[PEM](https://cryptography.io/en/latest/faq/#why-can-t-i-import-my-pem-file) is a base64 string encoding. DER is a binary encoding.
+DER is a binary encoding. [PEM](https://cryptography.io/en/latest/faq/#why-can-t-i-import-my-pem-file) is a base64 string encoding of DER with a header, footer, and optional metadata. See this [stackoverflow question](https://stackoverflow.com/questions/48958304/pkcs1-and-pkcs8-format-for-rsa-private-key) for more info on the differences.
+
+## Examples
 
 PKCS8 PEM:
 
