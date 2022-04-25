@@ -29,6 +29,22 @@ With the following mandatory environment variables:
 
 The [Dockerfile](https://github.com/PrefectHQ/prefect/blob/master/Dockerfile) calls [entrypoint.sh](https://github.com/PrefectHQ/prefect/blob/master/entrypoint.sh) which installs extra pip packages, and then executes the passed unquoted args.
 
+Prefect [will delete jobs](https://github.com/PrefectHQ/prefect/blob/master/src/prefect/agent/kubernetes/agent.py#L384) on completion.
+
 ## Dask
 
 The Prefect DaskExecutor creates a prefect-job pod which uses [dask-kubernetes](https://github.com/dask/dask-kubernetes) to start an ephemeral Dask cluster using [KubeCluster](https://kubernetes.dask.org/en/latest/kubecluster.html). This requires additional [kubernetes permissions](https://kubernetes.dask.org/en/latest/kubecluster.html#role-based-access-control-rbac). For more info see [dask-kubernetes](dask-kubernetes.md).
+
+Dask worker Pods that exit cleanly will end up in the `Completed` state and will not be deleted like Prefect jobs (see above). Kubernetes will eventually [garbage collect them](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-garbage-collection) but the default threshold is 12500 terminated pods, and not likely to be hit. Unfortunately the workers are not Jobs, so the [TTL-after-finished controller](https://kubernetes.io/docs/concepts/workloads/controllers/ttlafterfinished/) will not garbage collection them.
+
+If the Prefect Job Pod dies and restarts, it will attempt to create a new Dask cluster. The existing dask cluster will still exist executing tasks.
+
+### Rerun tasks
+
+Dask may [run tasks multiple times](https://distributed.dask.org/en/stable/limitations.html#assumptions-on-functions-and-data). This will occur when a worker holding an [intermediate results dies](https://distributed.dask.org/en/latest/memory.html#resilience). This is more likely to occur with adaptive scaling. This design works well for pure computation, but requires tasks with side-effects (eg: a task writing results to storage) to be idempotent. See [this reproduction](https://github.com/dask/distributed/issues/2935) of the behaviour.
+
+Even though in Prefect the task has max_retires = 0, this still occurs because of how Dask is designed. Instead, Prefect offers caching and version locking to mitigate this, see [#5485](https://github.com/PrefectHQ/prefect/issues/5485#issuecomment-1107100864).
+
+## Issues
+
+k8s sweet spot is stateless, multi-replica, short running workloads that run continuously. Batch jobs are single replica, long-running workloads that run to completion. k8s node scaling or maintenance events will restart Prefect job Pods. When this happens the agent does funny things, see [#3058](https://github.com/PrefectHQ/prefect/issues/3058).
