@@ -35,9 +35,29 @@ echo 'scale=2;4147/11198' | bc
 # .37
 ```
 
-## vs
+### q vs
 
 5x faster than [csvkit](http://csvkit.readthedocs.io/en/1.0.2/) (which is also backed by sqlite)
 Has a SQL syntax, unlike [Miller](http://johnkerl.org/miller/doc/) and [xsv](https://github.com/BurntSushi/xsv)
 
-xsv has sample and regex functionality tho.
+## [xsv](https://github.com/BurntSushi/xsv)
+
+Non SQL syntax with sample and regex functionality.
+
+Row count
+
+```
+xsv count logs.csv
+```
+
+Count number of rows matching the regex
+
+```
+xsv search "(root-7920f013|job-38f944ae)" logs.csv | xsv count
+```
+
+Sort by time asc
+
+```
+xsv sort -s _messagetime logs.csv
+```

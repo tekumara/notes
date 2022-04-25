@@ -158,3 +158,9 @@ variables must be specified in a `.tfvars` file.
 ### The "for_each" value depends on resource attributes that cannot be determined until apply
 
 Follow the dependency chain backwards and locate resources that don't yet exist or have unknown values.
+
+### This value does not have any indices
+
+When used on a resource attributed of type `tfsdk.ListNestedAttributes`.
+
+Wrap the attribute with `tolist(..)`
