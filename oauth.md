@@ -19,6 +19,12 @@ OpenID Connect (OIDC) is built on OAuth 2.0 and results in an ID token, in addit
 
 OIDC provider = oauth auth server
 
+### Step
+
+`step oauth` will generate a access and id token locally, using the Google IDP to login to the Smallstep Step CLI app.
+
+Other IDPs and apps can be used, but they need to allow localhost as a redirect URI.
+
 ## References
 
 [OAuth 2.0 and OpenID Connect Overview](https://developer.okta.com/docs/concepts/oauth-openid/)

@@ -37,6 +37,26 @@ Managed policies are [versioned](https://docs.aws.amazon.com/IAM/latest/UserGuid
 
 See [Managed policies and inline policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html)
 
+## Inline policies
+
+List names of inline policies
+
+```
+aws iam list-role-policies --role-name $(ROLE_NAME)
+```
+
+Get inline policy (cannot be used for managed policies)
+
+```
+aws iam get-role-policy --role-name $(ROLE_NAME) --policy-name $(POLICY_NAME)
+```
+
+Delete policy
+
+```
+aws iam delete-role-policy --role-name $(ROLE_NAME) --policy-name $(POLICY_NAME)
+```
+
 ## Managed policies
 
 List all managed policies
@@ -93,20 +113,6 @@ Remove attached managed policy
 aws iam detach-role-policy --role-name $rolename --policy-arn $arn
 ```
 
-## Inline policies
-
-List names of inline policies
-
-```
-aws iam list-role-policies --role-name $(ROLE_NAME)
-```
-
-Get inline policy (cannot be used for managed policies)
-
-```
-aws iam get-role-policy --role-name $(ROLE_NAME) --policy-name $(POLICY_NAME)
-```
-
 ## Roles + Policy
 
 Create [AWSBatchServiceRole](https://docs.aws.amazon.com/batch/latest/userguide/service_IAM_role.html):
@@ -136,3 +142,7 @@ Assume role
 ```
 aws sts assume-role --role-arn arn:aws:iam::123456789012:role/Developer --role-session-name doing-work --duration-seconds 3600
 ```
+
+## Trusting root accounts
+
+As an aside, I think even when granting access to specific IAM roles, we have to trust the IAM admins of the accounts those roles are in. This is because the IAM admins determine who or what can assume the role, so privilege escalation can always happen via unintended assumption. Granting access to the root account makes this more explicit. This is the argument made [here](https://ben11kehoe.medium.com/cross-account-role-trust-policies-should-trust-aws-accounts-not-roles-32737dfeaa03).
