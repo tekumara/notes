@@ -22,7 +22,7 @@ docker images
 
 The docker daemon will store images in _/var/lib/docker/image/overlay2/_. See _/var/lib/docker/image/overlay2/repositories.json_ for a list of the images. _/var/lib/docker_ is a volume on the host, separate from the primary docker daemon. Therefore docker images for the dind container are isolated from the primary docker daemon.
 
-### To config dockerd to use a local registry
+### To configure dockerd to use a local registry
 
 Untested - see https://github.com/docker-library/docker/issues/38#issuecomment-529049778
 

@@ -128,11 +128,21 @@ Buildx has [two export modes](https://github.com/moby/buildkit/issues/752):
 
 When exporting the cache from buildx, the registry must support cache [manifest lists](https://docs.docker.com/registry/spec/manifest-v2-2/#manifest-list), see [this discussion](https://github.com/moby/buildkit/issues/699#issuecomment-432902188). [ECR](https://github.com/aws/containers-roadmap/issues/876) and [Artifactory](https://www.jfrog.com/jira/browse/RTFACT-26179) don't.
 
-Build the ci service in a compose file and push:
+### docker buildx bake
+
+Build the `ci` service in compose file and push:
 
 ```
 docker buildx bake -f docker-compose.dev.yaml --push ci
 ```
+
+Using an env file:
+
+```
+env $(cat image.env | xargs) docker buildx bake -f docker-compose.yaml --push ci
+```
+
+To see the config/dry run use `--print`.
 
 ## Troubleshooting
 
