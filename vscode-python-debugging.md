@@ -52,21 +52,45 @@ pip install debugpy
 Run your program and wait for connection:
 
 ```
-python -m debugpy --listen 62888 --wait-for-client myapp/main.py arg`
+python -m debugpy --listen 62888 --wait-for-client <filename> | -m <module> [<arg>]...`
 ```
+
+`<program>` can be a path to a _.py_ file or a console script, eg: _.venv/bin/myapp_
 
 Connect to the debugger using an attach config:
 
 ```
-{
-    "name": "Python: Attach to 62888",
-    "type": "python",
-    "request": "attach",
-    "connect":{
-      "host": "localhost",
-      "port": 62888
-    }
-},
+        {
+            "name": "Python: Remote Attach",
+            "type": "python",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 62888
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "."
+                }
+            ],
+            "justMyCode": false
+        }
+```
+
+## Breakpoint in file that does not exist
+
+Make sure you are mapping the cwd of debugpy (ie: remote root) to your workspace.
+
+eg: if running debugpy in a subdir of your workspace folder, use:
+
+```
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "../"
+                }
+            ],
 ```
 
 ## References
