@@ -22,7 +22,7 @@ env | grep -i foo1
 
 ```
 
-Set a shell variable and make it available to child processes:
+Export a shell variable and make it available to child processes:
 
 ```bash
 export foo2=bar && python -c 'import os; print(os.environ["foo2"])'

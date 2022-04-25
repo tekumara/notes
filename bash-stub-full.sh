@@ -2,7 +2,7 @@
 
 set -Euo pipefail
 
-script_dir=$(cd -- "$(dirname -- "$0")" && pwd)
+script_dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
 
 usage() {
     die "Archive and upload spark ui event logs for prosperity
