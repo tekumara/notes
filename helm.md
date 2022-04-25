@@ -18,3 +18,13 @@
 `helm get values slim-api -o yaml --revision 156` get values yaml for revision 156
 `helm get values slim-api -o json | jq '.image.tag'` get image tag for latest revision
 `helm create $name` create a new helm chart in the dir _$name/_
+
+## Troubleshooting
+
+### unable to parse YAML: error converting YAML to JSON: yaml: line 24: found character that cannot start any token
+
+Usually because the interpolation has failed. To see the yaml generated run: `helm template --debug test .` Remove lines that look suspicious. Make sure there aren't missing required values.
+
+### no template "prefect-agent.fullname" associated with template "gotpl"
+
+An include references a value that doesn't exist.

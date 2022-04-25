@@ -135,7 +135,7 @@ k3s uses traefik as the [ingress controller](https://rancher.com/docs/k3s/latest
 kubectl get service -n kube-system traefik -o yaml
 ```
 
-The traefik Service (using klipper) will forward ports 80 and 443 on any node to the web (8000) and websecure (8443) target ports of the traefik pod.
+The traefik Service (using klipper) will forward ports 80 and 443 on any node's external ip (ie: docker network ip) to the web (8000) and websecure (8443) target ports of the traefik pod.
 
 See
 
@@ -146,7 +146,7 @@ See
 
 Services will be accessible on their external IP, which exists on a Docker bridge network. This works on Linux, but unfortunately this bridge network isn't [accessible from a macOS host](https://docs.docker.com/docker-for-mac/networking/#per-container-ip-addressing-is-not-possible) because the docker daemon is run inside a VM.
 
-To solve this, k3d creates a nginx proxy container named `k3d-$clustername-serverlb` on the same network as the cluster:
+To solve this, and make it easier to expose ports after creating the cluster, k3d creates a nginx proxy container named `k3d-$clustername-serverlb` on the same network as the cluster:
 
 ```
 docker ps
@@ -160,7 +160,13 @@ This container exposes host posts to allow access to the cluster from the host. 
 By default only 6443 (the kube api-server) is exposed on a random host port (in this example host port 51470). Additional host ports can be mapped at the time of cluster creation, eg: to map host port 8081 -> port 80 (ingress) on all nodes in the cluster
 
 ```
-k3d cluster create $clustername -p "8081:80@servers:*;agents:*"
+k3d cluster create $clustername -p 8081:80@loadbalancer
+```
+
+Or to expose a port after the cluster has been created:
+
+```
+k3d cluster edit $clustername --port-add 9001:9001@loadbalancer
 ```
 
 Port mappings default to proxy ports. A proxy port is created on the serverlb container and will:
@@ -185,9 +191,11 @@ docker exec -it k3d-$clustername-serverlb cat /etc/nginx/nginx.conf
 
 Ports can be mapped directly rather than via the loadbalancer proxy using the suffix `direct` in a node filter. Unlike proxy ports, these cannot be changed after the cluster has been created.
 
+To expose a port after the 
+
 See
 
-- [v5.0.0 release notes](https://github.com/rancher/k3d/blob/5a00a39323ee8d72da17b112afd86444b3cc4b30/CHANGELOG.md#v500) which describe the node filter syntax
+- [v5.0.0 release notes](https://github.com/rancher/k3d/blob/5a00a39323ee8d72da17b112afd86444b3cc4b30/CHANGELOG.md#v500) which describes the node filter syntax
 - [k3d Loadbalancer](https://k3d.io/v5.2.2/design/defaults/#k3d-loadbalancer)
 - [rancher/k3d-proxy](https://registry.hub.docker.com/r/rancher/k3d-proxy)
 

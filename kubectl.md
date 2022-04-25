@@ -126,6 +126,17 @@ kubectl -n ray patch service example-cluster-ray-head --type json -p '[{"op": "a
 
 `--type json` in the above uses [JSON Patch](https://tools.ietf.org/html/rfc6902), which in turn uses [JSON Pointer](https://tools.ietf.org/html/rfc6901) for identifying JSON values (eg: `/foo/0` = the first element of the foo array)
 
+Enable ptrace
+
+```
+kubectl patch deployment orion --type json -p '[{"op": "add", "path": "/spec/template/spec/containers/0/securityContext", "value":{ "capabilities": { "add": ["SYS_PTRACE"]}}}]'
+```
+
+securityContext:
+  capabilities:
+    add:
+    - SYS_PTRACE
+
 ## Delete
 
 `kubectl delete namespace livy` delete the livy namespace and all resources
