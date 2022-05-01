@@ -32,7 +32,9 @@ with snowflake.connector.connect(
 ) as conn:
     with conn.cursor() as cur:
         print(cur.execute("select 'hello world';").fetchone())
+```
 
+To use browser-based SSO replace `password` with `authenticator="externalbrowser"`.
 ```
 
 ## Browser-based SSO ID token caching
@@ -53,7 +55,7 @@ pip install "snowflake-connector-python[secure-local-storage]"
 
 On Linux ID tokens are stored in _~/.cache/snowflake/temporary_credential.json_ or the directory specified by the env var `SF_TEMPORARY_CREDENTIAL_CACHE_DIR`. To use the cache connect with:
 
-```
+```python
 conn = snowflake.connector.connect(
     ...
     client_store_temporary_credential=True

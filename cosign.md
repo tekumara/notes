@@ -11,6 +11,8 @@
   sudo chmod +x /usr/local/bin/cosign
   ```
 
+Generate key pair, cosign.key and cosign.pub, in the current directory:
+
 ```
 cosign generate-key-pair
 ```

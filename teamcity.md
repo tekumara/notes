@@ -8,7 +8,7 @@ When Synchronization is enabled, project settings & build configurations will be
 
 ### Use settings from VCS
 
-When `Use settings from VCS` is enabled, build configuration changes in a commit will be applied to the UI once the build is triggered. Changes to VCS roots, snapshot dependencies, build triggers, or added/deleted/renamed build configurations can only be applied from the default branch. See [Defining Settings to Apply to Builds](https://www.jetbrains.com/help/teamcity/2021.1/storing-project-settings-in-version-control.html#Defining+Settings+to+Apply+to+Builds) for a list of which changes can and can't take effect on the build.
+When `Use settings from VCS` is enabled, build configuration changes in a commit will be applied to the UI once the build is triggered. Changes to VCS roots, snapshot dependencies, build triggers including filters, or added/deleted/renamed build configurations can only be applied from the default branch. See [Defining Settings to Apply to Builds](https://www.jetbrains.com/help/teamcity/2021.1/storing-project-settings-in-version-control.html#Defining+Settings+to+Apply+to+Builds) for a list of which changes can and can't take effect on the build.
 
 Changes that can't be applied will warn with:
 
@@ -95,7 +95,7 @@ TeamCity is generating settings for the project from Kotlin.
 
 ### Pending changes are not detected
 
-First check the VCS root and see when the period scheduler last ran (via Edit configuration - General Settings - Version Control Settings), eg:
+First check the VCS root and see when the period scheduler last ran (via Edit configuration - Version Control Settings), eg:
 
 ```
 (git) awesome-app belongs to Team Awesome / Amazing App
@@ -104,13 +104,13 @@ First check the VCS root and see when the period scheduler last ran (via Edit co
     Changes checking interval: 1m
 ```
 
-Manually trigger a check for changes via _Actions - Check for pending changes_ (might take a minute or two). This should bring the periodic scheduler back to life.
-
 If the commit hook is inactive, reinstate it.
+
+Manually trigger a check for changes via _Actions - Check for pending changes_ (might take a minute or two). This should bring the periodic scheduler back to life.
 
 ### Pending changes but builds are not triggered
 
-Make sure the build configuration has a trigger. Check the [trigger rules](https://www.jetbrains.com/help/teamcity/configuring-build-triggers.html) used to understand when they fire.
+Make sure the build configuration has a trigger. Check the [trigger rules](https://www.jetbrains.com/help/teamcity/configuring-build-triggers.html) to understand when they fire.
 
 If you have a vcs trigger with a branch filter, include the non-refs path as well as the refs/head path, eg:
 
@@ -119,7 +119,7 @@ If you have a vcs trigger with a branch filter, include the non-refs path as wel
 +:main
 ```
 
-Changes to a branch filter in Kotlin will take effect once the UI has been updated, ie: once the change containing the updated branch filter has been detected and applied by Teamcity, the next change will trigger using the new branch filters.
+Changes to a branch filter in Kotlin will take effect after the UI has been updated, ie: the commit containing the updated branch filter will be applied to the UI once merged to the default branch, but the new trigger will take effect in the following commit.
 
 ### VCS trigger rules are ignored
 
