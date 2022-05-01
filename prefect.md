@@ -1,5 +1,17 @@
 # prefect
 
+## Philosophy
+
+Prefect should be invisible. It adds workflow semantics to python functions by converting them into tasks which provides:
+
+- retries and failure handling
+- scheduling
+- a state machine for recording tasks [states](https://docs.prefect.io/core/concepts/states.html)
+- error reporting and visibility into task run states
+- error handling by triggering tasks from Failed states
+- concurrent execution defined by a DAG (aka Flow) across multiple functions
+- [caching](https://docs.prefect.io/core/concepts/persistence.html#input-caching) of task outputs and inputs
+
 ## Authentication
 
 `prefect auth login` creates _~/.prefect/auth.toml_ and stores the API key there.
