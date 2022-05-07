@@ -164,3 +164,7 @@ Follow the dependency chain backwards and locate resources that don't yet exist 
 When used on a resource attributed of type `tfsdk.ListNestedAttributes`.
 
 Wrap the attribute with `tolist(..)`
+
+### Invalid type for provider
+
+If this is accompanied by a `Optional object type attributes are experimental` error, fix that to resolve the `Invalid type for provider` error.

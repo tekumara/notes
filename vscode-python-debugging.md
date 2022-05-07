@@ -59,7 +59,7 @@ python -m debugpy --listen 62888 --wait-for-client <filename> | -m <module> [<ar
 
 Connect to the debugger using an attach config:
 
-```
+```json
         {
             "name": "Python: Remote Attach",
             "type": "python",

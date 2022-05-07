@@ -35,7 +35,6 @@ with snowflake.connector.connect(
 ```
 
 To use browser-based SSO replace `password` with `authenticator="externalbrowser"`.
-```
 
 ## Browser-based SSO ID token caching
 
