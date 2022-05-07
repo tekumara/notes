@@ -48,3 +48,28 @@ Even though in Prefect the task has max_retires = 0, this still occurs because o
 ## Issues
 
 k8s sweet spot is stateless, multi-replica, short running workloads that run continuously. Batch jobs are single replica, long-running workloads that run to completion. k8s node scaling or maintenance events will restart Prefect job Pods. When this happens the agent does funny things, see [#3058](https://github.com/PrefectHQ/prefect/issues/3058).
+
+## Enabling debug logging on the agent
+
+Create a configmap:
+
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-toml
+data:
+  config.toml: |
+    [cloud.agent]
+    level = "DEBUG"
+```
+
+Mount on spec.container in the deployment:
+
+```
+       volumes:
+       - configMap:
+           defaultMode: 420
+           name: config-toml
+         name: config
+```

@@ -97,6 +97,10 @@ git log -3
 ```
 
 NB:
-`rc-5017..HEAD` shows all commits on both branches from the common ancestor that differ, same as `rc-5017 HEAD`
-`rc-5017...HEAD` shows all commits on HEAD from the common ancestor with rc-5017
+`git log main..HEAD` shows all commits on HEAD that aren't on main
+`git log rc-5017...HEAD` shows all commits on either branch but not both
+
 See [here](http://stackoverflow.com/questions/7251477/what-are-the-differences-between-double-dot-and-triple-dot-in-git-dif/7256391#7256391)
+
+`git diff main..HEAD` shows the difference between the tips of main and HEAD, same as `main HEAD`
+`git diff main...HEAD` shows the difference between the merge base of the two branches, and the tip of `HEAD`
