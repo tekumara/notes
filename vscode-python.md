@@ -35,3 +35,9 @@ Intellij will parse notebook code, find errors, and has go to definition. Vscode
 ## Python interpreters
 
 To change interpreter select _Python: Select Interpreter_. If vscode doesn't switch to your interpreter, check _Output -> Python Language Server_ for errors.
+
+If the interpreter selection fails, enable debug logging in _settings.json_:
+
+```
+"python.logging.level": "debug"
+```

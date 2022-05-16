@@ -31,7 +31,8 @@ Commands:
 - `sticky` after execution print the source for the current function
 - `w` print stack trace
 - `a` print args for current function
-- `q`
+- `q` quit
+- `! <python statement>` run python statement 
 
 Set a breakpoint at in pandas.io.common at line 334:
 

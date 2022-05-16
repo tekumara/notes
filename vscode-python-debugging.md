@@ -57,6 +57,12 @@ python -m debugpy --listen 62888 --wait-for-client <filename> | -m <module> [<ar
 
 `<program>` can be a path to a _.py_ file or a console script, eg: _.venv/bin/myapp_
 
+To debug a test called `test_flow`:
+
+```
+python -m debugpy --listen 62888 --wait-for-client -m pytest -k test_flow
+```
+
 Connect to the debugger using an attach config:
 
 ```json
