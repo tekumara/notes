@@ -2,7 +2,7 @@
 
 Ephemeral self-hosted Github actions runner for k8s with DinD.
 
-By default the controller creates a Pod which waits for a job. When the job completes the pod is recycled.
+By default the controller creates a Pod which waits for a github job. When the github job completes the pod is restarted.
 
 Install [cert-manager](https://cert-manager.io/docs/installation/):
 
@@ -115,27 +115,6 @@ sudo mkdir runner
 ```
 
 Then run /entrypoint.sh
-
-
-
-    "RUNNER_ORG=null",
-    "RUNNER_REPO=oliver-mannion_xero/aec-clone",
-    "RUNNER_ENTERPRISE=null",
-    "RUNNER_LABELS=null",
-    "RUNNER_GROUP=null",
-    "DOCKERD_IN_RUNNER=false",
-    "GITHUB_URL=https://github.com/",
-    "RUNNER_WORKDIR=/runner/_work",
-    "RUNNER_EPHEMERAL=true",
-    "DOCKER_HOST=tcp://localhost:2376",
-    "DOCKER_TLS_VERIFY=1",
-    "DOCKER_CERT_PATH=/certs/client",
-    "RUNNER_NAME=example-runner",
-    "RUNNER_TOKEN=AWPUFEESRENMSBDUL5FJIF3CG32MK"
-
-
-/runner/externals/node12/bin/node /runner/_work/_actions/actions/setup-python/v2/dist/setup/index.js
-
 
 ## Uninstall
 
