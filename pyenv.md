@@ -129,3 +129,15 @@ Make sure `eval "$(pyenv init -)"` has been run first.
 > /Users/tekumara/.pyenv/shims/python: line 21: /usr/local/Cellar/pyenv/1.2.15/libexec/pyenv: No such file or directory
 
 This can occur when upgrading to a new version of pyenv. To fix, rebuild the shims with `pyenv rehash`
+
+> ModuleNotFoundError: No module named 'virtualenvwrapper'
+> virtualenvwrapper.sh: There was a problem running the intiialization hooks
+
+This can occur when running _virtualenvwrapper.sh_ outside a pyenv python environment. Run `pyenv which virtualenvwrapper.sh` to locate _virtualenvwrapper.sh_, eg:
+
+```
+$ pyenv which virtualenvwrapper.sh
+/Users/tekumara/.pyenv/versions/3.9.7/bin/virtualenvwrapper.sh
+```
+
+If its in a non-pyenv python environment (eg: the system environment) uninstall that python environment and use pyenv instead.

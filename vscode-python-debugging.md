@@ -90,7 +90,7 @@ Make sure you are mapping the cwd of debugpy (ie: remote root) to your workspace
 
 eg: if running debugpy in a subdir of your workspace folder, use:
 
-```
+```json
             "pathMappings": [
                 {
                     "localRoot": "${workspaceFolder}",

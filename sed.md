@@ -21,6 +21,12 @@ Replace BASE= using a variable substitution ($~MONGO_HOME), note the following:
 sed -i "s|BASE=.*|BASE=$MONGO_HOME|" /etc/init.d/mongodb
 ```
 
+Delete everything between `begin` and `end` (including `begin` and `end`):
+
+```
+sed -i '' "/begin/,/end/d" "$file"
+```
+
 ## Special characters
 
 eg: given the line:

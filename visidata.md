@@ -38,10 +38,17 @@ Sheets:
 
 - `S` jump between sheets or join them together
 
-Data
+Sort:
+
+- `[` or `]` sorts [rows](https://www.visidata.org/docs/rows/) ascending/descending by current column
+
+[Stats / summaries](https://jsvine.github.io/intro-to-visidata/basics/summarizing-data/):
 
 - `F` frequency table for current column
-- `[` or `]` sorts [rows](https://www.visidata.org/docs/rows/) ascending/descending by current column
+- sum column:
+  1. `#` cast column to integer
+  1. `z+sum`
+  1. Check status bar at bottom of the screen
 
 Misc
 

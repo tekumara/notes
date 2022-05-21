@@ -42,3 +42,23 @@ To remove the quarantine flag:
 ```
 xattr -d com.apple.quarantine <your-file>
 ```
+
+## Installing updates
+
+To install recommended update:
+
+```
+softwareupdate -i -r
+```
+
+eg:
+
+```
+$ softwareupdate -i -r
+Software Update Tool
+
+Finding available software
+
+Downloaded Command Line Tools for Xcode
+Installing Command Line Tools for Xcode
+```

@@ -114,6 +114,11 @@ aws s3api head-object --bucket BUCKET --key KEY
 }
 ```
 
+ServerSideEncryption options:
+
+- `AES256` = Amazon S3-managed keys (SSE-S3)
+- `aws:kms` = AWS Key Management Service key (SSE-KMS)
+
 If your role doesn't have KMS privileges, GetObject and PutObject calls will fail with AccessDenied. Add the following policy to your role:
 
 ```
