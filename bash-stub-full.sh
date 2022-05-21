@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-set -Euo pipefail
+set -euo pipefail
 
-script_dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+script_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]:-$0}")")"
 
 usage() {
     die "Archive and upload spark ui event logs for prosperity

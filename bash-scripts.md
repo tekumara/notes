@@ -37,3 +37,22 @@ https://stackoverflow.com/a/2500451/149412
 ```
 [[ $- == *i* ]] && echo "in an interactive shell"
 ```
+
+## script dir
+
+to get the current script dir:
+
+```
+"$(dirname "$(readlink -f "${BASH_SOURCE[0]:-$0}")")"
+```
+
+`readlink` converts a relative to absolute and resolves symlinks. It's similar to `realpath` but more ubiquitous eg: realpath doesn't ship in BSD (Darwin) whereas readlink ships in both BSD and Linux.
+
+`dirname` extracts the directory part of the path.
+
+works in both bash and zsh, either sourced or directly run:
+
+| how     | bash                  | zsh                   |
+| ------- | --------------------- | --------------------- |
+| direct  | uses `BASH_SOURCE[0]` | uses `BASH_SOURCE[0]` |
+| sourced | uses `BASH_SOURCE[0]` | uses `$0`             |
