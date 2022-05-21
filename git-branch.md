@@ -67,3 +67,21 @@ Delete remote-tracking references (ie: origin/\*). Local branches will remain
 ```
 git remote prune origin
 ```
+
+List branches on the remote origin
+
+```
+git ls-remote -h origin
+```
+
+List all references (tags, heads/branches, pull requests) on the remote origin
+
+```
+git ls-remote -h origin
+```
+
+List all remote branches in your local repo
+
+```
+git branch -r
+```

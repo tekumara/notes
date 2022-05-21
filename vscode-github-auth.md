@@ -35,6 +35,14 @@ echo | git credential-osxkeychain get
 
 If the `github.com` keychain item is deleted, the VS Code Github Authentication process will regenerate it.
 
+To delete:
+
+```
+git credential-osxkeychain erase
+host=github.com
+protocol=https
+```
+
 ## Git Credential Manager
 
 The [Git Credential Manager](https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git#git-credential-manager) is an alternative authenticator. Similar to VS Code, it requires authorising an OAuth app and uses that to generate credentials for your github.com user.

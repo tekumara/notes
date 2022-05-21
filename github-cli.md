@@ -6,10 +6,10 @@ Use ssh for github.dev.myorg.com
 gh config set -h github.dev.myorg.com git_protocol ssh
 ```
 
-Auth to github.dev.xero.com using your browser, and store the generated oauth token on disk:
+Auth to github.dev.xero.com using your browser, ssh for git, and store the generated oauth token on disk:
 
 ```
-gh auth login -h github.dev.myorg.com -w
+gh auth login -h github.dev.myorg.com -w -p ssh
 ```
 
 On macOS the [config dir is _~/.config/gh_](https://github.com/cli/cli/blob/25b6eecc8dd7845ca42afa3362b80b13c355356a/internal/config/config_file.go#L40). Oauth tokens are stored here.
@@ -21,3 +21,28 @@ Sync the fork with it's parent
 ```
 gh repo sync git@github.enterprise:tekumara/awesome-app.git
 ```
+
+## Authenticate Git with your GitHub credentials
+
+During authentication you'll be asked `Authenticate Git with your GitHub credentials`? 
+
+[This feature](https://github.com/cli/cli/pull/2449) generates a password, and stores it in the default git credential helper, eg: `credential-osxkeychain` on Mac, which stores the token as a keychain item named after the hostname, eg: `github.com`
+
+
+## GitHub CLI as git credential helper
+
+`gh auth git-credential` implements the [git credential helper interface](https://github.com/cli/cli/blob/6701b52/pkg/cmd/auth/gitcredential/helper.go), eg:
+
+To fetch creds:
+
+```
+echo | gh auth git-credential get
+```
+
+To use this with git:
+
+```
+gh auth setup-git [<hostname>]
+```
+
+For more info see [https://github.com/cli/cli/pull/4246](https://github.com/cli/cli/pull/4246)
