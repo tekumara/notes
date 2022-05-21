@@ -1,0 +1,73 @@
+{
+  "description" : "### Document Name - AWS-RunPacker\n\n## What does this document do?\nThis document uses the HashiCorp [packer](https://www.packer.io/) tool to validate, fix, or build packer templates that are used to create machine images. This document is using Packer v1.7.2.\n\n## Input Parameters\n* TemplateS3BucketName: The name of the Amazon S3 bucket containing the packer template.\n* TemplateFileName: The name, or key, of the template file in the S3 bucket.\n* Mode: The mode, or command, in which to use Packer when validating against the template:\n    * [Build](https://www.packer.io/docs/commands/build.html): (Default) Runs all the builds within the template in order to generate a set of artifacts.\n    * [Validate](https://www.packer.io/docs/commands/validate.html): Validates the syntax and configuration of the template.\n    * [Fix](https://www.packer.io/docs/commands/fix.html): Finds backwards incompatible content in the template and updates it for use with the latest version of Packer. It then uploads the fixed template to the S3 bucket that you specify. The name of the fixed template is identical to the template provided by the user, but with \"fixed-\" prepended to the name.\n* [Force](https://www.packer.io/docs/commands/build.html#force): Forces a builder to run when artifacts from a previous build otherwise prevent a build from running.\n    * True: (Default) Force flag is used\n    * False: Force flag is not used\n* AutomationAssumeRole: The ARN of the role that allows Automation to perform the actions on your behalf.\n\n## Output Parameters\n* RunPackerProcessTemplate.output: The stdout from the Packer tool.\n* RunPackerProcessTemplate.fixed_template_key: The name of the template stored in an S3 bucket to use only when running in \"Fix\" mode.\n* RunPackerProcessTemplate.s3_bucket: The name of the S3 bucket that contains the fixed template to use only when running in \"Fix\" mode.\n",
+  "schemaVersion" : "0.3",
+  "assumeRole" : "{{ AutomationAssumeRole }}",
+  "parameters" : {
+    "TemplateS3BucketName" : {
+      "type" : "String",
+      "description" : "(Required) AWS S3 bucket name that stores the template. eg. my-packer-bucket"
+    },
+    "TemplateFileName" : {
+      "type" : "String",
+      "description" : "(Required) Packer template file key in the bucket. eg. path/to/packer-template.json"
+    },
+    "Mode" : {
+      "type" : "String",
+      "description" : "(Required) The mode in which to use Packer when validating against the template. Default Value - Build",
+      "allowedValues" : [ "Validate", "Fix", "Build" ],
+      "default" : "Build"
+    },
+    "Force" : {
+      "type" : "String",
+      "description" : "(Optional) Forces a builder to run when artifacts from a previous build otherwise prevent a build from running. Default Value - True",
+      "allowedValues" : [ "True", "False" ],
+      "default" : "True"
+    },
+    "AutomationAssumeRole" : {
+      "type" : "String",
+      "description" : "(Optional) The ARN of the role that allows Automation to perform the actions on your behalf.",
+      "default" : ""
+    }
+  },
+  "outputs" : [ "RunPackerProcessTemplate.output", "RunPackerProcessTemplate.fixed_template_key", "RunPackerProcessTemplate.s3_bucket" ],
+  "mainSteps" : [ {
+    "name" : "RunPackerProcessTemplate",
+    "action" : "aws:executeScript",
+    "timeoutSeconds" : 600,
+    "description" : "## RunPackerProcessTemplate\nRuns the selected mode against the template using the Packer tool\n## Outputs\n* output: The stdout from the packer tool\n* Fixed_template_key: The name of the fixed template in S3 if run in \"Fix\" mode. No value otherwise\n* s3_bucket: The name of your s3 that contains the fixed template if run in \"Fix\" mode. No value otherwise\n",
+    "inputs" : {
+      "Runtime" : "python3.6",
+      "Handler" : "run_packer_handler",
+      "Attachment" : "packer_1.7.2_linux_amd64.zip",
+      "InputPayload" : {
+        "TemplateFileName" : "{{TemplateFileName}}",
+        "TemplateS3BucketName" : "{{TemplateS3BucketName}}",
+        "Mode" : "{{Mode}}",
+        "Force" : "{{Force}}"
+      },
+      "Script" : "import os\nimport glob\nimport boto3\nimport subprocess\nfrom pathlib import Path\nimport json\n\ndef get_current_dir():\n  current_path = os.path.realpath(__file__)\n  p = Path(current_path)\n  return str(p.parent)\n\ndef execute_packer_command(cmdArray):\n  p = subprocess.Popen(cmdArray, stdout=subprocess.PIPE, stderr=subprocess.PIPE)\n  out, err = [(x.decode(\"utf-8\")) for x in p.communicate()]\n  return_code = p.returncode\n  if err != \"\":\n    raise Exception(\"ERROR IN EXECUTING PACKER\", err)\n  if return_code != 0:\n    raise Exception(\"FAILED\", out)\n  return out\n\ndef download_file(path, key, bucket_name):\n  s3 = boto3.client('s3')\n  s3.download_file(bucket_name, key, path)\n\ndef upload_file(path, key, bucket_name):\n  s3 = boto3.client('s3')\n  s3.upload_file(path, bucket_name, key)\n\ndef validate_template(packer_cmd, template_path):\n  validate_template_cmd = [packer_cmd, \"validate\", template_path]\n  out = execute_packer_command(validate_template_cmd)\n  print(\"Template validated successfully\")\n  return out\n\ndef build_template(packer_cmd, template_path, force_build):\n  build_command = [packer_cmd, \"build\"]\n  if force_build == \"True\":\n      build_command.extend([\"-machine-readable\", \"-force\"])\n  build_command.append(template_path)\n  out = execute_packer_command(build_command)\n  print(\"Template built\")\n  return out\n\ndef fix_template(packer_cmd, local_template_path, s3_template_path, bucket_name):\n    s3_path_head, template_file_name = os.path.split(s3_template_path)\n    fixed_template_file_name = \"fixed-\" + template_file_name\n    fixed_template_path = os.path.join('/tmp/', fixed_template_file_name)\n    fixed_template_cmd = [packer_cmd, \"fix\", local_template_path]\n    out = execute_packer_command(fixed_template_cmd)\n    fixed_template_file = open(fixed_template_path, \"w\")\n    fixed_template_file.write(out)\n    fixed_template_file.close()\n    fixed_s3_key = os.path.join(s3_path_head, fixed_template_file_name)\n    upload_file(fixed_template_path, fixed_s3_key, bucket_name)\n    print (\"Template fixed from \" + s3_template_path + \" to \" + fixed_s3_key)\n    return out, fixed_s3_key\n\ndef run_packer_handler(events, context):\n  current_dir = get_current_dir()\n  packer_cmd = current_dir + \"/\" + \"packer\"\n  s3_template_path = events['TemplateFileName']\n  bucket_name = events['TemplateS3BucketName']\n  mode = events['Mode']\n  force_build = events['Force']\n  s3_path_head, file_name = os.path.split(s3_template_path)\n  local_template_path = os.path.join(\"/tmp/\", file_name)\n  download_file(local_template_path, s3_template_path, bucket_name)\n\n  os.system(\"chmod u=x \" + packer_cmd)\n\n  fixed_template_path = \"\"\n  ret_bucket_value = \"\"\n  if mode == \"Validate\":\n      out = validate_template(packer_cmd, local_template_path)\n  elif mode == \"Build\":\n      out = build_template(packer_cmd, local_template_path, force_build)\n  elif mode == \"Fix\":\n      out, fixed_template_path = fix_template(packer_cmd, local_template_path, s3_template_path, bucket_name)\n      ret_bucket_value = bucket_name\n  return {\n    'output': json.dumps(out),\n    'fixed_template_key': fixed_template_path,\n    's3_bucket': ret_bucket_value\n  }\n"
+    },
+    "isEnd" : true,
+    "outputs" : [ {
+      "Name" : "output",
+      "Selector" : "$.Payload.output",
+      "Type" : "String"
+    }, {
+      "Name" : "fixed_template_key",
+      "Selector" : "$.Payload.fixed_template_key",
+      "Type" : "String"
+    }, {
+      "Name" : "s3_bucket",
+      "Selector" : "$.Payload.s3_bucket",
+      "Type" : "String"
+    } ]
+  } ],
+  "files" : {
+    "packer_1.7.2_linux_amd64.zip" : {
+      "checksums" : {
+        "sha256" : "9429c3a6f80b406dbddb9b30a4e468aeac59ab6ae4d09618c8d70c4f4188442e"
+      },
+      "size" : 28738303
+    }
+  }
+}
