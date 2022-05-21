@@ -6,11 +6,15 @@
 - a Service to access the scheduler
 - one or more Pods containing dask workers.
 
+This requires additional [kubernetes permissions](https://kubernetes.dask.org/en/latest/kubecluster.html#role-based-access-control-rbac).
+
 ## Troubleshooting
 
 ## Orphaned dask pods
 
-dask pods can become orphaned when dask kubernetes fails after creating them. It doesn't tidy up.
+Dask worker Pods that exit cleanly will end up in the `Completed` state and will not be deleted. Kubernetes will eventually [garbage collect them](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-garbage-collection) but the default threshold is 12500 terminated pods, and not likely to be hit. Unfortunately the workers are not Jobs, so the [TTL-after-finished controller](https://kubernetes.io/docs/concepts/workloads/controllers/ttlafterfinished/) will not garbage collection them.
+
+Dask pods can also end up in the `Error` state if they don't [shutdown cleanly](https://github.com/dask/distributed/issues/6261).
 
 ### Missing dependency kubectl (caused by socket.gaierror: [Errno -2] Name or service not known)
 

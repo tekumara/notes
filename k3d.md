@@ -191,8 +191,6 @@ docker exec -it k3d-$clustername-serverlb cat /etc/nginx/nginx.conf
 
 Ports can be mapped directly rather than via the loadbalancer proxy using the suffix `direct` in a node filter. Unlike proxy ports, these cannot be changed after the cluster has been created.
 
-To expose a port after the 
-
 See
 
 - [v5.0.0 release notes](https://github.com/rancher/k3d/blob/5a00a39323ee8d72da17b112afd86444b3cc4b30/CHANGELOG.md#v500) which describes the node filter syntax

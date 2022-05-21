@@ -33,15 +33,15 @@ Prefect [will delete jobs](https://github.com/PrefectHQ/prefect/blob/master/src/
 
 ## Dask
 
-The Prefect DaskExecutor creates a prefect-job pod which uses [dask-kubernetes](https://github.com/dask/dask-kubernetes) to start an ephemeral Dask cluster using [KubeCluster](https://kubernetes.dask.org/en/latest/kubecluster.html). This requires additional [kubernetes permissions](https://kubernetes.dask.org/en/latest/kubecluster.html#role-based-access-control-rbac). For more info see [dask-kubernetes](dask-kubernetes.md).
+The Prefect DaskExecutor creates a prefect-job pod which uses [dask-kubernetes](https://github.com/dask/dask-kubernetes) to start an ephemeral Dask cluster. For more info see [dask-kubernetes](dask-kubernetes.md).
 
-Dask worker Pods that exit cleanly will end up in the `Completed` state and will not be deleted like Prefect jobs (see above). Kubernetes will eventually [garbage collect them](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-garbage-collection) but the default threshold is 12500 terminated pods, and not likely to be hit. Unfortunately the workers are not Jobs, so the [TTL-after-finished controller](https://kubernetes.io/docs/concepts/workloads/controllers/ttlafterfinished/) will not garbage collection them.
+Dask worker Pods that exit cleanly will end up in the `Completed` state and will not be deleted like Prefect jobs (see above).
 
 If the Prefect Job Pod dies and restarts, it will attempt to create a new Dask cluster. The existing dask cluster will still exist executing tasks.
 
 ### Rerun tasks
 
-Dask may [run tasks multiple times](https://distributed.dask.org/en/stable/limitations.html#assumptions-on-functions-and-data). This will occur when a worker holding an [intermediate results dies](https://distributed.dask.org/en/latest/memory.html#resilience). This can happen as part of normal operation, particularly when using adaptive scaling. Dask's design works well for pure computation, but requires tasks with side-effects (eg: a task writing results to storage) to be idempotent. See [this reproduction](https://github.com/dask/distributed/issues/2935) of the behaviour. This is less-likely to happen if the side-effect is the terminal task, as it won't have any intermediate results that require recomputing. But it could be retried if the worker dies part way through the task.
+Dask may [run tasks multiple times](https://distributed.dask.org/en/stable/limitations.html#assumptions-on-functions-and-data). This will occur when a worker holding an [intermediate results dies](https://distributed.dask.org/en/latest/memory.html#resilience). This can happen as part of normal operation, particularly when using adaptive scaling. Dask's design works well for pure computation, but requires tasks with side-effects (eg: a task writing results to storage) to be idempotent. See [this reproduction](https://github.com/dask/distributed/issues/2935) of the behaviour. This is less-likely to happen if the side-effect is the terminal task, as it won't have any intermediate results that require recomputing. But it could still be retried if the worker dies part way through the task.
 
 Even though in Prefect the task has max_retires = 0, this still occurs because of how Dask is designed. Instead, Prefect offers caching and version locking to mitigate this, see [#5485](https://github.com/PrefectHQ/prefect/issues/5485#issuecomment-1107100864).
 
