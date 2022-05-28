@@ -1,6 +1,45 @@
 # buildkit in kubernetes
 
-## vmware-tanzu/buildkit-cli-for-kubectl
+## [buildx create](https://docs.docker.com/engine/reference/commandline/buildx_create)
+
+Define a [rootless kubernetes builder instance](https://docs.docker.com/engine/reference/commandline/buildx_create/#driver-opt) in the default kube namespace with two replicas:
+
+```
+docker buildx create --driver kubernetes --name playlab \
+    --driver-opt rootless=true --driver-opt replicas=2 \
+    --driver-opt requests.cpu=1000m --driver-opt requests.memory=1G \
+    --driver-opt limits.cpu=1000m --driver-opt limits.memory=1G
+```
+
+A [Kubernetes Deployment](https://github.com/docker/buildx/blob/add4301ed6dc3bdd80375e6f8abd85098a91d351/driver/kubernetes/manifest/manifest.go#L48) is created on first use:
+
+```
+docker buildx --builder mybuilder build .
+```
+
+To talk to the instance, the docker client execs `buildctl dial-stdio` inside the pod and streams stdin/out.
+
+Watch the build process:
+
+```
+kubectl exec -it mybuilder0-57966d47cb-z99fs -- ps -o pid,ppid,time,args
+```
+
+The pods, and their cache, remain until killed.
+
+Delete builder instance which removes the Kubernetes Deployment:
+
+```
+docker buildx rm mybuilder
+```
+
+## [examples/kubernetes](https://github.com/moby/buildkit/tree/master/examples/kubernetes)
+
+```
+kubectl apply -f pod.rootless.yaml
+```
+
+## BuildKit CLI for kubectl
 
 Create builder instance in current namespace
 
@@ -8,7 +47,9 @@ Create builder instance in current namespace
 kubectl buildkit create
 ```
 
-See [vmware-tanzu/buildkit-cli-for-kubectl](https://github.com/vmware-tanzu/buildkit-cli-for-kubectl)
+References
+- [vmware-tanzu/buildkit-cli-for-kubectl](https://github.com/vmware-tanzu/buildkit-cli-for-kubectl)
+- [YouTube: BuildKit CLI for kubectl: A New Way to Build Container Images](https://www.youtube.com/watch?v=vTh6jkW_xtI)
 
 ## See also
 

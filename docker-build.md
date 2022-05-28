@@ -126,7 +126,7 @@ Buildx has [two export modes](https://github.com/moby/buildkit/issues/752):
 - `type=registry,mode=max`: export all layers of all intermediate steps in multi-stage builds
 - `mode=min`: export layers for the resulting images and only metadata for the intermediate steps (which is somewhat useful).
 
-When exporting the cache from buildx, the registry must support cache [manifest lists](https://docs.docker.com/registry/spec/manifest-v2-2/#manifest-list), see [this discussion](https://github.com/moby/buildkit/issues/699#issuecomment-432902188). [ECR](https://github.com/aws/containers-roadmap/issues/876) and [Artifactory](https://www.jfrog.com/jira/browse/RTFACT-26179) don't.
+When exporting the cache from buildx, the registry must support cache [manifest lists](https://docs.docker.com/registry/spec/manifest-v2-2/#manifest-list), see [this discussion](https://github.com/moby/buildkit/issues/699#issuecomment-432902188). [ECR](https://github.com/aws/containers-roadmap/issues/876) doesn't and [Artifactory > 7.31.10](https://www.jfrog.com/jira/browse/RTFACT-26179) does. See a more complete list of [cache support here](https://docs.earthly.dev/docs/guides/shared-cache) and a comparison between [inline and explicit caching](https://docs.earthly.dev/docs/guides/shared-cache#comparison-between-inline-and-explicit-cache).
 
 ### docker buildx bake
 
