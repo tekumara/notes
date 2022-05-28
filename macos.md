@@ -62,3 +62,15 @@ Finding available software
 Downloaded Command Line Tools for Xcode
 Installing Command Line Tools for Xcode
 ```
+
+## You are making changes to your Certificate Trust Settings
+
+Look at the process tree for the `/usr/bin/security` process to see what's calling it, eg:
+
+```
+ps -Af | grep "security"
+pstree -p 17714
+```
+
+You are making changes to your Certificate Trust Settings = cert is being deleted
+You are making changes to the System Certificate Trust Settings = cert is being added

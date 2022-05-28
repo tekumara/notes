@@ -1,4 +1,4 @@
-# kim
+# [kim](https://github.com/rancher/kim)
 
 ```
 kim builder install --selector kubernetes.io/hostname=k3d-kim-server-0

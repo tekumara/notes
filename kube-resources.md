@@ -2,6 +2,8 @@
 
 Requests are what the container is guaranteed. Limits are the maximum amount containerd/docker will allow the container to use.
 
+Requests cannot be greater than limits. If requests are unspecified, then requests = limits. If limits are unspecified then they default to the [LimitRange in the namespace](https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/cpu-default-namespace/).
+
 Pods are scheduled based on requests not limits. The scheduler and kubelet ensures the sum of requests of all containers is within the node's allocatable capacity.
 
 Memory:
