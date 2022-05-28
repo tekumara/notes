@@ -1,5 +1,35 @@
 # aws s3 inventory
 
+## table creation
+
+parquet example:
+
+```
+CREATE EXTERNAL TABLE inv(
+         bucket string,
+         key string,
+         size bigint,
+         last_modified_date bigint,
+         encryption_status string,
+         storage_class string,
+         intelligent_tiering_access_tier string
+) PARTITIONED BY (
+        dt string
+)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe'
+  STORED AS INPUTFORMAT 'org.apache.hadoop.hive.ql.io.SymlinkTextInputFormat'
+  OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.IgnoreKeyTextOutputFormat'
+  LOCATION 's3://inventory-bucket/source-bucket/config-name/hive/'
+  TBLPROPERTIES (
+    "projection.enabled" = "true",
+    "projection.dt.type" = "date",
+    "projection.dt.format" = "yyyy-MM-dd-HH-mm",
+    "projection.dt.range" = "2022-01-01-00-00,NOW",
+    "projection.dt.interval" = "1",
+    "projection.dt.interval.unit" = "DAYS"
+  );
+```
+
 See [this page](https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-inventory-athena-query.html) to create the athena tables.
 
 ```sql
@@ -15,10 +45,10 @@ WITH inventory AS (
 		) as base,
 		url_decode(key) as key,
 		cast(size as bigint) / 1000 as "size_kb",
-		from_iso8601_timestamp(last_modified_date) as last_modified_date,
-        -- partition key
+		from_unixtime(last_modified_date/1000) as last_modified_date,
+		-- partition key
 		dt
-	from inventory_my_bucket
+	from inv
 ),
 inventory_fragments AS (
 	select *,
@@ -39,8 +69,10 @@ select reduce(
 	sum(size_kb) as sum_size_kb,
 	min(last_modified_date) as min_last_modified_date
 from inventory_fragments
-where last_modified_date < date_add('day', -215, now())
-	and dt = '2022-05-19-00-00'
+where last_modified_date < date_add('day', -35, now()) and last_modified_date > date_add('day', -215, now())
+	and dt = '2022-05-22-00-00'
 group by fragments
 order by fragments asc
 ```
+
+When the data is in CSV format, `last_modified_date` is a string so use `from_iso8601_timestamp(last_modified_date) as last_modified_date` instead.

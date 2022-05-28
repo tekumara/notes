@@ -2,9 +2,10 @@
 
 ## vs SSM parameter store
 
-Prefered over SSM parameter store because
+[Prefered over SSM parameter store](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_CheatSheet.html#411-aws) because
 
 - the steady limit for SSM GetParameter is 40 and burst is 100 transactions per second. You can enable the `high-throughput-enabled` setting to increase the limit to 1,000 TPS (which costs $0.05 per 10,000 Parameter Store API interactions)
+- cross account access and resource policies
 
 AWS Secrets Manager provide a built-in framework for rotating credentials! And allows more 'JSON'-y data instead of strictly a single 'parameter' (yes I know you can put json in there too)
 
