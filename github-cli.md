@@ -24,10 +24,9 @@ gh repo sync git@github.enterprise:tekumara/awesome-app.git
 
 ## Authenticate Git with your GitHub credentials
 
-During authentication you'll be asked `Authenticate Git with your GitHub credentials`? 
+During authentication you'll be asked `Authenticate Git with your GitHub credentials`?
 
-[This feature](https://github.com/cli/cli/pull/2449) generates a password, and stores it in the default git credential helper, eg: `credential-osxkeychain` on Mac, which stores the token as a keychain item named after the hostname, eg: `github.com`
-
+[This feature](https://github.com/cli/cli/pull/2449) generates a oauth token, and stores it in the default git credential helper, eg: on Mac this is `credential-osxkeychain` which stores the token as a keychain item named after the hostname, eg: `github.com`
 
 ## GitHub CLI as git credential helper
 

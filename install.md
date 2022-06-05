@@ -1,6 +1,6 @@
 # install
 
-install will set ownership and permissions correctly. tar files will have usual file owners so using install will correct this. It can also:
+install will set owner and group to root and correct permissions (useful for tar files will usual file owners). It can also:
 
 - create leading directories
 - preserve previous file as .old
