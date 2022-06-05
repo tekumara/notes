@@ -15,7 +15,8 @@ Copy
 - `Y` copy row as tsv to system clipboard
 - `zY` copy cell to system clipboard
 
-- `/` search rows by regex applied to current column
+- `/` forward search rows by regex applied to current column
+- `?` backward search rows by regex applied to current column
 - `g/` search rows by regex applied to all visible columns
 
 Selection:

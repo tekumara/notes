@@ -327,3 +327,11 @@ BUCKET=awesome-bucket && aws s3api put-bucket-policy --bucket $BUCKET --policy '
     ]
 }'
 ```
+
+## Access a public bucket without credentials
+
+eg:
+
+```
+aws s3 ls s3://tpc-h-csv --no-sign-request
+```
