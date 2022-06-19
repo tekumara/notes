@@ -16,7 +16,8 @@
 `lsof -c ssh-agent` files ssh-agent currently has open
 `sudo opensnoop -f ~/.ssh/github` tail file opens
 `sudo fs_usage -w` tail filesystem sys calls and page faults (includes fstat64 calls)
-`sudo fs_usage -w -f filesys mds` watch filesystem sys calls made by the `mds_stores` process
+`sudo fs_usage -w -f filesys` watch filesystem sys calls
+`sudo fs_usage -w -f filesys | grep mds` watch filesystem sys calls made by the `mds_stores` process
 `sudo iosnoop -n python3` tail disk I/O (block, size, filename) for the python3 process. NB: does not show `stat64` calls, or cached file access.
 
 ## Processes
@@ -39,7 +40,7 @@ To enable dtrace:
 - Reboot the mac
 - Hold ⌘R during reboot to enter the Recovery OS.
 - From the Utilities menu, run Terminal
-- Run `csrutil enable --without dtrace` which should report "This is an unsupported configuration".
+- Run `csrutil enable --without dtrace` which should report "Requesting an unsupported configuration".
 
 ## References
 

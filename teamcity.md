@@ -83,6 +83,15 @@ I've found it also doesn't trigger at all without a snapshot dependency (still t
 
 `sequence` is part of [teamcity-pipelines-dsl](https://github.com/JetBrains/teamcity-pipelines-dsl) and was merged into TeamCity version 2019.2 as [`sequential`](https://www.jetbrains.com/help/teamcity/kotlin-dsl.html#Build+Chain+DSL+Extension).
 
+## Build badges
+
+
+See [Get Build Status Icon REST API](https://www.jetbrains.com/help/teamcity/rest/get-build-status-icon.html)
+
+
+
+
+
 ## Troubleshooting
 
 ### Verbose build logs
