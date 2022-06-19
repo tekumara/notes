@@ -10,12 +10,13 @@ On first usage, you'll be unauthenticated and asked to [authorise the GitHub for
 1. On the Success page popup click `Open Visual Studio Code` to be taken back to VS Code.
 1. When VS Code asks `Allow an extension to open this URI?` click `Allow`.
 
-Once complete, the Github Authentication process generates two keychain items:
+Once complete, the Github Authentication process generates the keychain item `vscodevscode.github-authentication` which is used to generate session tokens.
 
-- `vscodevscode.github-authentication`: used by the VS Code Github Authentication process to generate session tokens.
-- `github.com`: a session token used by `credential-osxkeychain`, the [macOS Keychain credential helper](https://docs.github.com/en/get-started/getting-started-with-git/updating-credentials-from-the-macos-keychain). This allows `git` commands to authenticate to [https://github.com](https://github.com) URLs as you.
+It also generates a session token which is passed to `credential-osxkeychain` for storing as the `github.com` keychain item. This allows `git` commands to authenticate to [https://github.com](https://github.com) URLs as you.
 
 The logs for the authentication process are visible in `Output - GitHub Authentication`.
+
+If the `github.com` keychain item is deleted, the VS Code Github Authentication process will regenerate it.
 
 ## Signing out
 
@@ -24,25 +25,3 @@ In VS Code, click the profile icon in the bottom left. Choose your GitHub accoun
 This invalidates GitHub for VSCode credentials (ie: the `vscodevscode.github-authentication` keychain item) on your machine.
 
 Note the GitHub for VSCode OAuth app will still be authorized. To revoke it, visit [Applications settings](https://github.com/settings/applications).
-
-## macOS Keychain credentials
-
-To fetch keychain creds:
-
-```
-echo | git credential-osxkeychain get
-```
-
-If the `github.com` keychain item is deleted, the VS Code Github Authentication process will regenerate it.
-
-To delete:
-
-```
-git credential-osxkeychain erase
-host=github.com
-protocol=https
-```
-
-## Git Credential Manager
-
-The [Git Credential Manager](https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git#git-credential-manager) is an alternative authenticator. Similar to VS Code, it requires authorising an OAuth app and uses that to generate credentials for your github.com user.
