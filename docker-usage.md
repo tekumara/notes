@@ -42,6 +42,8 @@ docker run --rm -it --entrypoint /bin/bash -v /run/host-services/ssh-auth.sock:/
 
 The container will need to run as root otherwise you'll get `Error connecting to agent: Permission denied`
 
+`docker exec -it -e AWS_DEFAULT_REGION -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_SESSION_TOKEN CONTAINER bash` run bash with aws creds from host
+
 ## Modify existing container config
 
 Docker stores container metadata in `/var/lib/docker/containers/[CONTAINER_ID]/`. On a Mac, Docker runs as an LinuxKit xhyve process. You need to connect to that first and then proceed to modify the container metadata ([ref](https://www.softwareab.net/wordpress/docker-macosx-modify-hostconfig-existing-container/))

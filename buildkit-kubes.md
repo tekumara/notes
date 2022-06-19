@@ -1,5 +1,7 @@
 # buildkit in kubernetes
 
+Install buildctl: `brew install buildkit`
+
 ## [buildx create](https://docs.docker.com/engine/reference/commandline/buildx_create)
 
 Define a [rootless kubernetes builder instance](https://docs.docker.com/engine/reference/commandline/buildx_create/#driver-opt) in the default kube namespace with two replicas:
@@ -35,9 +37,24 @@ docker buildx rm mybuilder
 
 ## [examples/kubernetes](https://github.com/moby/buildkit/tree/master/examples/kubernetes)
 
+## Pod exec
+
+Create a [pod](https://github.com/moby/buildkit/blob/master/examples/kubernetes/pod.rootless.yaml):
+
 ```
 kubectl apply -f pod.rootless.yaml
 ```
+
+Connect via the exec buildctl stdio method:
+
+```
+buildctl --addr kube-pod://buildkitd build --frontend dockerfile.v0 --local context=/path/to/dir --local dockerfile=/path/to/dir
+```
+
+## Service
+
+
+
 
 ## BuildKit CLI for kubectl
 
@@ -48,9 +65,11 @@ kubectl buildkit create
 ```
 
 References
+
 - [vmware-tanzu/buildkit-cli-for-kubectl](https://github.com/vmware-tanzu/buildkit-cli-for-kubectl)
 - [YouTube: BuildKit CLI for kubectl: A New Way to Build Container Images](https://www.youtube.com/watch?v=vTh6jkW_xtI)
 
 ## See also
 
-[kim](kim.md)
+- [kim](kim.md)
+- [buildkitd.toml](https://github.com/moby/buildkit/blob/master/docs/buildkitd.toml.md) for configuration options
