@@ -17,6 +17,24 @@ To debug inside dependencies, add `"justMyCode": false` to the launch config in 
 }
 ```
 
+To run scripts installed in the virtualenv, [explicitly add the venv's bin dir to the path](https://github.com/microsoft/vscode-python/issues/4300#issuecomment-1146749781):
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "testing",
+      "type": "python",
+      "request": "launch",
+      "purpose": ["debug-test"],
+      "justMyCode": false
+      "env": { "PATH": "${workspaceFolder}/.venv/bin"}
+    }
+  ]
+}
+```
+
 To run a fastapi/uvicorn app
 
 ```json
@@ -66,22 +84,22 @@ python -m debugpy --listen 62888 --wait-for-client -m pytest -k test_flow
 Connect to the debugger using an attach config:
 
 ```json
-        {
-            "name": "Python: Remote Attach",
-            "type": "python",
-            "request": "attach",
-            "connect": {
-                "host": "localhost",
-                "port": 62888
-            },
-            "pathMappings": [
-                {
-                    "localRoot": "${workspaceFolder}",
-                    "remoteRoot": "."
-                }
-            ],
-            "justMyCode": false
-        }
+{
+  "name": "Python: Remote Attach",
+  "type": "python",
+  "request": "attach",
+  "connect": {
+    "host": "localhost",
+    "port": 62888
+  },
+  "pathMappings": [
+    {
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "."
+    }
+  ],
+  "justMyCode": false
+}
 ```
 
 ## Breakpoint in file that does not exist

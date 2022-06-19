@@ -147,16 +147,6 @@ If you start with `python3 -sE` then:
 
 However, dist-packages directories will still be on the path.
 
-### ImportError: No module named X
-
-If you get the above when running `pytest` from the command line, run via the python interpreter:
-
-```
-python -m pytest [...]
-```
-
-This will add the current directory to `sys.path`, see [Calling pytest through python -m pytest](https://docs.pytest.org/en/latest/usage.html#calling-pytest-through-python-m-pytest)
-
 ## importlib_metadata.PackageNotFoundError: No package metadata was found for package_X
 
 Can occur when the `package_X.egg-info` directory for a linked editable package is missing. Reinstall the package, eg: `pip install -e package_X`

@@ -41,3 +41,16 @@ If the interpreter selection fails, enable debug logging in _settings.json_:
 ```
 "python.logging.level": "debug"
 ```
+
+## Testing
+
+To configure pytest use _pyproject.toml_ or [vscode configuration options](https://code.visualstudio.com/docs/python/testing#_pytest-configuration-settings):
+
+eg: to run pytest against _tests/_ and stream stdout:
+
+```
+    "python.testing.pytestArgs": [
+        "tests",
+        "-s"
+    ],
+```
