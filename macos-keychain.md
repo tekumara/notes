@@ -1,5 +1,10 @@
 # keychain
 
+The default key chains are:
+
+- `login` local to the device. Unlocked when you login. The password is your mac login password. Located at _~/Library/Keychains/login.keychain-db_.
+- `Local Items` - synced to iCloud if `Apple ID > Keychain` is checked. Available on all devices that sync, eg: on Iphone the application passwords will be accessible via `Settings > Passwords`. Includes Safari passwords, credit cards, Wi-Fi (aka Airport network) passwords, and SSH key file paths and their passphrase (if any). [Implemented differently](https://apple.stackexchange.com/a/316220/224585) from traditional keychains, as an [encrypted sqlite database](https://github.com/n0fate/chainbreaker/issues/11#issuecomment-525326166). Not accessible from the `security` cli tool.
+
 Set the timeout on the aws-vault keychain to 9 hours
 
 ```
@@ -12,7 +17,7 @@ To fetch the aws-vault oidc token
 security find-generic-password -D "aws-vault oidc token" -w
 ```
 
-To see details of all items in the aws-vault keychain
+To see details of all items for the aws-vault service (aka Where in the UI):
 
 ```
 security find-generic-password -s aws-vault
@@ -27,7 +32,7 @@ security find-internet-password -s github.com -w
 Create a new keychain
 
 ```
-security create-keychain  $HOME/Library/Keychains/delme.keychain-db
+security create-keychain $HOME/Library/Keychains/delme.keychain-db
 ```
 
 List the keychain search list
@@ -49,8 +54,6 @@ A keychain can be used once unlocked. If a keychain is locked you'll be prompted
 ```
 aws-vault wants to use the "aws-vault" keychain
 ```
-
-NB: the `login` keychain is unlocked when you login.
 
 When an keychain is unlocked and an application wants to use an item in the keychain you'll be prompted, eg:
 
