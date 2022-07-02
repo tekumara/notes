@@ -42,7 +42,7 @@ docker run --rm -it --entrypoint /bin/bash -v /run/host-services/ssh-auth.sock:/
 
 The container will need to run as root otherwise you'll get `Error connecting to agent: Permission denied`
 
-`docker exec -it -e AWS_DEFAULT_REGION -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_SESSION_TOKEN CONTAINER bash` run bash with aws creds from host
+`docker run --rm -it -e AWS_DEFAULT_REGION -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_SESSION_TOKEN --entrypoint /bin/bash CONTAINER` run bash with aws creds from host
 
 ## Modify existing container config
 
@@ -62,6 +62,21 @@ Delete a volume
 docker volume rm $volume
 ```
 
+List image id and its overlay dirs:
+
+```
+docker inspect -f $'{{.Id}}\t{{.GraphDriver.Data.LowerDir}}' $(docker images -aq)
+docker inspect $(docker images -aq) |  jq -r 'map([.Id, .RepoTags, .GraphDriver.Data]) | .[] | "\(.[0])\t\(.[1])\t\(.[2])"'
+``
+
+List containers by name and their overlay dirs:
+```
+
+docker inspect -f $'{{.Name}}\t{{.GraphDriver.Data}}' $(docker ps -aq)
+docker inspect $(docker ps -aq) |  jq -r 'map([.Name, .GraphDriver.Data]) | .[] | "\(.[0])\t\(.[1])"'
+
+```
+
 ## Troubleshooting
 
 ### ERROR: error while removing network: network X id Y has active endpoints
@@ -76,3 +91,4 @@ Either:
 
 - Use `/bin/bash` or [tini](https://github.com/krallin/tini) as an entrypoint
 - Run the container with an init (defaults to tini), eg: `docker run --init` or if using docker compose set `init: true`.
+```

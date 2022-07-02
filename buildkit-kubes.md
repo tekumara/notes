@@ -7,7 +7,7 @@ Install buildctl: `brew install buildkit`
 Define a [rootless kubernetes builder instance](https://docs.docker.com/engine/reference/commandline/buildx_create/#driver-opt) in the default kube namespace with two replicas:
 
 ```
-docker buildx create --driver kubernetes --name playlab \
+docker buildx create --driver kubernetes --name kubebkd \
     --driver-opt rootless=true --driver-opt replicas=2 \
     --driver-opt requests.cpu=1000m --driver-opt requests.memory=1G \
     --driver-opt limits.cpu=1000m --driver-opt limits.memory=1G
