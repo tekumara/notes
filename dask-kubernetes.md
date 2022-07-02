@@ -10,6 +10,18 @@ This requires additional [kubernetes permissions](https://kubernetes.dask.org/en
 
 ## Troubleshooting
 
+List scheduler pod
+
+```
+kubectl get pods -l dask.org/component=scheduler
+```
+
+List worker pods
+
+```
+kubectl get pods -l dask.org/component=worker
+```
+
 ## Orphaned dask pods
 
 Dask worker Pods that exit cleanly will end up in the `Completed` state and will not be deleted. Kubernetes will eventually [garbage collect them](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-garbage-collection) but the default threshold is 12500 terminated pods, and not likely to be hit. Unfortunately the workers are not Jobs, so the [TTL-after-finished controller](https://kubernetes.io/docs/concepts/workloads/controllers/ttlafterfinished/) will not garbage collection them.

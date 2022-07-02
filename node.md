@@ -51,3 +51,11 @@ To install pyright into _$NODE_PATH$_:
 ```
 npm -g pyright
 ```
+
+## node prefix
+
+`node -p process.config.variables.node_prefix` will show the prefix baked into node, eg: /usr/, in which case node will look for global modules in /usr/node_modules.
+
+This may be [different from the npm](https://github.com/nodejs/node/issues/18024#issuecomment-355848073) (see `npm config get prefix`).
+
+You can override the global node_modules location using, eg: `NODE_PATH=/usr/local/lib/node_modules`

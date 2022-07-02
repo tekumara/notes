@@ -1,7 +1,10 @@
 # install
 
-install will set owner and group to root and correct permissions (useful for tar files will usual file owners). It can also:
+install will copy a file and and set mode to rwxr-xr-x (0755).
 
-- create leading directories
-- preserve previous file as .old
-- correctly copy when the file is in use
+Can also
+
+- `-d` create leading directories
+- `-b` will preserve previous file as .old
+- `-S` safe copy will use a temp file and rename
+- `-o` set the owner on the file after copy
