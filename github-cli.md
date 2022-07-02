@@ -16,11 +16,13 @@ On macOS the [config dir is _~/.config/gh_](https://github.com/cli/cli/blob/25b6
 
 If `GITHUB_TOKEN` or `GITHUB_ENTERPRISE_TOKEN` env vars are specified they'll take precedence over stored oauth tokens.
 
-Sync the fork with it's parent
+Sync the fork default branch (ie: master/main) with it's parent:
 
 ```
-gh repo sync git@github.enterprise:tekumara/awesome-app.git
+gh repo sync git@github.enterprise:tekumara/my-fork.git
 ```
+
+This will update the fork on github, and fetch origin/main to match the parent repo. You'll need to merge your local branch with the origin.
 
 ## Authenticate Git with your GitHub credentials
 
