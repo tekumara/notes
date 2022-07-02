@@ -1,5 +1,11 @@
 # aws s3 inventory
 
+Describe inventory config
+
+```
+aws s3api get-bucket-inventory-configuration --bucket $bucket --id $name
+```
+
 ## table creation
 
 parquet example:

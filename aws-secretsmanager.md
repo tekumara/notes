@@ -103,3 +103,11 @@ When accessing the secret use its ARN, otherwise you'll be trying to access a se
 ```
 
 See [How do I share AWS Secrets Manager secrets between AWS accounts?](https://aws.amazon.com/premiumsupport/knowledge-center/secrets-manager-share-between-accounts/)
+
+### No resource-based policy allows the secretsmanager:GetSecretValue action
+
+Make sure the `AWS_DEFAULT_REGION` env var matches the key, otherwise you may get:
+
+```
+arn:aws:sts::123456789012:assumed-role/app-role/MySession is not authorized to perform: secretsmanager:GetSecretValue on resource: arn:aws:secretsmanager:us-east-1:111111122222:secret:top-secret
+```
