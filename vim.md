@@ -60,11 +60,14 @@ If a multi-line paste is appearing on a single line, or auto-indenting is being 
 ## Copy/cut paste
 
 visual selection (by line) - `V`  
+select whole file - `ggVG` (gg moves to first line, V starts visual selection, G jumps to last line)
 copy - `y`
+copy to system clipboard - `"*y`
 copy line - `yy`  
 cut line - `dd`  
 paste before - `P`  
 paste after - `p`
+paste before from system clipboard - `"*p`
 
 `ciw` to replace the word under the cursor ([ref](https://stackoverflow.com/questions/1379198/how-to-delete-a-word-and-go-into-insert-mode-in-vim))
 
