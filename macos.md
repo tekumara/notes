@@ -19,6 +19,10 @@ Also check Disk Utility. Try and manually mount it from there. If you get `com.a
 ⌥ Option (or Alt)
 ⌃ Control (or Ctrl)
 
+## Delete
+
+Fn + Delete
+
 ## Temperature and fan speed
 
 ```
