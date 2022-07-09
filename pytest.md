@@ -1,9 +1,15 @@
 # pytest
 
-Stream stdout whilst running
+Stream stdout whilst running (equivalent to --capture=no)
 
 ```
 pytest -s
+```
+
+Stream stdout include log level INFO or greater (defaults to WARNING) and include time in log message:
+
+```
+pytest -s --log-cli-level=INFO --log-cli-format="%(asctime)s %(levelname)s %(message)s"
 ```
 
 List test names
