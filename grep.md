@@ -61,8 +61,4 @@ grep -v -e ERROR -e WARN
 
 ## Searching on Mac OS file return all lines
 
-The can happen if the file has old Mac style line breaks (CR only), as opposed to unix line breaks (LF only).
-
-Mac line breaks are indicated by a single ^M (carriage return, 0xd) in Vim, or try `file filename` and you will see something like `E-MTAB-1733.tsv: ASCII text, with CR line terminators`
-
-To fix, see [[Fix Mac Line Ends]]
+The can happen if the file has old Mac style line breaks (CR only), as opposed to unix line breaks (LF only). See [linebreaks.md](linebreaks.md).
