@@ -16,12 +16,12 @@ Dictionary applied to all column types (string, double, float etc.). When using 
 
 The dictionary is at the row group level at the start of each column chunk.
 
-Decreasing the row group size will decrease the cardinality of possible values and so make it more likely that a dictionary will be used. 
+Decreasing the row group size will decrease the cardinality of possible values and so make it more likely that a dictionary will be used.
 
 ## Organisation
 
-* Partition by low cardinality fields - because split planning because expensive with more files 
-* Sort by high cardinality predicate fields
+- Partition by low cardinality fields - because split planning because expensive with more files
+- Sort by high cardinality predicate fields
 
 ## References
 
@@ -29,5 +29,3 @@ Decreasing the row group size will decrease the cardinality of possible values a
 https://www.safaribooksonline.com/library/view/strata-hadoop/9781491944660/video282760.html
 
 [Parquet performance tuning: The missing guide - Ryan Blue (Netflix) - Part 2 (30:04 mins)](https://www.safaribooksonline.com/library/view/strata-hadoop/9781491944660/video282760.html)
-
-
