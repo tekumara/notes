@@ -105,14 +105,12 @@ On load, if the status bar says "converted" ....
 
 ## Show line ends
 
-`:set list` to see line-endings.  
+`:set list` to show new lines a `$`
+`:e ++ff=unix` to show carriage returns as `^M` (reopens dos file in unix format). Oor start vim in binary mode, eg: `vim -b`.  
 `:set nolist` to go back to normal.
+`:set ff` to see file type in status bar (eg: unix, dos)
 
-While I don't think you can see \n or \r\n in vi, you can see which type of file it is (UNIX, DOS, etc.) to infer which line endings it has...
-
-`:set ff`
-
-[ref](https://stackoverflow.com/questions/3569997/view-line-endings-in-a-text-file)
+[ref](https://stackoverflow.com/questions/3860519/see-line-breaks-and-carriage-returns-in-editor#comment23046314_3860537)
 
 ## Vim buffers
 
