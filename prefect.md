@@ -7,6 +7,7 @@ Prefect should be invisible. It adds workflow semantics to python functions by c
 - retries and failure handling
 - scheduling
 - a state machine for recording tasks [states](https://docs.prefect.io/core/concepts/states.html)
+- state handling for state transitions of [tasks](https://docs.prefect.io/core/concepts/tasks.html#state-handlers) and [flows](https://docs.prefect.io/core/concepts/flows.html#state-handlers)
 - error reporting and visibility into task run states
 - error handling by triggering tasks from Failed states
 - concurrent execution defined by a DAG (aka Flow) across multiple functions

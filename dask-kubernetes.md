@@ -41,3 +41,7 @@ RBAC needs to be configured, see the [RBAC](https://kubernetes.dask.org/en/lates
 ### kubernetes_asyncio.config.config_exception.ConfigException: Invalid kube-config file. Expected key current-context in kube-config
 
 KubeCluster will use the current cluster if running in one, or otherwise will expect a kube-config file. If there is no kube-config file it will produce this error.
+
+### KeyError: 'clusters'
+
+Occurs when the kubernetes client tries to read a kube-config file that is missing the `clusters` keywords.
