@@ -131,7 +131,7 @@ Make sure `eval "$(pyenv init -)"` has been run first.
 This can occur when upgrading to a new version of pyenv. To fix, rebuild the shims with `pyenv rehash`
 
 > ModuleNotFoundError: No module named 'virtualenvwrapper'
-> virtualenvwrapper.sh: There was a problem running the intiialization hooks
+> virtualenvwrapper.sh: There was a problem running the initialization hooks
 
 This can occur when running _virtualenvwrapper.sh_ outside a pyenv python environment. Run `pyenv which virtualenvwrapper.sh` to locate _virtualenvwrapper.sh_, eg:
 
