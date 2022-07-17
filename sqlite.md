@@ -7,3 +7,4 @@
 
 `.tables` list tables  
 `.schema mytable` show CREATE statement for mytable
+`.headers ON` to show column names in select results

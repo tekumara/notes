@@ -43,6 +43,12 @@ Create a POST query, and send form data in the body as Content-Type multipart/fo
 curl -F "text=<-" http://localhost:8090/debug/termExtraction
 ```
 
+Create a POST query, with a JSON body:
+
+```bash
+curl -H "Content-Type: application/json" -X POST --data '{"logs":{"flow_run_id":{"any_":["b6b2e565-8e4b-4e24-b415-0cde3810fdb4"]},"level":{"ge_":0}},"sort":"TIMESTAMP_ASC"}' -s "http://localhost:4200/api/logs/filter"
+```
+
 Create a POST query, and send body from a file as Content-Type application/json
 
 ```bash
