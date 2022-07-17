@@ -47,11 +47,18 @@ To delete the whole line that contains the phrase 'newrelic is optional':
 sed -i '/newrelic is optional/d' ./bin/tomcat_ctl.sh
 ```
 
-## Sed on Mac OS X
+## Sed on macOS
 
-On Mac OS X sed doesn't support so-called enhanced patterns such as `\s`, `\b`, `\d`. Prefer perl instead. [ref](http://stackoverflow.com/questions/12178924/os-x-sed-e-doesnt-accept-extended-regular-expressions)
+[sed on macOS doesn't support enhanced patterns](https://stackoverflow.com/a/23146221/149412) such as `\s`, `\b`, `\d` (unlike grep on macOS).
 
-See `man re_format` for a list of enhanced patterns, which are not supported.
+See `man re_format` for a list of enhanced patterns, which are not supported. Instead use the equivalent bracket expression, eg:
+
+- `\s` = `[[:space:]]`
+- `\S` = `[^[:space:]]`
+- `\d` = `[[:digit:]]`
+- `\b` has no equivalent.
+
+Alternatively use perl instead.
 
 ### Trouble shooting
 

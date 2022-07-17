@@ -2,7 +2,7 @@
 
 Command line options:
 
-`-e` execute a oneliner  
+`-e` execute a one-liner  
 `-n` do something to every line  
 `-p` do something to every line, like -n, but also print the line  
 `-i` update in-place
@@ -52,7 +52,7 @@ Print out data.csv, replacing every occurrence of a 4 digit number with NUM
 perl -pe 's/[0-9]{4}\b/NUM/g' data.csv
 ```
 
-To do a inplace replace, saving a backup to \*.bak
+To do a in-place replace, saving a backup to \*.bak
 
 ```
 perl -i'*.bak' -pe 's/[0-9]{4}\b/NUM/g' data.csv
@@ -61,7 +61,7 @@ perl -i'*.bak' -pe 's/[0-9]{4}\b/NUM/g' data.csv
 To process more than one regex at a time in a one-line, separate by ;
 
 ```
- perl -i'*.bak' -pe 's/\s+[0-9]{11}\b//;s/V5457 [0-9\/]{5} //' $1
+perl -i'*.bak' -pe 's/\s+[0-9]{11}\b//;s/V5457 [0-9\/]{5} //' $1
 ```
 
 Replace newline with \n literal
@@ -73,7 +73,7 @@ perl -pe 's/\n/\\n/'
 Lowercase everything
 
 ```
- perl -pe "s/(.*)/lc($1)/e"
+perl -pe "s/(.*)/lc($1)/e"
 ```
 
 Print done if all lines in the last column are "done"
