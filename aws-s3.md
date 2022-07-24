@@ -335,3 +335,7 @@ eg:
 ```
 aws s3 ls s3://tpc-h-csv --no-sign-request
 ```
+
+## S3 Bucket Keys
+
+S3 bucket keys can bypass KMS IAM perms, eg: changes to the source KMS key policy may not be immediately propagated to the bucket key which is a copy of the KMS key.

@@ -1,5 +1,11 @@
 # aws athena
 
+Show partitions:
+
+```
+SHOW PARTITIONS `inventory`.`my-bucket`
+```
+
 ## Troubleshooting
 
 > ```

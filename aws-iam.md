@@ -37,6 +37,8 @@ Managed policies are [versioned](https://docs.aws.amazon.com/IAM/latest/UserGuid
 
 See [Managed policies and inline policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html)
 
+In CloudFormation, inline policies can be specified along with the role or via a `AWS::IAM::Policy` resource. `AWS::IAM::ManagedPolicy` is for managed policies.
+
 ## Inline policies
 
 List names of inline policies
