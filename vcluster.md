@@ -22,18 +22,18 @@ vcluster list
 
 ## Connecting to the cluster
 
-Connect to a vcluster, forwarding the vcluster kube api to a random port on localhost, with kube config written to _kubeconfig.yaml_:
+Connect to a vcluster, forwarding the vcluster kube api to a random port on localhost, and update the first `$KUBECONFIG` file whilst running:
 
 ```
 vcluster connect vcluster-1
 ```
 
-_kubeconfig.yaml_ will contain a context called `Default.
+When running, `$KUBECONFIG` file will be updated with `cluster`, `context`, and `user` entries for the vcluster, and `current-context` will be set to the vcluster. When `vcluster connect` exists, these will be removed and `current-context` will be reverted to its previous value.
 
-Specify where to write kube config:
+Instead of updating the `$KUBECONFIG` file, write to a custom kube config file, with a custom context:
 
 ```
-vcluster connect vcluster-1 --kube-config ~/.kube/vcluster.yaml
+vcluster connect vcluster-1 --kube-config ~/.kube/vcluster.yaml --kube-config-context-name vcluster --update-current=false
 ```
 
 Run command directly against vcluster
@@ -43,3 +43,5 @@ vcluster connect vcluster-1 -n playlab -- kubectl get pods
 ```
 
 For more options see [Accessing vcluster](https://www.vcluster.com/docs/operator/accessing-vcluster)
+
+NB: vcluster doesn't play nice when the first `$KUBECONFIG` file is a [dummy file used to create a per-shell context](https://github.com/ahmetb/kubectx/issues/12#issuecomment-557852519). Instead it updates the last file, but doesn't restore it on exit. Write to a custom kube config file instead.
