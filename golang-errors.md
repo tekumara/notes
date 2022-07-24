@@ -22,3 +22,33 @@ Solution:
     }
 
 ```
+
+## missing type in composite literal
+
+```golang
+	app := &githubapp.Config{
+		V3APIURL: baseURL,
+		App: {
+			IntegrationID: id,
+			WebhookSecret: secret,
+			PrivateKey: privateKey,
+		},
+	}
+```
+
+[Include the nested type](https://stackoverflow.com/a/24809404/149412):
+
+```golang
+	app := &githubapp.Config{
+		V3APIURL: baseURL,
+		App: struct {
+			IntegrationID int64  `yaml:"integration_id" json:"integrationId"`
+			WebhookSecret string `yaml:"webhook_secret" json:"webhookSecret"`
+			PrivateKey    string `yaml:"private_key" json:"privateKey"`
+		}{
+			IntegrationID: id,
+			WebhookSecret: secret,
+			PrivateKey:    privateKey,
+		},
+	}
+```
