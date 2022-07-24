@@ -1,14 +1,33 @@
 # python dependency resolution
 
-pip lacks a dependency resolver, and so unable to resolve incompatibility issues which surface as:
+Projects typically express dependencies in the "abstract", ie: as version ranges, and without transitive dependencies. This is common and useful for libraries which need to be flexible so they will work in a range of applications.
+
+Applications however can suffer from transitive dependencies breaking if they don't follow semver correctly, or introduce new bugs when upgrading within version ranges. In order for an application to be built in a reproducible way, it will want to pin all dependencies, including transitive dependencies, to specific versions via a lock file.
+
+## PEP 665
+
+[PEP 665](https://peps.python.org/pep-0665/) defined a way to represent an exhaustive list of all dependencies (aka lock files) but was rejected in part and [not feasible for Poetry](https://twitter.com/SDisPater/status/1521932870918492163?s=20&t=C5NO9wfdKsJlsDug9e7DXw).
+
+## pip
+
+pip historically lacked a dependency resolver, and so was unable to resolve incompatibility issues which surface as:
 
 ```
 ERROR: my-app 1.0.0 has requirement Flask~=1.0.2, but you'll have flask 1.1.2 which is incompatible.
 ```
 
-Even more harmful is when transitive dependencies drift in an incompatible way, causing future builds of the the app to fail (this has happened!)
+pip 20.3 introduced a dependency resolver see [pypa/pip#988](https://github.com/pypa/pip/issues/988). In some cases it's slow and needs to download multiple versions of a package in order to find one satisfying constraints, eg:
 
-Adding a resolver to pip is tracked in [pypa/pip#988](https://github.com/pypa/pip/issues/988).
+```
+Collecting boto3>=1.20.0
+  Using cached boto3-1.24.35-py3-none-any.whl (132 kB)
+  Using cached boto3-1.24.34-py3-none-any.whl (132 kB)
+  Using cached boto3-1.24.33-py3-none-any.whl (132 kB)
+  Using cached boto3-1.24.32-py3-none-any.whl (132 kB)
+  Using cached boto3-1.24.31-py3-none-any.whl (132 kB)
+```
+
+`pip freeze` can be used to generate a lock file, but there's no easy way to go between a list of top level dependencies and the lock file of all files.
 
 ## pip-compile
 
@@ -48,10 +67,11 @@ Slower than poetry, but like poetry can resolve [cases](https://github.com/jazzb
 
 ## performance
 
-* pip-compile 6 sec
-* poety 11 sec
-* pipgrep 30 sec
+- pip-compile 6 sec
+- poety 11 sec
+- pipgrep 30 sec
 
 allennlp
-* poetry 5m 28s (1m 50s second run)
-* pipgrip 2m 37s
+
+- poetry 5m 28s (1m 50s second run)
+- pipgrip 2m 37s
