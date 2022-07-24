@@ -7,11 +7,11 @@ Determined AI provides cluster management for reproducible containerised model t
 - kubernetes and EC2 clusters with elastic scaling
 - scheduling of notebooks, tensorboards, commands and shells on CPUs
 - training on CPUs and GPUs
-- PyTorch and Tensorflow/Keras support primarily and a [generic api](https://github.com/rb-determined-ai/determined/blob/sprinkle-spec/sprinkle/user-facing/low-level.md) to integrate other frameworks
+- PyTorch and Tensorflow/Keras support primarily and a [core api](https://github.com/rb-determined-ai/determined/blob/sprinkle-spec/sprinkle/user-facing/low-level.md) to integrate other frameworks
 - a [structured way](https://www.determined.ai/blog/standardized-models-with-determined) of defining model training for reproducibility and scalability
 - [multi-machine distributed training](https://docs.determined.ai/latest/topic-guides/effective-distributed-training.html#effective-distributed-training) built on top of [horovod](https://github.com/horovod/horovod) which uses [NVIDIA/nccl](https://github.com/NVIDIA/nccl) and [facebookincubator/gloo](https://github.com/facebookincubator/gloo)
 - state-of-the-art hyperparameter tuning algorithm ([ASHA](https://arxiv.org/abs/1810.05934))
-- a high-performance random-access data layer ([yogadl](https://docs.determined.ai/latest/how-to/data-layer.html)) that locally caches data read from cloud storage. Enables transparent data sharding across multiple-machines, and resuming training mid-epoch.
+- a high-performance random-access data layer ([yogadl](https://docs.determined.ai/latest/how-to/data-layer.html)) that locally caches data read from cloud storage (useful for tf.datasets). Enables transparent data sharding across multiple-machines, resuming training mid-epoch, and random-access for shuffling datasets. Derived from tensorpack, specifically [this file](https://github.com/tensorpack/tensorpack/blob/master/tensorpack/dataflow/format.py).
 - integrated experiment tracking with [visualisations](https://www.youtube.com/watch?v=YsEE-eiWkeE) in the determined ui and tensorboard
 - a [model registry](https://docs.determined.ai/latest/tutorials/model-registry.html)
 - group based access to compute resources and experiment results
@@ -31,11 +31,11 @@ CLI commands use WebSockets to communicate with the master.
 
 ## Local cluster install
 
-Local laptop install using [det-deploy](https://docs.determined.ai/latest/how-to/installation/deploy.html):
+Local laptop install using [det deploy](https://docs.determined.ai/latest/how-to/installation/deploy.html):
 
 ```shell
 pip install determined-deploy
-det-deploy local cluster-up --no-gpu
+det deploy local cluster-up
 ```
 
 This starts 3 containers:
@@ -45,15 +45,41 @@ This starts 3 containers:
 - [determined-master](https://github.com/determined-ai/determined/tree/master/master)
 
 They are connected by a docker bridge network.
-The master UI is served on http://localhost:8080 with user `admin` or `determined` with no password.
+The master UI is served on [http://localhost:8080](http://localhost:8080) with user `admin` or `determined` with no password.
 
 To stop the local install:
 
 ```shell
-det-deploy local cluster-down
+det deploy local cluster-down
 ```
 
 The docker agents need to mount `/var/run/docker.sock` so they can start and stop containers.
+
+## AWS install
+
+```shell
+det deploy aws up --cluster-id $clusterid --keypair $keypair --agent-subnet-id $subnetid --compute-agent-instance-type g4dn.2xlarge
+```
+
+Creates a [cloudformation stack](https://github.com/determined-ai/determined/blob/9a34b3d/harness/determined/deploy/aws/templates/simple.yaml) with:
+
+- cloudwatch log group for instances
+- the master configuration file ([master.yaml](https://docs.determined.ai/latest/sysadmin-deploy-on-aws/install-on-aws.html#custom-master-yaml-templates))
+- s3 bucket for checkpoints
+- agent and master and database security groups
+- an rds aurora postgresql database
+- iam policies for cloudwatch
+- iam role and instance profile for agent and master
+- master ec2 instance
+- elastic ip for master instance
+
+Configuration options include:
+- [use TLS](https://docs.determined.ai/latest/sysadmin-basics/tls.html) if a cert is provided (default: http)
+- `--master-instance-type` (default: m5.large)
+- `--compute-agent-instance-type` (default: p2.8xlarge)
+- `--aux-agent-instance-type` (default: t2.xlarge)
+- `--db-password` (default: postgres)
+- [fsx](https://github.com/determined-ai/determined/blob/9a34b3d/harness/determined/deploy/aws/templates/fsx.yaml)
 
 ## Using determined
 
@@ -170,6 +196,6 @@ During a trial:
 /opt/conda/bin/python3.6: Error while finding module specification for 'determined.exec.harness' (ModuleNotFoundError: No module named 'determined.exec')
 ```
 
-Make sure you don't have a directory called determined in your experiment.
+Make sure you don't have a directory called `determined` in your experiment.
 
 If you see `websocket: close 1001 (going away)` in the logs, it generally means the container can't be reached via HTTP.
