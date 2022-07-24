@@ -1,0 +1,9 @@
+# aws iam abac
+
+Attribute-based Access Control (ABAC) is [access control based on resources tags](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_tags.html). See also [What is ABAC for AWS?](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_attribute-based-access-control.html)
+
+Smaller scoped accounts and RBAC are preferable to multi-tenant accounts because [ABAC has limitations](https://summitroute.com/blog/2020/11/02/state_of_abac_on_aws/) including [incomplete support across AWS services](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html). However it can still be useful for implementing cross-cutting concerns across AWS accounts, eg: SSM Session Manager access to only tagged instances.
+
+To limit actions to specific tags, used a via policy condition that references the `aws:ResourceTag` global condition key or a service-specific key, eg: `ec2:ResourceTag`. Some services [support only the service-specific version](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_tags.html#access_tags_control-resources) of this key and not the global version. See the service authorization reference page for more details on which condition keys are accepted, eg: [Actions, resources, and condition keys for Amazon EC2](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonec2.html)
+
+For this to work you also need to limit which [tag values can be used in a request](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_tags.html#access_tags_control-requests) via the `aws:RequestTag` global condition key, and/or which [tag keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_tags.html#access_tags_control-tag-keys) can be used via the `aws:TagKeys` condition key. See these [EC2 examples](https://aws.amazon.com/premiumsupport/knowledge-center/iam-policy-tags-restrict/).
