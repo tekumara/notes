@@ -116,11 +116,18 @@ Sort json lines by key, by slurping them into an array first, and then convertin
 printf '{ "name": "banana" }\n{ "name": "apple" }' | jq -s -c 'sort_by(.name)[]'
 ```
 
+To sort by array element, wrap in an outer array:
+
+``json
+echo '[[3,4],[5,2]]' | jq 'sort_by(.[1])[]'
+
+````
+
 Convert date string to epoch timestamp
 
 ```json
 echo '[ { "name": "apple", "created_at": "Fri Jan 02 01:29:31 +0000 2020" }, { "name": "orange", "created_at": "Thu Nov 22 22:51:23 +0000 2019" }]' | jq '.[] .created_at |= (strptime("%a %b %d %H:%M:%S %z %Y")|mktime)
-```
+````
 
 Sort date string chronologically descending
 

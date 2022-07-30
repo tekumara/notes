@@ -4,6 +4,8 @@
 
 `--files` prints the names of any files that would be searched, without actually performing the search. This is useful to determine whether a particular file is being searched or not.
 
+`--no-heading` output filename per match, rather than heading. Good from navigation from the terminal to a vscode tab.
+
 ### Ripgrep appears to ignore top-level folder
 
 If ripgrep isn't searching files it's probably because its obeying a `.gitignore` directive.
