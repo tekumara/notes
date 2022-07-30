@@ -63,10 +63,10 @@ List subnets with the Name tag (others ignored):
 aws ec2 describe-subnets | jq '.Subnets[] | {SubnetId, VpcId, Name: (.Tags | .[]? | select(.Key == "Name") | .Value), CidrBlock}'
 ```
 
-List all subnets (as csv sorted by vpc id)
+List all subnets (as csv sorted by name)
 
 ```
-aws ec2 describe-subnets | jq -r '.Subnets[] | [.SubnetId, .VpcId, (.Tags | .[]? | select(.Key == "Name") | .Value), .CidrBlock] | @csv' | sort
+aws ec2 describe-subnets | jq -r '[.Subnets[] | [.SubnetId, .VpcId, (.Tags | .[]? | select(.Key == "Name") | .Value), .CidrBlock] ] | sort_by(.[2])[] | @csv'
 ```
 
 ## Describe security groups

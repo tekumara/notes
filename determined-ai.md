@@ -61,7 +61,7 @@ The docker agents need to mount `/var/run/docker.sock` so they can start and sto
 det deploy aws up --cluster-id $clusterid --keypair $keypair --agent-subnet-id $subnetid --compute-agent-instance-type g4dn.2xlarge
 ```
 
-Creates a [cloudformation stack](https://github.com/determined-ai/determined/blob/9a34b3d/harness/determined/deploy/aws/templates/simple.yaml) with:
+Creates a [cloudformation stack](https://github.com/determined-ai/determined/blob/9a34b3d/harness/determined/deploy/aws/templates/simple.yaml) named `$clusterid` with:
 
 - cloudwatch log group for instances
 - the master configuration file ([master.yaml](https://docs.determined.ai/latest/sysadmin-deploy-on-aws/install-on-aws.html#custom-master-yaml-templates))
@@ -70,7 +70,7 @@ Creates a [cloudformation stack](https://github.com/determined-ai/determined/blo
 - an rds aurora postgresql database
 - iam policies for cloudwatch
 - iam role and instance profile for agent and master
-- master ec2 instance
+- master ec2 instance named `det-master-$clusterid`
 - elastic ip for master instance
 
 Configuration options include:

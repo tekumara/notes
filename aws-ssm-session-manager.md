@@ -153,7 +153,7 @@ Make sure you are in the right AWS region, as set in the environment variable `A
 
 If the instance is not visible, or you get an `Unauthorized request` error when trying to start a session, make sure you the EC2 IAM instance profile has an [SSM policy attached](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started-instance-profile.html) with the right permissions.
 
-To your instance profile, add `AmazonSSMManagedInstanceCore` or a custom policy with at least the following:
+To your instance profile role, add `AmazonSSMManagedInstanceCore` or a custom policy with at least the following:
 
 ```json
 {
