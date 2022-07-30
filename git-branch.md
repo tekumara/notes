@@ -85,3 +85,15 @@ List all remote branches in your local repo
 ```
 git branch -r
 ```
+
+Show which branches are tracking which remote branches:
+
+```
+git branch -vv
+```
+
+or
+
+```
+git remote show origin
+```

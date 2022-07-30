@@ -46,3 +46,15 @@ remote.upstream.fetch=+refs/heads/*:refs/remotes/upstream/*
 ## git pull (a fetch and merge)
 
 `git pull` fetch and merge
+
+Show which branches are tracking which remote branches:
+
+```
+git branch -vv
+```
+
+or
+
+```
+git remote show origin
+```
