@@ -1,5 +1,21 @@
 # CSV tools
 
+## [dsq](https://github.com/multiprocessio/dsq)
+
+SQLite based engine for querying CSV, parquet, and other file formats. The CLI for [datastation](https://github.com/multiprocessio/datastation)
+
+```
+brew install dsq
+```
+
+## [duckdb](https://github.com/duckdb/duckdb)
+
+Custom engine for querying CSV and parquet.
+
+## [datafusion](https://arrow.apache.org/datafusion/user-guide/cli.html)
+
+Custom engine but requires multiple commands to ingest and work on CSV, so not great for one-liners.
+
 ## [q](http://harelba.github.io/q/)
 
 For executing SQL queries on csv files. Backed by sqlite.
