@@ -16,16 +16,16 @@ Determined AI provides cluster management for reproducible containerised model t
 - a [model registry](https://docs.determined.ai/latest/tutorials/model-registry.html)
 - group based access to compute resources and experiment results
 
-Enterprise edition:
+Enterprise edition aka [HPE ML Development Environment](https://www.hpe.com/us/en/solutions/artificial-intelligence/machine-learning-development-environment.html) provides:
 
-- Okta integration ([OAuth 2.0](https://docs.determined.ai/latest/topic-guides/oauth.html), [SAML](https://docs.determined.ai/latest/topic-guides/saml.html), [SCIM](https://docs.determined.ai/latest/topic-guides/scim.html))
+- Okta integration ([OAuth 2.0](https://docs.determined.ai/latest/cluster-setup-guide/security/oauth.html), [SAML](https://docs.determined.ai/latest/cluster-setup-guide/security/saml.html), [SCIM](https://docs.determined.ai/latest/cluster-setup-guide/security/scim.html))
 - Support & product development
 
 ## Network connectivity
 
 `det shell open` uses SSH, so requires network level access.
 
-Notebooks are HTTP proxied via the master, eg: http://master:8080/proxy/80d46f5d-f41c-4dda-ae5c-9c276f61b8f0/
+Notebooks are HTTP proxied via the master, eg: [http://master:8080/proxy/80d46f5d-f41c-4dda-ae5c-9c276f61b8f0/](http://master:8080/proxy/80d46f5d-f41c-4dda-ae5c-9c276f61b8f0/)
 
 CLI commands use WebSockets to communicate with the master.
 
@@ -67,13 +67,14 @@ Creates a [cloudformation stack](https://github.com/determined-ai/determined/blo
 - the master configuration file ([master.yaml](https://docs.determined.ai/latest/sysadmin-deploy-on-aws/install-on-aws.html#custom-master-yaml-templates))
 - s3 bucket for checkpoints
 - agent and master and database security groups
-- an rds aurora postgresql database
+- an rds aurora postgresql database named `$clusterid-database-xxxxxx`
 - iam policies for cloudwatch
 - iam role and instance profile for agent and master
 - master ec2 instance named `det-master-$clusterid`
 - elastic ip for master instance
 
 Configuration options include:
+
 - [use TLS](https://docs.determined.ai/latest/sysadmin-basics/tls.html) if a cert is provided (default: http)
 - `--master-instance-type` (default: m5.large)
 - `--compute-agent-instance-type` (default: p2.8xlarge)
@@ -101,7 +102,7 @@ pip install determined-cli
 `det e label add 17 foobar` Add the label “foobar” to experiment 17
 `det trial logs 1` list logs for trial 1
 
-`det user login admin` authenticate as admin for the next 30 days, or until logged out
+`det user login admin` authenticate as admin for the next 30 days, or until logged out. Alternatively set the `DET_USER` and `DET_PASS` env vars.
 
 ## Notebooks
 
@@ -179,6 +180,17 @@ Determined creates the _/determined/determined-ai_ cloudwatch log groups with tw
 
 - determined-master
 - determined-agent
+
+The logs are also output to the console and available via `aws ec2 get-console-output` or on the master instance itself using `sudo docker logs determined-master -f`
+
+## Development
+
+Set up a go workspace:
+
+```
+go work init
+go work use master agent proto
+```
 
 ## Troubleshooting
 
