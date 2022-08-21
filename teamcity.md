@@ -85,12 +85,7 @@ I've found it also doesn't trigger at all without a snapshot dependency (still t
 
 ## Build badges
 
-
 See [Get Build Status Icon REST API](https://www.jetbrains.com/help/teamcity/rest/get-build-status-icon.html)
-
-
-
-
 
 ## Troubleshooting
 
@@ -199,6 +194,31 @@ Make sure you have the [commit status publisher](https://www.jetbrains.com/help/
         }
     }
 ```
+
+## Failed to commit project settings
+
+This can happen when making changes to a project in the UI.
+
+Check the details of the failure on the Edit Project - Versioned Settings page under Current Status.
+
+### Failed to apply changes from VCS to project settings  ...  DSL script execution failure
+
+This can happen when the UI can write to the VCS root but it is out of sync with the root.
+
+### Cannot find previous revision of project ... Please commit current project settings into VCS first
+
+When loading project settings from VCS, this will occur if a change was made in the UI that wasn't committed.
+The message will contain `skip updating settings to revision SHA` where SHA is the head commit on the VCS.
+
+The settings in the UI need to be flushed to the VCS by committing them, or if you can't because the branch is protected:
+
+1. Enable editing
+1. Synchronization disabled
+1. Apply
+1. Synchronization enabled
+1. Settings format: Kotlin
+1. Apply
+1. Import settings from VCS
 
 ## References
 
