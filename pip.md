@@ -83,3 +83,9 @@ pip list --outdated
 ```
 
 [pipupgrade](https://github.com/achillesrasquinha/pipupgrade) can automatically update requirements.txt
+
+## Trouble shooting
+
+> pip.\_vendor.pkg_resources.ContextualVersionConflict: (typing-extensions 4.2.0 (/home/runner/work/aec/aec/.venv/lib/python3.7/site-packages), Requirement.parse('typing_extensions==4.3.0'), {'aec-cli'})
+
+There's already a version installed in the virtualenv (ie: 4.2.0) that conflicts with the requirement to install version 4.3.0.

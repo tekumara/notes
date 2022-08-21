@@ -22,7 +22,7 @@ eg: to include all packages except tests in the source dist:
 packages=find_packages(exclude=["tests"]),
 ```
 
-Specify package data files in MANIFEST.in to include them in the source dist. Non-package data files can also be included, eg: files in the root directory like _requirements.txt_.
+Specify package data files in MANIFEST.in to include them in the source dist. Non-package data files can also be included, eg: files in the root directory or outside your package package like _requirements.txt_.
 
 Any files included in the source dist will be available to setup.py during the install process. The source dist files are listed in _\*.egg-info/SOURCES.txt_ is the set of files contained within the sdist.
 
@@ -37,7 +37,7 @@ See [Including files in source distributions with MANIFEST.in](https://packaging
 - [docs](https://setuptools.readthedocs.io/en/latest/userguide/datafiles.html) and [setuptools/#3148](https://github.com/pypa/setuptools/pull/3148)
 - also [setuptools/#1461](https://github.com/pypa/setuptools/issues/1461) and [setuptools/#2835](https://github.com/pypa/setuptools/pull/2835#issuecomment-956123517)).
 
-`data_files` is deprecated and does not work with wheels.
+`data_files` is deprecated and does not work with wheels. Wheels don't have an easy way of including non-package files (ie: files outside your python package's directory)
 
 See [Including Data Files](https://web.archive.org/web/20200919125552/https://setuptools.readthedocs.io/en/stable/setuptools.html#including-data-files).
 
