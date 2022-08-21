@@ -21,6 +21,7 @@ Conflicts appear as unmerged files in `git status`.
 * *theirs* = incoming change, stashed changes. The branch being merged in (eg: stashed changes), or the branch being rebased.
 
 You will need to resolve the conflicts, eg:
+* `git checkout --ours .` to keep all our changes  
 * `git checkout --theirs .` to keep all their changes  
 * `git mergetool unmerged_file_name` to run your merge conflict resolution tool on unmerged_file_name. See [man git-mergetool](http://schacon.github.com/git/git-mergetool.html) for more.
 
