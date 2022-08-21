@@ -23,9 +23,26 @@ Produces:
     TypeVar "_T" is invariant
 ```
 
-Most mutable [collections are invariant](https://mypy.readthedocs.io/en/stable/common_issues.html?highlight=invariant#invariance-vs-covariance). Use an immutable collection instead, eg: `Sequence` instead of `List`.
+Most mutable [collections are invariant](https://mypy.readthedocs.io/en/stable/common_issues.html?highlight=invariant#invariance-vs-covariance).
 
-### "contextvars" is not a known member of module
+Use an immutable collection instead, eg: `Sequence` instead of `List` or annotate the value with the matching type argument, eg: in the above example `List[List[Optional[str]]]`.
+
+Invariance isn't allowed on mutable collections to avoid reassigning the type and then updating the underlying collection in ways that generate a runtime exception, eg:
+
+```python
+my_list_1: List[float] = [1, 2, 3]
+my_list_2: List[Optional[float]] = my_list_1  # type error
+my_list_2.append(None)
+
+for elem in my_list_1:
+    print(elem + 1)  # Runtime exception
+```
+
+More detail [here](https://github.com/microsoft/pyright/blob/main/docs/type-concepts.md#type-assignability).
+
+### X is not a known member of module
+
+eg:
 
 ```python
 import structlog
