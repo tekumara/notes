@@ -68,7 +68,7 @@ The service account does not have an `eks.amazonaws.com/role-arn` annotation.
 An error occurred (AccessDenied) when calling the AssumeRoleWithWebIdentity operation: Not authorized to perform sts:AssumeRoleWithWebIdentity
 ```
 
-The annotated role cannot be assumed. Check the trust policy on the role.
+The annotated role cannot be assumed. Check the trust policy on the role is for the correct service account and aws account.
 
 ### Manually assuming a role using the serviceaccount token
 

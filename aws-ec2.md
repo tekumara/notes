@@ -49,10 +49,16 @@ aws ec2 describe-instances --region us-east-1 | jq -r '.Reservations[].Instances
 
 ## UserData
 
-Show the UserData for a launched instance
+Show the user data for an instance:
 
 ```
-aws ec2 get-launch-template-data --instance-id $INSTANCE_ID | jq -r '.LaunchTemplateData.UserData | @base64d'
+aws ec2 describe-instance-attribute --instance-id $INSTANCE_ID --attribute userData | jq -r '.UserData.Value | @base64d'
+```
+
+Show all launch data for an instance (whether it used a launch template or not), includes user data
+
+```
+aws ec2 get-launch-template-data --instance-id $INSTANCE_ID
 ```
 
 ## Describe subnets
@@ -160,7 +166,7 @@ Make sure the EBS volume is mounted with the correct [device name](https://docs.
 
 ### Client.InternalError: Client error on launch
 
-In Cloudtrail look for `RunInstances` events, and then any events immediately afterwards that have errorred, eg: `GenerateDataKeyWithoutPlaintext` events with errorCode `AccessDenied`.
+In Cloudtrail look for `RunInstances` events, and then any events immediately afterwards that have errored, eg: `GenerateDataKeyWithoutPlaintext` events with errorCode `AccessDenied`.
 
 ### An error occurred (Unsupported) when calling the StartInstances operation: The requested configuration is currently not supported. Please check the documentation for supported configurations.
 
