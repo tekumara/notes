@@ -9,3 +9,9 @@ An Abstract Base Class (ABC) formalises the inspection of an object. An ABC desc
 The `typing.Protocol` class enables structural subtyping. A protocol is an implicit base class. Any class that matches the protocol's defined members is considered to be a subclass for type analysis.
 
 See the example [here](https://stackoverflow.com/a/50255847/149412)
+
+Because it structural, rather than nominal, an explicit import is not needed, and so it can be used to break circular import errors, eg:
+
+```
+ImportError: cannot import name 'TransactionSet' from partially initialized module 'txgenerator.models' (most likely due to a circular import)
+```
