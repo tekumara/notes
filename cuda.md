@@ -6,7 +6,7 @@ The [CUDA toolkit](https://developer.nvidia.com/cuda-toolkit) provides GPU-accel
 
 [cuDNN](https://developer.nvidia.com/cudnn) - a GPU-accelerated library of primitives for deep neural networks.
 
-The [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/overview.html) allows docker containers to use GPUs.
+The [NVIDIA Container Toolkit](cuda-docker.md#nvidia-container-toolkit) allows docker containers to use GPUs.
 
 ## Install CUDA on Ubuntu
 
@@ -29,23 +29,3 @@ See:
 
 - [CUDA Toolkit Archive](https://developer.nvidia.com/cuda-toolkit-archive)
 - [cuDNN archive](https://developer.nvidia.com/rdp/cudnn-archive)
-
-## Container images
-
-[nvidia/container-images/cuda](https://gitlab.com/nvidia/container-images/cuda) contains [Dockerfiles](https://gitlab.com/nvidia/container-images/cuda/-/tree/master/dist) for many distros and versions, eg: [nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04](https://gitlab.com/nvidia/container-images/cuda/-/blob/master/dist/10.1/ubuntu18.04-x86_64/runtime/cudnn7/Dockerfile)
-
-To test (requires the Nvidia Container Toolkit to be installed):
-
-```
-docker run --gpus all --rm nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04 nvidia-smi
-```
-
-To diagnose:
-
-```
-nvidia-container-cli -k -d /dev/tty info
-```
-
-See also:
-
-- [NGC container catalog](https://ngc.nvidia.com/catalog/containers)
