@@ -57,6 +57,7 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl get pod helper -o jsonpath='{.status.podIPs}` get pod ip
 `kubectl get pod -n kube-system -l app.kubernetes.io/name=traefik -o custom-columns=:metadata.name --no-headers=true` get pod names by selector
 `kubectl get pods -o custom-columns=":metadata.name, :status.phase, :spec.serviceAccount"` get service accounts
+`kubectl describe pod -l job-name` describe pods started by a job
 
 Show all forwarded ports, ie: [NodePort services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types):
 
