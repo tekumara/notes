@@ -14,10 +14,8 @@ First install the nvidia kernel drivers.
 
 Then install CUDA, either
 
-1. directly, eg: the [AWS Deep Learning AMI](https://aws.amazon.com/marketplace/pp/B07Y3VDBNS))
-2. via apt, eg: [nvidia/container-images/cuda](https://gitlab.com/nvidia/container-images/cuda/-/tree/master/dist/10.1/ubuntu18.04-x86_64)).
-
-See [NVIDIA CUDA Installation Guide for Linux](https://docs.nvidia.com/cuda/archive/10.1/cuda-installation-guide-linux/index.html#ubuntu-installation)
+1. Indirectly by using the [AWS Deep Learning AMI](https://aws.amazon.com/marketplace/pp/B07Y3VDBNS))
+2. On Ubuntu via an apt meta-package, eg: `sudo apt-get install cuda-runtime-11-2` see [NVIDIA CUDA Installation Guide for Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#package-manager-metas).
 
 Test
 
