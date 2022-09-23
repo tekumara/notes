@@ -123,7 +123,8 @@ If you want a target to be called regardless of if there is file with the target
 
 ## Ignore timestamp of dependency
 
-To trigger a target only when a dependency does not exist:
+To trigger a target only when a dependency does not exist use an [order-only prerequisite](https://www.gnu.org/software/make/manual/make.html#Prerequisite-Types):
+
 eg:
 
 ```
@@ -195,7 +196,7 @@ time-one-min-ago:
     echo $(timemillis)
 ```
 
-## Missing seperator
+## Missing separator
 
 Make sure the target line begins with a tab.
 

@@ -203,7 +203,9 @@ Check the details of the failure on the Edit Project - Versioned Settings page u
 
 ### Failed to apply changes from VCS to project settings  ...  DSL script execution failure
 
-This can happen when the UI can write to the VCS root but it is out of sync with the root.
+This can happen when the UI can write to the VCS root but it is out of sync with the project settings in the repo.
+
+If the error is `Expected build feature is not found` try removing the UI patch code from the repo.
 
 ### Cannot find previous revision of project ... Please commit current project settings into VCS first
 

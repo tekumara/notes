@@ -8,3 +8,6 @@ See [LD_LIBRARY_PATH – or: How to get yourself into trouble!](https://www.hpc.
 
 > Never ever set LD_LIBRARY_PATH globally.
 > If you are forced to set LD_LIBRARY_PATH, do so only as part of a wrapper.
+
+
+[ldconfig](https://man7.org/linux/man-pages/man8/ldconfig.8.html) configures linker run-time bindings.

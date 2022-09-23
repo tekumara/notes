@@ -4,10 +4,6 @@ Auto-scaling ([unlike AWS Batch](https://raysummit.anyscale.com/content/Videos/n
 
 Has an actor model for stateful computation.
 
-## ray serve
-
-Head node doesn't support HA yet.
-
 ## ray locally
 
 ```

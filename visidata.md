@@ -25,7 +25,7 @@ Selection:
 - `gu` unselect all rows
 - `|` select rows by regex applied to current column
 - `g|` select rows by regex applied to all visible columns
-- `"` open duplicate sheet with only selected row
+- `"` open duplicate sheet with only selected rows
 
 Column width:
 
@@ -54,7 +54,14 @@ Sort:
 Misc
 
 - `v` word wrap
+- `i` add column with row number
 
 See [Quick Reference Guide](https://www.visidata.org/man/)
 
 Clipboard behaviour can be [configured](https://github.com/saulpw/visidata/issues/98).
+
+The status line can be configured to [show the current row number](https://github.com/saulpw/visidata/issues/1536)
+
+Wishlist
+
+- [Bookmarks](https://github.com/saulpw/visidata/issues/1537)

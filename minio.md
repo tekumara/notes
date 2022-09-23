@@ -33,3 +33,15 @@ Info
 ```
 mc admin info local
 ```
+
+List buckets
+
+```
+mc ls local
+```
+
+Create bucket called mybucket
+
+```
+mc mb local/mybucket
+```
