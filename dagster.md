@@ -26,6 +26,7 @@ A set of abstractions for pipelines that enables the definition and separation o
 - [Versioning and memoization/caching (Experimental)](https://docs.dagster.io/guides/dagster/memoization)
 - [k8s requests/limits](https://github.com/dagster-io/dagster/issues/3483#issuecomment-754305435)
 - launch remote processes, eg: [AWS batch](<(https://dagster.slack.com/archives/CCCR6P2UR/p1614041404042600)>)) or a specialised step launcher eg: the [EMR PySpark step launcher](https://docs.dagster.io/integrations/pyspark#submitting-pyspark-solids-on-emr)
+- [Software-defined assets](https://dagster.io/blog/software-defined-assets) aka "Reconciliation-based orchestration", ie: scheduling based on the  based on the presence of input data and the absence of output data. The scheduler is aware of the (possibly time-partitioned) inputs and outputs of each workflow and then it continually schedules a set of workflows as each workflow's input becomes available.
 
 Not supported
 

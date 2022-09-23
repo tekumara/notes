@@ -58,3 +58,9 @@ or
 ```
 git remote show origin
 ```
+
+Extract org and repo name for origin (requires ripgrep):
+
+```
+git config --get remote.origin.url | rg "(?:git@|https://)[^:/]+[:/](.*).git" -o -r "\$1"
+```

@@ -125,3 +125,37 @@ curl -w "@curl-format.txt" -o /dev/null -s http://wordpress.com/
 ```
 
 [ref](https://josephscott.org/archives/2011/10/timing-details-with-curl/)
+
+## HTTP2
+
+```
+curl -v -k --raw --http2 -XPOST http://localhost:10001/ray.rpc.RayletDriver/ClusterInfo
+*   Trying 127.0.0.1:10001...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 10001 (#0)
+> POST /ray.rpc.RayletDriver/ClusterInfo HTTP/1.1
+> Host: localhost:10001
+> User-Agent: curl/7.68.0
+> Accept: */*
+> Connection: Upgrade, HTTP2-Settings
+> Upgrade: h2c
+> HTTP2-Settings: AAMAAABkAARAAAAAAAIAAAAA
+> 
+* Received HTTP/0.9 when not allowed
+```
+
+```
+curl -v -k --raw --http2-prior-knowledge -XPOST http://localhost:10001/ray.rpc.RayletDriver/ClusterInfo
+*   Trying 127.0.0.1:10001...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 10001 (#0)
+* Using HTTP2, server supports multi-use
+* Connection state changed (HTTP/2 confirmed)
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* Using Stream ID: 1 (easy handle 0x564d531dc8c0)
+> POST /ray.rpc.RayletDriver/ClusterInfo HTTP/2
+> Host: localhost:10001
+> user-agent: curl/7.68.0
+> accept: */*
+> 
+```

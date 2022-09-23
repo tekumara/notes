@@ -108,7 +108,7 @@ Search for package or package description
 apt-cache search "Text-to-search"`
 ```
 
-Show all package versions, and thier url, across all repos
+Show all package versions, and their url, across all repos
 
 ```
 apt-cache showpkg PACKAGENAME
