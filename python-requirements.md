@@ -1,4 +1,6 @@
-# python requirements.txt
+# python requirements
+
+## requirements.txt
 
 A requirements.txt has the advantage that its hash or timestamp can be used as a cache key. setup.py can also, but may change for reasons unrelated to dependencies changing (eg: if the version is hard-coded in setup.py and bumped).
 
@@ -30,4 +32,10 @@ awesome_lib @ git+ssh://git@github.com/awesome-lib.git@feature1
 
 NB: if you have already the package, delete it first so pip will detect the missing and install the version from the branch
 
-See also [PEP 508](https://peps.python.org/pep-0508/)
+See also [PEP 508 – Dependency specification for Python Software Packages](https://peps.python.org/pep-0508/)
+
+## Compatible release versions
+
+The [compatible release clause](https://peps.python.org/pep-0440/#compatible-release) `~= X.Y.Z` is roughly equivalent to `>= X.Y.Z`, `== X.Y.*`
+
+`V.*` matches any version with the prefix `V.` 

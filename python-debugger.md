@@ -32,12 +32,18 @@ Commands:
 - `w` print stack trace
 - `a` print args for current function
 - `q` quit
-- `! <python statement>` run python statement 
+- `! <python statement>` run python statement
 
 Set a breakpoint at in pandas.io.common at line 334:
 
 ```
 b /Users/tekumara/.virtualenvs/s3fs052/lib/python3.7/site-packages/pandas/io/common.py:334
+```
+
+Set breakpoint in current file on line 1234
+
+```
+b 1234
 ```
 
 ## Troubleshooting

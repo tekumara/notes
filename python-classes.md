@@ -24,3 +24,8 @@ class BasicStarship:
     damage: int                           # instance variable without default
     stats: ClassVar[Dict[str, int]] = {}  # class variable
 ```
+
+## **init**
+
+If you override the `__init__` method of a superclass, and you want it to be called, you need to do that explicitly, eg:
+`super().__init__(...)`
