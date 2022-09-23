@@ -14,7 +14,7 @@ docker manifest inspect $repo:$tag | jq '[.layers[].size] | add'
 ```
 
 Get uncompressed size of local image
-
+ 
 ```shell
 docker image inspect $repo:$tag | jq '.[].Size'
 ```

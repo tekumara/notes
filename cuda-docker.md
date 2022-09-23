@@ -12,9 +12,8 @@
 - `base`: Includes the CUDA runtime (cudart)
 - `runtime`: Builds on the base and includes the CUDA math libraries, and NCCL. A runtime image that also includes cuDNN is available.
 - `devel`: Builds on the runtime and includes headers, development tools for building CUDA images. These images are particularly useful for multi-stage builds.
-- `cudnn8`: Build on either the devel or runtime images and includes [cuDNN](https://developer.nvidia.com/cudnn).
-
-eg: CUDA 11.2.2 ubuntu 20.04
+- `cudnn8`: Build on either the devel or runtime images and includes [cuDNN](https://developer.nvidia.com
+  eg: CUDA 11.2.2 ubuntu 20.04
 
 | image                                                                                                                                                           | compressed size | additional contents                                                                                       |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | --------------------------------------------------------------------------------------------------------- |
@@ -27,23 +26,15 @@ Tensorflow requires at least a cuda:11.2.2-cudnn8-runtime image.
 
 ## Nvidia container toolkit
 
-The [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/overview.html) uses a pre-start hook to make `nvidia-smi`, the nvidia drivers, and `/proc/driver/nvidia` and `/dev/nvidia*` available within any container run on the node.
+The [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/overview.html) uses a pre-start hook triggered by the presence of [nvidia-container-runtime environment variables](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/user-guide.html#environment-variables-oci-spec). The hook makes `nvidia-smi`, the nvidia drivers, and `/proc/driver/nvidia` and `/dev/nvidia*` available within the container.
 
-To trigger the pre-start-hook a container will need to specify:
-
-```
-# nvidia-container-runtime
-ENV NVIDIA_VISIBLE_DEVICES all
-ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
-```
-
-The container image will also require CUDA to be installed.
+For CUDA applications, the container image must also have CUDA installed.
 
 See also
 
+- [nvidia-docker2 > nvidia-container-runtime > nvidia-container-toolkit > libnvidia-container](https://github.com/NVIDIA/nvidia-docker/issues/1268#issuecomment-632692949)
 - [NVIDIA/nvidia-docker repo](https://github.com/NVIDIA/nvidia-docker)
 - [nvidia-container-runtime](https://github.com/NVIDIA/nvidia-container-runtime)
-- [nvidia-docker2 vs nvidia-container-runtime vs nvidia-container-toolkit vs libnvidia-container](https://github.com/NVIDIA/nvidia-docker/issues/1268#issuecomment-632692949)
 
 ## Testing
 
@@ -76,4 +67,12 @@ or
 If `nvida-smi` shows `CUDA Version: N/A` or an application cannot load `libcuda.so.1` make sure:
 
 - the host has the Nvidia container toolkit installed
-- the docker image has the nvidia-container-runtime environment variables set (see above)
+- the docker image contains CUDA
+- if run via docker, the container has been started with `docker run --gpus all`. This sets the `NVIDIA_VISIBLE_DEVICES=all` env var inside the container, which triggers the pre-start hook.  
+- if run via kubernetes, the docker image or pod spec must have the following [nvidia-container-runtime environment variables](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/user-guide.html#environment-variables-oci-spec) set to trigger the pre-start hook:
+
+  ```
+  # nvidia-container-runtime
+  ENV NVIDIA_VISIBLE_DEVICES all
+  ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+  ```

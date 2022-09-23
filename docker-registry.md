@@ -32,7 +32,7 @@ Tag an already pushed image:
 crane tag localhost:5555/tekumara/spark:3.2.1-hadoop3.2-java11-python3.9-bullseye latest
 ```
 
-Inspect digest for a tag (or latest if no tag):
+Inspect digest (ie: sha256) for a tag (or latest if no tag):
 
 ```
 crane digest localhost:5555/readme
@@ -42,6 +42,24 @@ Export by digest to a local file:
 
 ```
 crane export localhost:5555/readme@sha256:0c5834c5243e64acc398983b01bc6272f6fe2f2c2320c425edf00ed9fd8e489c > readme
+```
+
+Extract the config digest:
+
+```
+crane manifest nvidia/cuda:11.2.1-runtime-ubuntu20.04 --platform linux/amd64 | jq -r .config.digest                
+```
+
+Fetching the config blob using its digest, then extract commands for non-empty layers from the history:
+
+```
+crane blob nvidia/cuda:11.2.1-runtime-ubuntu20.04@sha256:3963e0f7ab539b9be67648cb7ffbabb1d6676e045971eb25347e7c16b3a689e7 | jq -r '.history[] | select(.empty_layer != true) | .created_by'
+```
+
+Get compressed size of image on remote repository in MiB (the [same as compressed size on Dockerhub](https://hub.docker.com/layers/library/python/3.9.13-buster/images/sha256-e21225e5c86f11108123d2ca43bdb66c1a1b0991272232d185beca089b64791d?context=explore)):
+
+```
+crane manifest python:3.9.13-buster --platform linux/amd64 | jq '[.layers[].size] | add' | awk '{printf "%''d MiB\n", $1/1048576}'
 ```
 
 ## curl

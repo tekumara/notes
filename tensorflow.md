@@ -2,16 +2,23 @@
 
 ## Hello world
 
-```
+```python
 import tensorflow as tf
 hello = tf.constant('Hello, TensorFlow!')
 ```
 
 As a oneliner:
 
+```python
+python -c "import tensorflow as tf; hello = tf.constant('hello world');"
 ```
-python3 -c "import tensorflow as tf; hello = tf.constant('hello world');"
-```
+
+## Docker
+
+Tensorflow images are based on the [nvidia/cuda](https://hub.docker.com/r/nvidia/cuda) base ubuntu images and install the CUDA libraries (ie: [libcu*.so](https://github.com/tensorflow/tensorflow/blob/c70994edddf74bef2189325c571621c2b9de38a5/tensorflow/tools/dockerfiles/dockerfiles/gpu.Dockerfile#L47)) needed and [TensorRT](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html) (ie: libnvinfer).
+
+- [tensorflow/serving](https://hub.docker.com/r/tensorflow/serving/) doesn't contain python. [source](https://github.com/tensorflow/serving/blob/master/tensorflow_serving/tools/docker/Dockerfile.gpu).
+- [tensorflow/tensorflow](https://hub.docker.com/r/tensorflow/tensorflow/) contains the distro python (eg: 3.8 in ubuntu20.04). [source](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tools/dockerfiles/dockerfiles/gpu.Dockerfile)
 
 ## CPU Optimizations
 
@@ -38,7 +45,7 @@ export_during_activation "KMP_SETTINGS=0"
 ## Troubleshooting
 
 ```
-W tensorflow/stream_executor/platform/default/dso_loader.cc:59] Could not load dynamic library 'libcudart.so.10.1'; dlerror: libcudart.so.10.1: cannot open shared object file: No such file or directory
+tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
 ```
 
-Install CUDA.
+Install CUDA and make sure the packages are linked, eg: `ln -s cuda-11.2 /usr/local/cuda`
