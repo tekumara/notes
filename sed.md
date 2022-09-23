@@ -60,11 +60,15 @@ See `man re_format` for a list of enhanced patterns, which are not supported. In
 
 Alternatively use perl instead.
 
-### Trouble shooting
+### Troubleshooting
 
 `invalid command code o`: make sure you provide a file extension to -i, eg: `sed -i.bak ...` or `sed -i ''` to replace without backing up (note on GNU/linux this would be `sed -i''` ie: no space after the flag).
 
 `in-place editing only works for regular files`: sed doesn't like symlinks
+
+## Pattern is being partially replaced
+
+Make sure your pattern is valid on macOS, eg: use  `[[:digit:]]` instead of `\d`
 
 ## Multiple replacements
 

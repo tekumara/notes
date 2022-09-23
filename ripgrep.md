@@ -6,6 +6,16 @@
 
 `--no-heading` output filename per match, rather than heading. Good from navigation from the terminal to a vscode tab.
 
+`-l` to only show the filename, not the matched line
+
+`-F` Treat the pattern as a literal string instead of a regular expression
+
+## Search and replace
+
+```shell
+rg -g '{setup.py,pyproject.toml,reqiurements.*}' -l "$search" "$dir" | xargs sed "s/$search/$replace/"
+```
+
 ### Ripgrep appears to ignore top-level folder
 
 If ripgrep isn't searching files it's probably because its obeying a `.gitignore` directive.
@@ -16,10 +26,11 @@ Or use `-u` to disable smart search, eg: `rg -uuu` which is roughly equivalent t
 
 ### Globs
 
-[Globs](https://github.com/BurntSushi/ripgrep/tree/master/globset) determine which files to include or exclude in the search.
+[Globs](https://github.com/BurntSushi/ripgrep/tree/master/globset) determine which files to include or exclude in the search. Globs are separated by comma and **no space**.
+
 eg:
 
-```
+```shell
 # list names of all files in any `ansible/` subdirectory (ignoring files in .gitignore).
 # NB the * is required.
 $ rg -g 'ansible/*' --files
