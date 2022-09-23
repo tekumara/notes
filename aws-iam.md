@@ -64,7 +64,7 @@ aws iam delete-role-policy --role-name $(ROLE_NAME) --policy-name $(POLICY_NAME)
 List all managed policies
 
 ```
-aws iam list-policies
+aws iam list-policies | jq -r '.Policies[].Arn' | sort
 ```
 
 List managed policies attached to the role

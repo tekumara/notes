@@ -32,6 +32,7 @@ Additional features:
 
 `atlantis --help` will show possible commands
 `atlantis version` will [show the terraform version](https://github.com/runatlantis/atlantis/blob/90e92e3a13e8cb7f07ae6b0935b1a0bdf90be927/server/core/runtime/version_step_runner.go) not the atlantis version.
+`atlantis plan -p myproject -- -replace=aws_dynamodb_table.dynamodb_table` to destroy and recreate a resource. Anything after `--` is passed to terraform.
 
 ## Helm
 
@@ -53,11 +54,13 @@ The chart installs:
 
 If this is a concern, then run the projects separately, eg: `atlantis apply -p test` followed by `atlantis apply -p prod`
 
-By default altantis will require any approver. To only allow approvers that are code owners, set the branch protection rules to `Require review from Code Owners` and in atlantis.yaml set
+By default atlantis will require any approver. To only allow approvers that are code owners, set the branch protection rules to `Require review from Code Owners` and in atlantis.yaml set
 
 ```
 apply_requirements: [mergeable]
 ```
+
+If you want to ensure PRs are merged after apply, set `automerge`
 
 ### Order
 
@@ -80,3 +83,8 @@ eg: _atlantis.yaml_
 ### The default workspace is currently locked by another command that is running for this pull request
 
 In order to run parallel plans, each project must have it's own workspace.
+
+
+## Troubleshooting
+
+Empty plan with no text - check that you have a valid version of terraform in atlantis.yaml 
