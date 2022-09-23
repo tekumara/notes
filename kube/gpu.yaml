@@ -19,6 +19,7 @@ spec:
         cpu: "1000m"
       limits:
         cpu: "2000m"
+        memory: 2Gi
         nvidia.com/gpu: 1
     env:
       # needed to trigger nvidia-container-runtime which makes gpus available
