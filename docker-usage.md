@@ -67,14 +67,13 @@ List image id and its overlay dirs:
 ```
 docker inspect -f $'{{.Id}}\t{{.GraphDriver.Data.LowerDir}}' $(docker images -aq)
 docker inspect $(docker images -aq) |  jq -r 'map([.Id, .RepoTags, .GraphDriver.Data]) | .[] | "\(.[0])\t\(.[1])\t\(.[2])"'
-``
-
-List containers by name and their overlay dirs:
 ```
 
+List containers by name and their overlay dirs:
+
+```
 docker inspect -f $'{{.Name}}\t{{.GraphDriver.Data}}' $(docker ps -aq)
 docker inspect $(docker ps -aq) |  jq -r 'map([.Name, .GraphDriver.Data]) | .[] | "\(.[0])\t\(.[1])"'
-
 ```
 
 ## Troubleshooting
@@ -91,4 +90,3 @@ Either:
 
 - Use `/bin/bash` or [tini](https://github.com/krallin/tini) as an entrypoint
 - Run the container with an init (defaults to tini), eg: `docker run --init` or if using docker compose set `init: true`.
-```

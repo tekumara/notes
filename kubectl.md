@@ -52,13 +52,15 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl get role app-admin -o yaml` show details of a role
 `kubectl get pods -n livy -w` watch pods in the namespace livy  
 `kubectl get pods -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .spec.containers[*]}{.image}{", "}{end}{"\n"}{end}'` list pods and their running container images
-`kubectl get pods -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .spec.containers[*]}{.name}{"\t"}{.resources}{"\t"}{end}{"\n"}{end}'` list pods' resources
+
+`kubectl get pods -o custom-columns=":metadata.name, :status.phase, :spec.containers[*].resources"` get resource limits (cpu/mem) as golang map
+`kubectl get pods -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .spec.containers[*]}{.name}{"\t"}{.resources}{"\t"}{end}{"\n"}{end}'` list pod's resource requests and limits (eg: cpu/mem)
 `kubectl get pods mypod -o json | jq '.spec.containers[] | {image, env:[.env[] | "\(.name)=\(.value)" ]}'` list pod's container images and environment variables as json
 `kubectl get pods -o wide` list pods and the node they are running on  
 `kubectl get pod helper -o jsonpath='{.status.podIPs}` get pod ip
 `kubectl get pod -n kube-system -l app.kubernetes.io/name=traefik -o custom-columns=:metadata.name --no-headers=true` get pod names by selector
 `kubectl get pods -o custom-columns=":metadata.name, :status.phase, :spec.serviceAccount"` get service accounts
-`kubectl get pods -o custom-columns=":metadata.name, :status.phase, :spec.limits"` get service accounts
+
 `kubectl describe pod -l job-name` describe pods started by a job
 
 Show all forwarded ports, ie: [NodePort services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types):
