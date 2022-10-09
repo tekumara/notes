@@ -6,13 +6,13 @@ The [KyroSerializer](https://spark.apache.org/docs/latest/tuning.html#data-seria
 
 ## Task serialization
 
-Spark also serialises UDFs (aka task serialization) as closures using the  JavaSerializer (see [here](https://stackoverflow.com/a/40261550/149412)).
+Spark also serialises UDFs (aka task serialization) as closures using the JavaSerializer (see [here](https://stackoverflow.com/a/40261550/149412)).
 
-When UDFs are serialized any outer context that is referenced is also serialized. eg: if a function references a field or method in a class, then the whole class is serialized as well. 
+When UDFs are serialized any outer context that is referenced is also serialized. eg: if a function references a field or method in a class, then the whole class is serialized as well.
 
 Members of singletons (ie: static members) are available on all executors, don't require serialization, and can be referenced from a UDF. If you have a member of a singleton that you want to vary between test and production code, you can place your UDF in a Trait and mix it into a prod object and a test object.
 
-Anything in the UDF will be executed for each row. In this example, `s3Factory()` will be called for every row this udf is executed on: 
+Anything in the UDF will be executed for each row. In this example, `s3Factory()` will be called for every row this udf is executed on:
 
 ```
 udf((link: String) => extract(s3Factory(), bucket)(link))
@@ -37,13 +37,14 @@ Serialization stack:
 This can happen when your UDF calls a class function or uses a class instance variable, and it tries to serialise the whole class and hits something it can't seralize (see [here](https://stackoverflow.com/questions/22592811/task-not-serializable-java-io-notserializableexception-when-calling-function-ou/23053760#23053760).
 
 If an object can't be serialized by the JavaSerializer, you can either
-* remove the unserializable object from the object graph being serialized if it is not actually needed
-* enable the Kyro serializer and try broadcasting it
-* make it a `lazy val` so it is created once per task/partition by an executor, as per here [Using Transient Lazy Val's To Avoid Spark Serialisation Issues](https://nathankleyn.com/2017/12/29/using-transient-and-lazy-vals-to-avoid-spark-serialisation-issues/) - note `@transient` isn't strictly necessary. In effect, the `lazy val` creates a function that creates the unserializable object on first access. This function can't contain an already created version of the object because serialization of it will be attempted.
-* make the referenced object/function a member of a singleton object
-* move the creation of the unserializable object into a generator/iterator, which doesn't need to be serialized, and use mapPartitions eg:
 
-  ```scala 
+- remove the unserializable object from the object graph being serialized if it is not actually needed
+- enable the Kyro serializer and try broadcasting it
+- make it a `lazy val` so it is created once per task/partition by an executor, as per here [Using Transient Lazy Val's To Avoid Spark Serialisation Issues](https://nathankleyn.com/2017/12/29/using-transient-and-lazy-vals-to-avoid-spark-serialisation-issues/) - note `@transient` isn't strictly necessary. In effect, the `lazy val` creates a function that creates the unserializable object on first access. This function can't contain an already created version of the object because serialization of it will be attempted.
+- make the referenced object/function a member of a singleton object
+- move the creation of the unserializable object into a generator/iterator, which doesn't need to be serialized, and use mapPartitions eg:
+
+  ```scala
       uniqueLinks.mapPartitions { rowIterator =>
         new AbstractIterator[Row] {
 
@@ -90,7 +91,7 @@ trait TraitA {
     }
     udf
   }
-  
+
 }
 
 object ObjectA extends TraitA { ... }
@@ -98,9 +99,9 @@ object ObjectA extends TraitA { ... }
 
 To avoid this either:
 
-* don't use a lazy val
-* define the method as a static method on an `object`
-* use Scala 2.12
+- don't use a lazy val
+- define the method as a static method on an `object`
+- use Scala 2.12
 
 The same problem will occur if the udf closes over a lazy val and is defined on a class as an instance method.
 
@@ -109,6 +110,7 @@ For more examples see [scala-anonfun-debug](https://github.com/tekumara/scala-an
 ## Kryo serialization errors
 
 If Kryo has trouble serializing it doesn't always give helpful errors, eg:
+
 ```
 java.lang.NoClassDefFoundError: Could not initialize class org.tensorflow.Graph
     at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
@@ -139,4 +141,4 @@ java.lang.NoClassDefFoundError: Could not initialize class org.tensorflow.Graph
     at org.apache.spark.broadcast.Broadcast.value(Broadcast.scala:70)
 ```
 
-This isn't a classpath issue. You may be able to work around it by broadcasting an object's dependencies, and creating the object from its dependencies on the executor. 
+This isn't a classpath issue. You may be able to work around it by broadcasting an object's dependencies, and creating the object from its dependencies on the executor.

@@ -11,3 +11,11 @@ Plain list as output:
 ```
 .mode list
 ```
+
+Show table schema:
+
+```
+.schema table_name
+
+describe table_name;
+```
