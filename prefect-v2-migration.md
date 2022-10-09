@@ -14,3 +14,12 @@ rg -F -l 'logger = prefect.context.get("logger")' | xargs sed -i '' 's/logger = 
     ctx: prefect.context.TaskRunContext = get_run_context()  # type: ignore
     flowlink = f"https://cloud.prefect.io/flow-run/{ctx.task_run.flow_run_id}"
 ```
+
+
+```
+@task(trigger=any_successful)
+```
+
+```
+prefect.exceptions.MappingLengthMismatch
+```

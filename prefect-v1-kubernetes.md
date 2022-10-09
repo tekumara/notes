@@ -37,7 +37,9 @@ The Prefect DaskExecutor creates a prefect-job pod which uses [dask-kubernetes](
 
 Dask worker Pods that exit cleanly will end up in the `Completed` state and will not be deleted like Prefect jobs (see above).
 
-If the Prefect Job Pod dies and restarts, it will attempt to create a new Dask cluster. The existing dask cluster will still exist executing tasks.
+There are edge cases where Prefect creates the dask cluster, but then dies without removing it. The cluster remains potentially executing tasks eg:
+- the Prefect job pod is rescheduled. On restart is creates a new Dask cluster
+- the Prefect job pod stats the dask scheduler, but the scheduler cannot scale the workers up because of quota limits and the Prefect job pod dies 
 
 ## Issues
 
