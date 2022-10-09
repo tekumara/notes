@@ -158,6 +158,20 @@ The instance profile used by the instance does not need access to the KMS key.
 
 The LaunchTime of an EC2 instance is the time it was started, not the time it was first created.
 
+## Check for public snapshosts/amis
+
+Snapshots
+
+```
+aws ec2 describe-snapshots --owner-id self --restorable-by-user-ids all --no-paginate
+```
+
+AMIs
+
+```
+aws ec2 describe-images --owners self --executable-users all
+```
+
 ## Troubleshooting
 
 ### Instance doesn't come up

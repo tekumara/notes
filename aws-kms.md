@@ -47,6 +47,13 @@ aws kms list-grants --key-id arn:aws:kms:us-east-1:123456789012:key/569bba03-c7d
 
 See [Allows key users to use the KMS key](https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html#key-policy-default-allow-users)
 
+## Use SSE-KMS
+
+Use SSE-KMS as the transparent encryption mechanism rather than SSE-S3 because:
+
+- better audit trail than standard S3 access logging because it logs the IAM principal that accessed the object.
+- limits the potential disclosure of highly sensitive objects if another role (with blanket s3:GetObject \* access) in the same account is compromised, as the KMS key can specify only certain allowed principals have access.
+
 ## Troubleshooting
 
 com.amazonaws.services.kms.model.AWSKMSException: The ciphertext refers to a customer master key that does not exist, does not exist in this region, or you are not allowed to access.
