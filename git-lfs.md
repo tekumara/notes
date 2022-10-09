@@ -1,6 +1,7 @@
 # Git LFS
 
 `git lfs install` creates the following hooks in the git global config:
+
 ```
 [filter "lfs"]
 	clean = git-lfs clean -- %f
@@ -8,6 +9,7 @@
 	process = git-lfs filter-process
 	required = true
 ```
+
 `git lfs uninstall` removes them
 
 If you installed git lfs as a system package (eg: a .deb from packagecloud) then the above hooks will be installed into the git system config (ie: `/etc/gitconfig`)
@@ -20,5 +22,3 @@ If you installed git lfs as a system package (eg: a .deb from packagecloud) then
 
 When the git lfs smudge filter fails it can leave a repo with a dirty working tree.
 Reset the working tree, and uninstall the filters.
-
-

@@ -11,3 +11,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> import asyncio
 >>>
 ```
+
+## Notes
+
+An object constructor cannot be async.

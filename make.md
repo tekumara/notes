@@ -255,11 +255,6 @@ make -o FILE test
 
 `FILE` is never remade when it's dependencies are newer.
 
-## Reference
-
-[Index of Concepts](https://www.gnu.org/software/make/manual/html_node/Concept-Index.html)
-[Heredoc in a Makefile](https://stackoverflow.com/questions/5873025/heredoc-in-a-makefile/7377522#7377522) - describes the use of the `.ONESHELL` target.
-
 ## cat build.sh > build
 
 When I run `make build` on my macOS laptop it gets right to the end and then errors with:
@@ -273,3 +268,9 @@ make: *** [build] Error 1
 This is because the `build` target has no recipe, and since there's a build.sh file, make runs [a weird SCCS built-in rule](https://stackoverflow.com/questions/43264686/why-does-calling-make-with-a-shell-script-target-create-an-executable-file).
 
 `.PHONY: build` will fix this. Alternatively, add a recipe for the `build` target, or rename `build.sh`
+
+## Reference
+
+- [Makefile Programming Language Tutorial](https://twolodzko.github.io/makefile-programming)
+- [Index of Concepts](https://www.gnu.org/software/make/manual/html_node/Concept-Index.html)
+- [Heredoc in a Makefile](https://stackoverflow.com/questions/5873025/heredoc-in-a-makefile/7377522#7377522) - describes the use of the `.ONESHELL` target.

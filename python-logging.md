@@ -21,3 +21,11 @@ import logging
 logger = logging.getLogger("s3fs")
 logger.setLevel(logging.DEBUG)
 ```
+
+To disable [warnings](https://docs.python.org/3/library/warnings.html):
+
+```
+python -W ignore::DeprecationWarning
+```
+
+See also how to configure this for [pytest](https://docs.pytest.org/en/latest/how-to/capture-warnings.html#disabling-warnings-summary).

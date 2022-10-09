@@ -10,6 +10,8 @@
 
 `-F` Treat the pattern as a literal string instead of a regular expression
 
+`--hidden` search hidden files
+
 ## Search and replace
 
 ```shell
