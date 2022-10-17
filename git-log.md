@@ -97,10 +97,10 @@ git log -3
 ```
 
 NB:
-`git log main..HEAD` shows all commits on HEAD that aren't on main
-`git log rc-5017...HEAD` shows all commits on either branch but not both
+`git log main..HEAD` shows all commits on HEAD that aren't on main from their merge base (ie: common ancestor). `HEAD..main` will show all commits on main that aren't on HEAD (ie: order sensitive).
+`git log rc-5017...HEAD` shows all commits on either branch but not both. Same as `git log HEAD...rc-5017` (ie: order insensitive)
 
 See [here](http://stackoverflow.com/questions/7251477/what-are-the-differences-between-double-dot-and-triple-dot-in-git-dif/7256391#7256391)
 
-`git diff main..HEAD` shows the difference between the tips of main and HEAD, same as `main HEAD`
-`git diff main...HEAD` shows the difference between the merge base of the two branches, and the tip of `HEAD`
+`git diff main..HEAD` shows the difference between the tips of main and HEAD ie: changes need to go from main -> HEAD. Same as `main HEAD`. `HEAD..main` will show the same set of changes, but with left and right side are swapped, ie: as a patch to go from HEAD -> main.
+`git diff main...HEAD` changes on HEAD since the merge base (ie: common ancestor). Order sensitive. `HEAD...main` will show a different set of changes.

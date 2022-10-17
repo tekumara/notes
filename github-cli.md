@@ -6,7 +6,7 @@ Use ssh for github.dev.myorg.com
 gh config set -h github.dev.myorg.com git_protocol ssh
 ```
 
-Auth to github.dev.xero.com using your browser, ssh for git, and store the generated oauth token on disk:
+Auth to github.dev.myorg.com using your browser, ssh for git, and store the generated oauth token on disk:
 
 ```
 gh auth login -h github.dev.myorg.com -w -p ssh

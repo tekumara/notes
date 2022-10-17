@@ -16,7 +16,7 @@ The creds are stored as keychain items named after the github host, eg: `github.
 To fetch keychain creds:
 
 ```
-echo -e "host=github.dev.xero.com\nprotocol=https" | git credential-osxkeychain get
+echo -e "host=github.com\nprotocol=https" | git credential-osxkeychain get
 # or just
 echo host=github.com | git credential-osxkeychain get
 ```
