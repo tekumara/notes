@@ -58,6 +58,8 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl get pods mypod -o json | jq '.spec.containers[] | {image, env:[.env[] | "\(.name)=\(.value)" ]}'` list pod's container images and environment variables as json
 `kubectl get pods -o wide` list pods and the node they are running on  
 `kubectl get pod helper -o jsonpath='{.status.podIPs}` get pod ip
+`kubectl get pod -o "custom-columns=:metadata.name,:status.podIPs[*].ip"` list all pods and their  ips
+
 `kubectl get pod -n kube-system -l app.kubernetes.io/name=traefik -o custom-columns=:metadata.name --no-headers=true` get pod names by selector
 `kubectl get pods -o custom-columns=":metadata.name, :status.phase, :spec.serviceAccount"` get service accounts
 
