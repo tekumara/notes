@@ -1,8 +1,30 @@
 # AceMoney
 
+## ASB
+
+OFX MS Money
+
 ## CBA Netbank
 
 Use CSV so we can reorder transactions to match the UI.
+
+using duckdb:
+
+```sql
+CREATE TEMP TABLE ace AS SELECT * FROM read_csv_auto ('csvdata.csv');
+
+.mode csv
+.headers on
+# nb this will overwrite the file
+.once csvdata.duck.csv
+
+select '' as Num,strftime(column0, '%d/%m/%Y') as Date,column2 as Payee,'' as Category,'' as S,
+  case when column1<0 then abs(column1) else '' end as Withdrawal,
+  case when column1>0 then column1 else '' end as Deposit,
+  column3 as Total,
+  '' as Comment
+from ace order by rowid desc;
+```
 
 using sqlite:
 
@@ -22,24 +44,6 @@ CREATE TABLE "csvdata" (
 
 # order desc so balance is correct
 select "" as Num,Date,Payee,"" as Category,"" as S,iif(cast(Amount as decimal)<0,abs(cast(Amount as decimal)),"") as Withdrawal,iif(cast(Amount as decimal)>0,Amount,"") as Deposit,Balance as Total,"" as Comment from csvdata order by rowid desc;
-```
-
-using duckdb:
-
-```sql
-CREATE TEMP TABLE ace AS SELECT * FROM read_csv_auto ('csvdata.csv');
-
-.mode csv
-.headers on
-# nb this will overwrite the file
-.once csvdata.duck.csv
-
-select '' as Num,strftime(column0, '%d/%m/%Y') as Date,column2 as Payee,'' as Category,'' as S,
-  case when column1<0 then abs(column1) else '' end as Withdrawal,
-  case when column1>0 then column1 else '' end as Deposit,
-  column3 as Total,p
-  '' as Comment
-from ace order by rowid desc;
 ```
 
 From a View Transactions extract (file.csv) using duckdb
@@ -92,26 +96,32 @@ from ace order by rowid desc;
 
 ## St George
 
-There is a setting in the UI to order from oldest to newest.
-If these has not been set, use CSV so we can reorder transactions to match the UI.
+Export CSV (nb: set the UI to order from oldest to newest).
 
 using duckdb:
 
 ```sql
-CREATE TEMP TABLE ace AS SELECT * FROM read_csv_auto ('trans021022.csv');
+CREATE TEMP TABLE ace AS SELECT * FROM read_csv_auto ('trans201122.csv');
 
 .mode csv
 .headers on
 # nb this will overwrite the file
 .once trans.ace.csv
 
-select '' as Num,strftime(column0, '%d/%m/%Y') as Date,column1 as Payee,'' as Category,'' as S,
+select '' as Num,strftime(column0, '%d/%m/%Y') as Date,
+  regexp_replace(column1, '^(Visa Purchase( O/Seas)?|Osko Withdrawal|Eftpos Debit|Tfr Wdl BPAY Internet|Atm Withdrawal)\s+\S+\s','') as Payee,
+  '' as Category,'' as S,
   column2 as Withdrawal,
   column3 as Deposit,
   column4 as Total,
-  '' as Comment
-from ace order by rowid desc;
+  regexp_extract(column1,'^(Visa Purchase( O/Seas)?|Osko Withdrawal|Eftpos Debit|Tfr Wdl BPAY Internet|Atm Withdrawal)') as Comment
+from ace
+order by rowid asc;
 ```
+
+## NAB
+
+~/Dropbox/scripts/cnab ~/Downloads/Transactions.qif
 
 ## Downloads
 
@@ -122,3 +132,9 @@ By default, Acemoney will not have access to the Downloads Folder on macOS. Gran
 ```
 env WINEPREFIX="/home/tekumara/.wine" wine .wine/drive_c/Program\ Files\ \(x86\)/AceMoney/AceMoney.exe`
 ```
+
+## Troubleshooting
+
+> There is no Windows program configured to open this type of file
+
+When opening a file from Finder with Acemoney, this error will occur if the file has a space in the name.

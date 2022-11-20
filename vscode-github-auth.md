@@ -20,7 +20,7 @@ If the `github.com` keychain item is deleted, the VS Code Github Authentication 
 
 ## Signing out
 
-In VS Code, click the profile icon in the bottom left. Choose your GitHub account and select `Sign out`.
+In VS Code, click the Account icon in the bottom left. Choose your GitHub account and select `Sign out`.
 
 This invalidates GitHub for VSCode credentials (ie: the `vscodevscode.github-authentication` keychain item) on your machine.
 

@@ -34,7 +34,7 @@ CLI commands use WebSockets to communicate with the master.
 Local laptop install using [det deploy](https://docs.determined.ai/latest/how-to/installation/deploy.html):
 
 ```shell
-pip install determined-deploy
+pip install determined
 det deploy local cluster-up
 ```
 
@@ -87,12 +87,15 @@ Configuration options include:
 Install the [cli](https://github.com/determined-ai/determined/tree/master/cli) first:
 
 ```shell
-pip install determined-cli
+pip install determined
 ```
 
-`det notebook start -c .` Start a notebook on the cluster with contents of current dir
-`det notebook start --config environment.image=determinedai/environments:cuda-10.1-pytorch-1.4-tf-2.2-gpu-0.7.0` Start a notebook with the TF 2 container  
-`det notebook list -a` Show notebooks created by any user, not just yourself  
+Notebooks/shell:
+`det notebook start -c .` Start a notebook on the cluster with contents of current dir and the default image
+`det notebook start --config environment.image=<image_name>` Start a notebook with a custom image
+`det notebook logs <notebook_id>` -f tail logs of notebook
+`det notebook list -a` Show notebooks created by any user, not just yourself
+`det notebook kill <notebook_id>` stop the notebook
 `det shell start` Start a shell on the cluster. You will need to explicitly kill it afterwards using `det shell kill`
 
 `det experiment create -f const.yaml .` Create experiment defined in _const.yaml_ with model def in current dir, and follow the first trials logs
