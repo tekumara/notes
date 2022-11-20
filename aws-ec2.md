@@ -34,6 +34,12 @@ Describe instances as a table, filtered by the `Name` tag
 aws ec2 describe-instances --filters "Name=tag:Name,Values=super-duper-instance" --region=us-east-1 --output table
 ```
 
+Get private dns hostname for an instance
+
+```
+aws ec2 describe-instances --instance-id $instanceid | jq -r ".Reservations[0].Instances[0].PrivateDnsName"
+```
+
 Describe instance state and public DNS name in a table:
 
 ```

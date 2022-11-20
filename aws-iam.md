@@ -148,3 +148,9 @@ aws sts assume-role --role-arn arn:aws:iam::123456789012:role/Developer --role-s
 ## Trusting root accounts
 
 As an aside, I think even when granting access to specific IAM roles, we have to trust the IAM admins of the accounts those roles are in. This is because the IAM admins determine who or what can assume the role, so privilege escalation can always happen via unintended assumption. Granting access to the root account makes this more explicit. This is the argument made [here](https://ben11kehoe.medium.com/cross-account-role-trust-policies-should-trust-aws-accounts-not-roles-32737dfeaa03).
+
+## Troubleshooting
+
+> MalformedPolicyDocumentException: This resource policy contains an unsupported principal
+
+Your policy contains a principal (eg: role arn) that does not exist. Check the role name and AWS account.

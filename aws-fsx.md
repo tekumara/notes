@@ -37,3 +37,7 @@ Pricing (us-east-1):
 - Infrequent Access Storage (GB-Month) $0.025
 - Infrequent Access Requests (per GB transferred) $0.01
 - Provisioned Throughput (MB/s-Month) $6.00
+
+## References
+
+- [AWS re:Invent 2021 - {New Launch} Introducing Amazon FSx for OpenZFS](https://www.youtube.com/watch?v=hPJSIZD099o)

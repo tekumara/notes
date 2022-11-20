@@ -95,6 +95,14 @@ SSH tunnelling can be used with VSCode remote SSH.
 
 ## Troubleshooting
 
+## Upgrade the SSM agent
+
+Upgrade ssm (Amazon Linux)
+
+```
+sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+```
+
 ## Checking and managing the SSM agent
 
 The SSM agent should be installed by default.
@@ -104,10 +112,16 @@ Is SSM installed on the instance, and which version?
 Amazon Linux: `rpm -qa | grep ssm`
 Ubuntu: `snap list`
 
-Upgrade ssm
+Is it running? (ubuntu):
 
 ```
-sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+systemctl status snap.amazon-ssm-agent.amazon-ssm-agent.service`
+```
+
+Inspect logs (ubuntu):
+
+```
+sudo journalctl -u snap.amazon-ssm-agent.amazon-ssm-agent.service
 ```
 
 Restart the ssm agent
