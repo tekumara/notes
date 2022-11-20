@@ -148,6 +148,20 @@ Python doesn't have an explicit export keyword. Instead conventions has arisen o
 
 For more info see this [comment](https://github.com/microsoft/pyright/issues/2277#issuecomment-937468789).
 
+## Ignore specific type errors
+
+To ignore reportGeneralTypeIssues for the whole file:
+
+```
+# pyright: reportGeneralTypeIssues=false
+```
+
+To ignore on a specific line:
+
+```
+# pyright: ignore[reportGeneralTypeIssues]
+```
+
 ## Alternatives to pyright
 
 Pyre can't find modules ([#279](https://github.com/facebook/pyre-check/issues/279)) without specifying the `search_path` pointing to site-packages. It's slow (11 secs) and doesn't find any issues out-of-the-box.

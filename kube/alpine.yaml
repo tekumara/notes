@@ -10,3 +10,6 @@ spec:
     stdin: true
     # stdin is a tty
     tty: true
+    resources:
+      requests:
+        cpu: "1000m"
