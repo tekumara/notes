@@ -21,13 +21,16 @@ echo -e "host=github.com\nprotocol=https" | git credential-osxkeychain get
 echo host=github.com | git credential-osxkeychain get
 ```
 
-To delete:
+To delete (nb: paste each line in separately)
 
 ```
 git credential-osxkeychain erase
 host=github.com
 protocol=https
+
 ```
+
+This will remove the github.com item from the keychain.
 
 Multiple users for the same host all use the same password, ie: the remote host `https://tekumara@github.com` will use the same password as `https://github.com`
 

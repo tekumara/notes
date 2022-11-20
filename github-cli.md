@@ -30,6 +30,8 @@ During authentication you'll be asked `Authenticate Git with your GitHub credent
 
 [This feature](https://github.com/cli/cli/pull/2449) generates an oauth token, and stores it in the default git credential helper, eg: on Mac this is `credential-osxkeychain` which stores the token as a keychain item named after the hostname, eg: `github.com`
 
+This token can be revoked by revoking the Github CLI [OAuth App](https://github.com/settings/applications).
+
 ## GitHub CLI as git credential helper
 
 `gh auth git-credential` implements the [git credential helper interface](https://github.com/cli/cli/blob/6701b52/pkg/cmd/auth/gitcredential/helper.go), eg:

@@ -1,8 +1,12 @@
-
 # Git diff
 
-`git diff main HEAD` diff between main and the current branch.
+`git diff main` compare working dir to main
+`git diff main HEAD` compare head of current branch to main
 `git diff main..HEAD` same as the previous command
+
+## Stats
+
+`git diff --stat [<path>...]` Show number of lines changed per file and in total
 
 ## Show differences in a specific commit
 
@@ -29,9 +33,10 @@ working tree = current state on disk
 index = staging area
 
 `git status` shows
-* Changes to be committed = staged changes
-* Changes not staged for commit = unstaged changes, but not yet added
-* Untracked files
+
+- Changes to be committed = staged changes
+- Changes not staged for commit = unstaged changes, but not yet added
+- Untracked files
 
 `git diff <filename>` shows only unstaged changes (aka changes not staged for commit), ie: changes made to the working tree vs the index.
 

@@ -50,22 +50,16 @@ Branches not merged into master
 git branch  --no-merged master
 ```
 
-Delete branches merged into master
+List all branches including remote branches with tracking info:
 
 ```
-git branch --merged master | grep -v master | xargs git branch -d
+git branch -avv
 ```
 
-Show any remote-tracking references (ie: origin/\*) that no longer exist on the remote.
+Show tracking info:
 
 ```
-git remote prune origin --dry-run
-```
-
-Delete remote-tracking references (ie: origin/\*). Local branches will remain
-
-```
-git remote prune origin
+git remote show origin
 ```
 
 List branches on the remote origin
@@ -84,16 +78,4 @@ List all remote branches in your local repo
 
 ```
 git branch -r
-```
-
-Show which branches are tracking which remote branches:
-
-```
-git branch -vv
-```
-
-or
-
-```
-git remote show origin
 ```
