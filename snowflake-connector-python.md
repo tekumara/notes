@@ -66,3 +66,7 @@ If you are using dbt it will import `snowflake-connector-python[secure-local-sto
 ## Result batch
 
 The results of SQL queries are stored in S3 across multiple objects. Each object is a [result batch/chunk](https://github.com/snowflakedb/snowflake-connector-python/blob/4384345c3aa72ca2070a88e10cbb16af75af4c5e/src/snowflake/connector/result_batch.py#L208). The S3 object URLs [expire after 6 hours](https://github.com/snowflakedb/snowflake-connector-python/blob/4384345c3aa72ca2070a88e10cbb16af75af4c5e/src/snowflake/connector/result_batch.py#L221). Result batches are either JSON or arrow binary data (see [ArrowResultBatch](https://github.com/snowflakedb/snowflake-connector-python/blob/4384345c3aa72ca2070a88e10cbb16af75af4c5e/src/snowflake/connector/result_batch.py#L541)).
+
+## Client session keep alive
+
+`client_session_keep_alive = True` is for an individual session/connection... normally [the session master token](https://community.snowflake.com/s/article/Authentication-token-has-expired-The-user-must-authenticate-again) expires with a "Authentication token has expired" error if the client's session has been idle for 4 hours. This keeps it alive with a heartbeat from the client.

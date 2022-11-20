@@ -1,6 +1,22 @@
 # python logging
 
-Basic info level logging with time:
+To create a logger:
+
+```python
+import logging
+logger = logging.getLogger(__name__)
+```
+
+By default logging output goes to stderr, with no formatting, for WARNING or above (see the [handler of last resort](https://docs.python.org/3/library/logging.html#logging.lastResort)).
+
+eg:
+
+```shell
+❯ python -c 'import logging;logger = logging.getLogger(__name__);logger.warning("foo")' > /dev/null
+foo
+```
+
+To output info level and above to stderr with timestamps etc. configure the root handler using [basicConfig](https://docs.python.org/3/library/logging.html#logging.basicConfig):
 
 ```python
 import logging
