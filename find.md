@@ -23,3 +23,9 @@ Find a directories at the top level:
 ```
 find * -type d -maxdepth 0
 ```
+
+Find all python files exclude those in _.venv/_:
+
+```
+find * -path ./.venv -prune -o -iname '*.py'
+```

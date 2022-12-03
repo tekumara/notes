@@ -5,11 +5,12 @@ set -euo pipefail
 script_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]:-$0}")")"
 
 usage() {
+    script=$(basename "$0")
     die "Archive and upload spark ui event logs for prosperity
 
-    Usage: $0 <s3_bucket> <suffix>
+    Usage: $script <s3_bucket> <suffix>
 
-       eg: $0 s3://spark-logs 20180330
+       eg: $script s3://spark-logs 20180330
            will archive all application event logs to s3://spark-logs/j-XXXXXXXXXXXXX/spark-event-logs-20180330.tar.gz"
 }
 
