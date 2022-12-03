@@ -7,7 +7,7 @@ To debug inside dependencies, add `"justMyCode": false` to the launch config in 
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "testing",
+      "name": "Python: Tests",
       "type": "python",
       "request": "launch",
       "purpose": ["debug-test"],
@@ -16,6 +16,8 @@ To debug inside dependencies, add `"justMyCode": false` to the launch config in 
   ]
 }
 ```
+
+Unfortunately the above only works in _launch.json_ and not in _*.code-workspace_ or _settings.json_ (see [#18778](https://github.com/microsoft/vscode-python/issues/18778)).
 
 To run scripts installed in the virtualenv, [explicitly add the venv's bin dir to the path](https://github.com/microsoft/vscode-python/issues/4300#issuecomment-1146749781):
 
