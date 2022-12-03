@@ -32,10 +32,11 @@ Tag an already pushed image:
 crane tag localhost:5555/tekumara/spark:3.2.1-hadoop3.2-java11-python3.9-bullseye latest
 ```
 
-Inspect digest (ie: sha256) for a tag (or latest if no tag):
+Get repo digest (ie: the sha256 of the image) for a tag (or latest if no tag):
 
 ```
-crane digest localhost:5555/readme
+❯ crane digest python:3.9-slim
+sha256:9ef969a374118f28a61261e2b018a7f9debcc0dc1342481bd8b8693c1457f46d
 ```
 
 Export by digest to a local file:

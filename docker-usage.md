@@ -28,7 +28,7 @@
 
 `docker ps --format "table {{.Image}}\t{{.Ports}}\t{{.Names}}"` containers with nicer formatting
 `docker container rm CONTAINER` remove container
-`docker network connect NETWORK CONTAINER` add additional network to a container
+`docker network connect NETWORK CONTAINER` add additional netnoteswork to a container
 `docker inspect CONTAINER | jq '.[].HostConfig.RestartPolicy'` check [restart policy](https://docs.docker.com/config/containers/start-containers-automatically/)
 `docker update --restart no CONTAINER` set restart policy to default of no, so the container doesn't start when the daemon starts up
 
