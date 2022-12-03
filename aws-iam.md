@@ -1,5 +1,17 @@
 # AWS IAM
 
+## ID
+
+```
+aws sts get-caller-identity
+```
+
+or
+
+```
+python -c 'import boto3; client = boto3.client("sts"); print(client.get_caller_identity()["Arn"])'
+```
+
 ## IAM arns
 
 `arn:aws:iam::123456789012:root` the root user ie: the AWS account itself, in this case account `123456789012`

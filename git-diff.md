@@ -1,8 +1,10 @@
 # Git diff
 
 `git diff main` compare working dir to main
-`git diff main HEAD` compare head of current branch to main
-`git diff main..HEAD` same as the previous command
+`git diff main HEAD` same as `git diff main..HEAD`
+`git diff main..HEAD` shows the difference between the tips of main and HEAD ie: changes need to go from main -> HEAD. Same as `main HEAD`. `HEAD..main` will show the same set of changes, but with left and right side are swapped, ie: as a patch to go from HEAD -> main.
+`git diff main...HEAD` changes on HEAD since the merge base (ie: common ancestor). Order sensitive. `HEAD...main` will show a different set of changes.
+`git diff main HEAD [<path>...]` for specific files
 
 ## Stats
 

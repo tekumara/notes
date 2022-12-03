@@ -42,6 +42,10 @@ If requests are unspecified and limits are, then [requests are set to limits](ht
 
 If requests and limits are both unspecified then they both default to their respective LimitRange values. The pod is assigned a `BestEffort` QoS class.
 
+## Reserved resources
+
+Node resources (cpu/mem) can be reserved for the [kube daemons](https://kubernetes.io/docs/tasks/administer-cluster/reserve-compute-resources/#kube-reserved) and [system (OS) daemons](https://kubernetes.io/docs/tasks/administer-cluster/reserve-compute-resources/#system-reserved). This limits the maximum amount of CPU and memory that can be requested by a pod. If a pod requests more than is available it will fail to schedule.
+
 ## Memory and bursting
 
 If a lot of pods on the same node burst at the same time to consume memory (a non-compressible resource) they may be OOM killed. Worse, they may interfere with other pods, and in the worst case if [system resources are not correctly reserved](https://kubernetes.io/docs/tasks/administer-cluster/reserve-compute-resources/#) the node can become NotReady, fail, and not recover.
@@ -50,13 +54,14 @@ The EKS AMI sets [kubeReserved and evictionHard](https://github.com/awslabs/amaz
 
 ## CPU and requests
 
-CPU requests are a promise of how much CPU the container will receive when the system is at capacity (ie: where there are more runnable tasks than available timeslices). It is used to generate the `cpu.shares` value for each container used by the Linux CFS for scheduling. Idle/unused cpu shares are available for other cgroups to use. Containers can burst beyond their requests to consumer idle cpu shares, but they can't steal share from other processes when those process are non-idle. For more info see [CPU Shares for Docker containers](https://www.batey.info/cgroup-cpu-shares-for-docker.html)
+CPU requests are a promise of how much CPU the container will receive **when the system is at capacity** (ie: where there are more runnable tasks than available timeslices). It is used to generate the `cpu.shares` value for each container used by the Linux CFS for scheduling. Idle/unused cpu shares are available for other cgroups to use. Containers can burst beyond their requests to consumer idle cpu shares, but they can't steal share from other processes when those process are non-idle. For more info see [CPU Shares for Docker containers](https://www.batey.info/cgroup-cpu-shares-for-docker.html)
 
 ## References
 
 - [Resource Quality of Service in Kubernetes](https://github.com/kubernetes/design-proposals-archive/blob/main/node/resource-qos.md)
 - [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
 - [Node-pressure Eviction](https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/)
+- [Reserve Compute Resources for System Daemons](https://kubernetes.io/docs/tasks/administer-cluster/reserve-compute-resources/)
 - [The container throttling problem](https://danluu.com/cgroup-throttling/)
 
 ## Resource inspection
