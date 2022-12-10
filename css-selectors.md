@@ -1,4 +1,4 @@
-# jQuery Selectors
+# CSS selectors
 
 `$("div")` - selects all `<div>` elements
 
