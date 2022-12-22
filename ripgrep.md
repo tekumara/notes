@@ -12,6 +12,14 @@
 
 `--hidden` search hidden files
 
+`-tpy` search python file types (see [Manual filtering: file types](https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#manual-filtering-file-types))
+
+`-Tpy` exclude python file types.
+
+Show js file types
+
+`rg --type-list | rg '^js:'`
+
 ## Search and replace
 
 ```shell
@@ -55,6 +63,13 @@ rg -g '!{.Trash,Library,.rustup}' --hidden checktime
 
 # ignore javascript files
 rg -g '!*.js'
+rg -Tjs # ignores *.js, *.jsx, *.vue
+
+# search python files but not files named conftest.py
+# NB: order of the globs is important. Later globs are applied on top of previous globs.
+# So if the order is reversed, conftest.py will be included.
+rg --glob '*.py' --glob '!conftest.py' --no-heading "import AppSettings"
+
 ```
 
 In above examples the implicit path to search is `.` (the current directory).
