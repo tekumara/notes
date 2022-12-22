@@ -2,7 +2,11 @@
 
 `$("div")` - selects all `<div>` elements
 
+`$("#myapp")` - select the element with the id `#myapp`
+
 `$(".ui-widget")` - all elements of class ui-widget
+
+`$("text.ui-widget")` - all text elements of class ui-widget
 
 `$(".one .two")` - all elements of class two, that are descendants of elements that are class one
 

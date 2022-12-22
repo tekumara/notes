@@ -16,3 +16,11 @@
 - On an Apple keyboard: shift - delete x
 
 NB: you can't delete suggestions that are bookmarks. Remove the bookmark instead.
+
+## Inspecting shared workers
+
+1. Visit chrome://inspect/#workers
+1. Click inspect on the worker
+1. Devtools will appear with the worker's console log
+
+You can now navigate to the worker source and place breakpoints.
