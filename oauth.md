@@ -9,7 +9,7 @@ There are different types of [flows](https://developer.okta.com/docs/concepts/oa
 - Authorization Code flow with PKCE
 - etc.
 
-Some of the OAuth Web application authorization flow requires callbacks, ie: something running on localhost listening for the callback.
+Some of the OAuth Web application authorization flow requires callbacks, ie: something running on localhost listening for the callback. See [What's a Response Type](https://developer.okta.com/blog/2017/07/25/oidc-primer-part-1#whats-a-response-type)
 
 OAuth Device authorization flow allows use of a one-time code ([example](https://github.com/cli/cli/pull/1522)). Useful for apps that don't have a web browser, eg: CLI tools.
 
@@ -27,4 +27,5 @@ Other IDPs and apps can be used, but they need to allow localhost as a redirect 
 
 ## References
 
-[OAuth 2.0 and OpenID Connect Overview](https://developer.okta.com/docs/concepts/oauth-openid/)
+- [OAuth 2.0 and OpenID Connect Overview](https://developer.okta.com/docs/concepts/oauth-openid/)
+- [Identity, Claims, & Tokens – An OpenID Connect Primer, Part 1 of 3](https://developer.okta.com/blog/2017/07/25/oidc-primer-part-1)
