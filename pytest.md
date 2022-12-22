@@ -6,10 +6,16 @@ Stream stdout whilst running (equivalent to --capture=no)
 pytest -s
 ```
 
-Stream stdout include log level INFO or greater (defaults to WARNING) and include time in log message:
+Include INFO logs (defaults to WARNING). Will display on log failure.
 
 ```
-pytest -s --log-cli-level=INFO --log-cli-format="%(asctime)s %(levelname)s %(message)s"
+pytest --log-level=INFO
+```
+
+Stream logs INFO or greater whilst running, and include time in log message:
+
+```
+pytest --log-cli-level=INFO --log-cli-format="%(asctime)s %(levelname)s %(message)s"
 ```
 
 List test names

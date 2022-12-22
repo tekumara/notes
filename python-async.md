@@ -12,6 +12,14 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>>
 ```
 
+## Start an event loop
+
+If `main` is async:
+
+```
+asyncio.run(main())
+```
+
 ## Notes
 
 An object constructor cannot be async.

@@ -20,7 +20,7 @@ To output info level and above to stderr with timestamps etc. configure the root
 
 ```python
 import logging
-logging.basicConfig(level=logging.INFO, format="%(threadName)s %(asctime)s %(levelname)s %(message)s")
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(threadName)s %(levelname)s %(message)s")
 ```
 
 To enable debug logging on the root logger:
