@@ -31,29 +31,30 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 ## Inspection
 
 `kubectl version` show client and server versions  
-`kubectl get deployments -n kube-system` show deployments for kube itself  
-`kubectl get service --namespace jhub` get services in the jub namespace
 `kubectl get endpoints` get endpoints objects, ie: IP addresses of pods for a service
 `kubectl api-resources` show all resource types  
 `kubectl get apiservice` show all apiservice resources  
 `kubectl get namespaces` show all namespaces  
-`kubectl get nodes` list node details including IP address, capacity, resources requests and limits  
-`kubectl top nodes` show CPU/MEM usage for nodes
-`kubectl top pods` show CPU/MEM usage for pods in current namespace
-`kubectl top pods -A` show CPU/MEM usage for pods in all namespaces  
 `kubectl describe rs/hub-67966db58b -n jhub` describe the replicaset hub-67966db58b in namespace  
 `kubectl get events --sort-by='{.lastTimestamp}'` show events sorted by last seen timestamp. NB: by default events are only kept by the api server for 1 hour
 `kubectl get events --sort-by='{.lastTimestamp}' --field-selector involvedObject.name=my-pod-zl6m6` show events for a specific pod
-`kubectl describe ingress` describe ingress objects
 `kubectl logs -f $PODNAME` stream logs
 `kubectl logs -lapp=awesome-app --since=0s` dump logs in the last 0 secs from all pods with the label awesome-app
-`kubectl get ingress -n flyteexamples-development -o jsonpath='{range .items[*]}{"\n"}http://localhost:30081{.spec.rules[*].http.paths[*].path}{end}'` show ingress paths (ignores host)
 `kubectl auth can-i --list` show all the actions I have in the current namespace
 `kubectl get role app-admin -o yaml` show details of a role
-`kubectl get pods -n livy -w` watch pods in the namespace livy  
-`kubectl get pods -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .spec.containers[*]}{.image}{", "}{end}{"\n"}{end}'` list pods and their running container images
 
+### Nodes
+
+`kubectl get nodes` list node details including IP address, capacity, resources requests and limits  
+`kubectl top nodes` show CPU/MEM usage for nodes
+`kubectl get nodes -o custom-columns=":metadata.name, :status.allocatable.memory, :status.allocatable.cpu, :status.capacity.memory, :status.capacity.cpu"` get nodes allocatable and capacity
+
+### Pods
+
+`kubectl top pods` show CPU/MEM usage for pods in current namespace
+`kubectl top pods -A` show CPU/MEM usage for pods in all namespaces  
 `kubectl get pods -o custom-columns=":metadata.name, :status.phase, :spec.containers[*].resources"` get resource limits (cpu/mem) as golang map
+`kubectl get pods -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .spec.containers[*]}{.image}{", "}{end}{"\n"}{end}'` list pods and their running container images
 `kubectl get pods -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .spec.containers[*]}{.name}{"\t"}{.resources}{"\t"}{end}{"\n"}{end}'` list pod's resource requests and limits (eg: cpu/mem)
 `kubectl get pods mypod -o json | jq '.spec.containers[] | {image, env:[.env[] | "\(.name)=\(.value)" ]}'` list pod's container images and environment variables as json
 `kubectl get pods -o wide` list pods and the node they are running on  
@@ -62,14 +63,27 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 
 `kubectl get pod -n kube-system -l app.kubernetes.io/name=traefik -o custom-columns=:metadata.name --no-headers=true` get pod names by selector
 `kubectl get pods -o custom-columns=":metadata.name, :status.phase, :spec.serviceAccount"` get service accounts
+`kubectl get pods -n livy -w` watch pods in the namespace livy  
 
 `kubectl describe pod -l job-name` describe pods started by a job
+
+### Services/Ingress
+
+`kubectl describe ingress` describe ingress objects
+`kubectl get service --namespace jhub` get services in the jub namespace
+`kubectl get ingress -n flyteexamples-development -o jsonpath='{range .items[*]}{"\n"}http://localhost:30081{.spec.rules[*].http.paths[*].path}{end}'` show ingress paths (ignores host)
 
 Show all forwarded ports, ie: [NodePort services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types):
 
 ```
 kubectl get svc -o json --all-namespaces | jq '.items[] | {name:.metadata.name, p:.spec.ports[] } | select( .p.nodePort != null ) | "\(.name): localhost:\(.p.nodePort) -> \(.p.port) -> \(.p.targetPort)"'
 ```
+
+### Deployments
+
+`kubectl get deployments -n kube-system` show deployments for kube itself  
+
+`kubectl get deployment -o "custom-columns=:spec.template.spec.containers[*].image"` list images used in deployment
 
 Show deployment status
 

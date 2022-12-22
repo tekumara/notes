@@ -13,7 +13,10 @@
 `helm repo update` get lastest version of charts from repos
 `helm show all $repo/$name` inspect chart $name from repo $repo
 `helm template mychart --values values.yaml` render chart
-`helm get all slim-api` describe all info (hooks, manifest, notes, values) for release slim-api
+`helm get all $release` describe all info (hooks, manifest, notes, values) for the release
+`helm get manifest $release` describe all resources for the release (does not include CRDs)
+`helm get manifest $release | yq '.' -o json allm | jq -r '"- \(.kind) \(.metadata.name)"'` describe all resources kinds and their name
+`helm show crds $chart` describe all CRDs in the chart
 `helm get values slim-api -o yaml` get values yaml for latest revision
 `helm get values slim-api -o yaml --revision 156` get values yaml for revision 156
 `helm get values slim-api -o json | jq '.image.tag'` get image tag for latest revision
