@@ -1,5 +1,13 @@
 # Slack API
 
+## SDKs
+
+- [bolt-python](https://github.com/SlackAPI/bolt-python) - A framework to build Slack apps using Python, see the [tutorial](https://slack.dev/bolt-python/tutorial/getting-started). Good for bots that need to listen to events. Supports [Socket Mode](https://api.slack.com/apis/connections/socket) which allows the app to communicate with Slack without exposing a public HTTP request URL. Apps using socket mode can’t be publicly distributed.
+
+- [python-slack-sdk](https://github.com/slackapi/python-slack-sdk) - Slack Developer Kit for Python. Good for making requests to the slack API, eg: post a message.
+
+- [Incoming webhooks](https://slack.com/help/articles/115005265063-Incoming-webhooks-for-Slack) - Exposes a URL that can be used to post messages to a specific channel.
+
 ## Linking
 
 To link to a channel (web):
@@ -35,7 +43,7 @@ To get a token see [Create and regenerate API tokens](https://get.slack.help/hc/
 
 ## Stars API
 
-NB: these are now called saved messages.
+NB: these are now called saved items.
 
 eg: [list starred messages](https://api.slack.com/methods/stars.list) in the order they were starred, most recent first, with 1000 per page:
 

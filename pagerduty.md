@@ -1,10 +1,10 @@
 # PagerDuty
 
-## Restricting shifts to specific hours
+## Restricting shifts to specific times
 
-See [Scheduling Gaps](https://support.pagerduty.com/docs/schedules#section-scheduling-gaps) however, we during the gaps when no responder is on call incidents will not be triggered.
+If `Restrict on-call shifts to specific times` is checked on the **schedule**, this can create a gap where no-one is on call, and incidents will not be triggered. See [Schedule Coverage Gaps](https://support.pagerduty.com/docs/schedule-basics#schedule-restrictions).
 
-One option is to use the [Defined Support Hours](https://support.pageraduty.com/docs/dynamic-notifications#section-defined-support-hours) configuration. Incidents will always trigger but their urgency will be determined by the time of day, and users can adjust their low urgency notifications to be non intrusive. See also https://support.pagerduty.com/docs/service-settings#section-use-case-2-support-hours
+Instead use [Defined Support Hours](https://support.pagerduty.com/docs/dynamic-notifications#section-defined-support-hours) on the **service**. Incidents will always trigger but their urgency will be determined by the time of day, and users can adjust their low urgency notifications to be non intrusive. See the example in [Urgency Use Case: Support Hours](https://support.pagerduty.com/docs/configurable-service-settings#urgency-use-case-support-hours)
 
 ## Low vs High Urgency
 

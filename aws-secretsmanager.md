@@ -104,10 +104,16 @@ When accessing the secret use its ARN, otherwise you'll be trying to access a se
 
 See [How do I share AWS Secrets Manager secrets between AWS accounts?](https://aws.amazon.com/premiumsupport/knowledge-center/secrets-manager-share-between-accounts/)
 
-### No resource-based policy allows the secretsmanager:GetSecretValue action
+### AccessDeniedException ... No resource-based policy allows the secretsmanager:GetSecretValue action
 
-Make sure the `AWS_DEFAULT_REGION` env var matches the key, otherwise you may get:
+Occurs when the `AWS_DEFAULT_REGION` env var doesn't match the key region, eg:
 
 ```
-arn:aws:sts::123456789012:assumed-role/app-role/MySession is not authorized to perform: secretsmanager:GetSecretValue on resource: arn:aws:secretsmanager:us-east-1:111111122222:secret:top-secret
+arn:aws:sts::123456789012:assumed-role/app-role/MySession is not authorized to perform: secretsmanager:GetSecretValue on resource: arn:aws:secretsmanager:us-east-1:111111122222:secret:top-secret because no resource-based policy allows the secretsmanager:GetSecretValue action
+```
+
+Adjust `AWS_DEFAULT_REGION` or explicity provide the region when fetching the key, eg:
+
+```python
+client = boto3.client("secretsmanager", region_name="us-east-1")
 ```
