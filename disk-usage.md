@@ -27,12 +27,13 @@ Files, ordered by file name, but with file size: `find . -type f -printf "%p %s\
 Get top 10 largest files `find . -printf '%s %p\n'| sort -nr | head -10`
 
 Get file size total from ls
+
 ```
 ls -alR  | grep -v '^d' | awk '{total += $5} END {print "Total:", total}'
 ```
+
 same thing with find
+
 ```
 find . -type f -printf "%s\n" | awk '{s+=$1} END {print s}'
 ```
-
-

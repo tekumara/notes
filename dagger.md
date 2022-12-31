@@ -1,5 +1,8 @@
 # dagger
 
+An API for buildkit.
+Component model for packaging and reusing build scripts across languages ("better buildpacks")
+
 ## Getting started
 
 ```

@@ -54,7 +54,7 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl top pods` show CPU/MEM usage for pods in current namespace
 `kubectl top pods -A` show CPU/MEM usage for pods in all namespaces  
 `kubectl get pods -o custom-columns=":metadata.name, :status.phase, :spec.containers[*].resources"` get resource limits (cpu/mem) as golang map
-`kubectl get pods -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .spec.containers[*]}{.image}{", "}{end}{"\n"}{end}'` list pods and their running container images
+`kubectl get pods -o custom-columns=":metadata.name, :status.phase, :spec.containers[*].image"` list pods and their running container images
 `kubectl get pods -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .spec.containers[*]}{.name}{"\t"}{.resources}{"\t"}{end}{"\n"}{end}'` list pod's resource requests and limits (eg: cpu/mem)
 `kubectl get pods mypod -o json | jq '.spec.containers[] | {image, env:[.env[] | "\(.name)=\(.value)" ]}'` list pod's container images and environment variables as json
 `kubectl get pods -o wide` list pods and the node they are running on  

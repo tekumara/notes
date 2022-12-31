@@ -78,3 +78,9 @@ pstree -p 17714
 
 You are making changes to your Certificate Trust Settings = cert is being deleted
 You are making changes to the System Certificate Trust Settings = cert is being added
+
+## List USB devices
+
+```
+system_profiler SPUSBDataTypesystem_profiler SPUSBDataType
+```
