@@ -2,41 +2,37 @@
 
 ## Linux
 
-Create `link_name -> destination` in the current directory
+Create `target -> source` in the current directory
 
 ```
-ln -s destination link_name
+ln -s source target
 ```
 
-Create the link `destination -> destination` inside _directory/_
-
-```
-ln -s destination directory/
-```
+target is the symbolic link's name.
 
 ## Replacing a symbolic link that points to a directory
 
 This is rather unintuitive on Mac OS X.
 
-Given a symbolic link _directory_, eg:
+If the target is an existing symlink pointing at a directory, eg:
 
 ```
-$ ls -al /usr/local/opt/gcc*
-lrwxr-xr-x  1 tekumara  admin  21 27 Sep 12:31 /usr/local/opt/gcc -> ../Cellar/gcc@8/8.3.0
+$ ls -al python
+lrwxr-xr-x  1 tekumara  admin    28B  2 Jan 16:09 python -> ../Cellar/python@3.10/3.10.9
 ```
 
-Then `ln -sf ../Cellar/gcc/8.3.0 gcc` will actually create a symlink _inside_ gcc, with the link name being the last component of the path, eg:
+Then `ln -sf ../Cellar/python@3.10/3.10.10 python` follows the symlink and creates a symlink **inside** _python/_. The link name is the last component of the path (ie: `3.10.10`), eg:
 
 ```
-$ ls -al /usr/local/opt/gcc/8.3.0
-lrwxr-xr-x  1 tekumara  admin  21 27 Sep 12:54 /usr/local/opt/gcc/8.3.0 -> ../Cellar/gcc@8/8.3.0
+$ ls -al python/
+lrwxr-xr-x   1 tekumara  admin    29B 15 Jan 08:11 3.10.10 -> ../Cellar/python@3.10/3.10.10
+...
 ```
 
-To avoid following the symlink directory, and replace a symlink that is a directory, use the `-h` (macOS) or `-n` (linux) option, eg:
+To avoid following the symlink, and replace an existing symlink, use the `-h` (macOS) or `-n` (linux) option, eg:
 
 ```
-$ ln -sfh ../Cellar/gcc/9.2.0 gcc
-$ ls -al /usr/local/opt/gcc*
-lrwxr-xr-x  1 tekumara  admin  21 27 Sep 12:31 /usr/local/opt/gcc -> ../Cellar/gcc/9.2.0
-
+$ ln -sfh ../Cellar/python@3.10/3.10.10 python
+$ ls -al python
+lrwxr-xr-x  1 tekumara  admin    28B  2 Jan 16:09 python -> ../Cellar/python@3.10/3.10.10
 ```

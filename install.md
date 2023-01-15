@@ -8,3 +8,9 @@ Can also
 - `-b` will preserve previous file as .old
 - `-S` safe copy will use a temp file and rename
 - `-o` set the owner on the file after copy
+
+## Troubleshooting
+
+> Inappropriate file type or format
+
+Check that you aren't trying to install a directory.
