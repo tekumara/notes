@@ -24,6 +24,12 @@ List the recipient (ie: public key) in slot one:
 age-plugin-yubikey -l --serial 12345678 --slot 1
 ```
 
+List recipients for all keys in all slots including compatible keys not created by `age-plugin-yubikey`:
+
+```
+age-plugin-yubikey --list-all
+```
+
 List the cert data stored in the slot
 
 ```

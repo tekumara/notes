@@ -3,7 +3,8 @@
 The default key chains are:
 
 - `login` local to the device. Unlocked when you login. The password is your mac login password. Located at _~/Library/Keychains/login.keychain-db_.
-- `Local Items` - synced to iCloud if `Apple ID > Keychain` is checked. Available on all devices that sync, eg: on Iphone the application passwords will be accessible via `Settings > Passwords`. Includes Safari passwords, credit cards, Wi-Fi (aka Airport network) passwords, and SSH key file paths and their passphrase (if any). [Implemented differently](https://apple.stackexchange.com/a/316220/224585) from traditional keychains, as an [encrypted sqlite database](https://github.com/n0fate/chainbreaker/issues/11#issuecomment-525326166). Not accessible from the `security` cli tool.
+- `Local Items` - Includes Safari passwords, credit cards, Wi-Fi (aka Airport network) passwords, and SSH key file paths and their passphrase (if any). [Implemented differently](https://apple.stackexchange.com/a/316220/224585) from traditional keychains, as an [encrypted sqlite database](https://github.com/n0fate/chainbreaker/issues/11#issuecomment-525326166). Not accessible from the `security` cli tool.
+- `iCloud` - If iCloud syncing is enabled the `Local Items` keychain is renamed to `iCloud` and synced. To enable syncing on macOS/iPhone check `Settings > Apple ID > iCloud > Password & Keychain`
 
 Set the timeout on the aws-vault keychain to 9 hours
 
