@@ -28,15 +28,9 @@ or
 
 To test these changes, use the Edit VCS Root page to change the VCS root to point to your feature branch. It might take a minute for you changes to appear in the TeamCity UI. Restore main/master as the default branch after testing.
 
-## Kotlin DSL Sources / API Docs
+### View current build configuration settings
 
-To download the sources for the Kotlin Teamcity DSL classes run:
-
-```
-mvn -U dependency:sources
-```
-
-See also the [public teamcity server kotlin dsl api docs](https://teamcity.jetbrains.com/app/dsl-documentation/index.html).
+From Build Configuration Home -> More -> Settings. See also View DSL.
 
 ## Generating the build configuration XML
 
@@ -61,9 +55,15 @@ This requires having a pluginRepository configured that hosts `org.jetbrains.tea
   </pluginRepositories>
 ```
 
-## View current build configuration settings
+## Kotlin DSL Sources / API Docs
 
-From Build Configuration Home -> More -> Settings. See also View DSL.
+To download the sources for the Kotlin Teamcity DSL classes run:
+
+```
+mvn -U dependency:sources
+```
+
+See also the [public teamcity server kotlin dsl api docs](https://teamcity.jetbrains.com/app/dsl-documentation/index.html).
 
 ## Triggers and dependencies
 
@@ -112,7 +112,7 @@ If the commit hook is inactive, reinstate it.
 
 Manually trigger a check for changes via _Actions - Check for pending changes_ (might take a minute or two). This should bring the periodic scheduler back to life.
 
-### Pending changes but builds are not triggered
+### Pending changes but builds are not triggering
 
 Make sure the build configuration has a trigger. Check the [trigger rules](https://www.jetbrains.com/help/teamcity/configuring-build-triggers.html) to understand when they fire.
 
@@ -123,7 +123,7 @@ If you have a vcs trigger with a branch filter, include the non-refs path as wel
 +:main
 ```
 
-Changes to a branch filter in Kotlin will take effect after the UI has been updated, ie: the commit containing the updated branch filter will be applied to the UI once merged to the default branch, but the new trigger will take effect in the following commit.
+Changes to a branch filter in Kotlin will take effect in the first commit **after** the commit that updates the UI. The UI is updated when the commit containing the updated branch filter is merged to the default branch.
 
 ### VCS trigger rules are ignored
 
@@ -195,7 +195,7 @@ Make sure you have the [commit status publisher](https://www.jetbrains.com/help/
     }
 ```
 
-## Failed to commit project settings
+### Failed to commit project settings
 
 This can happen when making changes to a project in the UI.
 
