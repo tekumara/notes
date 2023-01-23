@@ -18,10 +18,10 @@ Show list of files in a commit
 git show --name-only 637a6264a4dc75658435fd41b8fe271b2c4c32c3
 ```
 
-Show contents of file README.md in head:
+Show contents of file README.md in r2:
 
 ```
-git show HEAD:README.md
+git show r2:README.md
 ```
 
 Show history for a file, continuing past renames:
@@ -42,34 +42,34 @@ Show history for files in current directory only:
 git log .
 ```
 
-Show hash and commit message for HEAD
+Show hash and commit message for r2
 
 ```
 git --no-pager show --summary
 ```
 
-Show lists of commits (abbreviated SHA1 and title line) between tag rc-5017 and HEAD
+Show lists of commits (abbreviated SHA1 and title line) between tag main and r2
 
 ```
-git log --pretty=oneline --abbrev-commit rc-5017..HEAD
+git log --pretty=oneline --abbrev-commit main..r2
 ```
 
 For a given path only
 
 ```
-git log --pretty=oneline --abbrev-commit rc-5017..HEAD module1/
+git log --pretty=oneline --abbrev-commit main..r2 module1/
 ```
 
-Show lists of commits (date and title line) between tag rc-5017 and HEAD
+Show lists of commits (date and title line) between tag main and r2
 
 ```
-git log --pretty='%ad %s' --date=short rc-5017..HEAD
+git log --pretty='%ad %s' --date=short main..r2
 ```
 
-Show lists of commits (data, author, title line) between tag rc-5017 and HEAD
+Show lists of commits (data, author, title line) between tag main and r2
 
 ```
-git log --pretty='%ad %an %s' --date=short rc-5017..HEAD
+git log --pretty='%ad %an %s' --date=short main..r2
 ```
 
 Search for a file in the logs (across all branches)
@@ -96,11 +96,20 @@ Show the last 3 commits for the current branch
 git log -3
 ```
 
-NB:
-`git log main..HEAD` shows all commits on HEAD that aren't on main from their merge base (ie: common ancestor). `HEAD..main` will show all commits on main that aren't on HEAD (ie: order sensitive).
-`git log rc-5017...HEAD` shows all commits on either branch but not both. Same as `git log HEAD...rc-5017` (ie: order insensitive)
+## Ranges
 
-See [here](http://stackoverflow.com/questions/7251477/what-are-the-differences-between-double-dot-and-triple-dot-in-git-dif/7256391#7256391)
+git log accepts [range revisions](https://git-scm.com/docs/gitrevisions#_specifying_ranges) to specify a set of commits. The dotted range notation, ie: `..` and `...`, works as follows.
 
-`git diff main..HEAD` shows the difference between the tips of main and HEAD ie: changes need to go from main -> HEAD. Same as `main HEAD`. `HEAD..main` will show the same set of changes, but with left and right side are swapped, ie: as a patch to go from HEAD -> main.
-`git diff main...HEAD` changes on HEAD since the merge base (ie: common ancestor). Order sensitive. `HEAD...main` will show a different set of changes.
+`git log main r2` shows all commits on main and r2
+
+`git log main..r2` shows unique commits on r2 that aren't on main. `r2..main` will show all commits on main that aren't on r2 (ie: order sensitive). Defined as `git log "^main" r2`.
+
+`git log main...r2` shows unique commits on either branch but not both ie: removes common ancestors. Same as `git log r2...main` (ie: order insensitive). Defined as `git long r1 r2 --not $(git merge-base --all r1 r2)`)
+
+### vs git diff
+
+[git diff](git-diff.md#ranges) and git log use similar notation (`..` and `...`) but work differently. "git diff" compares the file tree at two specific commits. "git log" identifies a set of commits by walking the commit graph. git diff uses `...` to pick the _most recent_ merge base as the comparison commit. Whereas git log uses `...` to show unique commits by removing commits common to both branches (ie: removing commits reachable from _all_ merge bases).
+
+### References
+
+- [Stack overflow - What are the differences between double-dot ".." and triple-dot "..." in Git diff commit ranges?](http://stackoverflow.com/questions/7251477/what-are-the-differences-between-double-dot-and-triple-dot-in-git-dif/7256391#7256391)
