@@ -34,8 +34,8 @@ eg:
 
 ```
 Matching Java Virtual Machines (2):
-    17.0.5 (arm64) "Eclipse Adoptium" - "OpenJDK 17.0.5" /Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home    1.8.0_192, x86_64:	"Java SE 8"	/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home
-
+    17.0.5 (arm64) "Eclipse Adoptium" - "OpenJDK 17.0.5" /Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home
+    11.0.17 (arm64) "Eclipse Adoptium" - "OpenJDK 11.0.17" /Library/Java/JavaVirtualMachines/temurin-11.jdk/Contents/Home
 /Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home
 ```
 
