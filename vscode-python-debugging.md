@@ -7,10 +7,12 @@ To debug inside dependencies, add `"justMyCode": false` to the launch config in 
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Python: Tests",
+      "name": "Python: Debug Tests",
       "type": "python",
       "request": "launch",
+      "program": "${file}",
       "purpose": ["debug-test"],
+      "console": "internalConsole",
       "justMyCode": false
     }
   ]
