@@ -46,13 +46,13 @@ alter account set allow_id_token = true;
 
 ID tokens are cached and valid for 4 hours.
 
-On Mac/Windows ID tokens are cached in the OS keychain. To use the cache:
+On Mac ID tokens are cached in the `login` keychain. To cache tokens on macOS install:
 
 ```
 pip install "snowflake-connector-python[secure-local-storage]"
 ```
 
-On Linux ID tokens are stored in _~/.cache/snowflake/temporary_credential.json_ or the directory specified by the env var `SF_TEMPORARY_CREDENTIAL_CACHE_DIR`. To use the cache connect with:
+On Linux ID tokens are stored in _~/.cache/snowflake/temporary_credential.json_ or the directory specified by the env var `SF_TEMPORARY_CREDENTIAL_CACHE_DIR`. To cache tokens connect with:
 
 ```python
 conn = snowflake.connector.connect(
@@ -61,7 +61,7 @@ conn = snowflake.connector.connect(
 )
 ```
 
-If you are using dbt it will import `snowflake-connector-python[secure-local-storage]` and set [client_store_temporary_credential=True](https://github.com/dbt-labs/dbt-snowflake/blob/e1ee1c8d9aa3986d9ed8460750fb932f0131c310/dbt/adapters/snowflake/connections.py#L119) for you.
+If you are using dbt it will import `snowflake-connector-python[secure-local-storage]` and set [client_store_temporary_credential=True](https://github.com/dbt-labs/dbt-snowflake/blob/d9f8655/dbt/adapters/snowflake/connections.py#L150) for you.
 
 ## Result batch
 
@@ -70,3 +70,13 @@ The results of SQL queries are stored in S3 across multiple objects. Each object
 ## Client session keep alive
 
 `client_session_keep_alive = True` is for an individual session/connection... normally [the session master token](https://community.snowflake.com/s/article/Authentication-token-has-expired-The-user-must-authenticate-again) expires with a "Authentication token has expired" error if the client's session has been idle for 4 hours. This keeps it alive with a heartbeat from the client.
+
+## Troubleshooting
+
+> snowflake.connector.network.ReauthenticationRequest: 390195 (08001): The provided ID Token is invalid.
+
+May occur when using a stale token. Try again. See [#1415](https://github.com/snowflakedb/snowflake-connector-python/issues/1415#issuecomment-1414927724)
+
+> snowflake.connector.errors.InterfaceError: 252005: Failed to convert current row, cause: [Snowflake Exception] unknown arrow internal data type(1113013152) for TIMESTAMP_NTZ data
+
+May occur when using incompatible versions of pyarrow and snowflake-connector-python. Reinstall both, eg: `pip install --force-reinstall 'snowflake-connector-python[pandas]'`

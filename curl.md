@@ -14,6 +14,9 @@
 `-L` follow location redirects  
 `-f` on server errors, fail silently with no output and exit code 22
 `-S` when used with `-s` show an error message if curl fails
+`--connect-timeout <fractional seconds>` connection timeout (defaults to 75 secs)
+`--max-timeout <fractional seconds>` max time for transfer
+
 
 [man page](http://curl.haxx.se/docs/manpage.html)
 

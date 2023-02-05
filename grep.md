@@ -30,6 +30,13 @@ Search all files and subdirectories (-r) of current directory that have the file
 grep -r --include "*.tsv" bar .
 ```
 
+Return just the digits in a string:
+
+```
+grep -o '[0-9]\+' <<< "E: Could not get lock /var/lib/dpkg/lock-frontend. It is held by process 132492 (apt-get)"
+132492
+```
+
 Return value of a key/value pair:
 
 ```

@@ -33,6 +33,7 @@ Additional features:
 `atlantis --help` will show possible commands
 `atlantis version` will [show the terraform version](https://github.com/runatlantis/atlantis/blob/90e92e3a13e8cb7f07ae6b0935b1a0bdf90be927/server/core/runtime/version_step_runner.go) not the atlantis version.
 `atlantis plan -p myproject -- -replace=aws_dynamodb_table.dynamodb_table` to destroy and recreate a resource. Anything after `--` is passed to terraform.
+`atlantis plan -p myproject -- -destroy` to remove myproject (run before deleting the project's files)
 
 ## Helm
 

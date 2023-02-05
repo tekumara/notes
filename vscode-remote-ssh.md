@@ -2,7 +2,7 @@
 
 ## VS Code Server
 
-VS Code Remote SSH will start a vscode-server process on the SSH host, eg:
+When `remote.SSH.useLocalServer=true` (the default) VS Code Remote SSH will start a vscode-server process on the SSH host, eg:
 
 ```
 ubuntu     13478       1  2 01:01 ?        00:00:11 /home/ubuntu/.vscode-server/bin/784b0177c56c607789f9638da7b6bf3230d47a8c/node /home/ubuntu/.vscode-server/bin/784b0177c56c607789f9638da7b6bf3230d47a8c/out/server-main.js --start-server --host=127.0.0.1 --accept-server-license-terms --enable-remote-auto-shutdown --port=0 --telemetry-level all --install-extension ms-python.python --install-extension ms-python.vscode-pylance --connection-token-file /home/ubuntu/.vscode-server/.784b0177c56c607789f9638da7b6bf3230d47a8c.toke
@@ -12,15 +12,21 @@ When a VS Code SSH window is closed, it will close its connection with the serve
 
 VS Code processes on the remote (eg: terminals) are child process of the vscode server process.
 
+## Local server
+
+https://github.com/microsoft/vscode-remote-release/wiki/Debugging-for-Remote-SSH
+
 ## Troubleshooting
 
 ### No SSH keys after reconnecting
 
-If you get disconnected from your SSH session and reconnect and are not able to authenticate to github via SSH or other SSH hosts, try reconnecting again using Reload Window. If that fails, reset SSH_AUTH_SOCK to the latest socket:
+If you get disconnected from your SSH session and reconnect and are not able to authenticate to github via SSH or other SSH hosts, try resetting SSH_AUTH_SOCK to the latest socket:
 
 ```
 export SSH_AUTH_SOCK=$(ls -t /run/user/1001/vscode-ssh-auth-sock-* | head -1)
 ```
+
+See [#7859](https://github.com/microsoft/vscode-remote-release/issues/7859).
 
 ### No browser popups after reconnecting
 
@@ -64,4 +70,4 @@ Check Output - Log (Shared):
     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1157:16)
 ```
 
-see https://github.com/microsoft/vscode-remote-release/issues/7180
+see [#7180](https://github.com/microsoft/vscode-remote-release/issues/7180)

@@ -147,7 +147,7 @@ aws iam get-role --role-name ecsInstanceRole && aws iam list-attached-role-polic
 
 When a role is added to a resource policy a unique principal ID is generated. If the role is deleted and recreated, the resource policy will still contain the role but it will point to the old principal ID, which is no longer valid. This helps mitigate the risk of someone escalating their privileges by removing and recreating the role or user. Attempts to use the new role to access the resource will fail with an AccessDeniedException stating no resource-based policy allows the action. If you delete and recreate the role you'll need to edit the resource policy for it to generate a new principal ID.
 
-The same holds for trust policies as described in the warning box [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_policy-examples.html#example-delegate-xaccount-rolesapi).
+The same holds for trust policies as described in the warning box [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-roles).
 
 ## Assuming roles
 

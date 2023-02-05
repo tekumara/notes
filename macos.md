@@ -84,3 +84,7 @@ You are making changes to the System Certificate Trust Settings = cert is being 
 ```
 system_profiler SPUSBDataTypesystem_profiler SPUSBDataType
 ```
+
+## Find which process owns a window
+
+See [lswin.py](https://github.com/glyph/mac_list_windows_pids)

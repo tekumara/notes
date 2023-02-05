@@ -1,5 +1,11 @@
 # ImageMagick
 
+Install:
+
+```
+brew install imagemagick
+```
+
 To identify existing format
 
 ```

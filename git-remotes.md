@@ -16,8 +16,9 @@ A _fast forward push_ sends a commit that is a descendant of the remote's HEAD.
 
 `git remote` - list, add and delete remote repositories. These are not necessary, but help make remote operations easier by mapping a remote URLs to an easy to remember alias.
 
-`git remote -v ` list remote aliases and their details  
-`git remote add origin git@github.com:tukushan/delme-git.git ` add a remote alias called _origin_
+`git remote -v` list remote aliases and their details  
+`git remote add origin git@github.com:tekumara/delme-git.git` add a remote alias called _origin_
+`git remote set-url origin git@github.com:tekumara/delme-git.git` change the remote URL for _origin_
 
 ## git push
 
@@ -63,4 +64,22 @@ Extract org and repo name for origin (requires ripgrep):
 
 ```
 git config --get remote.origin.url | rg "(?:git@|https://)[^:/]+[:/](.*).git" -o -r "\$1"
+```
+
+## Troubleshooting
+
+> warning: symbolic ref is dangling: refs/remotes/origin/HEAD
+
+Usually remotes/origin/HEAD -> origin/master.
+
+The origin/HEAD reference is optional and represents the default branch on the remote. It only acts as a shortcut: If it exists and points to origin/master, you can use specific simply origin where you would otherwise specify origin/master.
+
+To fix use `git remote set-head origin -a`. This will query the remote to determine its HEAD, and then set remotes/origin/HEAD to that.
+Alternatively `git remote set-head origin master` will set remotes/origin/HEAD to origin/master.
+`git branch -a -l | grep HEAD` will show you what remotes/origin/HEAD is set to.
+
+After fixing this you may need to remove the gc log:
+
+```
+rm .git/gc.log
 ```
