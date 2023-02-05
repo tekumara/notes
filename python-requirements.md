@@ -38,4 +38,4 @@ See also [PEP 508 – Dependency specification for Python Software Packages](htt
 
 The [compatible release clause](https://peps.python.org/pep-0440/#compatible-release) `~= X.Y.Z` is roughly equivalent to `>= X.Y.Z`, `== X.Y.*`
 
-`V.*` matches any version with the prefix `V.` 
+`V.*` matches any version with the prefix `V.`

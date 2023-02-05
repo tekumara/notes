@@ -14,11 +14,7 @@
 
 See [configOptions.ts](https://github.com/microsoft/pyright/blob/978baa47a55f056523174a00c11f3301a27e7062/server/src/common/configOptions.ts#L257) for the specific rules turned on and their level (eg: warning/error) for each mode.
 
-In strict mode, individual rules can be disabled on a per file basis via a comment (see [#601](https://github.com/microsoft/pyright/issues/601)), eg:
-
-```
-# pyright: reportMissingTypeStubs=false
-```
+Strict mode can be enabled on a per file basis via a comment, and individual rules disabled, see [#601](https://github.com/microsoft/pyright/issues/601).
 
 ## Configuration
 

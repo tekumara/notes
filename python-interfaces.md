@@ -10,7 +10,7 @@ The `typing.Protocol` class enables structural subtyping. A protocol is an impli
 
 See the example [here](https://stackoverflow.com/a/50255847/149412)
 
-Because it structural, rather than nominal, an explicit import is not needed, and so it can be used to break circular import errors, eg:
+Because it structural, rather than nominal, an explicit import is not needed, and so it can be used to [break circular import errors](https://pythontest.com/fix-circular-import-python-typing-protocol/), eg:
 
 ```
 ImportError: cannot import name 'TransactionSet' from partially initialized module 'txgenerator.models' (most likely due to a circular import)
