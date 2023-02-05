@@ -67,27 +67,10 @@ Logs: `~/Library/Containers/com.docker.docker/Data/log/vm/`
 
 ## Disk usage
 
-Unused images are images that aren't associated with a container.
-
-`docker container prune` remove all stopped containers
-`docker container prune --filter 'until=1440h'` remove all containers created earlier than 60 days ago
-`docker system prune --volumes` removes all stopped containers, unused networks, unused volumes, dangling images, and dangling build cache objects
-`docker system prune -a` remove all stopped containers + all images without a container including the build cache (will delete k3d clusters not running)
-`docker system prune -a` above + all volumes not used
-
-`docker images -f dangling=true` list [dangling images](https://docs.docker.com/engine/reference/commandline/images/#show-untagged-images-dangling), ie: untagged images not being used as an intermediate layer.
-`docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}:{{.Tag}}" | sort -k 2 -h` images sorted by size
-
-Unused images are images without a container. After removing containers you can remove their image.
-
-`docker image prune` remove all unused dangling images
-`docker image prune -a --filter 'until=1440h'` remove unused images (dangling or otherwise) created earlier than 60 days ago
-`docker image rm $repo:$tag` remove specific image
-
 `docker system df` will show docker disk utilization summary - images, containers, volumes  
 `docker system df -v` a break-down at the individual image/container/volume level including shared size (ie: shared layers), unique size (ie: unique layers).
 
-`docker system df -v | grep $volume` to show size of specific volume or alternatively: `docker run --rm -it -v /:/vm-root alpine du -sHh /vm-root/$(docker volume inspect --format '{{ .Mountpoint }}' $volume)`
+`docker system df -v | grep $volume` to show size of specific volume or alternatively: `docker run --rm -it -v /:/vm-root alpine du -sHh /vm-root$(docker volume inspect --format '{{ .Mountpoint }}' $volume)`
 
 Docker Desktop stores Linux containers and images in a single, large “disk image” file, located at `~/Library/Containers/com.docker.docker/Data/vms/0/data`
 
@@ -99,5 +82,35 @@ total 68167208
 ```
 
 Actual usage is 68MB, max is 104G. To increase the max: _Docker - Preferences - Resources - Disk image size_
+
+`docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}:{{.Tag}}" | sort -k 2 -h` images sorted by size
+
+[Dangling images](https://docs.docker.com/engine/reference/commandline/images/#show-untagged-images-dangling) are untagged leaf images (ie: not intermediate layers).
+
+`docker images -f dangling=true` list dangling images and their size
+
+Unused images are images that aren't associated with a container (includes all dangling images)
+
+`grep -xvf <(docker ps -a --format '{{.Image}}') <(docker images | tail -n +2 | awk '{ print $1":"$2 }')` unused images
+
+## Pruning
+
+`docker image prune` remove dangling images
+`docker image prune -a --filter 'until=1440h'` remove unused images (dangling or otherwise) created earlier than 60 days ago
+`docker image rm $repo:$tag` remove specific image
+
+`docker volume prune` remove all unused local volumes
+
+`docker container prune` remove all stopped containers
+`docker container prune --filter 'until=1440h'` remove all containers created earlier than 60 days ago
+
+After removing containers you can remove their image.
+
+To prune everything:
+
+`docker system prune` remove all stopped containers (will delete k3d clusters not running!), unused networks, dangling images, dangling build cache objects
+`docker system prune --volumes` remove above + volumes associated with the stopped containers
+`docker system prune -a` remove all stopped containers + all images + networks associated with those containers (ie: unused images), and the whole build cache  
+`docker system prune -a --volumes` above + volumes too
 
 See also: [Disk utilization in Docker for Mac](https://docs.docker.com/docker-for-mac/space/)

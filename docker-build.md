@@ -92,11 +92,13 @@ For this to work, the image must have been written with a cache manifest. Set `-
 
 ## Cache misses between hosts
 
-[tarsum](https://github.com/moby/moby/blob/7b9275c0da707b030e62c96b679a976f31f929d3/pkg/tarsum/tarsum_spec.md) is the checksum Docker uses on files in the tar archives that make up its layers. Caching is invalidated when a file's tarsum changes.
+[tarsum](https://github.com/moby/moby/blob/99a3969/pkg/tarsum/tarsum_spec.md) is the checksum Docker uses on files in the tar archives that make up its layers. Caching is invalidated when a file's tarsum changes.
 
-tarsum v1 [does not include mtime](https://github.com/moby/moby/pull/12031) but does include [file mode](https://pkg.go.dev/os#FileMode) with [permission bits](https://github.com/moby/moby/issues/32816#issuecomment-910030001), size and xattrs excluding [SELinux xattrs](https://github.com/moby/buildkit/issues/1330). See [Headers](https://github.com/moby/moby/blob/7b9275c0da707b030e62c96b679a976f31f929d3/pkg/tarsum/tarsum_spec.md#headers) or the buildkit implementation [here](https://github.com/moby/buildkit/blob/b9c4e0b3024fccdf9ced8b38a1adecf6dbf84eab/cache/contenthash/filehash.go#L15) for the full list.
+tarsum v1 [does not include mtime](https://github.com/moby/moby/pull/12031) but does include [file mode](https://pkg.go.dev/os#FileMode) with [permission bits](https://github.com/moby/moby/issues/32816#issuecomment-910030001), size and xattrs excluding [SELinux xattrs](https://github.com/moby/buildkit/issues/1330). See [Headers](https://github.com/moby/moby/blob/99a3969/pkg/tarsum/tarsum_spec.md#headers) or the buildkit implementation [here](https://github.com/moby/buildkit/blob/f84058e/cache/contenthash/filehash.go#L15) for the full list.
 
-tarsum v1 also includes uid and gids, but Docker will [normalise uid and guid](https://github.com/docker/cli/pull/513L309) to 0:0 in the tar archive so these don't matter.
+tarsum v1 also includes uid and gids
+- in this PR Docker will [normalise uid and guid](https://github.com/docker/cli/pull/513) to 0:0 in the tar archive so these don't matter.
+- but buildkit does not (see https://github.com/moby/buildkit/issues/3291)
 
 To view perms, uid, guid, size, mtime, name use `ll` or
 

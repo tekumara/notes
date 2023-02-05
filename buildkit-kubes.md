@@ -28,6 +28,7 @@ kubectl exec -it mybuilder0-57966d47cb-z99fs -- ps -o pid,ppid,time,args
 ```
 
 Within the buildkitd container:
+
 - Images are stored in _/home/user/.local/share/buildkit/runc-native_
 - `buildctl du` will show layers and their size, use `--verbose` to see command used for the layers
 - `buildctl build` can be used to manually build
@@ -40,6 +41,23 @@ Delete builder instance which removes the Kubernetes Deployment:
 docker buildx rm mybuilder
 ```
 
+List builders
+
+```
+docker buildx ls
+```
+
+Inspect current builder
+
+```
+docker build inspectx
+```
+
+Change current builder instance to the default
+
+```
+docker build use default
+```
 
 ## [examples/kubernetes](https://github.com/moby/buildkit/tree/master/examples/kubernetes)
 
@@ -58,9 +76,6 @@ buildctl --addr kube-pod://buildkitd build --frontend dockerfile.v0 --local cont
 ```
 
 ## Service
-
-
-
 
 ## BuildKit CLI for kubectl
 
