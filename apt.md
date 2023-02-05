@@ -135,3 +135,8 @@ Defaults env_keep = "http_proxy ftp_proxy"
 ```
 
 [ref](http://askubuntu.com/questions/7470/how-to-run-sudo-apt-get-update-through-proxy-in-commandline)
+
+## Source
+
+- [salsa.debian.org](https://salsa.debian.org/apt-team/apt)
+- [github clone](https://github.com/live-clones/apt)

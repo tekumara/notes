@@ -1,19 +1,37 @@
 # systemctl
 
-List services
+List active services
 
 ```
 systemctl list-units --type=service
 ```
 
-Get status
+List active timers
+
+```
+systemctl list-units --type=timer
+```
+
+Get status of timer
+
+```
+systemctl status <service>.timer
+```
+
+Get status of service
 
 ```
 systemctl status <service>
 ```
 
-Inspect logs for service
+Service logs (shows when the service was run)
 
 ```
-sudo journalctl -u <service>
+journalctl -u <service>
+```
+
+Timer logs (shows when the timer started, **not** when it was triggered)
+
+```
+journalctl -u <service>.timer
 ```
