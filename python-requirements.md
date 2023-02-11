@@ -21,13 +21,19 @@ Requirements.txt are recommended for applications (and should contain pinned ver
 eg:
 
 ```
-awesome_lib @ git+ssh://git@github.com/awesome-lib.git
+awesome_lib @ git+ssh://git@github.com/tekumara/awesome-lib.git
 ```
 
 or on a branch:
 
 ```
-awesome_lib @ git+ssh://git@github.com/awesome-lib.git@feature1
+awesome_lib @ git+ssh://git@github.com/tekumara/awesome-lib.git@feature1
+```
+
+or using http:
+
+```
+awesome_lib @ git+https://github.com/tekumara/awesome-lib.git@feature1
 ```
 
 NB: if you have already the package, delete it first so pip will detect the missing and install the version from the branch

@@ -19,7 +19,7 @@ To debug inside dependencies, add `"justMyCode": false` to the launch config in 
 }
 ```
 
-Unfortunately the above only works in _launch.json_ and not in _*.code-workspace_ or _settings.json_ (see [#18778](https://github.com/microsoft/vscode-python/issues/18778)).
+Unfortunately the above only works in _launch.json_ and not in _\*.code-workspace_ or _settings.json_ (see [#18778](https://github.com/microsoft/vscode-python/issues/18778)).
 
 To run scripts installed in the virtualenv, [explicitly add the venv's bin dir to the path](https://github.com/microsoft/vscode-python/issues/4300#issuecomment-1146749781):
 
@@ -85,6 +85,12 @@ To debug a test called `test_flow`:
 python -m debugpy --listen 62888 --wait-for-client -m pytest -k test_flow
 ```
 
+To accept a remote connection, including a connection from a container host, listen on all interfaces:
+
+```
+python -m debugpy --listen 0.0.0.0:62888 ...
+```
+
 Connect to the debugger using an attach config:
 
 ```json
@@ -106,7 +112,9 @@ Connect to the debugger using an attach config:
 }
 ```
 
-## Breakpoint in file that does not exist
+## Troubleshooting
+
+> The editor could not be opened because the file was not found.
 
 Make sure you are mapping the cwd of debugpy (ie: remote root) to your workspace.
 
@@ -117,6 +125,23 @@ eg: if running debugpy in a subdir of your workspace folder, use:
                 {
                     "localRoot": "${workspaceFolder}",
                     "remoteRoot": "../"
+                }
+            ],
+```
+
+or if you are running debugpy in a container with packages installed into _/usr/local/lib_:
+
+```json
+            "pathMappings": [
+                // map files in /usr/local/lib to the workspace's venv
+                {
+                    "localRoot": "${workspaceFolder}/.venv/lib/",
+                    "remoteRoot": "/usr/local/lib/"
+                },
+                // map files in cwd to workspace
+                {
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "."
                 }
             ],
 ```
