@@ -51,7 +51,7 @@ Extract the config digest:
 crane manifest nvidia/cuda:11.2.1-runtime-ubuntu20.04 --platform linux/amd64 | jq -r .config.digest                
 ```
 
-Fetching the config blob using its digest, then extract commands for non-empty layers from the history:
+Fetch the config blob, which is an [image spec](https://github.com/moby/moby/tree/master/image/spec)) doc, using its digest, then extract commands for non-empty layers from the history:
 
 ```
 crane blob nvidia/cuda:11.2.1-runtime-ubuntu20.04@sha256:3963e0f7ab539b9be67648cb7ffbabb1d6676e045971eb25347e7c16b3a689e7 | jq -r '.history[] | select(.empty_layer != true) | .created_by'

@@ -130,6 +130,8 @@ Buildx has [two export modes](https://github.com/moby/buildkit/issues/752):
 
 When exporting the cache from buildx, the registry must support cache [manifest lists](https://docs.docker.com/registry/spec/manifest-v2-2/#manifest-list), see [this discussion](https://github.com/moby/buildkit/issues/699#issuecomment-432902188). [ECR](https://github.com/aws/containers-roadmap/issues/876) doesn't and [Artifactory > 7.31.10](https://www.jfrog.com/jira/browse/RTFACT-26179) does. See a more complete list of [cache support here](https://docs.earthly.dev/docs/guides/shared-cache) and a comparison between [inline and explicit caching](https://docs.earthly.dev/docs/guides/shared-cache#comparison-between-inline-and-explicit-cache).
 
+To build a inline cache buildx need to first run the cache manifest from the registry.
+
 ### docker buildx bake
 
 Build the `ci` service in compose file and push:
