@@ -65,3 +65,7 @@ Comby won't match within a string unless the template contains string quotes, eg
 ```
 
 Alternatively, use the text matcher which [ignores strings](https://github.com/comby-tools/comby/blob/a36c63fb1e686adaff3e90aed00e88404f8cda78/lib/kernel/matchers/languages.ml#L15) (`raw_string_literals` defines which literals Comby considers to be a string. For the text matcher there are none)
+
+## Match whole words
+
+To avoid matching multiple args, use `:[var:e]` instead of `:[var]`

@@ -27,6 +27,13 @@ Delete everything between `begin` and `end` (including `begin` and `end`):
 sed -i '' "/begin/,/end/d" "$file"
 ```
 
+Extract portion of path, eg:
+
+```
+echo work/tekumara/setup/pyproject.toml | sed 's#work/\(.*\)/pyproject.toml#\1#'
+# tekumara/setup
+```
+
 ## Special characters
 
 eg: given the line:
@@ -68,7 +75,7 @@ Alternatively use perl instead.
 
 ## Pattern is being partially replaced
 
-Make sure your pattern is valid on macOS, eg: use  `[[:digit:]]` instead of `\d`
+Make sure your pattern is valid on macOS, eg: use `[[:digit:]]` instead of `\d`
 
 ## Multiple replacements
 

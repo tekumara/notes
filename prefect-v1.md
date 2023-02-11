@@ -45,3 +45,19 @@ The UI is slow and crashes at times.
 ### Found no flows
 
 Flow objects must exist in the module namespace to be found. Flows that only have function-local references will not be found.
+
+### Unpickling a flow
+
+To manually unpickle a flow:
+
+```python
+import json, binascii, cloudpickle
+fpath = ...
+
+f = open(fpath, "rb")
+data = f.read() 
+info = json.loads(data.decode("utf-8"))
+flow_bytes = binascii.a2b_base64(info["flow"])
+reg_versions = info["versions"]
+flow = cloudpickle.loads(flow_bytes)
+```

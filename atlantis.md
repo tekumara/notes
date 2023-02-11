@@ -45,6 +45,7 @@ helm install -f https://raw.githubusercontent.com/runatlantis/helm-charts/main/c
 To specify a custom image, set `image.repository` and `image.tag`.
 
 The chart installs:
+
 - Pod, Service, Ingress
 - ServiceAccount, Secret, ConfigMap,
 - StatefulSet
@@ -85,7 +86,8 @@ eg: _atlantis.yaml_
 
 In order to run parallel plans, each project must have it's own workspace.
 
-
 ## Troubleshooting
 
-Empty plan with no text - check that you have a valid version of terraform in atlantis.yaml 
+Empty plan with no text - check that you have a valid version of terraform in atlantis.yaml
+
+Plans on push but commands are ignored - make sure the [webhooks](https://www.runatlantis.io/docs/configuring-webhooks.html) are receiving the correct events.
