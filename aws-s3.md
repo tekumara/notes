@@ -1,5 +1,16 @@
 # aws s3
 
+## boto
+
+List objects in bucket:
+
+```python
+from boto3 import client
+conn = client('s3')
+for key in conn.list_objects(Bucket='xero-data-apps-prod-xos-sandbox-flows')['Contents']:
+    print(key['Key'])
+```
+
 ## Regions
 
 S3 bucket names must be globally unique across all regions and accounts. The S3 console will show a global list of buckets across all regions for the account, but each bucket is actually stored in only a single region which you need to specify when creating a bucket.

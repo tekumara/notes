@@ -7,7 +7,7 @@ pyenv builds python from source using its [python-build](https://github.com/pyen
 ## Install
 
 - Install binaries on Mac OS X: `brew install pyenv`
-- Install binaries on \*nix using [pyenv-installer](https://github.com/pyenv/pyenv-installer): `curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash`
+- Install binaries and [all plugins](https://github.com/pyenv/pyenv-installer/blob/master/bin/pyenv-installer#L69) on \*nix using [pyenv-installer](https://github.com/pyenv/pyenv-installer): `curl https://pyenv.run | bash`
 
 Bash config:
 
@@ -141,3 +141,7 @@ $ pyenv which virtualenvwrapper.sh
 ```
 
 If its in a non-pyenv python environment (eg: the system environment) uninstall that python environment and use pyenv instead.
+
+> virtualenvwrapper_load:source:3: no such file or directory: /home/compute/.local/bin/virtualenvwrapper.sh
+
+Check VIRTUALENVWRAPPER_SCRIPT is correctly set

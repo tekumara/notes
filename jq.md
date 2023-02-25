@@ -143,7 +143,15 @@ echo '["aec-cli-1.0.2.tar.gz","t1000-1.0.1-pre-proxyfix2.tar.gz","boto3-1.17.97.
 
 Convert json string to json
 
+```
 echo '"{\"Version\":\"2012-10-17\"}"' | jq -r '. | fromjson'
+```
+
+Base64 decode:
+
+```
+jq '."moby.buildkit.cache.v0" | @base64d | fromjson' e5a6a0bb46d5ae24bf64f3a0a58b99d7cabcda46160f4be494639378505666d9.json
+```
 
 ## Refs
 
