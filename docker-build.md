@@ -61,9 +61,9 @@ The `--entrypoint` flag can be used to override the default entrypoint. A parame
 
 [BuildKit](https://github.com/moby/buildkit) was introduced into Docker 18.06 as experimental (see [PR #37151](https://github.com/moby/moby/pull/37151)) and is documented [here](https://docs.docker.com/develop/develop-images/build_enhancements/)
 
-BuildKit is enabled by default on Docker Desktop for Mac, and docker compose v2 on linux, but not yet for the [docker cli on linux](https://github.com/moby/moby/issues/40379).
+BuildKit is enabled by default on Docker Desktop for Mac, and since docker [v23.0.0](https://github.com/moby/moby/releases/tag/v23.0.0) on linux.
 
-To enable BuildKit for the docker cli on linux:
+To enable BuildKit for the docker cli on earlier Linux versions:
 
 ```
 export DOCKER_BUILDKIT=1
@@ -77,18 +77,27 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 
 When building the output of dockerfile commands will only be shown on an error exit status code. Use `--progress plain` to always show the output of container commands (available since Docker 18.09).
 
-## External build cache
+## Remote build cache
 
-With BuildKit enabled, docker build can [use another image](https://github.com/moby/moby/pull/26839) as its layer cache when building:
+BuildKit supports the following cache exporters:
+
+- `inline` embed the cache into the image, and push them to the registry together (recommended)
+- `registry` push the image and the cache separately
+
+When using Buildkit via docker, set `BUILDKIT_INLINE_CACHE=1` to use the inline cache. buildkit will stash the inline cache in the `moby.buildkit.cache.v0` field of the [image config](https://github.com/moby/buildkit/issues/752). The layers are not changed. NB: on a fully cached rebuild, `moby.buildkit.cache.v0` may change, causing the manifest digest to change, see [#3009](https://github.com/moby/buildkit/issues/3009).
+
+Registry caching (aka explicit caching) will push separate layers for the cache. The requires the registry supports cache [manifest lists](https://docs.docker.com/registry/spec/manifest-v2-2/#manifest-list), see [this discussion](https://github.com/moby/buildkit/issues/699#issuecomment-432902188). [ECR](https://github.com/aws/containers-roadmap/issues/876) doesn't and [Artifactory > 7.31.10](https://www.jfrog.com/jira/browse/RTFACT-26179) does. See a more complete list of [cache support here](https://docs.earthly.dev/docs/remote-caching#compatibility-with-major-registry-providers).
+
+Registry caching can optionally use `max` cache mode, which will export all the layers of all intermediate steps (across). Inline caching only supports `min` mode which only exports layers for the final image. See this comparison between [inline and registry/explicit caching](https://docs.earthly.dev/docs/remote-caching#comparison-between-inline-and-explicit-cache).
+
+With BuildKit enabled, docker build can [use another image](https://github.com/moby/moby/pull/26839) as its layer cache when building using the `--cache-from` flag, eg:
 
 ```
 docker build . --cache-from myapp:latest
 => importing cache manifest from myapp:latest
 ```
 
-When the cache-from image is on a remote registry its layers will be pulled incrementally as needed.
-
-For this to work, the image must have been written with a cache manifest. Set `--build-arg BUILDKIT_INLINE_CACHE=1` to write a cache manifest during image building.
+When the `cache-from` image is on a remote registry its layers will be pulled incrementally as needed.
 
 ## Cache misses between hosts
 
@@ -97,6 +106,7 @@ For this to work, the image must have been written with a cache manifest. Set `-
 tarsum v1 [does not include mtime](https://github.com/moby/moby/pull/12031) but does include [file mode](https://pkg.go.dev/os#FileMode) with [permission bits](https://github.com/moby/moby/issues/32816#issuecomment-910030001), size and xattrs excluding [SELinux xattrs](https://github.com/moby/buildkit/issues/1330). See [Headers](https://github.com/moby/moby/blob/99a3969/pkg/tarsum/tarsum_spec.md#headers) or the buildkit implementation [here](https://github.com/moby/buildkit/blob/f84058e/cache/contenthash/filehash.go#L15) for the full list.
 
 tarsum v1 also includes uid and gids
+
 - in this PR Docker will [normalise uid and guid](https://github.com/docker/cli/pull/513) to 0:0 in the tar archive so these don't matter.
 - but buildkit does not (see https://github.com/moby/buildkit/issues/3291)
 
@@ -119,18 +129,13 @@ References:
 
 - discussion on [#34715](https://github.com/moby/moby/issues/34715#issuecomment-637383104)
 
+## Build sources record
+
+Buildkit will store a list of the build sources in the `moby.buildkit.buildinfo.v0` in the image document. See [Build reproducibility](https://github.com/moby/buildkit/blob/master/docs/build-repro.md).
+
 ## docker buildx
 
-[docker buildx](https://docs.docker.com/engine/reference/commandline/buildx/) offers the extended capabilities of buildkit that are otherwise available via [buildctl](https://github.com/moby/buildkit). See also [docker/buildx](https://github.com/docker/buildx) on Github.
-
-Buildx has [two export modes](https://github.com/moby/buildkit/issues/752):
-
-- `type=registry,mode=max`: export all layers of all intermediate steps in multi-stage builds
-- `mode=min`: export layers for the resulting images and only metadata for the intermediate steps (which is somewhat useful).
-
-When exporting the cache from buildx, the registry must support cache [manifest lists](https://docs.docker.com/registry/spec/manifest-v2-2/#manifest-list), see [this discussion](https://github.com/moby/buildkit/issues/699#issuecomment-432902188). [ECR](https://github.com/aws/containers-roadmap/issues/876) doesn't and [Artifactory > 7.31.10](https://www.jfrog.com/jira/browse/RTFACT-26179) does. See a more complete list of [cache support here](https://docs.earthly.dev/docs/guides/shared-cache) and a comparison between [inline and explicit caching](https://docs.earthly.dev/docs/guides/shared-cache#comparison-between-inline-and-explicit-cache).
-
-To build a inline cache buildx need to first run the cache manifest from the registry.
+[docker buildx](https://docs.docker.com/engine/reference/commandline/buildx/) offers the extended capabilities of buildkit that are otherwise available via [buildctl](https://github.com/moby/buildkit). See also [docker/buildx](https://github.com/docker/buildx) on Github. `docker build` -> `docker buildx build` since [docker v23](https://github.com/moby/moby/releases/tag/v23.0.0). However the buildx plugin (which supports additional commands like bake) must be separated installed (eg: `apt-get install docker-buildx-plugin`).
 
 ### docker buildx bake
 

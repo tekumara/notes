@@ -1,4 +1,4 @@
-# docker registry
+# docker registry (crane)
 
 ## crane
 
@@ -32,11 +32,11 @@ Tag an already pushed image:
 crane tag localhost:5555/tekumara/spark:3.2.1-hadoop3.2-java11-python3.9-bullseye latest
 ```
 
-Get repo digest (ie: the sha256 of the image) for a tag (or latest if no tag):
+Get manifest (or manifest list) digest for a tag (or latest if no tag):
 
 ```
 ❯ crane digest python:3.9-slim
-sha256:9ef969a374118f28a61261e2b018a7f9debcc0dc1342481bd8b8693c1457f46d
+sha256:3bab254e90bb0986ead59a3d415e719439e629d0ff3acfdfc96021a75aab0621
 ```
 
 Export by digest to a local file:
@@ -45,16 +45,22 @@ Export by digest to a local file:
 crane export localhost:5555/readme@sha256:0c5834c5243e64acc398983b01bc6272f6fe2f2c2320c425edf00ed9fd8e489c > readme
 ```
 
-Extract the config digest:
+Extract the config digest (aka docker image id):
 
 ```
-crane manifest nvidia/cuda:11.2.1-runtime-ubuntu20.04 --platform linux/amd64 | jq -r .config.digest                
+crane manifest nvidia/cuda:11.2.1-runtime-ubuntu20.04 --platform linux/amd64 | jq -r .config.digest
 ```
 
-Fetch the config blob, which is an [image spec](https://github.com/moby/moby/tree/master/image/spec)) doc, using its digest, then extract commands for non-empty layers from the history:
+Fetch the config blob (which is an [image spec](https://github.com/moby/moby/tree/master/image/spec)) doc) then extract commands for non-empty layers from the history:
 
 ```
-crane blob nvidia/cuda:11.2.1-runtime-ubuntu20.04@sha256:3963e0f7ab539b9be67648cb7ffbabb1d6676e045971eb25347e7c16b3a689e7 | jq -r '.history[] | select(.empty_layer != true) | .created_by'
+crane config nvidia/cuda:11.2.1-runtime-ubuntu20.04  --platform linux/amd64 | jq -r '.history[] | select(.empty_layer != true) | .created_by'
+```
+
+You can also fetch the config blob via its digest, eg:
+
+```
+crane blob nvidia/cuda:11.2.1-runtime-ubuntu20.04@sha256:3963e0f7ab539b9be67648cb7ffbabb1d6676e045971eb25347e7c16b3a689e7
 ```
 
 Get compressed size of image on remote repository in MiB (the [same as compressed size on Dockerhub](https://hub.docker.com/layers/library/python/3.9.13-buster/images/sha256-e21225e5c86f11108123d2ca43bdb66c1a1b0991272232d185beca089b64791d?context=explore)):
@@ -71,7 +77,7 @@ crane manifest python:3.9.13-buster --platform linux/amd64 | jq '[.layers[].size
 curl localhost:5555/v2/_catalog
 ```
 
-[List tags](https://docs.docker.com/registry/spec/api/#listing-image-tags) for a repo (adapted from this [gist](https://gist.github.com/Exchizz/02b2276cb992c5c7cd04a824c921d0f3)):
+[List tags](https://docs.docker.com/registry/spec/api/#listing-image-tags) for a docker hub repo (requires auth, adapted from this [gist](https://gist.github.com/Exchizz/02b2276cb992c5c7cd04a824c921d0f3)):
 
 ```
 REPO=tekumara/spark
