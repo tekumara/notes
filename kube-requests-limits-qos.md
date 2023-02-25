@@ -1,4 +1,4 @@
-# k8s resources
+# k8s requests, limits, and QOS
 
 Requests are what the container is guaranteed. Limits are the maximum amount the kernel will allow the container to use. Requests cannot be greater than limits.
 
@@ -8,7 +8,7 @@ The following recommendations are derived from the [EKS best practices guide](ht
 
 CPU:
 
-- If your app is not optimised for multiple cores do not request more than 1000m CPU.
+- If your app can not use for multiple cores do not request more than 1000m CPU.
 - Do not specify resource limits on CPU. The request acts as a weight on how much relative CPU time containers get, and no limit avoids throttling. If your cluster requires a limit, make this high enough to avoid throttling.
 
 Memory:
@@ -56,15 +56,7 @@ The EKS AMI sets [kubeReserved and evictionHard](https://github.com/awslabs/amaz
 
 CPU requests are a promise of how much CPU the container will receive **when the system is at capacity** (ie: where there are more runnable tasks than available timeslices). It is used to generate the `cpu.shares` value for each container used by the Linux CFS for scheduling. Idle/unused cpu shares are available for other cgroups to use. Containers can burst beyond their requests to consumer idle cpu shares, but they can't steal share from other processes when those process are non-idle. For more info see [CPU Shares for Docker containers](https://www.batey.info/cgroup-cpu-shares-for-docker.html)
 
-## References
-
-- [Resource Quality of Service in Kubernetes](https://github.com/kubernetes/design-proposals-archive/blob/main/node/resource-qos.md)
-- [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
-- [Node-pressure Eviction](https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/)
-- [Reserve Compute Resources for System Daemons](https://kubernetes.io/docs/tasks/administer-cluster/reserve-compute-resources/)
-- [The container throttling problem](https://danluu.com/cgroup-throttling/)
-
-## Resource inspection
+## Inspection
 
 Show cpu requests
 
@@ -95,3 +87,11 @@ Show resources available and allocated across the cluster
 ```
 kubectl describe nodes
 ```
+
+## References
+
+- [Resource Quality of Service in Kubernetes](https://github.com/kubernetes/design-proposals-archive/blob/main/node/resource-qos.md)
+- [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
+- [Node-pressure Eviction](https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/)
+- [Reserve Compute Resources for System Daemons](https://kubernetes.io/docs/tasks/administer-cluster/reserve-compute-resources/)
+- [The container throttling problem](https://danluu.com/cgroup-throttling/)
