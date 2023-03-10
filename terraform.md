@@ -168,3 +168,8 @@ Wrap the attribute with `tolist(..)`
 ### Invalid type for provider
 
 If this is accompanied by a `Optional object type attributes are experimental` error, fix that to resolve the `Invalid type for provider` error.
+
+### Error: error configuring S3 Backend: IAM Role (arn:aws:iam::...) cannot be assumed
+
+This is a generic error caused by failure to assume the role for the backend.
+To get an more specific error message enable debug logging, eg: `TF_LOG=DEBUG terraform ..`

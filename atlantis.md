@@ -88,6 +88,8 @@ In order to run parallel plans, each project must have it's own workspace.
 
 ## Troubleshooting
 
-Empty plan with no text - check that you have a valid version of terraform in atlantis.yaml
+Empty plan with no text - check that you have a valid version of terraform in _atlantis.yaml_
 
 Plans on push but commands are ignored - make sure the [webhooks](https://www.runatlantis.io/docs/configuring-webhooks.html) are receiving the correct events.
+
+`checking if workspace exists: stat ...: no such file or directory` - if trying to run `atlantis plan` via comment on any empty PR, push a trivial comment first.
