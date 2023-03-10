@@ -74,6 +74,10 @@ Host *
    IdentitiesOnly yes
 ```
 
+### Error connecting to agent: Permission denied
+
+Check you have permissions to the socket specified by $SSH_AUTH_SOCK, or try with `sudo`.
+
 ### Could not open a connection to your authentication agent
 
 If `ssh-add -l` on the remote host produces this error, check if the `SSH_AUTH_SOCK` env var has been set. If it hasn't been set:

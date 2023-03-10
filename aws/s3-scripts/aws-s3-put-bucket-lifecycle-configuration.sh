@@ -2,6 +2,7 @@
 
 buckets=(
 bucket-to-delete-1
+bucket-to-delete-2
 )
 
 for b in "${buckets[@]}"
@@ -14,6 +15,9 @@ do
                 "Expiration": {
                     "Days": 1
                 },
+                "NoncurrentVersionExpiration": {
+                    "NoncurrentDays": 1
+                }
                 "ID": "delete-all",
                 "Filter": {},
                 "Status": "Enabled"

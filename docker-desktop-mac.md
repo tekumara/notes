@@ -65,6 +65,16 @@ Logs: `~/Library/Containers/com.docker.docker/Data/log/vm/`
 
 `docker events` will tail docker events
 
+## SSH Agent
+
+See [SSH agent forwarding](https://docs.docker.com/desktop/networking/#ssh-agent-forwarding).
+
+If you get `Could not open a connection to your authentication agent.` then make sure non-root can write to the socket, eg:
+
+```
+sudo chmod o+w /run/host-services/ssh-auth.sock
+```
+
 ## Disk usage
 
 `docker system df` will show docker disk utilization summary - images, containers, volumes  
