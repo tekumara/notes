@@ -88,3 +88,21 @@ system_profiler SPUSBDataTypesystem_profiler SPUSBDataType
 ## Find which process owns a window
 
 See [lswin.py](https://github.com/glyph/mac_list_windows_pids)
+
+## Logs
+
+Stream logs for docker:
+
+```
+pred='process matches ".*(ocker|vpnkit).*" || (process in {"taskgated-helper", "launchservicesd", "kernel"} && eventMessage contains[c] "docker")'
+/usr/bin/log stream --style syslog --level=debug --color=always --predicate "$pred"
+```
+
+Collect the last hour of logs (1h) in a file:
+
+```
+/usr/bin/log show --debug --info --style syslog --last 1h --predicate "$pred" >/tmp/logs.txt
+```
+
+Or use the console ([example](https://docs.docker.com/desktop/troubleshoot/overview/#check-the-logs)).
+

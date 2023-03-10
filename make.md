@@ -255,6 +255,12 @@ make -o FILE test
 
 `FILE` is never remade when it's dependencies are newer.
 
+## Force up-to-date target to run
+
+```
+make -B test
+```
+
 ## cat build.sh > build
 
 When I run `make build` on my macOS laptop it gets right to the end and then errors with:

@@ -19,10 +19,20 @@ If `GITHUB_TOKEN` or `GITHUB_ENTERPRISE_TOKEN` env vars are specified they'll ta
 Sync the fork default branch (ie: master/main) with it's parent:
 
 ```
-gh repo sync git@github.enterprise:tekumara/my-fork.git
+# ghe
+gh repo sync git@github.enterprise:tekumara/repo.git
+
+# github.com
+gh repo sync tekumara/repo
 ```
 
-This will update the fork on github, and fetch origin/main to match the parent repo. You'll need to merge your local branch with the origin.
+This will update the fork on github. You can then pull the changes to your local repo.
+
+Create a PR against the parent repo, rather then the fork:
+
+```
+gh pr create --fill -w -R parent/repo
+```
 
 ## Authenticate Git with your GitHub credentials
 
@@ -49,3 +59,26 @@ gh auth setup-git [<hostname>]
 ```
 
 For more info see [https://github.com/cli/cli/pull/4246](https://github.com/cli/cli/pull/4246)
+
+## Troubleshooting
+
+> can't find corresponding remote for apache/spark
+
+To resolve, and sync the local repository from the remote parent, change the default repo to match the origin remote:
+
+```
+❯ gh repo set-default tekumara/spark
+✓ Set tekumara/spark as the default repository for the current directory
+❯ gh repo sync
+✓ Synced the "main" branch from tekumara/spark to local repository
+```
+
+> could not compute title or body defaults: failed to run git: fatal: ambiguous argument 'upstream/... ': unknown revision or path not in the working tree.
+
+Fetch the remote first:
+
+```
+git fetch upstream
+```
+
+See [#5896 comment](https://github.com/cli/cli/issues/5896#issuecomment-1304723277)

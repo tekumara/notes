@@ -16,6 +16,8 @@
 
 `-Tpy` exclude python file types.
 
+`-M0` to show full line that's matched, rather than truncating it with `...` 
+
 Show js file types
 
 `rg --type-list | rg '^js:'`
