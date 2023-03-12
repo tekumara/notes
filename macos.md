@@ -98,6 +98,8 @@ pred='process matches ".*(ocker|vpnkit).*" || (process in {"taskgated-helper", "
 /usr/bin/log stream --style syslog --level=debug --color=always --predicate "$pred"
 ```
 
+NB: `contains[c]` means "contains case insensitive". See [Predicate Format String Syntax](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Predicates/Articles/pSyntax.html)
+
 Collect the last hour of logs (1h) in a file:
 
 ```

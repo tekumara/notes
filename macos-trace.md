@@ -37,11 +37,21 @@ OS X El Captain introduced [System Integrity Protection](https://derflounder.wor
 
 To enable dtrace:
 
-- Reboot the mac
-- Hold ⌘R during reboot to enter the Recovery OS.
+- Enter Recovery Mode:
+  - Intel: Reboot the mac. Hold ⌘R during reboot.
+  - Apple silicon: Shut down. Press and hold the power button on your Mac until “Loading startup options” appears. Click Options, then click Continue. For more info, see [here](https://support.apple.com/en-au/guide/mac-help/mchl82829c17/mac).
 - From the Utilities menu, run Terminal
-- Run `csrutil enable --without dtrace` which should report "Requesting an unsupported configuration".
+- Run `csrutil enable --without dtrace` which should report:
+
+  ```
+  csrutil: Requesting an unsupported configuration. This is likely to break in the future and leave your machine in an unknown state.
+  Turning off System Integrity Protection requires modifying system security.
+  Allow booting unsigned operating systems and any kernel extensions for OS "Macintosh HD"? [y/n]:
+  ```
+
+- Choose `y` to proceed.
 
 ## References
 
-[Top 10 DTrace scripts for Mac OS X](http://dtrace.org/blogs/brendan/2011/10/10/top-10-dtrace-scripts-for-mac-os-x/)
+- [Top 10 DTrace scripts for Mac OS X](http://dtrace.org/blogs/brendan/2011/10/10/top-10-dtrace-scripts-for-mac-os-x/)
+- [Using dtrace on MacOS with SIP enabled](https://poweruser.blog/using-dtrace-with-sip-enabled-3826a352e64b)
