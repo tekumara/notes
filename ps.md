@@ -8,6 +8,12 @@ Show RSS
 ps -m -o pid,vsz,rss,%mem,command
 ```
 
+Show all stopped processes
+
+```
+ps -o stat,command,pid | grep '^S+'
+```
+
 ## ps (GNU)
 
 Human-friendly memory stats ([ref]()):

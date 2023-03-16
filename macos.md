@@ -107,4 +107,3 @@ Collect the last hour of logs (1h) in a file:
 ```
 
 Or use the console ([example](https://docs.docker.com/desktop/troubleshoot/overview/#check-the-logs)).
-
