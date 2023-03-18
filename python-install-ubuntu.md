@@ -1,4 +1,4 @@
-# Python Install
+# Python Install Ubuntu
 
 ## Ubuntu versions
 
@@ -6,6 +6,7 @@ Ubuntu distros contain python 2.7 and the following python 3 versions:
 
 | version                   | python 3 |
 | ------------------------- | -------- |
+| Ubuntu 22.04 LTS (jammy)  | 3.10     |
 | Ubuntu 20.04 LTS (focal)  | 3.8      |
 | Ubuntu 18.04 LTS (bionic) | 3.6      |
 | Ubuntu 17.10 (artful)     | 3.6      |
