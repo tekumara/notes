@@ -86,7 +86,7 @@ Many libraries lack stubs. However their `.py` files can contain partial or comp
 
 - specify the `--lib` command-line argument
 - set `"python.analysis.useLibraryCodeForTypes": true` for the pyright vscode extension. In Pylance this defaults to true.
-- set `"useLibraryCodeForTypes": false` in _pyrightconfig.json_. NB: Setting this to `false` will override Pylance.
+- set `"useLibraryCodeForTypes": true` in _pyrightconfig.json_. NB: Setting this to `false` will override Pylance.
 
 `useLibraryCodeForTypes` is a double-edged sword. On the one hand, it can avoid issues like:
 

@@ -33,6 +33,7 @@ Before installing a version of python, which is built from source, make sure you
 `pyenv global` show/set the python version for this user, as defined in _\$(pyenv root)/version_. If this file is not present, then the _system_ version will be used.  
 `pyenv shell` show/set the python version for this shell session, ie: shows/sets the _PYENV_VERSION_ environment variable.  
 `pyenv local` show/set the python version for this directory, ie: the _.python-version_ file in the current directory.
+`pyenv which <executable>` look for `<executable>` on the PATH.
 
 More info about [choosing the python version](https://github.com/pyenv/pyenv#choosing-the-python-version)
 
@@ -103,7 +104,11 @@ virtualenvwrapper
 
 See [tekumara/zsh-pyenv-virtualenvwrapper-lazy](https://github.com/tekumara/zsh-pyenv-virtualenvwrapper-lazy) for lazily loading pyenv-virtualwrapper
 
-## Errors
+## Troubleshooting
+
+> ImportError: cannot import name 'main'
+
+eg:
 
 ```shell
 $ pip --version
@@ -145,3 +150,30 @@ If its in a non-pyenv python environment (eg: the system environment) uninstall 
 > virtualenvwrapper_load:source:3: no such file or directory: /home/compute/.local/bin/virtualenvwrapper.sh
 
 Check VIRTUALENVWRAPPER_SCRIPT is correctly set
+
+> pyenv-virtualenvwrapper: system: either virtualenvwrapper.sh or virtualenvwrapper_lazy.sh is not available.
+
+_virtualenwrapper.sh_ [can't be found](https://github.com/pyenv/pyenv-virtualenvwrapper/blob/2c23eb3/bin/pyenv-virtualenvwrapper#L27) in the pyenv version's site-packages script dir, or on the PATH using `pyenv which virtualenvwrapper.sh`, even after attempts to install it via `pip install virtualenvwrapper`.
+
+Your site-packages executable script dir is:
+
+- _~/.local/bin_ when using the Ubuntu system python version. If you are using the pyenv `system` version make sure this directory is on your PATH.
+- "$(pyenv prefix $(pyenv version-name))/bin" when using a pyenv version of python, eg: _/.pyenv/versions/3.11.1/bin/virtualenvwrapper.sh_
+
+On macOS, virtualenvwrapper may have been installed into xcode's _~/Library/Python/3.9/bin/_ which is not on the PATH. Uninstall it and re-install it into your pyenv version, eg:
+
+```
+PIP_REQUIRE_VIRTUALENV=false /usr/bin/pip3 uninstall virtualenvwrapper     # xcode
+PIP_REQUIRE_VIRTUALENV=false pip install virtualenvwrapper                 # pyenv version
+```
+
+> pyenv-virtualenvwrapper: 3.9: virtualenv-clone is not available.
+
+_virtualenv-clone_ [can't be found](https://github.com/pyenv/pyenv-virtualenvwrapper/blob/2c23eb3/bin/pyenv-virtualenvwrapper#L47) in the pyenv version's site-packages script dir, or on the PATH using `pyenv which virtualenv-clone`.
+
+On macOS, virtualenv-clone may have been installed into xcode's _~/Library/Python/3.9/bin/_ which is not on the PATH. Uninstall it and re-install it using brew python, eg:
+
+```
+PIP_REQUIRE_VIRTUALENV=false /usr/bin/pip3 uninstall virtualenv-clone           # xcode
+PIP_REQUIRE_VIRTUALENV=false pip install virtualenv-clone                       # pyenv version
+```
