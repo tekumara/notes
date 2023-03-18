@@ -37,3 +37,7 @@ requirements-txt-fixer requirements.* || echo Fixed
 ```
 
 The hooks return an non-zero exit code when they make changes (hence the `|| echo Fixed`).
+
+## Debugging hook install
+
+See [Debug how pre-commit initializes its environment #1508](https://github.com/pre-commit/pre-commit/issues/1508#issuecomment-648874721)
