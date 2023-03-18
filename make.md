@@ -123,7 +123,7 @@ If you want a target to be called regardless of if there is file with the target
 
 ## Ignore timestamp of dependency
 
-To trigger a target only when a dependency does not exist use an [order-only prerequisite](https://www.gnu.org/software/make/manual/make.html#Prerequisite-Types):
+To trigger a target only when a dependency does not exist use an [order-only prerequisite](https://www.gnu.org/software/make/manual/make.html#Prerequisite-Types). Order-only prerequisites are never checked when determining if the target is out of date.
 
 eg:
 
@@ -131,7 +131,19 @@ eg:
 dbt_packages: packages.yml | $(venv)
 ```
 
-Will trigger `dbt_packages` when `$(venv)` does not exist, but if `$(venv)` is newer `dbt_packages` won't be triggered.
+Will trigger `dbt_packages` when `$(venv)` does not exist, but if `$(venv)` is newer than `dbt_packages`, then `dbt_packages` won't be considered out of date.
+
+NB: this is not transitive, ie: given
+
+```
+$(venv): pyproject.toml $(pip)
+  ...
+
+hooks: | $(venv)
+  ...
+```
+
+`make hooks` will still build `$(venv)` when `pyproject.toml` is newer than `$(venv)`, causing `$(venv)` to be out of date.
 
 ## Errors
 
