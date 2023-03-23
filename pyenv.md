@@ -135,7 +135,7 @@ Make sure `eval "$(pyenv init -)"` has been run first.
 
 This can occur when upgrading to a new version of pyenv. To fix, rebuild the shims with `pyenv rehash`
 
-> ModuleNotFoundError: No module named 'virtualenvwrapper'
+> Error while finding module specification for 'virtualenvwrapper.hook_loader' (ModuleNotFoundError: No module named 'virtualenvwrapper')
 > virtualenvwrapper.sh: There was a problem running the initialization hooks
 
 This can occur when running _virtualenvwrapper.sh_ outside a pyenv python environment. Run `pyenv which virtualenvwrapper.sh` to locate _virtualenvwrapper.sh_, eg:
@@ -169,7 +169,7 @@ PIP_REQUIRE_VIRTUALENV=false pip install virtualenvwrapper                 # pye
 
 > pyenv-virtualenvwrapper: 3.9: virtualenv-clone is not available.
 
-_virtualenv-clone_ [can't be found](https://github.com/pyenv/pyenv-virtualenvwrapper/blob/2c23eb3/bin/pyenv-virtualenvwrapper#L47) in the pyenv version's site-packages script dir, or on the PATH using `pyenv which virtualenv-clone`.
+This is the same class of error as the previous one above, ie: _virtualenv-clone_ [can't be found](https://github.com/pyenv/pyenv-virtualenvwrapper/blob/2c23eb3/bin/pyenv-virtualenvwrapper#L47) in the pyenv version's site-packages script dir, or on the PATH using `pyenv which virtualenv-clone`.
 
 On macOS, virtualenv-clone may have been installed into xcode's _~/Library/Python/3.9/bin/_ which is not on the PATH. Uninstall it and re-install it using brew python, eg:
 
@@ -177,3 +177,16 @@ On macOS, virtualenv-clone may have been installed into xcode's _~/Library/Pytho
 PIP_REQUIRE_VIRTUALENV=false /usr/bin/pip3 uninstall virtualenv-clone           # xcode
 PIP_REQUIRE_VIRTUALENV=false pip install virtualenv-clone                       # pyenv version
 ```
+
+> ModuleNotFoundError: No module named 'pip'
+
+eg:
+
+```
+Traceback (most recent call last):
+  File "/home/compute/.pyenv/versions/3.10/bin/pip", line 5, in <module>
+    from pip._internal.cli.main import main
+ModuleNotFoundError: No module named 'pip'
+```
+
+The `pip` module isn't present on `sys.path`.
