@@ -166,3 +166,7 @@ As an aside, I think even when granting access to specific IAM roles, we have to
 > MalformedPolicyDocumentException: This resource policy contains an unsupported principal
 
 Your policy contains a principal (eg: role arn) that does not exist. Check the role name and AWS account.
+
+> MalformedPolicyDocument: The policy failed legacy parsing
+
+Look for typos in arns or use of special characters, eg: `=`.
