@@ -9,7 +9,7 @@ Get info
 `brew log -p helm@2` show history of the helm@2 formula
 `brew list coreutils` show all installed files of a keg
 `brew tap caskroom/versions` Alternate cask versions
-`brew search postgresql` Search installed taps for formulae and casks with `postgresql` in the name. 
+`brew search postgresql` Search installed taps for formulae and casks with `postgresql` in the name.
 
 Show package owner of msbuild
 

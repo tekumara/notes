@@ -123,7 +123,7 @@ If you want a target to be called regardless of if there is file with the target
 
 ## Ignore timestamp of dependency
 
-To trigger a target only when a dependency does not exist use an [order-only prerequisite](https://www.gnu.org/software/make/manual/make.html#Prerequisite-Types). Order-only prerequisites are never checked when determining if the target is out of date.
+To trigger a target only when a dependency does not exist use an [order-only prerequisite](https://www.gnu.org/software/make/manual/make.html#Prerequisite-Types). Order-only prerequisites aren’t used to determine if the target is out of date.
 
 eg:
 

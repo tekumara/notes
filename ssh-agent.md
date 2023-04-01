@@ -50,8 +50,8 @@ For more details see [OpenSSH updates in macOS 10.12.2](https://developer.apple.
 
 SSH will offer:
 
+- all keys in the agent first
 - keys explicitly provided via `-i` or the `IdentityFile` setting in _~/.ssh/config_
-- all keys in the agent
 
 ## SSH forwarding
 
@@ -67,7 +67,7 @@ When forwarding is enabled `ssh-add -l` will show the same set of keys locally a
 
 If ssh produces this error then it may be because ssh-agent has provided > 5 identities before the correct one and ssh gives up.
 
-Add the following to your `.ssh/config` so that ssh only uses the authentication identity files configured in the ssh config file, even if ssh-agent offers more identities.
+Add the following to your `.ssh/config` so that ssh only uses the authentication identity files configured in the ssh config file, and not any of ssh-agent's identities.
 
 ```
 Host *

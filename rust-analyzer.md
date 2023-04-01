@@ -17,3 +17,7 @@ members = [
 ```
 
 Workspaces share the same _Cargo.lock_ file.
+
+> rust-analyzer failed to load workspace: "cargo" "--version" failed: No such file or directory (os error 2)
+
+Try restarting VS Code.
