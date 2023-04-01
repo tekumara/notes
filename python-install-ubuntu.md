@@ -23,7 +23,13 @@ sudo apt-get update
 sudo apt-get install -y python3 python3-dev python3-venv
 ```
 
-Use [pyenv](pyenv.md) to install version newer than the default provided by the distro.
+This will create a `python3` executable at _/usr/bin/python3_. `python` will not be on the path. Ubuntu packages explicitly depend on python3 or python2. If you require `python` pointing at /usr/bin/python3, install [python-is-python3](https://launchpad.net/ubuntu/focal/+package/python-is-python3):
+
+```
+sudo apt-get install python-is-python3
+```
+
+This creates the symlink /usr/bin/python -> python3.
 
 ### Installing a newer version via the package manager
 
@@ -55,9 +61,13 @@ You can now create virtualenvs (which include pip): `python3 -m venv`
 
 ## Dist packages
 
-The debian python package contains a [modified version of site.py](https://github.com/deadsnakes/python3.7/blob/4dc651768517acccad5f5081fff2de3e4d5900cd/debian/patches/distutils-install-layout.diff#L243) which uses the dist-packages rather than site-packages subdirectory. This means _/usr/lib/python3/dist-packages_ appears on `sys.path`. _python3-\*_ deb packages will be installed into _/usr/lib/python3/dist-packages_. The `python3-distutils` debian package also points at dist-packages rather than site-packages.
+The debian python package contains a [modified version of site.py](https://github.com/deadsnakes/python3.9/blob/ubuntu/focal/debian/patches/distutils-install-layout.diff#L270) which uses the dist-packages rather than site-packages subdirectory. This means _/usr/lib/python3/dist-packages_ appears on `sys.path`. _python3-\*_ deb packages will be installed into _/usr/lib/python3/dist-packages_. The `python3-distutils` debian package also points at dist-packages rather than site-packages.
 
-Any python installations with a prefix other than _/usr_ will be isolated from distribution installed packages, eg: installations in _/usr/local_ or virtualenvs.
+Virtulenvs won't have _/usr/lib/python3/dist-packages_ on `sys.path`
+
+References:
+
+- [the site module](https://docs.python.org/3/library/site.html)
 
 ## Install pip directly
 
@@ -68,7 +78,8 @@ Any python installations with a prefix other than _/usr_ will be isolated from d
 curl -s https://bootstrap.pypa.io/get-pip.py | sudo -H /usr/bin/python3.7
 ```
 
-pip will install system packages into _/usr/local/lib/python3.X/dist-packages_ and user packages into _~/.local/lib/python3.X/site-packages_ where X depends on the version of the python interpreter being run. Entrypoints will be created in the adjacent _bin/_ directory and reference the python3.X interpreter. When run as root using ie: `sudo pip` system packages will be installed.
+pip will install system packages into _/usr/local/lib/python3.X/dist-packages_ when run as root, 
+and user packages into _~/.local/lib/python3.X/site-packages_ where X depends on the version of the python interpreter being run. Entrypoints will be created in the adjacent _bin/_ directory and reference the python3.X interpreter. When run as root using ie: `sudo pip` system packages will be installed.
 
 Beware: _/usr/local/bin_ is a shared directory and can have entrypoints from different python versions.
 

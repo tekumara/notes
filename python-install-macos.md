@@ -10,9 +10,10 @@ The macOS xcode command line tools install:
 - _/usr/bin/pip3_ binary
 - The following versions of pip, all with shebang `#!/Library/Developer/CommandLineTools/usr/bin/python3`:
   - _/usr/local/bin/pip3_
+  - _/usr/local/bin/pip3.8_
   - _/usr/local/bin/pip3.9_
-  - _/usr/local/bin/pip3.10_ (incorrectly pointing at python3 which is 3.9)
-
+  - _/usr/local/bin/pip3.10_
+  
 pip will install packages in the user site-packages dir above and executable scripts (eg: `virtualenv`) into _~/Library/Python/3.9/bin_. This script dir is not on PATH.
 
 ## brew

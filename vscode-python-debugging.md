@@ -77,7 +77,7 @@ Run your program and wait for connection:
 python -m debugpy --listen 62888 --wait-for-client <filename> | -m <module> [<arg>]...`
 ```
 
-`<program>` can be a path to a _.py_ file or a console script, eg: _.venv/bin/myapp_ or a module.
+`<filename>` can be a path to a _.py_ file or a console script, eg: _.venv/bin/myapp_.
 
 To debug a test called `test_flow`:
 

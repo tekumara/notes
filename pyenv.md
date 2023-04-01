@@ -100,6 +100,8 @@ mktmpenv
 virtualenvwrapper
 ```
 
+On first run, `pyenv virtualenvwrapper` will pip install virtualenvwrapper into the currently active python site-packages and virtualenvwrapper.sh into the bin dir. Foy virtualenvwrapper to work in across python versions you need virtualenvwrapper.sh on the path. The virtualenvwrapper module does not need to be installed in each python version.
+
 ## zsh plugin for pyenv + pyenv-virtualwrapper
 
 See [tekumara/zsh-pyenv-virtualenvwrapper-lazy](https://github.com/tekumara/zsh-pyenv-virtualenvwrapper-lazy) for lazily loading pyenv-virtualwrapper
@@ -135,17 +137,11 @@ Make sure `eval "$(pyenv init -)"` has been run first.
 
 This can occur when upgrading to a new version of pyenv. To fix, rebuild the shims with `pyenv rehash`
 
-> Error while finding module specification for 'virtualenvwrapper.hook_loader' (ModuleNotFoundError: No module named 'virtualenvwrapper')
-> virtualenvwrapper.sh: There was a problem running the initialization hooks
+> /usr/local/bin/python: Error while finding module specification for 'virtualenvwrapper.hook_loader' (ModuleNotFoundError: No module named 'virtualenvwrapper')
 
-This can occur when running _virtualenvwrapper.sh_ outside a pyenv python environment. Run `pyenv which virtualenvwrapper.sh` to locate _virtualenvwrapper.sh_, eg:
+This can occur when the virtualenvwrapper pip package has not been installed into the right version of python.
 
-```
-$ pyenv which virtualenvwrapper.sh
-/Users/tekumara/.pyenv/versions/3.9.7/bin/virtualenvwrapper.sh
-```
-
-If its in a non-pyenv python environment (eg: the system environment) uninstall that python environment and use pyenv instead.
+eg: in the above example, `/usr/local/bin/python` is the version running, but `pip list` shows it doesn't have `virtualenvwrapper` installed.
 
 > virtualenvwrapper_load:source:3: no such file or directory: /home/compute/.local/bin/virtualenvwrapper.sh
 
@@ -190,3 +186,7 @@ ModuleNotFoundError: No module named 'pip'
 ```
 
 The `pip` module isn't present on `sys.path`.
+
+> pyenv-virtualenvwrapper: system: python is not available.
+
+pyenv-virtualenvwrapper expects `python` to be on the path, has it been installed? If using ubuntu, the [python-is-python3](https://launchpad.net/ubuntu/focal/+package/python-is-python3) package can be used to symlink python -> python3.
