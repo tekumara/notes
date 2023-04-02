@@ -1,0 +1,30 @@
+# Top
+
+## BSD (macOS) top
+
+- sort by CPU: `ocpu'
+
+## GNU top
+
+While top is running:
+
+- save current state to ~/.toprc: `W`
+- sort by %MEM: `M`
+- sort by %CPU: `P`
+- show individual CPU usage:`1`
+- toggle between showing the process name and the command line: `c` (To see more of the command line, increase the size of the terminal window.)
+- to select column to sort by: `shift-f`
+- to filter processes to those with "java" in the command column `o, COMMAND=java`
+
+NB:
+
+- if you want this to include the command line args toggle that first
+- it only filters on the visible part of the command line args, not everything
+
+From the command line:
+
+- to show only processes containing "elastic": `top -c -p $(pgrep -d',' -f elastic)`
+
+## See also
+
+Pidstat is a little like top’s per-process summary, but prints a rolling summary instead of clearing the screen, eg: `pidstat 1`
