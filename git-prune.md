@@ -12,16 +12,16 @@ Remove stale origin branches, and keeps the local branch:
 git remote prune origin
 ```
 
-Remote stale origin branches and the same named local branch if the local branch is merged:
-
-```
-git remote prune origin | awk '$2 == "[pruned]" {sub("origin/", "", $3); print $3}' | xargs git branch -d
-```
-
-Remote stale origin branches and the same named local branch regardless of merge status (use this for squash merged branches):
+Remove stale origin branches and the same named local branch regardless of merge status (use this for squash merged branches):
 
 ```
 git remote prune origin | awk '$2 == "[pruned]" {sub("origin/", "", $3); print $3}' | xargs git branch -D
+```
+
+Remove stale origin branches and the same named local branch if the local branch is merged:
+
+```
+git remote prune origin | awk '$2 == "[pruned]" {sub("origin/", "", $3); print $3}' | xargs git branch -d
 ```
 
 Fetch new heads and remove stale local tracking branches:

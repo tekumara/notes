@@ -25,7 +25,9 @@ You will need to resolve the conflicts, eg:
 * `git checkout --theirs .` to keep all their changes  
 * `git mergetool unmerged_file_name` to run your merge conflict resolution tool on unmerged_file_name. See [man git-mergetool](http://schacon.github.com/git/git-mergetool.html) for more.
 
-After changes are resolved you will need to add and commit to complete the merge:
+After changes are resolved but they will still show as unmerged, including added/deleted files. 
+
+You will need to add and commit to complete the merge:
 
 ```
 git add .

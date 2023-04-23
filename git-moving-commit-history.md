@@ -21,13 +21,11 @@ In the new repo, to import the branch from the old repo
 # fetch the scala branch from the old repo
 git remote add oldrepo ~/projects/oldrepo
 git fetch oldrepo scala
-# create the branch scala from the fetch
-git checkout oldrepo/scala -b scala
+# switch to branch scala pointing a FETCH_HEAD
+git checkout scala
 ```
 
 The new repo will now have a scala branch containing all commits, but files will have the `scala/` prefix removed.
-
-### fatal: 'FETCH_HEAD' is not a commit and a branch 'teamcity' cannot be created from it
 
 ## 3. Merge into master with a directory prefix
 
@@ -37,4 +35,14 @@ To create a merge commit on master, merging the scala branch in and prefixing al
 git checkout master
 git subtree add -P scala211 -m "merged scala branch under directory scala211/" scala
 git remote remove oldrepo
+```
+
+## Troubleshooting
+
+> fatal: refusing to merge unrelated histories
+
+When merging, use --allow-unrelated-histories, eg:
+
+```
+git merge scala --allow-unrelated-histories
 ```
