@@ -1,21 +1,5 @@
 # Rust
 
-## Rust Install
-
-In Ubuntu and Mac OS X, [install using rustup](https://www.rust-lang.org/tools/install):
-
-```
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-# To configure your current shell run
-source $HOME/.cargo/env
-```
-
-To upgrade:
-
-```
-rustup update
-```
-
 ## Syntax
 
 ```
@@ -47,77 +31,9 @@ let parsed = Url::parse("https://httpbin.org/cookies/set?k2=v2&k1=v1")?;
 let cleaned: &str = &parsed[..Position::AfterPath];
 ```
 
-## Formating
-
-```
-cargo install rustfmt
-cargo fmt
-```
-
-## Issues
-
-No line numbers in stack traces on Mac OS X [#24346](https://github.com/rust-lang/rust/issues/24346)
-
 ## Error handling
 
 `?` operator see https://m4rw3r.github.io/rust-questionmark-operator
-
-## Debugging
-
-For debugging, most people use VSCode+Rust+LLDB.
-
-## lldb
-
-eg: `rust-lldb ./target/debug/guessing-game`
-
-`b main.rs:21` - set breakpoint  
-`br list` - breakpoint list  
-`r` - start execution  
-`print guess` - print variable guess  
-`n` - step over  
-`c` - continue execution  
-`fr v` - show all local variables  
-`thread list`
-
-## Sublime Text 3 with Rust Enhanced + Rust Autocomplete
-
-Pros
-
-- fast compilation on file save
-- shows compilation errors inline
-
-Cons
-
-- requires the [YcmdCompletion package](https://packagecontrol.io/packages/YcmdCompletion) to see Types
-- can't goto definition on variable method
-
-## Sublime Text 3 with RLS
-
-https://github.com/rust-lang-nursery/rls/issues/214
-
-## Intellij Rust
-
-A plugin for Intellij and Clion.
-
-Cons
-
-- errors aren't inline
-- no debugger. Clion has GDB support, which can be used for debugging, it's experimental but see [#535](https://github.com/intellij-rust/intellij-rust/issues/535#issuecomment-320866757)
-  Pros
-- can join from struct/type to impl
-
-`CTRL - SHIFT - A` Toggle parameter name hints (can also add a keyboard shortcut)
-
-## Cargo
-
-create a new application project called `myapp` including initialising a git repo: `cargo new myapp --bin`
-
-cargo-edit will modify Cargo.toml for you, eg: to add reqwest to Cargo.toml
-
-```
-cargo install cargo-edit
-cargo add reqwest
-```
 
 ## Traits
 

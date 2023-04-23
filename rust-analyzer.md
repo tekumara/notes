@@ -1,5 +1,11 @@
 # rust-analyzer
 
+## Debug with args
+
+Inside the main function use the command `rust-analyzer.newDebugConfig` to generate a debug run config and then modify `args`.
+
+([ref](https://github.com/rust-lang/rust-analyzer/issues/10408))
+
 ## Troubleshooting
 
 > file not included in module tree rust-analyzer (unlinked-file)
