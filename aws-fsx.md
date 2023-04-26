@@ -41,3 +41,4 @@ Pricing (us-east-1):
 ## References
 
 - [AWS re:Invent 2021 - {New Launch} Introducing Amazon FSx for OpenZFS](https://www.youtube.com/watch?v=hPJSIZD099o)
+- [Choosing the right AWS file storage service for your deployment (2022)](https://d1.awsstatic.com/events/Summits/awsnycsummit/Choosing_the_right_AWS_file_storage_service_for_your_deployment_STG302.pdf)
