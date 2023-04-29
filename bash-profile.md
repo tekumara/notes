@@ -1,18 +1,12 @@
-<div title="bash profile" creator="YourName" modifier="YourName" created="201208252222" modified="201208252223" tags="bash linux" changecount="2">
-<pre>!Adding ~/bin to path
+# bash profile
 
-add the following to the end of .bashrc
+profile files are _/etc/profile_, _~/.bash_profile_, _~/.bash_login_, _~/.profile_.
 
-{{{
-# set PATH so it includes user's private bin if it exists
-if [ -d &quot;$HOME/bin&quot; ] ; then
-    PATH=&quot;$HOME/bin:$PATH&quot;
-fi
-}}}
+They are only executed at login time, eg: when sshing in.
 
-NB: I tried this in .profile and .bash_profile but those files weren't being executed on Xbuntu.
+They are not executed when running `bash` in an existing shell, or starting a bash terminal in Xbuntu.
 
-http://askubuntu.com/questions/60218/how-to-add-a-directory-to-my-path
-http://mywiki.wooledge.org/DotFiles
-http://superuser.com/questions/253250/why-is-shell-not-reading-from-bash-startup-files</pre>
-</div>
+## References
+
+- [Configuring your login sessions with dot files](http://mywiki.wooledge.org/DotFiles)
+- [.bash_profile vs .bashrc](https://joshstaiger.org/archives/2005/07/bash_profile_vs.html)

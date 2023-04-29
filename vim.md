@@ -59,7 +59,8 @@ If a multi-line paste is appearing on a single line, or auto-indenting is being 
 
 ## Copy/cut paste
 
-visual selection (by line) - `V`  
+visual selection (by line) - `V`
+visual selection by column - `ctrl+V` - to replace, press `c`, type the replacement, and then press ESC   
 select whole file - `ggVG` (gg moves to first line, V starts visual selection, G jumps to last line)
 copy - `y`
 copy to system clipboard - `"*y`

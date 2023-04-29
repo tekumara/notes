@@ -2,7 +2,8 @@
 
 ## BSD (macOS) top
 
-- sort by CPU: `ocpu'
+- sort by CPU: `ocpu` or `top -o cpu`
+- sort by mem (physical mem, aka rsize): `omem` or `top -o mem`
 
 ## GNU top
 
@@ -28,3 +29,5 @@ From the command line:
 ## See also
 
 Pidstat is a little like top’s per-process summary, but prints a rolling summary instead of clearing the screen, eg: `pidstat 1`
+
+[bottom](bottom.md) will show real mem, unlike top. It can also group processes together with the same name, which is super useful.

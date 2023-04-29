@@ -29,3 +29,9 @@ Find all python files exclude those in _.venv/_:
 ```
 find * -path ./.venv -prune -o -iname '*.py'
 ```
+
+Update symlinks pointing at _/usr/local/bin/python3_:
+
+```
+find -L . -maxdepth 6 -samefile /usr/local/bin/python3 -iname python3 -exec ln -sf /usr/bin/python3.9 {} \;
+```
