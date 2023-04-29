@@ -87,7 +87,7 @@ system_profiler SPUSBDataTypesystem_profiler SPUSBDataType
 
 ## Find which process owns a window
 
-See [lswin.py](https://github.com/glyph/mac_list_windows_pids)
+See [macos-lswin](https://github.com/tekumara/macos-lswin) or [lswin.py](https://github.com/glyph/mac_list_windows_pids)
 
 ## Logs
 
