@@ -101,7 +101,7 @@ When the `cache-from` image is on a remote registry its layers will be pulled in
 
 ## Cache misses between hosts
 
-[tarsum](https://github.com/moby/moby/blob/99a3969/pkg/tarsum/tarsum_spec.md) is the checksum Docker uses on files in the tar archives that make up its layers. Caching is invalidated when a file's tarsum changes.
+[tarsum](https://github.com/moby/moby/blob/99a3969/pkg/tarsum/tarsum_spec.md) is the checksum Docker uses on files in the tar archives that make up its layers. ADD/COPY layers are invalidated when a file's tarsum changes. tarsum is [not used for CMD layers](https://github.com/moby/moby/issues/17863#issuecomment-155443490).
 
 tarsum v1 [does not include mtime](https://github.com/moby/moby/pull/12031) but does include [file mode](https://pkg.go.dev/os#FileMode) with [permission bits](https://github.com/moby/moby/issues/32816#issuecomment-910030001), size and xattrs excluding [SELinux xattrs](https://github.com/moby/buildkit/issues/1330). See [Headers](https://github.com/moby/moby/blob/99a3969/pkg/tarsum/tarsum_spec.md#headers) or the buildkit implementation [here](https://github.com/moby/buildkit/blob/f84058e/cache/contenthash/filehash.go#L15) for the full list.
 
