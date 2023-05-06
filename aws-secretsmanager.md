@@ -123,7 +123,7 @@ client = boto3.client("secretsmanager", region_name="us-east-1")
 Can occur when fetching a secret via its partial arn and the secret name contains a hyphen and six chars, eg:
 
 ```
-AccessDeniedException: User: arn:aws:sts::123456789012:assumed-role/awesome-app/good-session is not authorized to perform: secretsmanager:GetSecretValue on resource: arn:aws:secretsmanager:ap-southeast-2:123456789012:secret:awesome-app/newrelic-object because no identity-based policy allows the secretsmanager:GetSecretValue action 
+AccessDeniedException: User: arn:aws:sts::123456789012:assumed-role/awesome-app/good-session is not authorized to perform: secretsmanager:GetSecretValue on resource: arn:aws:secretsmanager:ap-southeast-2:123456789012:secret:awesome-app/newrelic-object because no identity-based policy allows the secretsmanager:GetSecretValue action
 ```
 
 Use the full ARN. See [An AWS CLI or AWS SDK operation can't find my secret from a partial ARN](https://docs.aws.amazon.com/secretsmanager/latest/userguide/troubleshoot.html#ARN_secretnamehyphen)

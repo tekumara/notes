@@ -8,6 +8,14 @@ There is one SageMaker domain per account. A domain can have multiple users, eac
 
 User workspaces are persisted to EFS. They are mounted at _/home/sagemaker-user_
 
+## API Usage
+
+List apps:
+
+```
+aws sagemaker list-apps
+```
+
 ## Changing instance types
 
 See [Change an Instance Type](https://docs.aws.amazon.com/sagemaker/latest/dg/notebooks-run-and-manage-switch-instance-type.html)
@@ -73,7 +81,7 @@ Installed at _/opt/conda/lib/python3.7/site-packages/_:
 - sagemaker-jupyter-server-tools
 - sagemaker-nb2kg
 - sagemaker-sharing
-- sagemaker-ui-proxy (depends on jupyter-server-proxy and jupyter-telemetry): establishes URL handlers for _/graphql(.*)_, _/studio/eventlog_, _/studio/context_
+- sagemaker-ui-proxy (depends on jupyter-server-proxy and jupyter-telemetry): establishes URL handlers for _/graphql(.\*)_, _/studio/eventlog_, _/studio/context_
 
 NPM:
 

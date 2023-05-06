@@ -18,6 +18,14 @@ Features:
 - Jupyter logs shipped to CloudWatch
 - Internet and VPC egress (configurable)
 
+## API Usage
+
+List instances and their status
+
+```
+aws sagemaker list-notebook-instances | jq -r '.NotebookInstances[] | [.NotebookInstanceName,.NotebookInstanceStatus] | @tsv' | column -t -s $'\t'
+```
+
 ## More Details
 
 [Git repos](https://docs.aws.amazon.com/sagemaker/latest/dg/nbi-git-resource.html) are added per AWS account and accessed using a username and password stored in AWS Secrets Manager. Multiple repos can be associated. There are cloned under _/home/ec2-user/SageMaker_ and can be used by the jupyterlab-git extension, see [Use Git Repositories in a Notebook Instance](https://github.com/awsdocs/amazon-sagemaker-developer-guide/blob/master/doc_source/git-nbi-use.md).

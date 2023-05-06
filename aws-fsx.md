@@ -12,6 +12,8 @@ Pricing (us-east-1):
 - Throughput capacity $0.260 per MBps-month eg: 125 MB/s = $32.5
 - SSD IOPS $0.0060 per IOPS-month, eg: 300 IOPS = $1.8
 
+Prefer Single-AZ 2 for better [performance](https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/performance.html#choosing-between).
+
 ## Lustre
 
 Scale out, good for high throughput.
