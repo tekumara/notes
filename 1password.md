@@ -8,3 +8,19 @@ Unique features:
 - can input password into desktop apps
 - uses a secret key + password to lock vault - means password key logging is insufficient
 - supports passkeys across browsers and devices
+
+## Private keys
+
+The 1password desktop app will return private keys in OpenSSH format.
+
+But the `op` cli returns them in RSA format (ie: PKCS #8).
+
+See [this discussion](https://1password.community/discussion/comment/672965/#Comment_6729655).
+
+## Usage
+
+Read private key in PKCS #8 format:
+
+```
+op read op://Personal/awesome.private-key/'Private Key'
+```

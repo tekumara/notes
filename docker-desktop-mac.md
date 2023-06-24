@@ -67,65 +67,24 @@ Logs: `~/Library/Containers/com.docker.docker/Data/log/vm/`
 
 ## SSH Agent
 
-See [SSH agent forwarding](https://docs.docker.com/desktop/networking/#ssh-agent-forwarding).
+See [SSH agent forwarding](https://docs.docker.com/desktop/networking/#ssh-agent-forwarding) on how to expose the ssh agent to the container using the magic mount point _/run/host-services/ssh-auth.sock_.
 
-If you get `Could not open a connection to your authentication agent.` then make sure non-root can write to the socket, eg:
-
-```
-sudo chmod o+w /run/host-services/ssh-auth.sock
-```
-
-## Disk usage
-
-`docker system df` will show docker disk utilization summary - images, containers, volumes  
-`docker system df -v` a break-down at the individual image/container/volume level including shared size (ie: shared layers), unique size (ie: unique layers).
-
-`docker system df -v | grep $volume` to show size of specific volume or alternatively: `docker run --rm -it -v /:/vm-root alpine du -sHh /vm-root$(docker volume inspect --format '{{ .Mountpoint }}' $volume)`
-
-Docker Desktop stores Linux containers and images in a single, large “disk image” file, located at `~/Library/Containers/com.docker.docker/Data/vms/0/data`
-
-`ls -klsh ~/Library/Containers/com.docker.docker/Data/vms/0/data` will show the actual disk usage vs maximum:
+By default _/run/host-services/ssh-auth.sock_ only allows write access to root, eg:
 
 ```
-total 68167208
- 68167208 -rw-r--r--  1 tekumara  staff   104G 21 Jun 17:23 Docker.raw
+srwxr-xr-x 1 root root 0 May 30 03:16 /run/host-services/ssh-auth.sock
 ```
 
-Actual usage is 68MB, max is 104G. To increase the max: _Docker - Preferences - Resources - Disk image size_
+If running in the container as non-root, you'll need to give them write on the socket, eg:
 
-`docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}:{{.Tag}}" | sort -k 2 -h` images sorted by size
+```
+sudo chmod a+w /run/host-services/ssh-auth.sock
+```
 
-[Dangling images](https://docs.docker.com/engine/reference/commandline/images/#show-untagged-images-dangling) are untagged leaf images (ie: not intermediate layers).
+> Error connecting to agent: Permission denied
 
-`docker images -f dangling=true` list dangling images and their size
+You don't have write access to the socket.
 
-Unused images are images that aren't associated with a container (includes all dangling images)
+> Could not open a connection to your authentication agent.
 
-`grep -xvf <(docker ps -a --format '{{.Image}}') <(docker images | tail -n +2 | awk '{ print $1":"$2 }')` unused images
-
-## Pruning
-
-`docker image prune` remove dangling images
-`docker image prune -a --filter 'until=1440h'` remove unused images (dangling or otherwise) created earlier than 60 days ago
-`docker image rm $repo:$tag` remove specific image
-
-Pruning images does not automatically remove them from the build cache. It just removes the tag. So the total reclaimed space can be 0, but the image usage will decrease and the build cache usage will increase.
-
-`docker volume prune` remove all unused local volumes
-
-`docker container prune` remove all stopped containers
-`docker container prune --filter 'until=1440h'` remove all containers created earlier than 60 days ago
-
-After removing containers you can remove their image.
-
-`docker builder prune` remove dangling build cache
-`docker builder prune -a` remove all thebuild cache
-
-To prune everything:
-
-`docker system prune` remove all stopped containers (will delete k3d clusters not running!), unused networks, dangling images, dangling build cache objects
-`docker system prune --volumes` remove above + volumes associated with the stopped containers
-`docker system prune -a` remove all stopped containers + all images + networks associated with those containers (ie: unused images), and the whole build cache  
-`docker system prune -a --volumes` above + volumes too
-
-See also: [Disk utilization in Docker for Mac](https://docs.docker.com/docker-for-mac/space/)
+You don't have the SSH_AUTH_SOCK env var set.

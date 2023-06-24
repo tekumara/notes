@@ -20,10 +20,26 @@ Then install CUDA, either
 Test
 
 ```
-python -c "import tensorflow as tf; hello = tf.constant('hello world');"
+nvidia-smi
 ```
 
-See:
+```
+nvcc --version
+```
+
+```
+python3 -c "import tensorflow as tf; hello = tf.constant('hello world');"
+```
+
+## Troubleshooting
+
+> Could not load dynamic library 'libcudnn.so.8'
+
+Often stored in _/usr/local/cuda/lib/libcudnn.so.8_
+
+If the file exists make sure its directory is on `LD_LIBRARY_PATH`.
+
+## References
 
 - [CUDA Toolkit Archive](https://developer.nvidia.com/cuda-toolkit-archive)
 - [cuDNN archive](https://developer.nvidia.com/rdp/cudnn-archive)

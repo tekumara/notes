@@ -14,7 +14,7 @@ Git diff compares endpoints and does not use the normal [dotted range notation](
 
 If there are multiple possible merge bases, it'll pick the most recent one. `git merge-base main r2` shows the merge base (use `--all` to see all).
 
-If either commit is ommitted, the HEAD is used its place, eg: `main
+If either commit is omitted, the HEAD is used its place, eg: `main
 
 ## Stats
 
@@ -52,6 +52,6 @@ index = staging area
 
 `git diff <filename>` shows only unstaged changes (aka changes not staged for commit), ie: changes made to the working tree vs the index.
 
-`git diff --cached <filename>` shows only staged changes (aka changes to be commmitted), ie: changes made to the index vs r2
+`git diff --cached <filename>` shows only staged changes (aka changes to be committed), ie: changes made to the index vs r2
 
 `git diff r2 filename` shows difference between r2 and working directory (includes both staged and unstaged changes), ie: changes made to the working tree vs r2.

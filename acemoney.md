@@ -106,15 +106,24 @@ CREATE TEMP TABLE ace AS SELECT * FROM read_csv_auto ('trans201122.csv');
 .mode csv
 .headers on
 # nb this will overwrite the file
-.once trans.ace.csv
+.once trans2.ace.csv
 
 select '' as Num,strftime(column0, '%d/%m/%Y') as Date,
-  regexp_replace(column1, '^(Visa Purchase( O/Seas)?|Osko Withdrawal|Eftpos Debit|Tfr Wdl BPAY Internet|Atm Withdrawal)\s+\S+\s','') as Payee,
+  regexp_replace(
+    -- format by stripping out leading transaction type and using it as a comment bellow
+    regexp_replace(
+      column1, '^(Visa Purchase( O/Seas)?|Visa Credit( Overseas)?|Osko Withdrawal|Osko Deposit|Sct Deposit|Eftpos Debit|Tfr Wdl BPAY   Internet|Atm Withdrawal( -Wbc)?)\s+\S+\s',''
+    ),
+    -- normalise by striping out trailing reference numbers
+    '\d{4,}$', ''
+  ) as Payee,
   '' as Category,'' as S,
   column2 as Withdrawal,
   column3 as Deposit,
   column4 as Total,
-  regexp_extract(column1,'^(Visa Purchase( O/Seas)?|Osko Withdrawal|Eftpos Debit|Tfr Wdl BPAY Internet|Atm Withdrawal)') as Comment
+  regexp_extract(
+      column1, '^(Visa Purchase( O/Seas)?|Visa Credit( Overseas)?|Osko Withdrawal|Osko Deposit|Sct Deposit|Eftpos Debit|Tfr Wdl BPAY Internet|Atm Withdrawal( -Wbc)?)'
+  ) as Comment
 from ace
 order by rowid asc;
 ```

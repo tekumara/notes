@@ -6,7 +6,7 @@ cloud-init runs as root, to view the logs:
 sudo less /var/log/cloud-init-output.log
 ```
 
-view user data for current instance is stored at:
+view user data for current instance:
 
 ```
 sudo cat /var/lib/cloud/instance/user-data.txt

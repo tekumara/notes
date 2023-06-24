@@ -12,7 +12,7 @@
 `docker inspect -f '{{ json .NetworkSettings }}' CONTAINER | jq .` network settings including exposed ports and bridged IP address  
 `docker exec -it CONTAINER --user root bash` start a shell inside a running container, as the root user  
 `docker logs -f CONTAINER` tail logs  
-`docker run -it --name mycontainer IMAGE [COMMAND]` create and start a new container from an image ([ref](https://docs.docker.com/engine/reference/run/)). To use the image's default command, omit `command`. `-it` is for interactive sessions (keep stdin open and start a psuedo-tty)  
+`docker run -it --name mycontainer IMAGE [COMMAND]` create and start a new container from an image ([ref](https://docs.docker.com/engine/reference/run/)). To use the image's default command, omit `command`. `-it` is for interactive sessions (keep stdin open and start a pseudo-tty)  
 `docker run --rm -it -v $(pwd):/app -w /app IMAGE /bin/bash` run a shell in the image with the current directory mounted  
 `docker run -d IMAGE [COMMAND]` create and start a new container from an image, then detach and leave it running in the background  
 `docker run -it --entrypoint COMMAND --user root IMAGE` to override the entrypoint with an interactive command, and run as root  
@@ -33,14 +33,6 @@
 `docker update --restart no CONTAINER` set restart policy to default of no, so the container doesn't start when the daemon starts up
 
 `docker context ls` show current docker host
-
-Expose host ssh agent to container using the [magic mount point](https://github.com/docker/for-mac/issues/410#issuecomment-577064671):
-
-```
-docker run --rm -it --entrypoint /bin/bash -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock ubuntu:20.04
-```
-
-The container will need to run as root otherwise you'll get `Error connecting to agent: Permission denied`
 
 `docker run --rm -it -e AWS_DEFAULT_REGION -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_SESSION_TOKEN --entrypoint /bin/bash CONTAINER` run bash with aws creds from host
 

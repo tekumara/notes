@@ -14,27 +14,27 @@ In particular I found setting up external dependencies quite tricky, and there i
 
 Bazel is a distributed build system, that manages an explicitly defined dependency graph of rules which are pure functions that turn inputs into outputs. Rules can even be bash scripts (see [genrule](https://docs.bazel.build/versions/master/be/general.html#genrule)). Rather than modification times like Make, bazel uses intelligent hashing of the compiler and inputs to detect when rebuilds need to occur. Outputs are stored and managed by the bazel cache using content addressable storage, and can be shared remotely.
 
-Bazel makes it cheap to create fine grained modules, which coupled with pure functions, enable parallelization, caching, and remote execution which can scale your build to very large repos.  
+Bazel makes it cheap to create fine grained modules, which coupled with pure functions, enable parallelization, caching, and remote execution which can scale your build to very large repos.
 
 Bazel build definitions are meant to be simple, with any complexity pushed into plugins, rather than providing a turing complete build language.
 
 ## Why bazel?
 
-* Dependencies are resolved once when added, and not on every build - faster and means you can work offline.
-* Dependencies are versioned once, across all projects, and move in lock-step
-* Reproducible builds - you should never need to run `bazel clean` to get the build system out of an invalid state. Non-reproducibility is considered a bug, eg: [#3360](https://github.com/bazelbuild/bazel/issues/3360). If you want to trade away reproducibility, workers will allow you to run compilers that keep state.
-* Warm starts and incremental module builds across machines - the Bazel remote build cache works across invocations and machines, so you get warms start on a new laptop without having to rebuild everything from a clean slate. Rules (including tests) are only invoked when there are changes.
-* Speed - Bazel doesn't run your compile or test rules any faster than they would usually. In fact, without the use of an incremental compiler (which may cut against reproducibility) individual module builds will run slower. However, by breaking the build into small, pure functions that can be parallelized locally or on cloud machines (via remote execution) so the total build time can be reduced.
-* Supports large code bases (eg: monorepos) - when the time to build a large code base from an empty/clean state is say >20 mins, bazel may be a win because parallelism enables faster builds and caching enables warm starts - see [this discussion](https://github.com/bazelbuild/rules_scala/issues/328#issuecomment-418572865)
-* Explicit graph of build targets - can be queried to see what needs to be redeployed
+- Dependencies are resolved once when added, and not on every build - faster and means you can work offline.
+- Dependencies are versioned once, across all projects, and move in lock-step
+- Reproducible builds - you should never need to run `bazel clean` to get the build system out of an invalid state. Non-reproducibility is considered a bug, eg: [#3360](https://github.com/bazelbuild/bazel/issues/3360). If you want to trade away reproducibility, workers will allow you to run compilers that keep state.
+- Warm starts and incremental module builds across machines - the Bazel remote build cache works across invocations and machines, so you get warms start on a new laptop without having to rebuild everything from a clean slate. Rules (including tests) are only invoked when there are changes.
+- Speed - Bazel doesn't run your compile or test rules any faster than they would usually. In fact, without the use of an incremental compiler (which may cut against reproducibility) individual module builds will run slower. However, by breaking the build into small, pure functions that can be parallelized locally or on cloud machines (via remote execution) so the total build time can be reduced.
+- Supports large code bases (eg: monorepos) - when the time to build a large code base from an empty/clean state is say >20 mins, bazel may be a win because parallelism enables faster builds and caching enables warm starts - see [this discussion](https://github.com/bazelbuild/rules_scala/issues/328#issuecomment-418572865)
+- Explicit graph of build targets - can be queried to see what needs to be redeployed
 
 Areas that are a little rough:
 
-* Complex build system to set up
-* No linking of scala source in IntelliJ - [#476](https://github.com/bazelbuild/intellij/pull/476)
-* Using external dependencies from private Maven repos that require authentication requires workarounds eg: [#95](https://github.com/johnynek/bazel-deps/issues/95#issuecomment-436818518). [rules_jvm_external](https://github.com/bazelbuild/rules_jvm_external/) may help, although I haven't yet tried it.
-* No Scala incremental compiler (Zinc) support out of the box - in part because Zinc doesn't guarantee reproducibility. However there is an implementation from [Databricks](https://databricks.com/blog/2019/02/27/speedy-scala-builds-with-bazel-at-databricks.html) and [higherkindness](https://github.com/higherkindness/rules_scala)
-* Using S3 as a remote cache still not merged - [#4889](https://github.com/bazelbuild/bazel/pull/4889)
+- Complex build system to set up
+- No linking of scala source in IntelliJ - [#476](https://github.com/bazelbuild/intellij/pull/476)
+- Using external dependencies from private Maven repos that require authentication requires workarounds eg: [#95](https://github.com/johnynek/bazel-deps/issues/95#issuecomment-436818518). [rules_jvm_external](https://github.com/bazelbuild/rules_jvm_external/) may help, although I haven't yet tried it.
+- No Scala incremental compiler (Zinc) support out of the box - in part because Zinc doesn't guarantee reproducibility. However there is an implementation from [Databricks](https://databricks.com/blog/2019/02/27/speedy-scala-builds-with-bazel-at-databricks.html) and [higherkindness](https://github.com/higherkindness/rules_scala)
+- Using S3 as a remote cache still not merged - [#4889](https://github.com/bazelbuild/bazel/pull/4889)
 
 ## Bazel vs alternatives
 
@@ -44,6 +44,18 @@ Gradle configures and resolves every time you build. Configuring takes 10s on a 
 Reruns tests when nothing has changed and using --build-cache`
 
 Gradle also supports modularisation but gradle modules are typically quite heavyweight, and its build cache hasn't historically been reliable, although this is improving.
+
+## Install
+
+[Bazelisk](https://github.com/bazelbuild/bazelisk) is a handy launcher which selects the version of bazel based on environment vars or config files (eg: `.bazelversion`).
+
+Install on linux:
+
+```
+url=$(curl -s https://api.github.com/repos/bazelbuild/bazelisk/releases/latest | grep -om1 'https.*linux-amd64')
+curl -fsSLo bazel $url | tar -xz
+sudo install bazel /usr/local/bin && rm bazel
+```
 
 ## Usage
 
@@ -59,13 +71,13 @@ Gradle also supports modularisation but gradle modules are typically quite heavy
 `bazel query 'kind(rule, external:all)' --output label_kind` list all the rules in the `//external` package.  
 `bazel query 'kind(maven_jar, //external:*)' --output build` list the definition of all the rules in the `//external` package of type maven_jar.  
 `bazel query 'filter(.*log4j.*, kind(rule, external:all))' --output label_kind` list all log4j rules in the `//external package` NB: this is preferable to `bazel query 'kind(rule, external:all)' --output label_kind | grep log4j` as during the piping grep seems to miss some lines.  
-`bazel shutdown` shut down the workspace's bazel processes.  
+`bazel shutdown` shut down the workspace's bazel processes.
 
 ## External dependencies
 
 "The WORKSPACE file in the workspace directory tells Bazel how to get other projects’ sources. These other projects can contain one or more BUILD files with their own targets. BUILD files within the main project can depend on these external targets by using their name from the WORKSPACE file." see [Working with external dependencies](https://docs.bazel.build/versions/master/external.html)
 
-The [repository_rule](https://docs.bazel.build/versions/master/skylark/repository_rules.html) statement in `WORKSPACE` (or `.bzl` files loaded from `WORKSPACE`) sets up an external aka [remote repository](https://bazel.build/designs/2015/07/02/skylark-remote-repositories.html#remote-repository-rule). Each rule creates its own workspace with its own BUILD files and artifacts. Targets within a remote repo can be referenced by the remote repo name prefixed with `@`, eg:  `@remote_repo//proj:sometarget` or `@remote_repo` to refer to the target with the same name as the repo. Bazel recommends naming repos with underscores, eg: `com_google_guava` - for more details see [naming](https://github.com/bazelbuild/bazel/blob/4a74c5293050455e0ec0c965ea49eb3764cfe837/tools/build_defs/repo/java.bzl#L86).
+The [repository_rule](https://docs.bazel.build/versions/master/skylark/repository_rules.html) statement in `WORKSPACE` (or `.bzl` files loaded from `WORKSPACE`) sets up an external aka [remote repository](https://bazel.build/designs/2015/07/02/skylark-remote-repositories.html#remote-repository-rule). Each rule creates its own workspace with its own BUILD files and artifacts. Targets within a remote repo can be referenced by the remote repo name prefixed with `@`, eg: `@remote_repo//proj:sometarget` or `@remote_repo` to refer to the target with the same name as the repo. Bazel recommends naming repos with underscores, eg: `com_google_guava` - for more details see [naming](https://github.com/bazelbuild/bazel/blob/4a74c5293050455e0ec0c965ea49eb3764cfe837/tools/build_defs/repo/java.bzl#L86).
 
 Repository rules specify an [implementation function](https://docs.bazel.build/versions/master/skylark/repository_rules.html#implementation-function) which can fetch an artifact. The implementation function is only executed when needed during bazel build, fetch or query - see [when is the implementation function executed?](https://docs.bazel.build/versions/master/skylark/repository_rules.html#when-is-the-implementation-function-executed) and [RepositoryFunction.java](https://github.com/bazelbuild/bazel/blob/bf0df261fcc2995fa5a5b92392be747ec782a84c/src/main/java/com/google/devtools/build/lib/rules/repository/RepositoryFunction.java#L72). It will typically download/symlink artifacts into `$(bazel info output_base)/external/artifact_name/jar` ([ref](https://docs.bazel.build/versions/master/external.html#layout)). The `//external` package is virtual package that doesn't exist in your source tree, but contains rules that fetch artifacts. [This discussion](https://github.com/bazelbuild/bazel/issues/1952#issuecomment-266836372) suggests when referencing a repository target its better to use the repository name target (eg: `@org_slf4j_slf4j_log4j12//jar`) instead of the `//external` package target. External repositories themselves are not dependencies of a build ([ref](https://docs.bazel.build/versions/master/query.html#external-repos)). To list all rules defined in the external package: `bazel query 'kind(rule, external:all)' --output label_kind`
 
@@ -246,8 +258,8 @@ The [IntelliJ Bazel](https://ij.bazel.build/) plugin sets up an IntelliJ project
 
 Regardless of the number of targets or directories in your project there will be two IntelliJ modules:
 
-* `.project-data-dir` contains the `.ijwb` directory
-* `.workspace`. Under `workspace` source and test folders will be created according to the settings in the project view
+- `.project-data-dir` contains the `.ijwb` directory
+- `.workspace`. Under `workspace` source and test folders will be created according to the settings in the project view
 
 Sync will generate IDE info files (ie: IntelliJ project files) and resolve targets which includes building their source. It uses IntelliJ specific [aspects](https://docs.bazel.build/versions/master/skylark/aspects.html) to do this, which a different from the normal bazel commands.
 
@@ -260,7 +272,7 @@ After a sync, external java dependencies that have sources will be correctly lin
 
 ## Data dependencies
 
-Bazel runs binaries (including tests) in a [runfiles](https://docs.bazel.build/versions/master/skylark/rules.html#runfiles) directory, eg: for the target `//package1:tests` it would be `bazel-bin/package1/tests.runfiles/`. The runfiles directory contains symlinks to all dependencies needed by the target at run time.You can also inspect the manifest file which lists all the symlinks, eg: `tests.runfiles_mainfest`. If the binary needs a file at runtime, and not during build time, it can be specified as a [data dependency](https://docs.bazel.build/versions/master/build-ref.html#data). If data dependencies change, the binary won't be rebuilt, but any binaries/tests will be re-run. Note that this is not the same as the runtime java class path - for that use `runtime_deps` on `java_library` or `java_import`.
+Bazel runs binaries (including tests) in a [runfiles](https://docs.bazel.build/versions/master/skylark/rules.html#runfiles) directory, eg: for the target `//package1:tests` it would be `bazel-bin/package1/tests.runfiles/`. The runfiles directory contains symlinks to all dependencies needed by the target at run time.You can also inspect the manifest file which lists all the symlinks, eg: `tests.runfiles_manifest`. If the binary needs a file at runtime, and not during build time, it can be specified as a [data dependency](https://docs.bazel.build/versions/master/build-ref.html#data). If data dependencies change, the binary won't be rebuilt, but any binaries/tests will be re-run. Note that this is not the same as the runtime java class path - for that use `runtime_deps` on `java_library` or `java_import`.
 
 ...."The relative path of a file in the runfiles tree is the same as the relative path of that file in the source tree or generated output tree".....
 
@@ -308,7 +320,7 @@ For some more subtle differences between the two, see [bazel-deps #63](https://g
 
 ## Uber jar
 
-The `java_binary` rule can build a uber jar, containing all dependencies' `.class` files, by building the target *name*_deploy.jar, see [java_binary](https://docs.bazel.build/versions/master/be/java.html#java_binary)
+The `java_binary` rule can build a uber jar, containing all dependencies' `.class` files, by building the target _name_\_deploy.jar, see [java_binary](https://docs.bazel.build/versions/master/be/java.html#java_binary)
 
 ## Scala rules
 
@@ -350,10 +362,10 @@ To output errors to stdout use `--test_output=errors`, or to output everything `
 
 ## Questions
 
-* How to download sources for 3rd party maven deps?
-* How to resolve dependencies.yml easily? Need to publish it, and pull it down. [docker](https://github.com/johnynek/bazel-deps/pull/125) or [jar](https://github.com/johnynek/bazel-deps/issues/160) or [source](https://github.com/bazelbuild/BUILD_file_generator/blob/master/dev-scripts/dependencies/setup.sh)?
-* How to download from authed repo with bazel-deps? [#95](https://github.com/johnynek/bazel-deps/issues/95)
-* How to deploy from a monorepo? Via manual git commit message?
+- How to download sources for 3rd party maven deps?
+- How to resolve dependencies.yml easily? Need to publish it, and pull it down. [docker](https://github.com/johnynek/bazel-deps/pull/125) or [jar](https://github.com/johnynek/bazel-deps/issues/160) or [source](https://github.com/bazelbuild/BUILD_file_generator/blob/master/dev-scripts/dependencies/setup.sh)?
+- How to download from authed repo with bazel-deps? [#95](https://github.com/johnynek/bazel-deps/issues/95)
+- How to deploy from a monorepo? Via manual git commit message?
 
 ## Troubleshooting
 
@@ -388,6 +400,7 @@ name 'scala_library' is not defined
 ```
 
 Under tools/build_rules add the following to `prelude_bazel`:
+
 ```
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library", "scala_macro_library","scala_binary", "scala_test")
 load("@io_bazel_rules_scala//scala:scala_import.bzl", "scala_import")
