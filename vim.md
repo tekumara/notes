@@ -69,6 +69,7 @@ cut line - `dd`
 paste before - `P`  
 paste after - `p`
 paste before from system clipboard - `"*p`
+reindent - `=` - this will deindent if the indentation is incorrect.
 
 `ciw` to replace the word under the cursor ([ref](https://stackoverflow.com/questions/1379198/how-to-delete-a-word-and-go-into-insert-mode-in-vim))
 
