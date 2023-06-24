@@ -52,7 +52,7 @@ Immutable collection types support covariant type parameters, so derived classes
 | Set          | AbstractSet        |
 | n/a          | Tuple              |
 
-See [pyright: Understanding Typing - Generic Types](https://github.com/microsoft/pyright/blob/0f9d308827e014f2b9b65cd4864cc0b889c53236/docs/type-concepts.md#generic-types)
+See [pyright: Understanding Typing - Generic Types](https://github.com/microsoft/pyright/blob/c83a95e/docs/type-concepts.md#generic-types)
 
 ## Ignore
 
@@ -149,7 +149,7 @@ def first_name(names: "pd.Series[str]") -> List[str]:
     pass
 ```
 
-([ref])(https://github.com/python/typing/issues/410#issuecomment-293263300)
+([ref](https://github.com/python/typing/issues/410#issuecomment-293263300))
 
 ```
 def f(a: A) -> None:

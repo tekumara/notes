@@ -97,7 +97,9 @@ Many libraries lack stubs. However their `.py` files can contain partial or comp
 
 But on the other hand, the type information is inferred and can be incorrect. Some of these problems can only be fixed by the third party library author, and/or a type stub. Inference from source files can also be slow and can result in a sluggish experience for complex libraries like [tensorflow](https://github.com/microsoft/pyright/issues/1404#issuecomment-765814403).
 
-If you are using Pyright/pylance for type checking, `"useLibraryCodeForTypes": false` is recommended. The feature was added to provide completion suggestions when using Pylance (see [pyright/#945](https://github.com/microsoft/pyright/issues/945#issuecomment-674466348)). However, it will also disable "Go to Definition" behaviour (see [pylance-release/#278](https://github.com/microsoft/pylance-release/issues/278)).
+The feature was added to provide completion suggestions when using Pylance (see [pyright/#945](https://github.com/microsoft/pyright/issues/945#issuecomment-674466348)). Setting `"useLibraryCodeForTypes": false` will prevent type errors from incorrectly typed libraries. But, it will also disable "Go to Definition" behaviour in Pylance (see [pylance-release/#278](https://github.com/microsoft/pylance-release/issues/278)).
+
+As of [pyright 1.1.303](https://github.com/microsoft/pyright/releases/tag/1.1.303) `useLibraryCodeForTypes` defaults to true.
 
 ## Missing Type Stubs
 

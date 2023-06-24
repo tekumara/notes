@@ -2,10 +2,10 @@
 
 ## ps (BSD)
 
-Show RSS
+Show RSS in Kb
 
 ```
-ps -m -o pid,vsz,rss,%mem,command
+ps -A -m -o pid,vsz,rss,%mem,command
 ```
 
 Show all stopped processes
@@ -16,7 +16,7 @@ ps -o stat,command,pid | grep '^S+'
 
 ## ps (GNU)
 
-Human-friendly memory stats ([ref]()):
+Human-friendly memory stats:
 
 ```
 ps -eo pmem,comm,pid,maj_flt,min_flt,rss,vsz,etimes --sort -rss | numfmt --header --to=iec --field 4-5 | numfmt --header --from-unit=1024 --to=iec --field 6-7 | column -t | head

@@ -18,4 +18,10 @@ Convert yaml to json:
 yq . -o json file.yaml
 ```
 
+Convert toml to json:
+
+```
+yq . -o json -p toml Cargo.lock
+```
+
 No support for [string interpolation yet](https://github.com/mikefarah/yq/issues/1149).

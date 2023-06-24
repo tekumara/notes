@@ -5,3 +5,7 @@
 Some applications like the [GitHub CLI use an OAuth App](https://github.com/cli/cli/blob/be9f011/internal/authflow/flow.go) to generates tokens that can access many repos.
 
 Github Apps can act on behalf of a user, using [user-to-server requests](https://docs.github.com/en/developers/apps/building-github-apps/identifying-and-authorizing-users-for-github-apps).
+
+## private keys
+
+The app has an RSA format (ie: PKCS #8) private key.

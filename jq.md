@@ -35,6 +35,20 @@ A
 B
 ```
 
+Select specific keys from objects in  array:
+
+```
+echo ' [ {"a": 1, "b": 2}, {"a": 3, "b": 4} ] ' | jq '[ .[]| {a} ]'
+[
+  {
+    "a": 1
+  },
+  {
+    "a": 3
+  }
+]
+```
+
 Choose an element in an array based on a key value, and return another one of it's keys:
 
 ```json
@@ -75,7 +89,16 @@ String interpolation:
 echo 42 | jq '"The input was \(.), which is one less than \(.+1)"'
 ```
 
-Select a value in an array of values and output as csv:
+Select object in array by key containing a string:
+
+```json
+echo '[ { "name": "apple" }, { "name": "orange" }]' | jq '.[] | select(.name | contains("ran"))'
+{
+  "name": "orange"
+}
+```
+
+Select a value in an array using map and output as csv:
 
 ```json
 echo '[{"id": 1, "count":100}, {"id": 2, "count":200}, {"id": 3, "count":300}]' | jq -r 'map(select(.id == [1,3][])) | .[] | [.id, .count] | @csv'
@@ -94,15 +117,6 @@ Counting the number of elements in a newline delimited json stream
 
 - If the entire input file fits in memory, the simple solution is `jq -s length`. The -s flag puts everything in the input stream into one array before passing it to your program.
 - If the input file is really big, use reduce to avoid reading everything into memory at once. This requires jq 1.5. `jq -n 'reduce inputs as $obj (0; .+1)'`
-
-Select object with a key containing a string:
-
-```json
-echo '[ { "name": "apple" }, { "name": "orange" }]' | jq '.[] | select(.name | contains("ran"))'
-{
-  "name": "orange"
-}
-```
 
 Sort by key, input must be an array
 
@@ -138,7 +152,7 @@ echo '[ { "name": "apple", "created_at": "Fri Jan 02 01:29:31 +0000 2020" }, { "
 Extract python version using regex match
 
 ```json
-echo '["aec-cli-1.0.2.tar.gz","t1000-1.0.1-pre-proxyfix2.tar.gz","boto3-1.17.97.tar.gz","t1000-0.1.dev204+gc88c6ba.tar.gz","slimcontacts-1.2.4-CE-6.tar.gz"]' | jq '.[] | (capture("-(?<version>[0-9.]+[-+a-zA-Z0-9]*).tar.gz").version)'
+echo '["aec-cli-1.0.2.tar.gz","t1000-1.0.1-pre-proxyfix2.tar.gz","boto3-1.17.97.tar.gz","t1000-0.1.dev204+gc88c612.tar.gz","contacts-1.2.4-CE-6.tar.gz"]' | jq '.[] | (capture("-(?<version>[0-9.]+[-+a-zA-Z0-9]*).tar.gz").version)'
 ```
 
 Convert json string to json

@@ -33,7 +33,7 @@ See [More on Dependency Resolution](https://pip.pypa.io/en/stable/topics/more-de
 
 Backtracking can occur when there packages share the same dependency but with incompatible version constraints.
 
-To identify which packages have a conflicting shared dependency, first identify any backtracked packages during pip install. Modify your requirements to pip the backtracked packages to their latest version. Clean your virtalenv and rerun pip install to see which other packages are now backtracked. Compare the requirements of the first and second set of backtracked packages to find any conflicting constraints.
+To identify which packages have a conflicting shared dependency, first identify any backtracked packages during pip install. Modify your requirements to pin the backtracked packages to their latest version. Clean your virtualenv and rerun pip install to see which other packages are now backtracked. Compare the requirements of the first and second set of backtracked packages to find any conflicting constraints.
 
 Alternatively use pip-compile and compare the result i
 
@@ -70,6 +70,8 @@ pipenv, like poetry, offers virtualenv management with dependency resolution, re
 [pipgrip](https://github.com/ddelange/pipgrip) vendors the [sdispater/mixology](https://github.com/sdispater/mixology) implementation of PubGrub for resolution. Works with `pip` and a requirements file.
 
 Slower than poetry and pip-compile because it backtracks a lot see [#110](https://github.com/ddelange/pipgrip/issues/110).
+
+`pipgrip --tree '.[dev, notebook]'` to see all dependencies.
 
 ## dephell
 
