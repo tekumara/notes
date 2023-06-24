@@ -116,7 +116,7 @@ Manually trigger a check for changes via _Actions - Check for pending changes_ (
 
 Make sure the build configuration has a trigger. Check the [trigger rules](https://www.jetbrains.com/help/teamcity/configuring-build-triggers.html) to understand when they fire.
 
-If you have a vcs trigger with a branch filter, include the non-refs path as well as the refs/head path, eg:
+If you have a trigger with a [branch filter](https://www.jetbrains.com/help/teamcity/2022.10/branch-filter.html), include the non-refs path as well as the refs/head path, eg:
 
 ```
 +:refs/heads/main

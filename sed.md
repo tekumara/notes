@@ -89,7 +89,7 @@ sed -e 's/^/"/' -e 's/,text/",text/'
 
 ### Troubleshooting
 
-`invalid command code o`: make sure you provide a file extension to -i, eg: `sed -i.bak ...` or `sed -i ''` to replace without backing up (note on GNU/linux this would be `sed -i''` ie: no space after the flag).
+`invalid command code`: use `-e` with `-i` otherwise macos sed will inteprete the next command as the backup suffix, eg: `sed -i -e 's/before/after/g' file.txt`
 
 `in-place editing only works for regular files`: sed doesn't like symlinks
 
@@ -101,7 +101,7 @@ Make sure your pattern is valid on macOS, eg: use `[[:digit:]]` instead of `\d`
 
 `echo hello | sed -e 's/^/\\n/'` produces `\nhello`
 
-`echo hello | sed -e $'s/^/\\\n/'` works correctly. The `$'....'` contains a string literal in which bash performs C-style backslash substitution, e.g. `$'\n'` is translated to an actual newline. The `\\` is needed to produce a `\` which is required by sed in front of an acutal newline. [ref](https://stackoverflow.com/a/11163357/149412)
+`echo hello | sed -e $'s/^/\\\n/'` works correctly. The `$'....'` contains a string literal in which bash performs C-style backslash substitution, e.g. `$'\n'` is translated to an actual newline. The `\\` is needed to produce a `\` which is required by sed in front of an actual newline. [ref](https://stackoverflow.com/a/11163357/149412)
 
 ## + not matching
 

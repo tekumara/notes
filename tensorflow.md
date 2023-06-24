@@ -10,7 +10,10 @@ hello = tf.constant('Hello, TensorFlow!')
 As a oneliner:
 
 ```python
-python -c "import tensorflow as tf; hello = tf.constant('hello world');"
+python3 -c "import tensorflow as tf; hello = tf.constant('hello world');"
+
+...
+2023-04-17 06:19:33.884854: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1613] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 13627 MB memory:  -> device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5
 ```
 
 ## Docker

@@ -25,3 +25,10 @@ Add the apple x86 target:
 ```
 rustup target add x86_64-apple-darwin
 ```
+
+## Docker
+
+```
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+RUN source "$HOME/.cargo/env" && pip install -e .
+```

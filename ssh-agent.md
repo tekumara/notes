@@ -42,7 +42,7 @@ Note that `ssh-add --apple-use-keychain` will not add a key without a passphrase
 
 1. enable `AddKeysToAgent yes` and `UseKeychain yes` via ssh config for the host that uses the key
 1. make sure the key is not yet present in the agent
-1. use ssh to sucessfully connect to the host which will add the key to the agent **and** the keychain.
+1. use ssh to successfully connect to the host which will add the key to the agent **and** the keychain.
 
 For more details see [OpenSSH updates in macOS 10.12.2](https://developer.apple.com/library/archive/technotes/tn2449/_index.html)
 
@@ -80,7 +80,7 @@ Check you have permissions to the socket specified by $SSH_AUTH_SOCK, or try wit
 
 ### Could not open a connection to your authentication agent
 
-If `ssh-add -l` on the remote host produces this error, check if the `SSH_AUTH_SOCK` env var has been set. If it hasn't been set:
+If `ssh-add -l` on the remote host produces this error, check if the `SSH_AUTH_SOCK` env var has been set correctly. If it has been set:
 
 1. Locally make sure `ForwardAgent yes` has been specified or `ssh -A` is used when connecting.
 1. Make sure the remote host [allows SSH agent forwarding](https://developer.github.com/v3/guides/using-ssh-agent-forwarding/#your-system-must-allow-ssh-agent-forwarding)

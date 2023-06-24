@@ -16,7 +16,9 @@
 
 `-Tpy` exclude python file types.
 
-`-M0` to show full line that's matched, rather than truncating it with `...` 
+`-M0` to show full line that's matched, rather than truncating it with `...`
+
+`--no-messages` suppress "Permission denied" and other errors related to opening and reading files.
 
 Show js file types
 
