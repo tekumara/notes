@@ -1,5 +1,21 @@
 # VS Code remote ssh
 
+Install the Remote - SSH extension.
+
+`Remote-SSH: Connect to Host` will connect to any hosts defined in _~/.ssh/config_ and allow you to add new hosts.
+
+When vscode connects to a host, it establishes dynamic port forwarding (`-D`) which acts as a SOCKS proxy server. Vscode then starts a remote server on the host and connects to it via the SOCKS proxy.
+
+## Port forwarding
+
+- User forwarded: added by the user in the Ports View, and forwarded via the SOCKS proxy.
+- Auto forwarded: auto port forwarding when vscode sees "http://localhost:xxxx" in the terminal or debug console. See setting `remote.autoForwardPortsSource` in the release notes [here](https://github.com/microsoft/vscode-docs/blob/49f6cab2a0435a7704ebfc208852f23a880265f6/remote-release-notes/v1_54.md#port-forwarding-source-is-output) and [here](https://github.com/microsoft/vscode-docs/search?q=auto+port+forward).
+- Statically forwarded: ports configured in _~/.ssh/config_ via the `LocalForward` statement.
+
+## Extensions
+
+Extensions, like the Python interpreter, need to be installed on the remote server before they can be used.
+
 ## VS Code Server
 
 When `remote.SSH.useLocalServer=true` (the default) VS Code Remote SSH will start a vscode-server process on the SSH host, eg:
@@ -17,6 +33,8 @@ VS Code processes on the remote (eg: terminals) are child process of the vscode 
 https://github.com/microsoft/vscode-remote-release/wiki/Debugging-for-Remote-SSH
 
 ## Troubleshooting
+
+If you're have trouble connecting, try the equivalent ssh command in the shell in verbose mode, eg: `ssh -vvv`.
 
 ### No SSH keys after reconnecting
 

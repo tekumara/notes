@@ -36,11 +36,7 @@ Intellij will parse notebook code, find errors, and has go to definition. Vscode
 
 To change interpreter select _Python: Select Interpreter_. If vscode doesn't switch to your interpreter, check _Output -> Python Language Server_ for errors.
 
-If the interpreter selection fails, enable debug logging in _settings.json_:
-
-```
-"python.logging.level": "debug"
-```
+If the interpreter selection fails, enable debug logging via `Developer: Set Log Level`
 
 ## Testing
 
@@ -54,3 +50,24 @@ eg: to run pytest against _tests/_ and stream stdout:
         "-s"
     ],
 ```
+
+## Trouble shooting Pylance
+
+In Settings set `"python.analysis.logLevel": "Trace"` to get more detailed logs in `Output - Python Language Server`.
+
+### reportMissingImports
+
+eg:
+
+> Import "boto3" could not be resolved Pylance (reportMissingImports)
+
+This can happen when
+
+- the selected python interpreter in VS Code is not pointing at the right virtualenv, and so it cannot find the installed package (eg: boto3).
+- the imports are for an egg link
+
+### .venv not shown in list of python interpreters and cannot be manually selected
+
+See [#4361](https://github.com/microsoft/pylance-release/issues/4361).
+
+NB: To force Pylance to use the interpreter in the virtualenv, set `.venvPath` and `.venv` in the pyright config.
