@@ -2,7 +2,7 @@
 
 ## vs SSM parameter store
 
-[Prefered over SSM parameter store](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_CheatSheet.html#411-aws) because
+[Preferred over SSM parameter store](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_CheatSheet.html#411-aws) because
 
 - the steady limit for SSM GetParameter is 40 and burst is 100 transactions per second. You can enable the `high-throughput-enabled` setting to increase the limit to 1,000 TPS (which costs $0.05 per 10,000 Parameter Store API interactions)
 - cross account access and resource policies
@@ -112,7 +112,7 @@ Occurs when the `AWS_DEFAULT_REGION` env var doesn't match the key region, eg:
 arn:aws:sts::123456789012:assumed-role/app-role/MySession is not authorized to perform: secretsmanager:GetSecretValue on resource: arn:aws:secretsmanager:us-east-1:111111122222:secret:top-secret because no resource-based policy allows the secretsmanager:GetSecretValue action
 ```
 
-Adjust `AWS_DEFAULT_REGION` or explicity provide the region when fetching the key, eg:
+Adjust `AWS_DEFAULT_REGION` or explicitly provide the region when fetching the key, eg:
 
 ```python
 client = boto3.client("secretsmanager", region_name="us-east-1")

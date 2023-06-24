@@ -6,6 +6,17 @@ Show partitions:
 SHOW PARTITIONS `inventory`.`my-bucket`
 ```
 
+Query from the cli:
+
+```
+aws athena start-query-execution \
+   --query-string "select count(*) from tablename;" \
+   --query-execution-context Database=default \
+   --result-configuration OutputLocation=s3://results/
+```
+
+To run multiple queries from a file - see https://stackoverflow.com/a/44301541/149412ß
+
 ## Troubleshooting
 
 > ```
@@ -27,6 +38,15 @@ Use single quotes instead, eg:
 ```
 SHOW CREATE TABLE `inventory`.`bucket-name`
 ```
+
+> ```
+> select * from extract
+> where batch >= '2019-12-01'
+> ```
+>
+> Queries of this type are not supported.
+
+`extract` is a keyword, enclose it in double quotes.
 
 > ```
 > SHOW CREATE TABLE `inventory`.`bucket-name`
