@@ -94,6 +94,6 @@ Plans on push but commands are ignored - make sure the [webhooks](https://www.ru
 
 `checking if workspace exists: stat ...: no such file or directory` - if trying to run `atlantis plan` via comment on any empty PR, push a trivial comment first.
 
-`Ran Plan for 0 projects` - If you've made changes outside any project (eg: to atlantis.yaml) you'll need to explictly provide the project to plan, eg: `atlantis plan -p awesome_project`. Also make have `dir` defined in _atlantis.yaml_ (see [#1919](https://github.com/runatlantis/atlantis/issues/1919#issuecomment-1046132473)).
+`Ran Plan for 0 projects` - If you've made changes outside any project (eg: to atlantis.yaml) you'll need to explicitly provide the project to plan, eg: `atlantis plan -p awesome_project`. Also make have `dir` defined in _atlantis.yaml_ (see [#1919](https://github.com/runatlantis/atlantis/issues/1919#issuecomment-1046132473)).
 
 `Ran Apply for 0 projects` - make sure you have planned first.

@@ -36,7 +36,7 @@ Whitespace in the rewrite will appear as written.
 
 ## Match newline at top level
 
-`-match-newline-at-toplevel` :[hole] at the top level (ie: not within a recognized block syntax) will match zero or more newlines too. Enabled on [comby.live](https://comby.live) by default.
+`-match-newline-at-toplevel` `:[hole]` at the top level (ie: not within a recognized block syntax) will match zero or more newlines too. Enabled on [comby.live](https://comby.live) by default.
 
 eg: `:[hole]` here will match the newlines, and without `-match-newline-at-toplevel` there will be no match:
 
@@ -56,7 +56,7 @@ Match newline at top level can introduce the `Timeout for input: A long string..
 
 ## Match inside strings
 
-[Structural matching](https://comby.dev/docs/basic-usage#structural-matching) means Comby understands the interaction between delimiters, strings, and comments. The literals that constitute a delimeter, string or comment is defined by the matcher, which is inferred from a file's extension (or provided via `-matcher`).
+[Structural matching](https://comby.dev/docs/basic-usage#structural-matching) means Comby understands the interaction between delimiters, strings, and comments. The literals that constitute a delimiter, string or comment is defined by the matcher, which is inferred from a file's extension (or provided via `-matcher`).
 
 Comby won't match within a string unless the template contains string quotes, eg:
 

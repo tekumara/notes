@@ -71,6 +71,18 @@ Check current schema:
 SELECT CURRENT_SETTING('schema');
 ```
 
+Read parquet from s3:
+
+```
+from read_parquet('s3://commoncrawl/cc-index/table/cc-main/warc/crawl=CC-MAIN-2023-23/subset=robotstxt/part-00031-ffa3bf93-6ba1-4a27-adea-b0baae3b4389.c000.gz.parquet');
+```
+
+Debug s3 settings:
+
+```
+select * from duckdb_settings() where name like 's3%'
+```
+
 ## Troubleshooting
 
 > BinderException: Binder Error: There are no UNIQUE/PRIMARY KEY Indexes that refer to this table, ON CONFLICT is a no-op
@@ -100,6 +112,7 @@ Table functions, ORDER BY, window functions and joins have such implementations 
 > Or set PRAGMA temp_directory='/path/to/tmp.tmp'
 
 To open or create a persistent database:
+
 - include a path as a command line argument, eg: `duckdb FILENAME`. DuckDB will create it if it doesn't already exist.
 - use `.open FILENAME`. If FILENAME doesn't not exist is will be created.
 
@@ -110,3 +123,11 @@ Alternatively use `PRAGMA temp_directory='/path/to/tmp.tmp'`
 > Error: IO Error: Could not write all bytes to file
 
 No more space on disk when spilling.
+
+> Error: IO Error: No files found that match the pattern
+
+```
+from read_parquet('s3://bucket/predictions/predict[0].parquet');
+```
+
+Escape the square brackets, they're treated as part of a regex pattern.

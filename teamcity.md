@@ -201,7 +201,7 @@ This can happen when making changes to a project in the UI.
 
 Check the details of the failure on the Edit Project - Versioned Settings page under Current Status.
 
-### Failed to apply changes from VCS to project settings  ...  DSL script execution failure
+### Failed to apply changes from VCS to project settings ... DSL script execution failure
 
 This can happen when the UI can write to the VCS root but it is out of sync with the project settings in the repo.
 
@@ -221,6 +221,24 @@ The settings in the UI need to be flushed to the VCS by committing them, or if y
 1. Settings format: Kotlin
 1. Apply
 1. Import settings from VCS
+
+### Editing of the project settings is disabled
+
+
+
+### Deleting a build configuration
+
+Remove it from the kotlin and push it. If the build just removed runs it will fail, and still exist in the UI. But after subsequent builds it should be gone.
+
+### not authorized when testing connection on vcs root
+
+eg:
+
+```
+org.eclipse.jgit.errors.TransportException: https://github.com/myorg/myrepo: not authorized
+```
+
+Check the username and password on the VCS root is correct.
 
 ## References
 

@@ -89,10 +89,10 @@ String interpolation:
 echo 42 | jq '"The input was \(.), which is one less than \(.+1)"'
 ```
 
-Select object in array by key containing a string:
+Select object in array by key not containing a string:
 
 ```json
-echo '[ { "name": "apple" }, { "name": "orange" }]' | jq '.[] | select(.name | contains("ran"))'
+echo '[ { "name": "apple" }, { "name": "orange" }]' | jq '.[] | select(.name | contains("ran") | not)'
 {
   "name": "orange"
 }
