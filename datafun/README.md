@@ -1,4 +1,4 @@
-# Overview
+# Data pipeline fundamentals
 
 - intro to big O asymptotic analysis
 - key primitives - scan, sort, join, group by, udfs
