@@ -23,6 +23,6 @@ p.join()
 
 # How do we get batches?
 
-# Memory complexity?
+# Memory complexity? O(B*P)
 
 

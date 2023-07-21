@@ -42,8 +42,6 @@ def main():
 
 main()
 
-# Time complexity?
-
 # Memory complexity?
 
 # File bigger than mem?

@@ -18,7 +18,7 @@ def main():
 main()
 
 
-# Memory complexity?
+# Memory complexity? O(1)
 
 # IO?
 

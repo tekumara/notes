@@ -20,7 +20,7 @@ main()
 
 # Batch for IO efficiency, but means more memory
 
-# Memory complexity?
+# Memory complexity? O(B)
 
 # file bigger than mem?
 

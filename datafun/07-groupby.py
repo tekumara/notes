@@ -17,4 +17,4 @@ def main():
 main()
 
 
-# Parallise?
+# How to parallelise?

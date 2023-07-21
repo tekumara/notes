@@ -17,9 +17,8 @@ def scan():
 
 scan()
 
-# Time complexity? nlogn
 
-# Memory complexity?
+# Memory complexity? O(n)
 
 # File bigger than mem?
 
