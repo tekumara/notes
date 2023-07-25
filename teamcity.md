@@ -220,11 +220,13 @@ The settings in the UI need to be flushed to the VCS by committing them, or if y
 1. Synchronization enabled
 1. Settings format: Kotlin
 1. Apply
-1. Import settings from VCS
+1. Load project settings from VCS
+
+NB: You can ignore the popup "Versioned settings configuration change is not supported by the currently used format"
 
 ### Editing of the project settings is disabled
 
-
+From Versioned Settings, disable dynchronization.
 
 ### Deleting a build configuration
 

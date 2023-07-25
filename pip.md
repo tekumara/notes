@@ -23,13 +23,19 @@ pip install -e ../spark_data_testing
 
 This will create a `spark-data-testing.egg-link` file in your site-packages dir. It has the effect of placing your source directory on `PYTHONPATH`. All packages under the source directory will be accessible, even if they are not included in the source dist.
 
-See [Local Project Installs](https://pip.pypa.io/en/stable/reference/pip_install/#local-project-installs)
+See [Local Project Installs](https://pip.pypa.io/en/stable/topics/local-project-installs/)
 
 ### Paths
 
-`../spark_data_testing` is the same as `file:../spark_data_testing`
+eg:
 
-Any URL may use the `#egg=name` prefix to explicitly state the project name. When using `#egg=name` you need to use a url `file:`
+```
+pip install /Users/tekumara/code/spark_data_testing
+```
+
+Pip also supports relative paths, eg: `../spark_data_testing`. This is the same as `file:../spark_data_testing`
+
+Any URL may use the `#egg=name` prefix to explicitly state the project name. When using `#egg=name` you need to use a url `file:`, eg:
 
 ## VCS installs
 

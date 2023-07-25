@@ -47,7 +47,7 @@ dpkg -s PACKAGENAME
 Show package(s) and version only
 
 ```
-dpkg-query -W python python3.5
+dpkg-query -W "*xv*"
 ```
 
 Show package version and dependencies
