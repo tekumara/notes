@@ -42,6 +42,36 @@ See [Debug how pre-commit initializes its environment #1508](https://github.com/
 
 If you need something to run inside your project's virtualenv (eg: pylint, pyright to identify valid imports) then run it as a [local hook](https://pre-commit.com/#repository-local-hooks).
 
+### running hooks on a repo backed up to Dropbox
+
+pre-commit hooks will first move unstaged files to a pre-commit stash and restore them, eg:
+
+```
+[WARNING] Unstaged files detected.
+[INFO] Stashing unstaged files to /Users/tekumara/.cache/pre-commit/patch1690587194-72601.
+typos....................................................................Passed
+[INFO] Restored changes from /Users/tekumara/.cache/pre-commit/patch1690587194-72601.
+[master 92a70b0] add mount-fsx/md
+ 1 file changed, 189 insertions(+)
+ create mode 100644 mount-fsx.md
+```
+
+This causes a weird interaction when the repo is backed up to Dropbox. The stashed files are restored as conflicted copies:
+
+```
+❯ gs
+# On branch: master  |  +1  |  [*] => $e*
+#
+➤ Changes not staged for commit
+#
+#        deleted:  [1] github-releases.md
+#        deleted:  [2] typescript.md
+➤ Untracked files
+#
+#      untracked: [3] github-releases (tekumara's conflicted copy 2023-07-29).md
+#      untracked: [4] typescript (tekumara's conflicted copy 2023-07-29).md
+```
+
 ### Linter not excluding files
 
 Linters like `typos` can be configured to exclude certain files. For typos, you would add the file patterns to exclude in the `.typos.toml` config file. However, when typos is executed via a pre-commit hook, pre-commit passes the files to check explicitly on the command line. This overrides any exclusions specified in the linter's own config file. If you want to exclude files from `typos` when run via a pre-commit hook, use the `exclude` config key in `.pre-commit-config.yaml` instead.
