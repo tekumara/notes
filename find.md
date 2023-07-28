@@ -6,7 +6,7 @@ Find any file in this dir or its subdirs that matches 'kdeb\*'. NB: wildcard is 
 find . -iname 'kdeb*'
 ```
 
-To discard all erorrs:
+To discard all errors:
 
 ```
 find . -iname 'kdeb*' 2>/dev/null

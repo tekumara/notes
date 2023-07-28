@@ -38,21 +38,21 @@ Unused images are images that aren't associated with a container (includes all d
 
 ## Pruning
 
+`docker container prune` remove all stopped containers
+`docker container prune --filter 'until=1440h'` remove all containers created earlier than 60 days ago
+
+After removing containers you can remove their image.
+
 `docker image prune` remove dangling images
 `docker image prune -a --filter 'until=1440h'` remove unused images (dangling or otherwise) created earlier than 60 days ago
 `docker image rm $repo:$tag` remove specific image
 
 Pruning images does not automatically remove them from the build cache. It just removes the tag. So the total reclaimed space can be 0, but the image usage will decrease and the build cache usage will increase.
 
-`docker volume prune` remove all unused local volumes
-
-`docker container prune` remove all stopped containers
-`docker container prune --filter 'until=1440h'` remove all containers created earlier than 60 days ago
-
-After removing containers you can remove their image.
-
 `docker builder prune` remove dangling build cache
-`docker builder prune -a` remove all thebuild cache
+`docker builder prune -a` remove all build cache
+
+`docker volume prune` remove all unused local volumes
 
 To prune everything:
 

@@ -146,6 +146,21 @@ or if you are running debugpy in a container with packages installed into _/usr/
             ],
 ```
 
+> Breakpoints aren't being hit
+
+Can happen when `pathMappings` point the remote directory to somewhere other than the workspace directory, eg: if the current directory is not the workspace directory and you have:
+
+```json
+            "pathMappings": [
+              {
+                "localRoot": "${workspaceFolder}",
+                "remoteRoot": "."
+              }
+            ],
+```
+
+Try deleting the pathMappings.
+
 ## References
 
 - [Python debugging in VS Code](https://code.visualstudio.com/docs/python/debugging)

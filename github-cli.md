@@ -16,7 +16,7 @@ On macOS the [config dir is _~/.config/gh_](https://github.com/cli/cli/blob/25b6
 
 If `GITHUB_TOKEN` or `GITHUB_ENTERPRISE_TOKEN` env vars are specified they'll take precedence over stored oauth tokens.
 
-Sync the fork default branch (ie: master/main) with it's parent:
+Sync the fork default branch (ie: master/main) with its parent:
 
 ```
 # ghe
@@ -98,3 +98,11 @@ git fetch upstream
 ```
 
 See [#5896 comment](https://github.com/cli/cli/issues/5896#issuecomment-1304723277)
+
+> can't determine source repository for tobymao/sqlglot because repository is not fork
+
+Don't specify the upstream repo when running gh sync, use your fork instead, eg:
+
+```
+gh repo sync tekumara/sqlglot
+```

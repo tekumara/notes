@@ -33,13 +33,13 @@ sudo systemctl restart aws-ubuntu-eni-helper
 Service logs (shows when the service was run)
 
 ```
-journalctl -u <service>
+sudo journalctl -u <service>
 ```
 
 Timer logs (shows when the timer started, **not** when it was triggered)
 
 ```
-journalctl -u <service>.timer
+sudo journalctl -u <service>.timer
 ```
 
 Show errors from the most recent boot:

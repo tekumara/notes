@@ -242,6 +242,16 @@ org.eclipse.jgit.errors.TransportException: https://github.com/myorg/myrepo: not
 
 Check the username and password on the VCS root is correct.
 
+## Module was compiled with an incompatible version of Kotlin. The binary version of its metadata is 1.6.0, expected version is 1.4.2.
+
+Somewhere in the dependency tree there are kotlin deps at 1.6 and others at 1.4.2 … you can visualise the tree with:
+
+```
+mvn dependency:tree -f .teamcity/pom.xml
+```
+
+If you explicitly set `teamcity.dsl.version` or `kotlin.version` in _pom.xml_ try removing it.
+
 ## References
 
 [Kotlin DSL](https://www.jetbrains.com/help/teamcity/kotlin-dsl.html)

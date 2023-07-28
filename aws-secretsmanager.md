@@ -67,7 +67,7 @@ aws secretsmanager get-resource-policy --secret-id topsecret | jq '.ResourcePoli
 Describe secret. Will include a KmsKeyId field only if use a CMK (if using the default key this field won't be present)
 
 ```
-aws secretsmanager describe-secret --secret-id topsect
+aws secretsmanager describe-secret --secret-id topsecret
 ```
 
 ## Cross-account access
