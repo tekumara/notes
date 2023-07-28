@@ -34,6 +34,22 @@ Create a PR against the parent repo, rather then the fork:
 gh pr create --fill -w -R parent/repo
 ```
 
+## Usage
+
+Create org repo:
+
+```
+gh api orgs/ORG/repos -F name=REPO -F allow_merge_commit=false -F allow_rebase_merge=false -F squash_merge_commit_message=PR_BODY -F squash_merge_commit_title=PR_TITLE
+```
+
+NB: This will return 404 when ORG = a user name. Use `gh api user/repos` instead.
+
+Update repo, eg: set `delete_branch_on_merge`:
+
+```
+gh api repos/OWNER/REPO -F delete_branch_on_merge=true
+```
+
 ## Authenticate Git with your GitHub credentials
 
 During authentication you'll be asked `Authenticate Git with your GitHub credentials`?
