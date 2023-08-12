@@ -3,12 +3,12 @@
 TypedDict is a plain dictionary with type hints. ie: it's mutable
 NamedTuple is immutable
 
-"Dataclasses don't use __slots__.
+"Dataclasses don't use **slots**.
 They are bigger, slower, and more complex than NamedTuples.
-But they offer mutability and customizability." 
+But they offer mutability and customizability."
 [ref](https://twitter.com/raymondh/status/1175992038879219712?s=20)
 
-## [R0903(too-few-public-methods), Mordor]
+## R0903(too-few-public-methods)
 
 The error basically says that classes aren't meant to just store data, as you're basically treating the class as a dictionary. Classes should have at least a few methods to operate on the data that they hold.
 

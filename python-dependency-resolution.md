@@ -47,7 +47,7 @@ Produces a requirements.txt. Its annotated with the dependents of each package, 
 
 pip-compile will resolve packages for the same Python version and OS it is running on. This is most likely to be fine because you probably aren't using [environment markers](https://www.python.org/dev/peps/pep-0508/#environment-markers).
 
-It uses the [pip backtracking resolver](https://github.com/jazzband/pip-tools/pull/1539). Note however that pip-compile's backtracking resolver is not the same as pip's and will select different compatible versions given the same graph.
+It uses the [pip backtracking resolver](https://github.com/jazzband/pip-tools/pull/1539). Note however that pip-compile's backtracking resolver is not quiet the same as pip's and will select different compatible versions given the same graph.
 
 The legacy resolver is faster but [isn't a proper dependency resolver](https://github.com/jazzband/pip-tools/issues/1187#issuecomment-663993125) and fails on resolving `oslo.utils==1.4.0`.
 
@@ -69,13 +69,11 @@ pipenv, like poetry, offers virtualenv management with dependency resolution, re
 
 [pipgrip](https://github.com/ddelange/pipgrip) vendors the [sdispater/mixology](https://github.com/sdispater/mixology) implementation of PubGrub for resolution. Works with `pip` and a requirements file.
 
-Slower than poetry and pip-compile because it backtracks a lot see [#110](https://github.com/ddelange/pipgrip/issues/110).
+Stricter than pip, and much slower than poetry and pip-compile because it backtracks a lot see [#110](https://github.com/ddelange/pipgrip/issues/110).
 
 `pipgrip --tree '.[dev, notebook]'` to see all dependencies.
 
-## dephell
-
-[dephell](https://github.com/dephell/dephell) .... TODO
+Like poetry, pipgrep has nice error messages that explain conflicts, which is useful for debugging.
 
 ## performance
 
@@ -84,3 +82,8 @@ allennlp
 - pip-compile 18s
 - poetry 17s (2s on second run because it uses cached wheels)
 - pipgrip [doesn't complete](https://github.com/ddelange/pipgrip/issues/110)
+
+prefect flow
+
+- poetry 30s
+- pipgrep 3m
