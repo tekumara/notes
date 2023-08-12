@@ -4,7 +4,7 @@
 
 OLTP data models are optimised for writes, and OLAP models are optimised for reads.
 
-Data Vault optimises for auditability and automation.
+Data Vault optimises for auditability and automation of many sources. It standardises sources into hubs, sats, and links.
 
 ## Why?
 

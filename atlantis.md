@@ -88,12 +88,14 @@ In order to run parallel plans, each project must have it's own workspace.
 
 ## Troubleshooting
 
+Forgot to apply before merge - raise a new PR with an empty commit and run `atlantis -p <project_name>`
+
 Empty plan with no text - check that you have a valid version of terraform in _atlantis.yaml_
 
 Plans on push but commands are ignored - make sure the [webhooks](https://www.runatlantis.io/docs/configuring-webhooks.html) are receiving the correct events.
 
 `checking if workspace exists: stat ...: no such file or directory` - if trying to run `atlantis plan` via comment on any empty PR, push a trivial comment first.
 
-`Ran Plan for 0 projects` - If you've made changes outside any project (eg: to atlantis.yaml) you'll need to explicitly provide the project to plan, eg: `atlantis plan -p awesome_project`. Also make have `dir` defined in _atlantis.yaml_ (see [#1919](https://github.com/runatlantis/atlantis/issues/1919#issuecomment-1046132473)).
+`Ran Plan for 0 projects` - If you've made changes outside any project (eg: to atlantis.yaml) you'll need to explicitly provide the project to plan, eg: `atlantis plan -p awesome_project`. Also make sure you have `dir` defined in _atlantis.yaml_ (see [#1919](https://github.com/runatlantis/atlantis/issues/1919#issuecomment-1046132473)).
 
 `Ran Apply for 0 projects` - make sure you have planned first.

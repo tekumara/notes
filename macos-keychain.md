@@ -12,10 +12,16 @@ Set the timeout on the aws-vault keychain to 9 hours
 security set-keychain-setting -t 32400 $HOME/Library/Keychains/aws-vault.keychain-db
 ```
 
-To fetch the aws-vault oidc token
+To fetch the aws-vault oidc token by kind
 
 ```
 security find-generic-password -D "aws-vault oidc token" -w
+```
+
+To fetch the github cli token by name and base64 decode
+
+```
+export GH_TOKEN=$(security find-generic-password -s "gh:github.com" -w | while IFS=: read -A parts; do base64 -d <<< "${parts[2]}"; done)
 ```
 
 To see details of all items for the aws-vault service (aka Where in the UI):

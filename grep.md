@@ -47,7 +47,7 @@ grep -oP 'key=\K(.*)' config.properties
 
 `grep -P` enables PCRE ie: perl-compatible regular expressions. Needed to support things like the non-greedy operator `?` or `\K`. Not available on BSD grep, see [PCRE on macOS below](#pcre-on-macos)).
 `grep -E` enables ERE, ie: extended regular expressions. See [man re_format](https://man.netbsd.org/re_format.7). This includes [enhanced](https://stackoverflow.com/a/23146221/149412) extended REs, ie: `\s`, `\S` etc.
-`grep -o` only prints the match (not just capture group, for that use PCRE or perl), each match per line.
+`grep -o` only prints the match (not just capture group, for that use PCRE or perl or ripgrep), each match per line.
 
 Capture text in a tag:
 
