@@ -6,13 +6,13 @@ Use ssh for github.dev.myorg.com
 gh config set -h github.dev.myorg.com git_protocol ssh
 ```
 
-Auth to github.dev.myorg.com using your browser, ssh for git, and store the generated oauth token on disk:
+Auth to github.dev.myorg.com using your browser, ssh for git, and upload your SSH key:
 
 ```
 gh auth login -h github.dev.myorg.com -w -p ssh
 ```
 
-On macOS the [config dir is _~/.config/gh_](https://github.com/cli/cli/blob/25b6eecc8dd7845ca42afa3362b80b13c355356a/internal/config/config_file.go#L40). Oauth tokens are stored here.
+On macOS the [config dir is _~/.config/gh_](https://github.com/cli/cli/blob/25b6eecc8dd7845ca42afa3362b80b13c355356a/internal/config/config_file.go#L40). Oauth tokens are stored in the Login keychain under `gh:github.com` or your GHE hostname.
 
 If `GITHUB_TOKEN` or `GITHUB_ENTERPRISE_TOKEN` env vars are specified they'll take precedence over stored oauth tokens.
 
@@ -60,18 +60,35 @@ This token can be revoked by revoking the Github CLI [OAuth App](https://github.
 
 ## GitHub CLI as git credential helper
 
-`gh auth git-credential` implements the [git credential helper interface](https://github.com/cli/cli/blob/6701b52/pkg/cmd/auth/gitcredential/helper.go), eg:
+`gh auth git-credential` [implements](https://github.com/cli/cli/blob/6701b52/pkg/cmd/auth/gitcredential/helper.go), the [git crendtial helper interface](https://git-scm.com/docs/gitcredentials) for supplying HTTP usernames/passwords eg:
 
 To fetch creds:
 
 ```
-echo | gh auth git-credential get
+echo -e "host=github.com\nprotocol=https" | gh auth git-credential get
+# or
+gh auth token
+```
+
+To fetch just the token:
+
+```
+gh auth token
 ```
 
 To use this with git:
 
 ```
 gh auth setup-git [<hostname>]
+```
+
+This adds the following to _~/.gitconfig_:
+
+```
+credential.https://github.com.helper=
+credential.https://github.com.helper=!/opt/homebrew/bin/gh auth git-credential
+credential.https://gist.github.com.helper=
+credential.https://gist.github.com.helper=!/opt/homebrew/bin/gh auth git-credential
 ```
 
 For more info see [https://github.com/cli/cli/pull/4246](https://github.com/cli/cli/pull/4246)

@@ -6,7 +6,7 @@ Resets current branch to `<commit>` and depending on the mode may update the ind
 - mixed (default): reset index
 - hard: reset index, reset working directory
 
-`git reset HEAD .` - mixed (default), ie: resets the index (staging area) to HEAD. Does not alter working directory. This unstages any staged changes. Its effect is the opposite of git add. NB: HEAD can be omitted as its the default commit and . can be ommitted because its the default path, eg: `git reset`
+`git reset HEAD .` - mixed (default), ie: resets the index (staging area) to HEAD. Does not alter working directory. This unstages any staged changes. Its effect is the opposite of git add. NB: HEAD can be omitted as its the default commit and . can be omitted because its the default path, eg: `git reset`
 
 `git reset --hard HEAD` - has the same affect as `git checkout HEAD .` Removes staged and unstaged changes (but not untracked files). Cannot be used with paths (use `git checkout HEAD <path>` instead)
 
