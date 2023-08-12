@@ -24,6 +24,14 @@ Show js file types
 
 `rg --type-list | rg '^js:'`
 
+## Extract
+
+This returns `bar`:
+
+```
+echo "foo=bar" | rg 'foo=(.*)' -r '$1'
+```
+
 ## Search and replace
 
 ```shell
