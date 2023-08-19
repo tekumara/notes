@@ -36,6 +36,12 @@ or using http:
 awesome_lib @ git+https://github.com/tekumara/awesome-lib.git@feature1
 ```
 
+or locally:
+
+```
+my_package @ file:///absolute/path/my_package
+```
+
 NB: if you have already the package, delete it first so pip will detect the missing and install the version from the branch
 
 See also [PEP 508 – Dependency specification for Python Software Packages](https://peps.python.org/pep-0508/)

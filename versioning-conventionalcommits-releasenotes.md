@@ -7,6 +7,7 @@
 - Trade-offs with version constraints
   - tighter = more stable, less frequent updates. Favoured by deployed applications.
   - looser = more compatible, more frequent updates. Favoured by libraries.
+  - alternatively use a lock file and update regularly to break this tradeoff.
 - Definitions of compatible version for major version zero:
   - [Semver](https://semver.org/#spec-item-4): Major version zero (0.y.z) is for initial development. Anything MAY change at any time. The public API SHOULD NOT be considered stable.
   - [Cargo semver](https://doc.rust-lang.org/cargo/reference/resolver.html#semver-compatibility): Versions are considered compatible if their left-most non-zero major/minor/patch component is the same.
