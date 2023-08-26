@@ -350,3 +350,7 @@ aws s3 ls s3://ai2-public-datasets/ --no-sign-request
 ## S3 Bucket Keys
 
 S3 bucket keys can bypass KMS IAM perms, eg: changes to the source KMS key policy may not be immediately propagated to the bucket key which is a copy of the KMS key.
+
+## Folders
+
+From the console you can create a folder, which [creates an empty object](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-folders.html#create-folder) with the name of the folder eg: `myfolder/`

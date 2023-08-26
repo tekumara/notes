@@ -4,7 +4,7 @@
 
 Scale up, good for low latency.
 
-Single AZ host. No durability guarantees.
+[Single and Multi-AZ options with different performance profiles](https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/performance.html).
 
 Pricing (us-east-1):
 

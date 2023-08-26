@@ -23,6 +23,6 @@
 
 ## release notes generators
 
-- [.github/release.yml](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes) creates release notes categorised by label
-- [release-drafter](https://github.com/release-drafter/release-drafter) labels PRs, and creates a draft Github release with release notes from PRs and suggests the next semver version. Commits without PRs are ignored.
-- [release-please](https://github.com/googleapis/release-please) creates a PR with a CHANGELOG.md from prior commits, and bumps to the next semver version. On merge creates a Github Release with release notes.
+- [.github/release.yml](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes) built into Github, no GHA required. Creates release notes categorised by label
+- [release-drafter](https://github.com/release-drafter/release-drafter) labels PRs based on [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) , and creates a draft Github release with release notes from PRs and suggests the next semver version. Commits without PRs are ignored.
+- [release-please](https://github.com/googleapis/release-please) creates a PR with a CHANGELOG.md from prior commits grouped by [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/), and bumps to the next semver version. On merge creates a Github Release with release notes.

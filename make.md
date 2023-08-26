@@ -145,6 +145,21 @@ hooks: | $(venv)
 
 `make hooks` will still build `$(venv)` when `pyproject.toml` is newer than `$(venv)`, causing `$(venv)` to be out of date.
 
+## Always trigger a target
+
+```
+.terraform%:
+	terraform init -reconfigure
+
+## init
+init: .terraform-phony
+```
+
+- `make .terraform` runs only if .terraform is out of date (ie: doesn't exist)
+- `make init` always runs the .terraform target
+
+NB: The `phony` suffix in `.terraform-phony` is not special. Any suffix will trigger the `.terraform%` target, and because it doesn't match any existing _.terraform_ directory, will always mean the target is not up to date and so doesn't run.
+
 ## Errors
 
 ```
@@ -184,7 +199,7 @@ mappings-for-image: env-AWS_REGION env-IMAGE_ID
 
 Patsubst matches whole words, eg: `$(patsubst %un,a,run something)` will resolve to `a something`
 
-subst matches text occurences, eg: `$(subst u,a,run something)` will resolve to `ran something`
+subst matches text occurrences, eg: `$(subst u,a,run something)` will resolve to `ran something`
 
 [Text-Functions](https://www.gnu.org/software/make/manual/html_node/Text-Functions.html)
 
@@ -292,3 +307,5 @@ This is because the `build` target has no recipe, and since there's a build.sh f
 - [Makefile Programming Language Tutorial](https://twolodzko.github.io/makefile-programming)
 - [Index of Concepts](https://www.gnu.org/software/make/manual/html_node/Concept-Index.html)
 - [Heredoc in a Makefile](https://stackoverflow.com/questions/5873025/heredoc-in-a-makefile/7377522#7377522) - describes the use of the `.ONESHELL` target.
+
+<!-- markdownlint-disable-file no-hard-tabs -->

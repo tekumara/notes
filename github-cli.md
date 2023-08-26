@@ -123,3 +123,12 @@ Don't specify the upstream repo when running gh sync, use your fork instead, eg:
 ```
 gh repo sync tekumara/sqlglot
 ```
+
+> could not compute title or body defaults: could not find any commits between master and master
+
+If you are trying to raise a PR against the upstream repo make sure you have it as a remote:
+
+```
+git remote add upstream https://github.com/landaire/png-crc-fix.git
+git fetch upstream
+```

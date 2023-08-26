@@ -173,3 +173,20 @@ If this is accompanied by a `Optional object type attributes are experimental` e
 
 This is a generic error caused by failure to assume the role for the backend.
 To get an more specific error message enable debug logging, eg: `TF_LOG=DEBUG terraform ..`
+
+### Error: SSOProviderInvalidToken: the SSO session has expired or is invalid
+
+Generate an sso token in _~/.aws/sso/cache_: `aws sso login --profile <your_profile>`
+
+### Error: Invalid provider configuration
+
+> │ Error: Invalid provider configuration
+> │
+> │ Provider "registry.terraform.io/hashicorp/aws" requires explicit configuration. Add a provider block to the root module and configure the provider's required
+> │ arguments as described in the provider documentation.
+
+This can happen when all providers have an alias ([ref](https://github.com/hashicorp/terraform-provider-aws/issues/30902#issuecomment-1522160649)) and there are `data` or `resource` statements that don't specify a provider. In this case the default empty provider is used but is invalid.
+
+### Error: configuring Terraform AWS Provider: no valid credential sources for Terraform AWS Provider found
+
+The provider does not have valid creds. Check it has been correctly defined, and any needed credentials are available as environment variables or via the IMDS.

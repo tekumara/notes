@@ -22,3 +22,6 @@ Looking at the events:
 The new replicas cannot create because of the quota limits.
 
 Solution: manually delete the old replica set.
+
+## Cannot schedule your job
+

@@ -4,7 +4,7 @@
 - ubuntu:
 
   ```
-  wget "https://github.com/duckdb/duckdb/releases/download/v0.8.0/duckdb_cli-linux-amd64.zip" -P /tmp
+  wget "https://github.com/duckdb/duckdb/releases/download/v0.8.1/duckdb_cli-linux-amd64.zip" -P /tmp
   unzip /tmp/duckdb_cli-linux-amd64.zip -d /tmp
   sudo install /tmp/duckdb /usr/local/bin/duckdb
   ```
@@ -83,6 +83,8 @@ Debug s3 settings:
 select * from duckdb_settings() where name like 's3%'
 ```
 
+httpfs will [load the AWS env vars if present](https://github.com/duckdb/duckdb/pull/5419).
+
 ## Troubleshooting
 
 > BinderException: Binder Error: There are no UNIQUE/PRIMARY KEY Indexes that refer to this table, ON CONFLICT is a no-op
@@ -131,3 +133,7 @@ from read_parquet('s3://bucket/predictions/predict[0].parquet');
 ```
 
 Escape the square brackets, they're treated as part of a regex pattern.
+
+> HTTP GET error on 'https://foo.s3.amazonaws.com/?encoding-type=url&list-type=2&prefix=bar%2F' (HTTP 403)
+
+AWS credentials haven't been loaded. Set the AWS\_\* env vars or load the aws extension.

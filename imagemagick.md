@@ -70,6 +70,20 @@ Rotate and resize:
 convert -rotate 180 -resize 50% image3.jpg image3b.jpg
 ```
 
+## Exceptions
+
+When the file has an invalid crc, [convert will fail](https://github.com/ImageMagick/ImageMagick/issues/5329):
+
+```
+❯ pngcheck bad-crc.png
+bad-crc.png  EOF while reading CRC value
+ERROR: bad-crc.png
+❯ convert bad-crc.png -resize 80%
+convert: Expected 4 bytes; found 2 bytes `bad-crc.png' @ warning/png.c/MagickPNGWarningHandler/1526.
+convert: Read Exception `bad-crc.png' @ error/png.c/MagickPNGErrorHandler/1492.
+convert:  `80%' @ error/convert.c/ConvertImageCommand/3351.
+```
+
 ## References
 
 - [Convert man page](http://linux.die.net/man/1/convert)

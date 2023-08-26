@@ -26,6 +26,12 @@ From the command line:
 
 - to show only processes containing "elastic": `top -c -p $(pgrep -d',' -f elastic)`
 
+### Multi-CPU
+
+Top shows CPU % in terms of a single cpu by default (Irix mode). On a 4 CPU system this means you will see up to 400% usage. Press `I` to toggle Irix mode to show CPU % of the total number of CPUs, ie: CPU % will only go up to 100%.
+
+Press `1` to see a breakdown by each CPU.
+
 ## See also
 
 Pidstat is a little like top’s per-process summary, but prints a rolling summary instead of clearing the screen, eg: `pidstat 1`
