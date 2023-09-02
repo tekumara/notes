@@ -4,6 +4,7 @@
 `duti -l public.mp3` list all handlers for uti  
 `duti -x .mp3` list default handler for extension mp3  
 `duti -s org.videolan.vlc public.mp3 all` set VLC as the default handler for the MP3 MIME type
+`mdls -name kMDItemContentType <filename>` show the uti for a give file
 
 Get the app id (ie: bundle_id) of vscode:
 

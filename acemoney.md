@@ -19,8 +19,8 @@ CREATE TEMP TABLE ace AS SELECT * FROM read_csv_auto ('csvdata.csv');
 .once csvdata.duck.csv
 
 select '' as Num,strftime(column0, '%d/%m/%Y') as Date,column2 as Payee,'' as Category,'' as S,
-  case when column1<0 then abs(column1) else '' end as Withdrawal,
-  case when column1>0 then column1 else '' end as Deposit,
+  case when column1::numeric(18,2)<0 then abs(column1::numeric(18,2)) else '' end as Withdrawal,
+  case when column1::numeric(18,2)>0 then column1 else '' end as Deposit,
   column3 as Total,
   '' as Comment
 from ace order by rowid desc;

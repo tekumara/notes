@@ -29,7 +29,7 @@ See:
 
 eg: `ifeq`
 
-"A conditional causes part of a makefile to be obeyed or ignored depending on the values of variables. Conditionals can compare the value of one variable to another, or the value of a variable to a constant string. Conditionals control what make actually "sees" in the makefile, so they cannot be used to control shell commands at the time of execution." [ref](http://kirste.userpage.fu-berlin.de/chemnet/use/info/make/make_7.html) [ref](https://stackoverflow.com/a/11994561/149412):
+"A conditional causes part of a makefile to be obeyed or ignored depending on the values of variables. Conditionals can compare the value of one variable to another, or the value of a variable to a constant string. Conditionals control what make actually "sees" in the makefile, so they cannot be used to control shell commands at the time of execution." [ref](https://web.mit.edu/gnu/doc/html/make_7.html) [ref](https://stackoverflow.com/a/11994561/149412):
 
 `ifdef` will be ignored if it appears after commands in a target,
 eg: this works
