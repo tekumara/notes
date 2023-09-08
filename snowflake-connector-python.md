@@ -80,3 +80,7 @@ May occur when using a stale token. Try again. See [#1415](https://github.com/sn
 > snowflake.connector.errors.InterfaceError: 252005: Failed to convert current row, cause: [Snowflake Exception] unknown arrow internal data type(1113013152) for TIMESTAMP_NTZ data
 
 May occur when using incompatible versions of pyarrow and snowflake-connector-python. Reinstall both, eg: `pip install --force-reinstall 'snowflake-connector-python[pandas]'`
+
+> Failed to convert current row, cause: year 53682749 is out of range
+
+When a naive seven-part datetime (eg: `datetime.utcnow()`) is written using `write_as_dataframe` it will end up out of range, eg: `53682274-05-20T12:04:46Z`. Add a timezone, eg: `datetime.utcnow().replace(tzinfo=timezone.utc)`

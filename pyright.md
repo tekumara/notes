@@ -157,7 +157,7 @@ To ignore reportGeneralTypeIssues for the whole file:
 To ignore on a specific line:
 
 ```
-# pyright: ignore[reportOptionalMemberAccess,reportOptionalSubscript]
+# pyright: ignore[reportOptionalMemberAccess,reportOptionalSubscript,reportPrivateImportUsage]
 ```
 
 ## Alternatives to pyright

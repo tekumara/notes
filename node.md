@@ -1,36 +1,33 @@
 # Node
 
-## Install on Debian/Ubuntu
+## Install binaries via script
 
-Install Node.js LTS (v12.x) from the [nodesource/distributions](https://github.com/nodesource/distributions):
-
-```
-# Using Ubuntu
-curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-# Using Debian, as root
-curl -sL https://deb.nodesource.com/setup_lts.x | bash -
-apt-get install -y nodejs
-
-# Using Amazon Linux
-curl -sL https://rpm.nodesource.com/setup_lts.x | sudo bash -
-sudo yum install -y nodejs
-```
-
-NB: will install python2.7 if not present.
-
-## Scripted install of binaries
-
-Prefer using a package manger (see above) unless you are building a minimal Docker image.
-
-Install latest Node LTS into _/usr/local_:
+Install Node LTS binaries into _/usr/local_:
 
 ```
-curl -sL install-node.now.sh/lts | bash -s -- --yes
+curl -sfLS install-node.vercel.app/lts | bash -s -- --yes
 ```
 
 See [vercel/install-node](https://github.com/vercel/install-node/blob/master/install.sh) for more details.
+
+## Install via Debian/Ubuntu packages
+
+Prefer the scripted install above because it's a nice one-liner.
+
+But if you want to install the node debian packages from [nodesource/distributions](https://github.com/nodesource/distributions):
+
+```
+mkdir -m 0755 -p /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --yes --dearmor -o /etc/apt/keyrings/nodesource.gpg
+
+NODE_MAJOR=18 # Current LTS
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+
+apt-get update
+apt-get install -y nodejs
+```
+
+NB: will install python2.7 if not present.
 
 ## npm
 
