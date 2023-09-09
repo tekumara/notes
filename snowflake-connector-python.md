@@ -83,4 +83,4 @@ May occur when using incompatible versions of pyarrow and snowflake-connector-py
 
 > Failed to convert current row, cause: year 53682749 is out of range
 
-When a naive seven-part datetime (eg: `datetime.utcnow()`) is written using `write_as_dataframe` it will end up out of range, eg: `53682274-05-20T12:04:46Z`. Add a timezone, eg: `datetime.utcnow().replace(tzinfo=timezone.utc)`
+When a naive seven-part datetime (eg: `datetime.utcnow()`) is written using `write_as_dataframe` it will end up out of range, eg: `53682274-05-20T12:04:46Z`. Add a timezone, eg: `datetime.utcnow().replace(tzinfo=timezone.utc)` or `datetime.datetime(1970, 1, 1, 0, 0, tzinfo=pytz.utc)`
