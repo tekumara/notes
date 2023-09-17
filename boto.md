@@ -14,6 +14,8 @@ A region can be specified when creating a client. If none is specified the looku
 1. _~/.aws/config_ file, for the profile specified (or default profile)
 1. Raise a NoRegionError
 
+NB: See [AWS Region](https://docs.aws.amazon.com/sdkref/latest/guide/feature-region.html) for more info on which clients use which env vars.
+
 ## Use STS credentials created by the AWS CLI
 
 The following will use STS credentials created by the AWS CLI, if they exist.

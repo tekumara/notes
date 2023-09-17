@@ -23,7 +23,7 @@ Or if using _setup.py_:
     setup_requires=['setuptools_scm'],
 ```
 
-Versions are calculated from the git repo state as per [Default versioning scheme](https://github.com/pypa/setuptools_scm/#default-versioning-scheme).
+Versions are calculated from the git repo state as per [Default versioning scheme](https://github.com/pypa/setuptools_scm/blob/main/docs/usage.md#default-versioning-scheme).
 
 To see the current version install setuptools_scm and run:
 

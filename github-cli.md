@@ -93,9 +93,33 @@ credential.https://gist.github.com.helper=!/opt/homebrew/bin/gh auth git-credent
 
 For more info see [https://github.com/cli/cli/pull/4246](https://github.com/cli/cli/pull/4246)
 
+## Default remote repository
+
+Set the default remote repository for the current directory:
+
+```
+gh repo set-default
+```
+
+This will be saved in _.git/config_ as the key value pair `gh-resolved = base` under the remote you select.
+
+## Sync
+
+Sync the `main` branch in the local repo with the default remote repo:
+
+```
+gh repo sync
+```
+
+Synch the fork tekumara/PyGithub from it's parent
+
+```
+gh repo sync tekumara/PyGithub
+```
+
 ## Troubleshooting
 
-> can't find corresponding remote for apache/spark
+#### can't find corresponding remote for apache/spark
 
 To resolve, and sync the local repository from the remote parent, change the default repo to match the origin remote:
 
@@ -106,7 +130,7 @@ To resolve, and sync the local repository from the remote parent, change the def
 ✓ Synced the "main" branch from tekumara/spark to local repository
 ```
 
-> could not compute title or body defaults: failed to run git: fatal: ambiguous argument 'upstream/... ': unknown revision or path not in the working tree.
+#### could not compute title or body defaults: failed to run git: fatal: ambiguous argument 'upstream/... ': unknown revision or path not in the working tree
 
 Fetch the remote first:
 
@@ -116,7 +140,7 @@ git fetch upstream
 
 See [#5896 comment](https://github.com/cli/cli/issues/5896#issuecomment-1304723277)
 
-> can't determine source repository for tobymao/sqlglot because repository is not fork
+#### can't determine source repository for tobymao/sqlglot because repository is not fork
 
 Don't specify the upstream repo when running gh sync, use your fork instead, eg:
 
@@ -124,7 +148,12 @@ Don't specify the upstream repo when running gh sync, use your fork instead, eg:
 gh repo sync tekumara/sqlglot
 ```
 
-> could not compute title or body defaults: could not find any commits between master and master
+#### HTTP 404: Not Found (<https://api.github.com/repos/PyGithub/PyGithub/merge-upstream>)
+
+You've tried to sync a remote repo that does not have an upstream, ie: is not a fork.
+eg: `gh repo sync PyGithub/PyGithub`
+
+#### could not compute title or body defaults: could not find any commits between master and master
 
 If you are trying to raise a PR against the upstream repo make sure you have it as a remote:
 
@@ -132,3 +161,21 @@ If you are trying to raise a PR against the upstream repo make sure you have it 
 git remote add upstream https://github.com/landaire/png-crc-fix.git
 git fetch upstream
 ```
+
+#### can't sync because main is not tracking PyGithub/PyGithub
+
+You've tried to sync a local branch that is not tracking the default remote repository.
+eg: `gh repo sync` on a local repo cloned from a fork of, rather than, the default remote repository.
+
+#### can't sync because there are diverging changes; use `--force` to overwrite the destination branch
+
+You destination repo is ahead of the source repo so a fast-forward merge is not possible.
+`--force` will use a hard reset to do the merge, which will overwrite the commits that are ahead.
+Prefer a manual conflict resolution, eg:
+
+```
+git pull upstream
+git merge upstream/main
+```
+
+<!-- markdownlint-disable-file MD001 -->

@@ -8,6 +8,12 @@ To see what args were used to build the interpreter:
 import sysconfig; sysconfig.get_config_var('CONFIG_ARGS')
 ```
 
+To see what [compiler and link options](https://setuptools.pypa.io/en/latest/userguide/ext_modules.html#compiler-and-linker-options) where used:
+
+```
+python3 -m sysconfig | grep -E '^\s+(CC|CPP|CXX|LDSHARED|CFLAGS|CPPFLAGS|LDFLAGS)\b'
+```
+
 NB: this is loaded from _<sys.prefix>/python3.X/\_sysconfigdata_m_linux_x86_64-linux-gnu.py_
 
 The default ubuntu python packages aren't built with `--enable-optimizations`. The deadsnakes ppa packages and the [python docker images](https://github.com/docker-library/python) do.

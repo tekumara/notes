@@ -16,6 +16,12 @@ pdb++ is a drop-in replacement and has nice features like:
 To set a breakpoint:
 
 ```
+breakpoint()
+```
+
+or
+
+```
 import pdb; pdb.set_trace()
 ```
 

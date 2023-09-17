@@ -3,7 +3,7 @@
 Show partitions:
 
 ```
-SHOW PARTITIONS `inventory`.`my-bucket`
+SHOW PARTITIONS `my-database`.`my-table`
 ```
 
 Query from the cli:
@@ -16,6 +16,18 @@ aws athena start-query-execution \
 ```
 
 To run multiple queries from a file - see https://stackoverflow.com/a/44301541/149412ß
+
+To add partitions:
+
+```
+MSCK REPAIR TABLE `my-database`.`my-table`
+```
+
+A successful query will output:
+
+- `Partitions not in metastore`
+- `Partitions missing from filesystem` - partitions in the metastore that no longer exist, see below.
+- `Added partition to metastore` - partitions not in the metastore that were added successfully. If this isn't present new partitions weren't added, see "Partitions not being added to glue table" below.
 
 ## Troubleshooting
 
