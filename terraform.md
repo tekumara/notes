@@ -30,7 +30,7 @@ When using the s3 backend a single bucket is shared between environments. This i
 
 - environments are dependent on the availability of the state bucket's AWS region
 - cross-account access for the bucket (ie: resource policies for the bucket and kms key, or a role than can be assumed)
-- there is a single backend config rather than one per environment. This make things a simpler and quicker to initialise because there's no need to reinitialise per environment. It also more flexible and enables single workspace multi account approaches, ie: a single stack with an AWS provider per account and associated resources.
+- there is a single backend config rather than one per environment. This is more flexible and enables single workspace multi account approaches, ie: a single stack with an AWS provider per account and associated resources. As a small side benefit, when planning across multiple environments from the same machine, you won't have to reinitialise the backend for each environment.
 
 State objects will be located at `workspace_key_prefix/workspace_name/key`. By default `workspace_key_prefix` is `env:` but can be configured.
 
@@ -190,3 +190,21 @@ This can happen when all providers have an alias ([ref](https://github.com/hashi
 ### Error: configuring Terraform AWS Provider: no valid credential sources for Terraform AWS Provider found
 
 The provider does not have valid creds. Check it has been correctly defined, and any needed credentials are available as environment variables or via the IMDS.
+
+### The installed provider plugins are not consistent with the packages
+
+> │ Error: Required plugins are not installed
+> │
+> │ The installed provider plugins are not consistent with the packages
+> │ selected in the dependency lock file:
+> │ - registry.terraform.io/hashicorp/aws: the cached package for registry.terraform.io/hashicorp/aws 4.9.0 (in .terraform/providers) does not match any of the checksums recorded in the dependency lock file
+> │
+> │ Terraform uses external plugins to integrate with a variety of different
+> │ infrastructure services. You must install the required plugins before
+> │ running Terraform operations.
+
+Try replanning. Or add a .terraform.lock.hcl file if missing.
+
+### clang: error: no such file or directory: '.terraform.o'
+
+_.terraform.lock.hcl_ doesn't have hashes for your platform. Regenerate it.

@@ -302,6 +302,10 @@ This is because the `build` target has no recipe, and since there's a build.sh f
 
 `.PHONY: build` will fix this. Alternatively, add a recipe for the `build` target, or rename `build.sh`
 
+## make: Nothing to be done for `run'
+
+Check the indentation is current under the `run` target.
+
 ## Reference
 
 - [Makefile Programming Language Tutorial](https://twolodzko.github.io/makefile-programming)

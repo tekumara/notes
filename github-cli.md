@@ -117,6 +117,18 @@ Synch the fork tekumara/PyGithub from it's parent
 gh repo sync tekumara/PyGithub
 ```
 
+## Multi-user
+
+Use direnv to [set an alternate GH_CONFIG_DIR](https://github.com/cli/cli/issues/326#issuecomment-847810959) and [auth using insecure storage](https://github.com/cli/cli/issues/326#issuecomment-1641389115):
+
+```
+gh auth login -h github.com -w --insecure-storage
+```
+
+This will store and use the token in _$GH_CONFIG_DIR/hosts.yml_.
+
+Use `gh auth status` to verify it works after changing directories.
+
 ## Troubleshooting
 
 #### can't find corresponding remote for apache/spark
@@ -177,5 +189,9 @@ Prefer a manual conflict resolution, eg:
 git pull upstream
 git merge upstream/main
 ```
+
+#### PUT https://api.github.com/organizations/123/team/456/repos/my-org/my-repo: 422 Validation Failed
+
+Check permissions as per the [api docs](https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#add-or-update-team-repository-permissions).
 
 <!-- markdownlint-disable-file MD001 -->

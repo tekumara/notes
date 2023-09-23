@@ -6,12 +6,13 @@ script_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]:-$0}")")"
 
 usage() {
     script=$(basename "$0")
-    die "Archive and upload spark ui event logs for prosperity
+    echo -e "Archive and upload spark ui event logs for prosperity
 
     Usage: $script <s3_bucket> <suffix>
 
        eg: $script s3://spark-logs 20180330
-           will archive all application event logs to s3://spark-logs/j-XXXXXXXXXXXXX/spark-event-logs-20180330.tar.gz"
+           will archive all application event logs to s3://spark-logs/j-XXXXXXXXXXXXX/spark-event-logs-20180330.tar.gz"  >&2
+    exit 42
 }
 
 die() {
