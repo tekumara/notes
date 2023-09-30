@@ -1,5 +1,13 @@
 # python async
 
+## Start an event loop
+
+If `main` is async:
+
+```
+asyncio.run(main())
+```
+
 Start an async repl:
 
 ```
@@ -12,13 +20,33 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>>
 ```
 
-## Start an event loop
+## Tasks
 
-If `main` is async:
+Use a task when you wait your coroutine to run in the background. `asyncio.create_task` will execute the task on the event loop and return a `Task` which is subclass of `Future`. A task can be awaited.
 
+Save a reference to task returned from `asyncio.create_task`, to avoid it being [garbage-collected mid-execution](https://docs.astral.sh/ruff/rules/asyncio-dangling-task/).
+
+### Task Groups
+
+If work1 or work2 throws an exception, the other task will keep running.
+
+```python
+    t1 = asyncio.create_task(work1())
+    t2 = asyncio.create_task(work2())
+    await asyncio.wait([t1, t2])
 ```
-asyncio.run(main())
+
+If the exception is unretrieved, its trackback won't appear until exit where it will be displayed with the message `Task exception was never retrieved`.
+
+To have the exception cancel the other running task, use a TaskGroup:
+
+```python
+    async with asyncio.TaskGroup() as tg:
+        t1 = asyncio.create_task(work1())
+        t2 = asyncio.create_task(work2())
 ```
+
+The TaskGroup will wait for both tasks to complete, and will cancel one if the other throws an exception. The exception will retrieve and propagate the exception as an ExceptionGroup.
 
 ## Notes
 

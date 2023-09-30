@@ -2,7 +2,7 @@
 
 ## TypedDict
 
-I'd probably default to NamedTuples or Dataclasses, and use TypedDicts for special situations that require interoperability (eg: with pandas) or backwards compatibility.
+I'd probably default to NamedTuples or Dataclasses, and use TypedDicts for special situations that require interoperability (eg: with pandas) or backwards compatibility. Unlike dataclasses they don't support attribute access (eg: `Order.id`), can't have methods, and can only inherit from other `TypedDicts` so aren't great for building class hierarchies, eg: if you try to inherit from a TypedDict and Protocol you'll get a `TypeError: cannot inherit from both a TypedDict type and a non-TypedDict base class`. In python 3.11 there is no support however for [TypedDict to inherit from Generic](https://github.com/python/cpython/issues/89026#issuecomment-1116093221).
 
 eg:
 
@@ -43,7 +43,7 @@ A TypedDict is not compatible with `Dict[str, Any]` because it is considered a m
 ## Collections and variance
 
 Mutable collections have invariant type parameters because the contents of the collection can change.
-Immutable collection types support covariant type parameters, so derived classes are allowed.
+Immutable collection types support covariant type parameters, so derived classes and Union elements are allowed.
 
 | Mutable Type | Immutable Type     |
 | ------------ | ------------------ |
@@ -53,6 +53,34 @@ Immutable collection types support covariant type parameters, so derived classes
 | n/a          | Tuple              |
 
 See [pyright: Understanding Typing - Generic Types](https://github.com/microsoft/pyright/blob/c83a95e/docs/type-concepts.md#generic-types)
+
+eg:
+
+```python
+from collections.abc import Sequence
+
+
+def fn_invariant(_: list[str | None]) -> None:
+    pass
+
+
+def fn_covariant(_: Sequence[str | None]) -> None:
+    pass
+
+
+ls = ["a", "b", "c"]
+
+fn_invariant(ls) # <- errors
+fn_covariant(ls)
+```
+
+pyright:
+
+```
+14:14 - error: Argument of type "list[str]" cannot be assigned to parameter "_" of type "list[str | None]" in function "fn_invariant"
+    "list[str]" is incompatible with "list[str | None]"
+      Type parameter "_T@list" is invariant, but "str" is not the same as "str | None"
+```
 
 ## Ignore
 
@@ -111,7 +139,31 @@ See [mypy - Casts and type assertions](https://mypy.readthedocs.io/en/stable/cas
 
 Overloading allows a function to have multiple type signatures. This can allow a more precise description of a flexible function than using Union types. At runtime there is still only one implementation of the function (unlike other languages like Java which will select the appropriate method at compile time).
 
+To reduce redundancy, defaults and return values can be replaced with `...`. Not however this is what the type checker will reveal as the type, rather then its actual value,
+
 See [mypy - Function overloading](https://mypy.readthedocs.io/en/stable/more_types.html#function-overloading)
+
+### Overloads with optional params
+
+To make a second param optional, make it a keyword only param, eg:
+
+```python
+    @overload
+    def upsert(self, upsert: Chunk | list[Chunk], delete: None = None) -> None:
+        ...
+
+    @overload
+    def upsert(self, upsert: None = None, *, delete: Chunk | list[Chunk]) -> None:
+        ...
+
+    @overload
+    def upsert(self, upsert: Chunk | list[Chunk], delete: Chunk | list[Chunk]) -> None:
+        ...
+
+    def upsert(self, upsert: Chunk | list[Chunk] | None = None, delete: Chunk | list[Chunk] | None = None) -> None:
+```
+
+See [this comment](https://github.com/python/mypy/issues/5486#issuecomment-413229343).
 
 ## Subclasess
 

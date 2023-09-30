@@ -15,8 +15,7 @@
 `-f` on server errors, fail silently with no output and exit code 22
 `-S` when used with `-s` show an error message if curl fails
 `--connect-timeout <fractional seconds>` connection timeout (defaults to 75 secs)
-`--max-timeout <fractional seconds>` max time for transfer
-
+`-m or --max-time <fractional seconds>` max time for transfer
 
 [man page](http://curl.haxx.se/docs/manpage.html)
 
@@ -50,6 +49,14 @@ Create a POST query, with a JSON body:
 
 ```bash
 curl -H "Content-Type: application/json" -X POST --data '{"logs":{"flow_run_id":{"any_":["b6b2e565-8e4b-4e24-b415-0cde3810fdb4"]},"level":{"ge_":0}},"sort":"TIMESTAMP_ASC"}' -s "http://localhost:4200/api/logs/filter"
+```
+
+From stdin with bearer token:
+
+```bash
+echo 123 |
+  jq -c '{"query": { "match": { "number": . } } }' |
+  curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -d @- -XPOST url.com
 ```
 
 Create a POST query, and send body from a file as Content-Type application/json
@@ -143,7 +150,7 @@ curl -v -k --raw --http2 -XPOST http://localhost:10001/ray.rpc.RayletDriver/Clus
 > Connection: Upgrade, HTTP2-Settings
 > Upgrade: h2c
 > HTTP2-Settings: AAMAAABkAARAAAAAAAIAAAAA
-> 
+>
 * Received HTTP/0.9 when not allowed
 ```
 
@@ -160,5 +167,5 @@ curl -v -k --raw --http2-prior-knowledge -XPOST http://localhost:10001/ray.rpc.R
 > Host: localhost:10001
 > user-agent: curl/7.68.0
 > accept: */*
-> 
+>
 ```
