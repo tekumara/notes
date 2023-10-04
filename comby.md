@@ -19,7 +19,7 @@ comby 'foo' 'bar' requires.txt -f config.env    # recursive search for files nam
 comby 'foo' 'bar' requires.txt -f .py           # recursive search for files named requires.txt or ending in .py
 ```
 
-When using template via `-templates` (or its alias `-config`) the match and rewrite template positional arguments are omitted. To filter, use the `-f` flag because comby will interprets the first positional argument as the match template (see [these docs](https://comby.dev/docs/configuration#running)).
+When using template via `-templates` (or its alias `-config`) the match and rewrite template positional arguments are omitted. To filter, use the `-f` flag because comby will interpret the first positional argument as the match template (see [these docs](https://comby.dev/docs/configuration#running)).
 
 If `-f` is an extension that maps to a matcher, that matcher will be implicitly used, unless `-custom-matcher` or `-matcher` is specified
 
