@@ -1,5 +1,5 @@
 repos:
   - repo: https://github.com/crate-ci/typos
-    rev: v1.16.4
+    rev: v1.16.17
     hooks:
       - id: typos
