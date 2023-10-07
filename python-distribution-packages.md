@@ -1,13 +1,13 @@
 # Python distribution packages
 
-[_import package_](https://packaging.python.org/glossary/#term-import-package): a collection of modules under one directory with a `__init.__.py` file (empty or otherwise)  
-[_distribution package_](https://packaging.python.org/glossary/#term-distribution-package): an archive containing import packages and metadata for release and distribution.
+[_import package_](https://packaging.python.org/en/latest/glossary/#term-Import-Package): a collection of modules under one directory with a `__init.__.py` file (empty or otherwise)  
+[_distribution package_](https://packaging.python.org/en/latest/glossary/#term-Distribution-Package): an archive containing import packages and metadata for release and distribution.
 
 ## Distributions
 
 _sdist_: source distribution. Source files + metadata in a source archive, ie: a `tar.gz`. Will require a compiler toolchain to build any C extensions. During pip install, _setup.py_ is run to build a wheel if the _wheel_ package is installed.
 
-_bdist\_wheel_: binary distribution, packaged as a wheel file, ie: a `.whl` file which is a gzipped tar containing built binaries + metadata (dist-info) without setup.py. Doesn't require a C compile step. Creates `.pyc` files during installation to match the python interpreter used. Built for a particular OS and version of python eg: `pybay-1.0-3.0-py27-abi3-inux_x86_64.whl`. Package metadata is installed in an adjacent _dist-info_ directory.
+_bdist_wheel_: binary distribution, packaged as a wheel file, ie: a `.whl` file which is a gzipped tar containing built binaries + metadata (dist-info) without setup.py. Doesn't require a C compile step. Creates `.pyc` files during installation to match the python interpreter used. Built for a particular OS and version of python eg: `pybay-1.0-3.0-py27-abi3-inux_x86_64.whl`. Package metadata is installed in an adjacent _dist-info_ directory.
 
 git repo: pip can install from a git repo. It treats the git repo as a source dist.
 

@@ -5,7 +5,7 @@
 - `pip install $package` will install into the global site packages dir. If using pyenv this will be something like _~/.pyenv/versions/3.7.5/lib/python3.7/site-packages/_
 - `pip install --user $package` will install into _~/.local/lib/python$x.$y/site-packages_. These packages will be available in all versions of _python$x.$y.z_, eg: all versions of _python3.6_, or _python3.7_. Scripts will be installed into _~/.local/bin_ with a shebang line referencing the version of python used at the time of install. This means these scripts can be run regardless of the active python version.
 - `pip uninstall` will not remove transitive packages or any scripts installed into _~/.local/bin_. [pip-autoremove](https://github.com/invl/pip-autoremove) will.
-- `pip show $package` will show immediate dependencies of a package (but not recursively, use [pipdeptree](https://github.com/naiquevin/pipdeptree) for this) and the location of a package
+- `pip show $package` will show immediate dependencies of a package (but not recursively, use [pipdeptree](https://github.com/naiquevin/pipdeptree) for more but not all) and the location of a package
 
 ## Local project installs
 

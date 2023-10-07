@@ -80,3 +80,7 @@ See [here](https://repost.aws/knowledge-center/athena-aws-glue-msck-repair-table
 > Partitions missing from filesystem
 
 Use [ALTER TABLE .. DROP PARTITION ..](https://docs.aws.amazon.com/athena/latest/ug/msck-repair-table.html#:~:text=Partitions%20missing%20from%20file%20system) to remove the partition.
+
+> [ErrorCategory:USER_ERROR, ErrorCode:DDL_FAILED], Detail:FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask
+
+There may be some data that doesn't match the table definition.

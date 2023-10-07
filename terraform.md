@@ -208,3 +208,7 @@ Try replanning. Or add a .terraform.lock.hcl file if missing.
 ### clang: error: no such file or directory: '.terraform.o'
 
 _.terraform.lock.hcl_ doesn't have hashes for your platform. Regenerate it.
+
+### Not assuming role for the aws terraform provider
+
+Check that your provider is being used by your resources. If it has an `alias` that alias needs to be used, or removed if you want the provider to be the default provider.

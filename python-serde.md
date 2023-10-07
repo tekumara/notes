@@ -12,3 +12,12 @@ Features:
 - date support
 - default values
 
+## dataclasses
+
+validates field names, not types (to confirm)
+non-nested <-> dict
+
+## orjson
+
+serde dict <-> json bytes
+serialises dataclasses, but doesn't deserialise them from json bytes

@@ -2,7 +2,14 @@
 
 ## TypedDict
 
-I'd probably default to NamedTuples or Dataclasses, and use TypedDicts for special situations that require interoperability (eg: with pandas) or backwards compatibility. Unlike dataclasses they don't support attribute access (eg: `Order.id`), can't have methods, and can only inherit from other `TypedDicts` so aren't great for building class hierarchies, eg: if you try to inherit from a TypedDict and Protocol you'll get a `TypeError: cannot inherit from both a TypedDict type and a non-TypedDict base class`. In python 3.11 there is no support however for [TypedDict to inherit from Generic](https://github.com/python/cpython/issues/89026#issuecomment-1116093221).
+I'd probably default to NamedTuples or Dataclasses, and use TypedDicts for special situations that require interoperability (eg: with pandas) or backwards compatibility. Unlike dataclasses they
+
+- don't support attribute access (eg: `Order.id`)
+- can't have methods
+- can only inherit from other `TypedDicts` so aren't great for building class hierarchies, eg: if you try to inherit from a TypedDict and Protocol you'll get a `TypeError: cannot inherit from both a TypedDict type and a non-TypedDict base class`. In python 3.11 there so support however for [TypedDict to inherit from Generic](https://github.com/python/cpython/issues/89026#issuecomment-1116093221) and a special case.
+- a dictionary can be inferred as a TypedDict when supplied as a function argument or returned from a function, but requires an explicit annotation when assigned to a variable ([ref](https://github.com/microsoft/pyright/issues/1727#issuecomment-813123780)). So we don't have a way of typechecking construction when assigned to a variable.
+
+NB: TypedDict can't be inferred when using a [dict constructor](https://github.com/microsoft/pyright/issues/6051), use a dict literal instead.
 
 eg:
 
@@ -35,8 +42,6 @@ class RunArgs(_RequiredRunArgs, total=False):
 ```
 
 NB: [PEP 655](https://www.python.org/dev/peps/pep-0655/) introduces a new syntax for this in Python 3.10.
-
-A dictionary can be inferred as a TypedDict when supplied as a function argument, but requires an explicit annotation when assigned to a variable ([ref](https://github.com/microsoft/pyright/issues/1727#issuecomment-813123780)).
 
 A TypedDict is not compatible with `Dict[str, Any]` because it is considered a mutable invariant collection, see [mypy #4976](https://github.com/python/mypy/issues/4976).
 

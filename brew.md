@@ -10,6 +10,8 @@ Get info
 `brew list coreutils` show all installed files of a keg
 `brew tap caskroom/versions` Alternate cask versions
 `brew search postgresql` Search installed taps for formulae and casks with `postgresql` in the name.
+`brew tap-info --installed` List all installed taps and how many formulae they contain (whether installed or not).
+`brew list --full-name -1 | grep /` List all installed formulae that came from a tap.
 
 Show package owner of msbuild
 
@@ -19,7 +21,7 @@ ll `which msbuild`
 
 ## Brew update stalled
 
-If after the first install of a packge, brew is stalled on "Updating Homebrew" run `brew update --debug --verbose` and wait until git syncs.
+If after the first install of a package, brew is stalled on "Updating Homebrew" run `brew update --debug --verbose` and wait until git syncs.
 
 ## Creating a formula
 
