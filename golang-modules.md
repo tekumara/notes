@@ -1,5 +1,11 @@
 # golang modules
 
+To add a module:
+
+```
+go get -u github.com/spf13/cobra/cobra
+```
+
 To run a main package inside a go module:
 
 ```

@@ -9,7 +9,11 @@ See
 - [Delve installation](https://github.com/go-delve/delve/tree/master/Documentation/installation)
 - [Debugging Go code using VS Code](https://github.com/golang/vscode-go/blob/master/docs/debugging.md)
 
-## remote debugging / headless
+## Handling stdin
+
+Use `integratedTerminal` see [Handling STDIN](https://github.com/golang/vscode-go/blob/master/docs/debugging.md#handling-stdin)
+
+## Remote debugging / headless
 
 vscode also supports attaching to an existing process in:
 
@@ -34,7 +38,7 @@ dlv debug --headless --listen=:12345 --log -- --help
 
 In vscode, use a remote attach launch configuration in `launch.json`, eg:
 
-```
+```json
 {
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
@@ -72,19 +76,25 @@ If the above doesn't work try [legacy mode](https://github.com/golang/vscode-go/
 
 On panic, debugging fails. This is a known issue, see [MacOS: cannot continue on panic #1371](https://github.com/go-delve/delve/issues/1371)
 
-## Specifying environment variables for tests
+## Debugging tests
 
-Vs Code provides `run test | debug test` links above test functions. These are called code lenses.
+Vs Code provides `run test | debug test` links above test functions. These are called code lenses and can be used to debug tests
 
-To specify environment variables when using the code lenses, add a test envfile to _settings.json_:
+## Specify environment variables for tests (all launch configs)
+
+To specify environment variables for all test launch configurations add [`testEnvFile`](https://github.com/golang/vscode-go/blob/a3d76a551242c61fcdc0aacc08009c2e68725ca8/docs/settings.md?plain=1#L408) to _settings.json_, eg:
 
 ```
 "go.testEnvFile": "${workspaceFolder}/.env",
 ```
 
-To specify environment variables when using F5 or the Run and Debug panel, add a test envfile to _launch.json_:
+Alternatively, you can use [`testEnvVars`](https://github.com/golang/vscode-go/blob/a3d76a551242c61fcdc0aacc08009c2e68725ca8/docs/settings.md?plain=1#L411).
 
-```
+## Launch config env vars and args
+
+To specify environment variables when using F5 or the Run and Debug panel, add [`env` or `envFile`](https://github.com/golang/vscode-go/blob/master/docs/debugging.md#launchjson-attributes) to _launch.json_:
+
+```json
         {
             "name": "Start debugging",
             "type": "go",
@@ -92,4 +102,12 @@ To specify environment variables when using F5 or the Run and Debug panel, add a
         },
 ```
 
-This is a known inconsistency, see [#2128](https://github.com/golang/vscode-go/issues/2128)
+Unfortunately this isn't the default, see [#2128](https://github.com/golang/vscode-go/issues/2128)
+
+For command line args, use [`args`](https://github.com/golang/vscode-go/blob/master/docs/debugging.md#launchjson-attributes) in the launch configuration.
+
+## Troubleshooting
+
+### connect ECONNREFUSED 127.0.0.1:62888
+
+Check you are running the correct launch config. Add the `Go: Launch Package` launch configuration if needed.

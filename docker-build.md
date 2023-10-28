@@ -158,3 +158,7 @@ To see the config/dry run use `--print`.
 ### failed to create LLB definition: base name (${MY_ARG}) should not be blank
 
 Make sure the ARG is specified at the top of the file, and if it doesn't have a default value then supply one on the command line with `--build-arg MY_ARG=...`
+
+## W: GPG error: ... At least one invalid signature was encountered
+
+Can be a lack of disk space. See [docker prune](docker-disk-usage.md#pruning)

@@ -52,7 +52,7 @@ Pruning images does not automatically remove them from the build cache. It just 
 `docker builder prune` remove dangling build cache
 `docker builder prune -a` remove all build cache
 
-`docker volume prune` remove all unused local volumes
+`docker volume prune -a` remove all (ie: anonymous and named) unused (ie: not referenced by a container) volumes
 
 To prune everything:
 
@@ -62,3 +62,12 @@ To prune everything:
 `docker system prune -a --volumes` above + volumes too
 
 See also: [Disk utilization in Docker for Mac](https://docs.docker.com/docker-for-mac/space/)
+
+To remove most
+
+```
+docker container prune --filter 'until=1440h'
+docker image prune -a --filter 'until=1440h'
+docker volume prune -a
+docker builder prune
+```

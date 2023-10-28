@@ -80,3 +80,7 @@ if *event.Action == "requested" {
     ...
 }
 ```
+
+## Passing values to functions
+
+[Everything in Go is passed by value, ie: copied](https://go.dev/doc/faq#pass_by_value). But there are types that have reference-like semantics: pointers, channels, maps, slices. See [Rob Pike here](https://groups.google.com/g/golang-nuts/c/INedfATw74A/m/XrIPT6gkB7kJ).

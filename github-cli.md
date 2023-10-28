@@ -1,10 +1,6 @@
 # github cli
 
-Use ssh for github.dev.myorg.com
-
-```
-gh config set -h github.dev.myorg.com git_protocol ssh
-```
+## Configure
 
 Auth to github.dev.myorg.com using your browser, ssh for git, and upload your SSH key:
 
@@ -12,68 +8,36 @@ Auth to github.dev.myorg.com using your browser, ssh for git, and upload your SS
 gh auth login -h github.dev.myorg.com -w -p ssh
 ```
 
+### Tokens
+
+gh uses long-lived oauth tokens as mentioned [here](https://github.com/cli/cli/issues/5924).
+
 On macOS the [config dir is _~/.config/gh_](https://github.com/cli/cli/blob/25b6eecc8dd7845ca42afa3362b80b13c355356a/internal/config/config_file.go#L40). Oauth tokens are stored in the Login keychain under `gh:github.com` or your GHE hostname.
 
 If `GITHUB_TOKEN` or `GITHUB_ENTERPRISE_TOKEN` env vars are specified they'll take precedence over stored oauth tokens.
 
-Sync the fork default branch (ie: master/main) with its parent:
+To remove the token from the storage, but not revoke it:
 
 ```
-# ghe
-gh repo sync git@github.enterprise:tekumara/repo.git
-
-# github.com
-gh repo sync tekumara/repo
+gh auth logout
 ```
 
-This will update the fork on github. You can then pull the changes to your local repo.
+When token's are refreshed using `gh auth login` or `gh auth refresh`, the old token is replaced with a new token in storage. But the old token will still work if you have a copy elsewhere. To revoke all tokens remove the Github CLI [OAuth App](https://github.com/settings/applications).
 
-Create a PR against the parent repo, rather then the fork:
-
-```
-gh pr create --fill -w -R parent/repo
-```
-
-## Usage
-
-Create org repo:
-
-```
-gh api orgs/ORG/repos -F name=REPO -F allow_merge_commit=false -F allow_rebase_merge=false -F squash_merge_commit_message=PR_BODY -F squash_merge_commit_title=PR_TITLE
-```
-
-NB: This will return 404 when ORG = a user name. Use `gh api user/repos` instead.
-
-Update repo, eg: set `delete_branch_on_merge`:
-
-```
-gh api repos/OWNER/REPO -F delete_branch_on_merge=true
-```
-
-## Authenticate Git with your GitHub credentials
+### Authenticate Git with your GitHub credentials
 
 During authentication you'll be asked `Authenticate Git with your GitHub credentials`?
 
 [This feature](https://github.com/cli/cli/pull/2449) generates an oauth token, and stores it in the default git credential helper, eg: on Mac this is `credential-osxkeychain` which stores the token as a keychain item named after the hostname, eg: `github.com`
 
-This token can be revoked by revoking the Github CLI [OAuth App](https://github.com/settings/applications).
+### GitHub CLI as git credential helper
 
-## GitHub CLI as git credential helper
-
-`gh auth git-credential` [implements](https://github.com/cli/cli/blob/6701b52/pkg/cmd/auth/gitcredential/helper.go), the [git crendtial helper interface](https://git-scm.com/docs/gitcredentials) for supplying HTTP usernames/passwords eg:
+`gh auth git-credential` [implements](https://github.com/cli/cli/blob/6701b52/pkg/cmd/auth/gitcredential/helper.go), the [git credential helper interface](https://git-scm.com/docs/gitcredentials) for supplying HTTP usernames/passwords eg:
 
 To fetch creds:
 
 ```
 echo -e "host=github.com\nprotocol=https" | gh auth git-credential get
-# or
-gh auth token
-```
-
-To fetch just the token:
-
-```
-gh auth token
 ```
 
 To use this with git:
@@ -93,7 +57,17 @@ credential.https://gist.github.com.helper=!/opt/homebrew/bin/gh auth git-credent
 
 For more info see [https://github.com/cli/cli/pull/4246](https://github.com/cli/cli/pull/4246)
 
-## Default remote repository
+### Git protocol
+
+Use ssh for github.dev.myorg.com
+
+```
+gh config set -h github.dev.myorg.com git_protocol ssh
+```
+
+`git_protocol` is stored per host in _~/.config/gh/hosts.yml_. If not specified here then it falls back to `git_protocol` in _~/.config/gh/config.yml_ which defaults to `https`
+
+### Default remote repository
 
 Set the default remote repository for the current directory:
 
@@ -103,7 +77,41 @@ gh repo set-default
 
 This will be saved in _.git/config_ as the key value pair `gh-resolved = base` under the remote you select.
 
+## Usage
+
+Create a PR against the parent repo, rather then the fork:
+
+```
+gh pr create --fill -w -R parent/repo
+```
+
+Create org repo:
+
+```
+gh api orgs/ORG/repos -F name=REPO -F allow_merge_commit=false -F allow_rebase_merge=false -F squash_merge_commit_message=PR_BODY -F squash_merge_commit_title=PR_TITLE
+```
+
+NB: This will return 404 when ORG = a user name. Use `gh api user/repos` instead.
+
+Update repo, eg: set `delete_branch_on_merge`:
+
+```
+gh api repos/OWNER/REPO -F delete_branch_on_merge=true
+```
+
 ## Sync
+
+Sync the fork default branch (ie: master/main) with its parent:
+
+```
+# ghe
+gh repo sync git@github.enterprise:tekumara/repo.git
+
+# github.com
+gh repo sync tekumara/repo
+```
+
+This will update the fork on github. You can then pull the changes to your local repo.
 
 Sync the `main` branch in the local repo with the default remote repo:
 
@@ -128,6 +136,10 @@ gh auth login -h github.com -w --insecure-storage
 This will store and use the token in _$GH_CONFIG_DIR/hosts.yml_.
 
 Use `gh auth status` to verify it works after changing directories.
+
+## Auto updates
+
+cli checks once every 24 hours for updates and stores the update state in _~/.local/state/gh/state.yml_
 
 ## Troubleshooting
 
@@ -193,5 +205,9 @@ git merge upstream/main
 #### PUT https://api.github.com/organizations/123/team/456/repos/my-org/my-repo: 422 Validation Failed
 
 Check permissions as per the [api docs](https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#add-or-update-team-repository-permissions).
+
+#### You must supply a key in OpenSSH public key format
+
+Trying to add the private key file. Provide the public key file.
 
 <!-- markdownlint-disable-file MD001 -->
