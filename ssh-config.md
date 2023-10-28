@@ -45,6 +45,14 @@ Host node05-icing-aws-syd
   ProxyJump jump
 ```
 
+## Querying
+
+Determine identify file that will be used for github.com:
+
+```
+ssh -G github.com | grep identityfile
+```
+
 ## Invalid format
 
 Make sure your key file ends with an empty line.

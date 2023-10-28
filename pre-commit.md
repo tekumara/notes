@@ -3,12 +3,29 @@
 ## Why?
 
 - Automatically run hooks during git commit or push. Particularly useful when you don't have CI.
-- Run hooks only on the changed files
+- Run hooks only on changed files of given type
+- Don't fail fast, ie: run all hooks independently regardless of failure in previous hooks
+- Succinct output - only show output when hooks fail
+- Run hooks in parallel across batches of files
 - Has some nice formatters for python, eg: [double-quote-string-fixer](https://github.com/pre-commit/pre-commit-hooks#double-quote-string-fixer) to convert double to single quotes.
 
 ## Cache
 
-Non-local [non-system](https://pre-commit.com/#system) hooks are downloaded and cached in \*~/.cache/pre-commit/repo\*\*. They run in their own isolated virtualenv managed by pre-commit. `additional_dependencies` for local hooks will also be stored in the cache.
+Non-local [non-system](https://pre-commit.com/#system) hooks are cloned into their own [temp dir](https://github.com/pre-commit/pre-commit/blob/48f0dc9615488b583b11f2d90bd4a332701c6b6a/pre_commit/store.py#L161) under _~/.cache/pre-commit/repoXXXXXXXX_.
+
+Python hooks run in their own isolated virtualenv managed by pre-commit and created in the `py_env-python3.X` directory in the cache dir. `additional_dependencies` for local hooks will also be stored in the virtualenv. The virtualenv is created using the active version of python at the time the hook is installed. The python version can be [overridden using `language_version`](https://pre-commit.com/#overriding-language-version).
+
+To identify the cache directory for every hook:
+
+```
+sqlite3 ~/.cache/pre-commit/db.db 'select * from repos;'
+```
+
+Or for just black
+
+```
+sqlite3 ~/.cache/pre-commit/db.db "select * from repos where repo like '%black%';"
+```
 
 ## Languages
 

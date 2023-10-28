@@ -70,6 +70,34 @@ Rotate and resize:
 convert -rotate 180 -resize 50% image3.jpg image3b.jpg
 ```
 
+[Pad image](https://www.imagemagick.org/script/command-line-options.php#extent)
+
+```
+convert example.png -gravity center -background white -resize 256x256 -extent 256x256 example.png
+```
+
+Extract a circle of radius 128 with a transparent background:
+
+```
+magick example.png \( +clone -threshold 101% -fill white -draw 'circle %[fx:int(w/2)],%[fx:int(h/2)] %[fx:int(w/2)],%[fx:128+int(h/2)]' \) -channel-fx '| gray=>alpha' circle.png
+```
+
+NB: the circle might have a flat edge if the radius is = half the width. Reduce the radius by one.
+
+## Composites
+
+Create a white image:
+
+```
+magick -size 256x256 xc:white bg.png
+```
+
+Add the smaller quill4.png onto the white image to make it bigger:
+
+```
+magick composite quill4.png bg.png quill5.png
+```
+
 ## Exceptions
 
 When the file has an invalid crc, [convert will fail](https://github.com/ImageMagick/ImageMagick/issues/5329):
@@ -88,3 +116,4 @@ convert:  `80%' @ error/convert.c/ConvertImageCommand/3351.
 
 - [Convert man page](http://linux.die.net/man/1/convert)
 - [density and resampling](http://www.imagemagick.org/discourse-server/viewtopic.php?f=2&t=18241)
+- [Composition of Multiple Pairs of Images](https://imagemagick.org/Usage/layers/#composition)

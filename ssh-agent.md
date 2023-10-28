@@ -2,11 +2,7 @@
 
 ssh-agent can load private keys and then provide them to clients like SSH. This is useful because for pass-phrase protected private keys you will only need to provide the password once when the key is loaded, and not every time it is used. The agent itself can be locked and unlocked with a password.
 
-`ssh-keygen -lf ~/.ssh/id_rsa` shows you the public sha256 fingerprint of the key in the file `~/.ssh/id_rsa`. If this is a RSA/DSA private key it will look for the .pub file.
-`ssh-keygen -c -f ~/.ssh/id_rsa` update the comment on the key. The comment appears in `ssh-add -l`.
-`ssh-keygen -y -f ~/.ssh/id_rsa` read private key, print public key. Will always prompt for a passphrase regardless of whether it has been loaded in ssh-agent (if the key has one).
-
-`ssh-add -l` list public fingerprints of all loaded keys/identities. This is roughly a sha256 of the public key, specifically it is: `awk '{print $2}' ~/.ssh/id_ed25519.pub | base64 -d | shasum -a 256 | xxd -r -p | base64 | tr -d =`
+`ssh-add -l` list public fingerprints of all loaded keys/identities. This is unpadded base64 encoded sha256 of the public key, specifically it is: `awk '{print $2}' ~/.ssh/id_ed25519.pub | base64 -d | shasum -a 256 | xxd -r -p | base64 | tr -d =`
 `ssh-add -L` print public keys loaded.
 `ssh-add -L | ssh-keygen -E md5 -lf /dev/stdin` list public MD5 hash of keys loaded (useful to compare with Github fingerprints)
 `ssh-add -D` remove all loaded keys

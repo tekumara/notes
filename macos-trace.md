@@ -26,7 +26,7 @@ NB: `fs_usage` and `opensnoop` don't include `chdir` syscalls. So you'll be miss
 
 ## Processes
 
-`sudo fs_usage -w -f exec | grep typos` watch exec/spawn syscalls (ie: new processes) that start with `typos`
+`sudo fs_usage -w -f exec | grep typos` watch exec/spawn syscalls (ie: new processes) that start with `typos`.
 `sudo execsnoop -v` tail all new process execution
 `sudo execsnoop -v -c python` tail all new process execution for commands starting with `python*`
 `sudo newproc.d` tail all new process execution with their command line args - nb: this is expensive and can crash the system. Instead, stop the process (see below) and use `ps` to inspect the args.
@@ -57,7 +57,7 @@ If you can't disable SIP, because you are using a VM, you can still use `fs_usag
 
 [dtrace is broken on Ventura](https://apple.stackexchange.com/questions/457227/how-to-debug-a-freezing-dtrace-on-ventura) :-(
 
-dtrace scripts can generator are large amount of data, which can cause memory to spike and the system to freeze. Use filters provided by script arguments to avoid this.
+dtrace scripts can generate a large amount of data, which can cause memory to spike and the system to freeze. Use filters provided by script arguments to avoid this.
 
 ## References
 
