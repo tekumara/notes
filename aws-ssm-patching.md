@@ -22,6 +22,12 @@ To get all per-instance invocations of a command, with the per-instance status, 
 aws ssm list-command-invocations --command-id $command_id
 ```
 
+List documents
+
+```
+aws ssm list-documents | jq -r '.DocumentIdentifiers[].Name'
+```
+
 View document
 
 ```

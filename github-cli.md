@@ -22,7 +22,7 @@ To remove the token from the storage, but not revoke it:
 gh auth logout
 ```
 
-When token's are refreshed using `gh auth login` or `gh auth refresh`, the old token is replaced with a new token in storage. But the old token will still work if you have a copy elsewhere. To revoke all tokens remove the Github CLI [OAuth App](https://github.com/settings/applications).
+When token's are refreshed using `gh auth login` or `gh auth refresh`, the old token is replaced with a new token in storage. But the old token will still work if you have a copy elsewhere. The CLI [can't revoke tokens](https://github.com/cli/cli/issues/2193#issuecomment-709307250). Instead revoke the [Github CLI OAuth App via the browser](https://github.com/settings/connections/applications/178c6fc778ccc68e1d6a).
 
 ### Authenticate Git with your GitHub credentials
 
@@ -177,7 +177,7 @@ gh repo sync tekumara/sqlglot
 You've tried to sync a remote repo that does not have an upstream, ie: is not a fork.
 eg: `gh repo sync PyGithub/PyGithub`
 
-#### could not compute title or body defaults: could not find any commits between master and master
+#### could not compute title or body defaults: could not find any commits between main and main
 
 If you are trying to raise a PR against the upstream repo make sure you have it as a remote:
 

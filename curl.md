@@ -12,10 +12,10 @@
 
 `-v` show request and response headers  
 `-L` follow location redirects  
-`-f` on server errors, fail silently with no output and exit code 22
-`-S` when used with `-s` show an error message if curl fails
+`-f` on non-200 http errors, fail silently with no output and exit code 22
+`-S` when used with `-s` show an error message if curl fails (eg: could not resolve host, timeouts)
 `--connect-timeout <fractional seconds>` connection timeout (defaults to 75 secs)
-`-m or --max-time <fractional seconds>` max time for transfer
+`-m or --max-time <fractional seconds>` max time for transfer (will also catch connection timeouts)
 
 [man page](http://curl.haxx.se/docs/manpage.html)
 
