@@ -24,7 +24,7 @@ launchd starts ssh-agent on login (see `launchctl list com.openssh.ssh-agent`) w
 
 ### SSH Config
 
-SSH can be told to add keys to the agent and the keychain when they first successfully used to authenticate:
+SSH clients can be told to add keys to the agent and the keychain when they first successfully used to authenticate:
 
 ```
 # add key used by ssh into ssh-agent
@@ -89,5 +89,6 @@ Some fancy zsh prompts when in a git repo directory will do a [git fetch](https:
 ## References
 
 - [GitHub - Using SSH agent forwarding](https://docs.github.com/en/developers/overview/using-ssh-agent-forwarding)
+- [ArchWiki - SSH agents](https://wiki.archlinux.org/title/SSH_keys#SSH_agents)
 - [SSH and ssh-agent](https://www.symantec.com/connect/articles/ssh-and-ssh-agent)
 - [Saving SSH keys in macOS Sierra keychain](https://github.com/jirsbek/SSH-keys-in-macOS-Sierra-keychain)

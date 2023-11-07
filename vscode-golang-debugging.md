@@ -82,11 +82,13 @@ Vs Code provides `run test | debug test` links above test functions. These are c
 
 ## Specify environment variables for tests (all launch configs)
 
-To specify environment variables for all test launch configurations add [`testEnvFile`](https://github.com/golang/vscode-go/blob/a3d76a551242c61fcdc0aacc08009c2e68725ca8/docs/settings.md?plain=1#L408) to _settings.json_, eg:
+To specify environment variables for all test launch configurations and when running from code lenses, add [`testEnvFile`](https://github.com/golang/vscode-go/blob/a3d76a551242c61fcdc0aacc08009c2e68725ca8/docs/settings.md?plain=1#L408) to _settings.json_, eg:
 
 ```
 "go.testEnvFile": "${workspaceFolder}/.env",
 ```
+
+Unfortunately this isn't the default, see [#2128](https://github.com/golang/vscode-go/issues/2128)
 
 Alternatively, you can use [`testEnvVars`](https://github.com/golang/vscode-go/blob/a3d76a551242c61fcdc0aacc08009c2e68725ca8/docs/settings.md?plain=1#L411).
 
@@ -101,8 +103,6 @@ To specify environment variables when using F5 or the Run and Debug panel, add [
             "envFile": "${workspaceFolder}/.env"
         },
 ```
-
-Unfortunately this isn't the default, see [#2128](https://github.com/golang/vscode-go/issues/2128)
 
 For command line args, use [`args`](https://github.com/golang/vscode-go/blob/master/docs/debugging.md#launchjson-attributes) in the launch configuration.
 

@@ -57,6 +57,23 @@ ssh -G github.com | grep identityfile
 
 Make sure your key file ends with an empty line.
 
+## Multiple keys
+
+ssh will offer keys in the following order:
+
+1. `explicit agent` - as ordered in ~/.ssh/config
+1. `agent` - as ordered in ssh-add -l
+1. `explicit` - keys not loaded into the agent, as ordered in ~/.ssh/config
+
+Explicit = keys defined for the host in ~/.ssh/config.
+Agent = keys loaded into the agent.
+
+To see which keys are found, offered, and accepted when connecting:
+
+```
+ssh -v -T git@github.com 2>&1 | grep -E "Will attempt key|Offering public key|Server accepts key"
+```
+
 ## Shared persistent connections
 
 Setup `~/.ssh/config/` with the following:

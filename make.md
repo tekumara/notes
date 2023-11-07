@@ -86,8 +86,8 @@ See also:
 
 - [The Two Flavors of Variables](https://www.gnu.org/software/make/manual/html_node/Flavors.html)
 - [Variable Assignment](https://www.gnu.org/software/make/manual/html_node/Reading-Makefiles.html#Variable-Assignment)
-- https://stackoverflow.com/a/448939/149412
-- https://stackoverflow.com/a/30215530/149412
+- [What is the difference between the GNU Makefile variable assignments =, ?=, := and +=?](https://stackoverflow.com/a/448939/149412)
+- [GNU Make recursively expanded variables examples](https://stackoverflow.com/a/30215530/149412)
 
 ## Variable substitution
 
@@ -115,11 +115,11 @@ Allows you to run shell commands and have their values stored in a variable, eg:
 
 If using simple variables, eg: `FILES=$(shell ls)` note that shell will be executed every time `$(FILES)` is referenced [ref](https://electric-cloud.com/blog/2009/03/makefile-performance-shell/)
 
-https://www.gnu.org/software/make/manual/html_node/Shell-Function.html
+See [8.14 The shell Function](https://www.gnu.org/software/make/manual/html_node/Shell-Function.html)
 
 ## Phony
 
-If you want a target to be called regardless of if there is file with the target name in the same directory, use `.PHONY: mytarget` or `.PHONY: *` to make always execute all targets. https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html
+If you want a target to be called regardless of if there is file with the target name in the same directory, use `.PHONY: mytarget` or `.PHONY: *` to make always execute all targets. See [4.6 Phony Targets](https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html)
 
 ## Ignore timestamp of dependency
 

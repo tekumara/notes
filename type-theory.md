@@ -2,6 +2,7 @@
 
 covariant = replaceable with subtype
 contravariant = replaceable with supertype
+invariant = not replaceable with subtype
 
 [more detail](https://www.reddit.com/r/rust/comments/8h2kt5/comment/dygvo9d/?utm_source=share&utm_medium=web2x&context=3)
 
