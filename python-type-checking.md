@@ -43,7 +43,37 @@ class RunArgs(_RequiredRunArgs, total=False):
 
 NB: [PEP 655](https://www.python.org/dev/peps/pep-0655/) introduces a new syntax for this in Python 3.10.
 
-A TypedDict is not compatible with `Dict[str, Any]` because it is considered a mutable invariant collection, see [mypy #4976](https://github.com/python/mypy/issues/4976).
+A TypedDict is not compatible with `dict`, because it is [considered a mutable invariant collection](https://github.com/python/mypy/issues/4976), eg:
+
+```
+Argument of type "Animal" cannot be assigned to parameter "_" of type "dict[Unknown, Unknown]" in function "fn_covariant"
+  "Animal" is incompatible with "dict[Unknown, Unknown]"
+```
+
+Use a `Mapping` instead, eg:
+
+```python
+from collections.abc import Mapping
+from typing import TypedDict
+
+
+class Animal(TypedDict):
+    type: str
+
+
+def fn_covariant(_: dict) -> None:
+    pass
+
+
+def fn_invariant(_: Mapping) -> None:
+    pass
+
+
+cat: Animal = {"type": "cat"}
+
+fn_covariant(cat)  # <- errors
+fn_invariant(cat)
+```
 
 ## Collections and variance
 

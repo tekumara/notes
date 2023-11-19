@@ -77,10 +77,14 @@ The results of SQL queries are stored in S3 across multiple objects. Each object
 
 May occur when using a stale token. Try again. See [#1415](https://github.com/snowflakedb/snowflake-connector-python/issues/1415#issuecomment-1414927724)
 
-> snowflake.connector.errors.InterfaceError: 252005: Failed to convert current row, cause: [Snowflake Exception] unknown arrow internal data type(1113013152) for TIMESTAMP_NTZ data
+> snowflake.connector.errors.InterfaceError: 252005: Failed to convert current row, cause:\[Snowflake Exception\] unknown arrow internal data type(1113013152) for TIMESTAMP_NTZ data
 
 May occur when using incompatible versions of pyarrow and snowflake-connector-python. Reinstall both, eg: `pip install --force-reinstall 'snowflake-connector-python[pandas]'`
 
 > Failed to convert current row, cause: year 53682749 is out of range
 
 When a naive seven-part datetime (eg: `datetime.utcnow()`) is written using `write_as_dataframe` it will end up out of range, eg: `53682274-05-20T12:04:46Z`. Add a timezone, eg: `datetime.utcnow().replace(tzinfo=timezone.utc)` or `datetime.datetime(1970, 1, 1, 0, 0, tzinfo=pytz.utc)`
+
+> snowflake.connector.errors.ProgrammingError: 100035 (22007): Timestamp '(seconds_since_epoch=1700000802931099000)' is not recognized
+
+Use `use_logical_type=True` when writing with `write_pandas` (added in [3.4.0](https://docs.snowflake.com/en/release-notes/clients-drivers/python-connector-2023#version-3-4-0-november-03-2023).

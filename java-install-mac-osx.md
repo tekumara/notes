@@ -20,8 +20,6 @@ brew install openjdk@17
 sudo ln -sfn $HOMEBREW_PREFIX/opt/openjdk@17/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-17.jdk
 ```
 
-Link thisFor the system wrappers (see below) to find this
-
 ## Switching versions in the shell
 
 Show java versions in `/Library/Java/JavaVirtualMachines/` and the preferred Java home directory:

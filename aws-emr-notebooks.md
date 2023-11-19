@@ -62,6 +62,3 @@ The default Livy session timeout is 60 mins. If your job dies at 60 mins, and be
 ```
 
 [ref](https://aws.amazon.com/premiumsupport/knowledge-center/emr-session-not-found-http-request-error/)
-
-| f | b |
-| 1 | 2 |
