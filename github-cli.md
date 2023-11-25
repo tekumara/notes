@@ -210,4 +210,8 @@ Check permissions as per the [api docs](https://docs.github.com/en/rest/teams/te
 
 Trying to add the private key file. Provide the public key file.
 
+#### GraphQL: Could not resolve to a Repository with the name 'my-org/my-repo'. (repository)
+
+Repository is not found. Check that the gh auth token has access to my-org/my-repo.
+
 <!-- markdownlint-disable-file MD001 -->
