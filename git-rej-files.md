@@ -9,7 +9,7 @@ wiggle --replace file file.rej
 Apply all rej files
 
 ```
-for rej in *.rej .*.rej; do
+for rej in *.rej .*.rej(N); do
     base="$(basename -s .rej "$rej")"
     echo "Applying $rej to $base"
     wiggle --replace "$base" "$rej"

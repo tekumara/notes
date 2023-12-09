@@ -12,7 +12,7 @@ gh auth login -h github.dev.myorg.com -w -p ssh
 
 gh uses long-lived oauth tokens as mentioned [here](https://github.com/cli/cli/issues/5924).
 
-On macOS the [config dir is _~/.config/gh_](https://github.com/cli/cli/blob/25b6eecc8dd7845ca42afa3362b80b13c355356a/internal/config/config_file.go#L40). Oauth tokens are stored in the Login keychain under `gh:github.com` or your GHE hostname.
+On macOS the [config dir is _~/.config/gh_](https://github.com/cli/cli/blob/25b6eecc8dd7845ca42afa3362b80b13c355356a/internal/config/config_file.go#L40). In secure mode (the default) tokens are stored in the Login keychain under `gh:github.com` or your GHE hostname.
 
 If `GITHUB_TOKEN` or `GITHUB_ENTERPRISE_TOKEN` env vars are specified they'll take precedence over stored oauth tokens.
 
@@ -76,6 +76,18 @@ gh repo set-default
 ```
 
 This will be saved in _.git/config_ as the key value pair `gh-resolved = base` under the remote you select.
+
+### Extensions
+
+Stored in _~/.local/share/gh/extensions/_
+
+Locally built extensions can be symlinks, eg: the symlink
+
+```
+gh-doctor -> ~/code/gh-doctor
+```
+
+will default to using the _~/code/gh-doctor/gh-doctor_ binary.
 
 ## Usage
 

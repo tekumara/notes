@@ -26,3 +26,6 @@ When the VM starts press any key to boot from the installer CD/DVD otherwise the
 
 To reverse mouse scrolling: UTM -> Settings -> Input -> Invert scrolling
 
+### Troubleshooting
+
+Sometimes the `c` key press is not recognised. Move the mouse out of the window and back again.

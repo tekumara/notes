@@ -51,6 +51,8 @@ See [Managed policies and inline policies](https://docs.aws.amazon.com/IAM/lates
 
 In CloudFormation, inline policies can be specified along with the role or via a `AWS::IAM::Policy` resource. `AWS::IAM::ManagedPolicy` is for managed policies.
 
+In terraform, [aws_iam_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) are managed policies and [aws_iam_role_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) are inline policies.
+
 ## Inline policies
 
 List names of inline policies
@@ -170,3 +172,7 @@ Your policy contains a principal (eg: role arn) that does not exist. Check the r
 > MalformedPolicyDocument: The policy failed legacy parsing
 
 Look for typos in arns or use of special characters, eg: `=`.
+
+> MalformedPolicyDocument: Invalid principal in policy
+
+Check the arn is correct including name and account.

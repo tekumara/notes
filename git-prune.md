@@ -75,3 +75,5 @@ git branch --merged master | grep -v master | xargs git branch -d
 ```
 
 [Source](https://stackoverflow.com/a/33548037/149412)
+
+See also [gh-poi](https://github.com/seachicken/gh-poi).
