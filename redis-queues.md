@@ -69,3 +69,11 @@ Uses list. No polling but requires an second unacked list and a cleaner.
 [consume](https://github.com/adjust/rmq/blob/2c434d4682b82179a15e2e79f08ff5c1b926acfe/queue.go#L226) - rpoplpush readyKey unackedKey
 
 [cleaner](https://github.com/adjust/rmq/blob/2c434d4682b82179a15e2e79f08ff5c1b926acfe/cleaner.go#L20) moves unacked messages (aka deliveries) back to main queue for [connections](https://github.com/adjust/rmq/blob/2c434d4682b82179a15e2e79f08ff5c1b926acfe/connection.go#L46) that have no recent heartbeat.
+
+## [saq](https://github.com/tobymao/saq)
+
+[dequeue](https://github.com/tobymao/saq/blob/de013e657b0a8edb1f1b87ef42eb59357eb68207/saq/queue.py#L477) using `blmove` to move from queued to active list.
+
+[sweeps](https://github.com/tobymao/saq/blob/de013e657b0a8edb1f1b87ef42eb59357eb68207/saq/queue.py#L294) active list (by default every 30 secs).
+
+[enqueue](https://github.com/tobymao/saq/blob/de013e657b0a8edb1f1b87ef42eb59357eb68207/saq/queue.py#L528)

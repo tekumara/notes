@@ -67,7 +67,57 @@ error[E0515]: cannot return reference to temporary value
     |         temporary value created here
 ```
 
-Return the temporary value.
+Temporary variables are destroyed when they go out of scope at the end of the statement. So returning a reference to a temporary variable is dangerous because the referenced object will no longer exist once the function exits.
+
+The solution is to return the temporary value instead, or a reference to a longer lived variable.
+
+## cannot return reference to function parameter
+
+```
+error[E0515]: cannot return reference to function parameter `v`
+   --> crates/typos-lsp/src/lsp.rs:111:57
+    |
+111 |             let cli = try_new_cli(&path, config.map(|v| v.as_path()))?;
+    |                                                         ^^^^^^^^^^^ returns a reference to data owned by the current function
+```
+
+This error occurs when trying to return a reference to a function parameter in Rust.
+
+In Rust, function parameters are stored on the stack. When the function returns, the stack frame is popped and the parameter goes out of scope. So returning a reference to a parameter would result in returning a reference to invalid memory.
+
+To fix this, you need to return data that has a lifetime extending beyond the function call, eg: returning an owned value instead of a reference.
+
+## cannot move out of `self.config` which is behind a mutable reference
+
+```
+error[E0507]: cannot move out of `self.config` which is behind a mutable reference
+    --> crates/typos-lsp/src/lsp.rs:110:26
+     |
+110  |               let config = self
+     |  __________________________^
+111  | |                 .config
+     | |                       ^
+     | |                       |
+     | |_______________________help: consider calling `.as_ref()` or `.as_mut()` to borrow the type's contents
+     |                         move occurs because `self.config` has type `std::option::Option<std::string::String>`, which does not implement the `Copy` trait
+112  |                   .map(|v| PathBuf::from(shellexpand::tilde(&v).to_string()));
+     |                    ---------------------------------------------------------- `self.config` moved due to this method call
+     |
+note: `std::option::Option::<T>::map` takes ownership of the receiver `self`, which moves `self.config`
+    --> /Users/oliver.mannion/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/option.rs:1070:22
+     |
+1070 |     pub fn map<U, F>(self, f: F) -> Option<U>
+     |                      ^^^^
+help: you can `clone` the value and consume it, but this might not be your desired behavior
+     |
+112  |                 .clone().map(|v| PathBuf::from(shellexpand::tilde(&v).to_string()));
+     |                  ++++++++
+
+```
+
+`map` is trying to move out of `self.config` but `self` is a mutable reference. Rust does not allow moving out of a mutable reference because that would invalidate the reference.
+
+Instead convert it to a reference to borrow it, ie: `self.config.as_ref()...`
 
 ### Vector iteration
 

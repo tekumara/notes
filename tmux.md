@@ -19,7 +19,7 @@ Move pane from another session to the current session:
 
 ## Config
 
-Use https://github.com/gpakosz/.tmux
+Use [gpakosz/.tmux](https://github.com/gpakosz/.tmux)
 Modify ~/.tmux.conf.local and uncomment the line `#set -g history-limit 10000`
 In order to use VI key bindings (eg: `/` for search) make sure the `EDITOR` environment variable is exported in your shell
 
@@ -32,6 +32,10 @@ Toggle mouse mode: `Ctrl b m`
   - mouse selection will copy
   - on the command line the scroll wheel will scroll the shell history, or in vim, the vim window
 - when mouse mode is on, the scroll wheel will scroll the terminal history, and mouse selection won't work
+
+## Setting config
+
+set-option -g mouse on
 
 ## Latest version
 

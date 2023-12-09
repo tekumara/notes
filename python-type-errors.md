@@ -79,3 +79,11 @@ aopt2: List[Optional[str]] = a
 ```
 
 Generates a type error `Type "str" cannot be assigned to type "str | None"` see [Type Concepts - Generic Types](https://github.com/microsoft/pyright/blob/master/docs/type-concepts.md#generic-types)
+
+## .. is not exported from module .. (reportPrivateImportUsage)
+
+`__all__` can be used to export imported names and resolve the `reportPrivateImportUsage` error. It won't affect type-checking behaviour for names in `__init__.py` that aren't imports. However, as a matter of convention [PEP 008](https://peps.python.org/pep-0008/#public-and-internal-interfaces) states modules should explicitly declare the names in their public API using the `__all__` attribute:
+
+> To better support introspection, modules should explicitly declare the names in their public API using the `__all__` attribute. Setting `__all__` to an empty list indicates that the module has no public API.
+
+Also [PEP 484](https://www.python.org/dev/peps/pep-0484/#stub-files) mentions that imported modules are not considered exported unless they use the `import ... as ...` syntax or equivalent.

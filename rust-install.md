@@ -32,3 +32,11 @@ rustup target add x86_64-apple-darwin
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 RUN source "$HOME/.cargo/env" && pip install -e .
 ```
+
+## Windows
+
+```
+scoop install main/rust
+```
+
+You will need Microsoft C++ Build tools (MSVC) or otherwise switch to the [GNU toolchain](https://stackoverflow.com/a/64121601/149412).

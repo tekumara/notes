@@ -16,7 +16,7 @@ class Dog:
 "name" in dir(Dog) # False
 ```
 
-With annotations (see PEP 526](https://www.python.org/dev/peps/pep-0526/#class-and-instance-variable-annotations)):
+With annotations [see PEP 526](https://www.python.org/dev/peps/pep-0526/#class-and-instance-variable-annotations):
 
 ```python
 class BasicStarship:
@@ -24,6 +24,8 @@ class BasicStarship:
     damage: int                           # instance variable without default
     stats: ClassVar[Dict[str, int]] = {}  # class variable
 ```
+
+Note the [python allows an object to overwrite a class variable with an instance variable of the same name](https://microsoft.github.io/pyright/#/type-concepts-advanced?id=class-and-instance-variables)
 
 ## **init**
 
