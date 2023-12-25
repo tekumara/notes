@@ -120,10 +120,20 @@ client = boto3.client("secretsmanager", region_name="us-east-1")
 
 ### AccessDeniedException ... No identity-based policy allows the secretsmanager:GetSecretValue action
 
-Can occur when fetching a secret via its partial arn and the secret name contains a hyphen and six chars, eg:
+1. Make sure the arn in the policy ends in `-??????`.
+1. Can occur when fetching a secret via its partial arn and the secret name contains a hyphen and six chars, eg:
+
+   ```
+   AccessDeniedException: User: arn:aws:sts::123456789012:assumed-role/awesome-app/good-session is not authorized to perform: secretsmanager:GetSecretValue on resource: arn:aws:secretsmanager:ap-southeast-2:123456789012:secret:awesome-app/newrelic-object because no identity-based policy allows the secretsmanager:GetSecretValue action
+   ```
+
+   Use the full ARN. See [An AWS CLI or AWS SDK operation can't find my secret from a partial ARN](https://docs.aws.amazon.com/secretsmanager/latest/userguide/troubleshoot.html#ARN_secretnamehyphen)
+
+### creating Secrets Manager Secret: AccessDeniedException: Access to KMS is not allowed
+
+Your role needs:
 
 ```
-AccessDeniedException: User: arn:aws:sts::123456789012:assumed-role/awesome-app/good-session is not authorized to perform: secretsmanager:GetSecretValue on resource: arn:aws:secretsmanager:ap-southeast-2:123456789012:secret:awesome-app/newrelic-object because no identity-based policy allows the secretsmanager:GetSecretValue action
+      "kms:Decrypt",
+      "kms:GenerateDataKey*"
 ```
-
-Use the full ARN. See [An AWS CLI or AWS SDK operation can't find my secret from a partial ARN](https://docs.aws.amazon.com/secretsmanager/latest/userguide/troubleshoot.html#ARN_secretnamehyphen)

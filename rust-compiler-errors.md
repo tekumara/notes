@@ -119,7 +119,7 @@ help: you can `clone` the value and consume it, but this might not be your desir
 
 Instead convert it to a reference to borrow it, ie: `self.config.as_ref()...`
 
-### Vector iteration
+## Vector iteration
 
 ```rust
         let actions: Vec<CodeAction> = params.context.diagnostics.iter().map(|&diag| {
@@ -140,7 +140,7 @@ error[E0277]: a value of type `Vec<tower_lsp::lsp_types::CodeAction>` cannot be 
 
 `CodeAction::default` is a function .... use `CodeAction::default()` instead
 
-### Iterator - trait bounds were not satisfied
+## Iterator - trait bounds were not satisfied
 
 ```
 error[E0599]: the method `map` exists for struct `Vec<Cow<'_, str>>`, but its trait bounds were not satisfied
@@ -167,7 +167,7 @@ Vec is not an Iterator... instead do
     corrections.iter().map( ...
 ```
 
-### Deserialize with a struct that has borrowed reference
+## Deserialize with a struct that has borrowed reference
 
 ```
 error[E0277]: the trait bound `&'c Vec<Cow<'c, str>>: Deserialize<'_>` is not satisfied

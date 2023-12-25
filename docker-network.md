@@ -39,4 +39,10 @@ In order to reach docker container ports they have to be [port forwarded via vpn
 docker run -p 8000:80 --name webserver nginx
 ```
 
-See [Networking features in Docker Desktop for Mac](https://docs.docker.com/docker-for-mac/networking/#known-limitations-use-cases-and-workarounds)
+If this fails try a restart first.
+
+See:
+
+- [I want to connect from a container to a service on the host](https://docs.docker.com/docker-for-mac/networking/#known-limitations-use-cases-and-workarounds)
+- [How Docker Desktop Networking Works Under the Hood](https://www.docker.com/blog/how-docker-desktop-networking-works-under-the-hood/)
+

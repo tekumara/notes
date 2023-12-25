@@ -1,18 +1,6 @@
 # AWS EC2
 
-## ec2 instance metadata
-
-Get instance type
-
-```
-curl http://169.254.169.254/latest/meta-data/instance-type
-```
-
-Get instance credentials
-
-```
-curl http://169.254.169.254/latest/meta-data/iam/security-credentials/local-credentials
-```
+## Logs
 
 Get system log. NB: there's a delay before this appears.
 

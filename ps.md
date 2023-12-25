@@ -1,5 +1,7 @@
 # ps
 
+See also [procs](procs.md)
+
 ## ps (BSD)
 
 Show RSS in Kb

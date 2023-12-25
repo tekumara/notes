@@ -31,6 +31,16 @@ cargo install rustfmt
 cargo fmt
 ```
 
+## Tests
+
+Cargo will search your source file for tests and show `running 0 tests` when they [don't contain any tests](https://doc.rust-lang.org/cargo/guide/tests.html).
+
+Run tests showing stdout:
+
+```
+cargo test -- --nocapture
+```
+
 ## utils
 
 Show features of a crate:
