@@ -1,6 +1,4 @@
-# Windows config
-
-To configure Windows 11 like Macos:
+# Windows setup
 
 ## Create a non-admin user
 

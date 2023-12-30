@@ -22,3 +22,17 @@ Windows 11 ships with OpenSSH:
 where ssh
 C:\Windows\System32\OpenSSH\ssh.exe
 ```
+
+## env vars (powershell)
+
+To set an env var, eg:
+
+```
+$env:RUST_LOG='debug'
+```
+
+To list env vars:
+
+```
+dir env:
+```
