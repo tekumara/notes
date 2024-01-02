@@ -16,33 +16,37 @@ Requirements.txt are recommended for applications (and should contain pinned ver
 
 - [setup.py vs requirements.txt](https://caremad.io/posts/2013/07/setup-vs-requirement/)
 
-## Specifying git repos
+## Dependency specification
 
-eg:
-
-```
-awesome_lib @ git+ssh://git@github.com/tekumara/awesome-lib.git
-```
-
-or on a branch:
+Using https from the default branch:
 
 ```
-awesome_lib @ git+ssh://git@github.com/tekumara/awesome-lib.git@feature1
+awesome_lib @ git+https://github.com/tekumara/awesome-lib.git
 ```
 
-or using http:
+Using ssh from the `feature1` git branch with `dev` extras:
 
 ```
-awesome_lib @ git+https://github.com/tekumara/awesome-lib.git@feature1
+awesome_lib[dev] @ git+ssh://git@github.com/tekumara/awesome-lib.git@feature1
 ```
 
-or locally:
+From a PR:
+
+```
+awesome_lib @ git+https://github.com/tekumara/awesome-lib.git@refs/pull/123/head
+```
+
+Locally:
 
 ```
 my_package @ file:///absolute/path/my_package
 ```
 
-NB: if you have already the package, delete it first so pip will detect the missing and install the version from the branch
+From a subdirectory in a git repo using ssh, using the `#egg=name` prefix to explicitly state the project name:
+
+```
+git+ssh://git@github.com/tekumara/lab.git#egg=ebse&subdirectory=ebs_encrypter'
+```
 
 See also [PEP 508 – Dependency specification for Python Software Packages](https://peps.python.org/pep-0508/)
 

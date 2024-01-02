@@ -85,6 +85,41 @@ select * from duckdb_settings() where name like 's3%'
 
 httpfs will [load the AWS env vars if present](https://github.com/duckdb/duckdb/pull/5419).
 
+## json
+
+Unnest json array into rows:
+
+```
+select unnest(json('[{"a": "1"},{"b":2}]')::json[]);
+```
+
+Unnest json object into rows per key/value:
+
+```
+unpivot (SELECT unnest({'a': 42, 'b': 84})) on columns(*) into name key value value;
+```
+
+NB: these are equivalent
+
+```
+SELECT unnest({'a': 42, 'b': 84});
+SELECT a.* from (select {'a': 42, 'b': 84} as a);
+```
+
+## struct
+
+same as row, eg:
+
+```
+D select struct_pack(a=>42)::row(a integer);
+┌─────────────────────────────────────────────────┐
+│ CAST(struct_pack(a := 42) AS STRUCT(a INTEGER)) │
+│                struct(a integer)                │
+├─────────────────────────────────────────────────┤
+│ {'a': 42}                                       │
+└─────────────────────────────────────────────────┘
+```
+
 ## Troubleshooting
 
 > BinderException: Binder Error: There are no UNIQUE/PRIMARY KEY Indexes that refer to this table, ON CONFLICT is a no-op

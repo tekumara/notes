@@ -35,7 +35,7 @@ pip install /Users/tekumara/code/spark_data_testing
 
 Pip also supports relative paths, eg: `../spark_data_testing`. This is the same as `file:../spark_data_testing`
 
-Any URL may use the `#egg=name` prefix to explicitly state the project name. When using `#egg=name` you need to use a url `file:`, eg:
+Any URL may use the `#egg=name` prefix to explicitly state the project name. When using `#egg=name` you need to use a `file:` url.
 
 ## VCS installs
 
@@ -47,22 +47,13 @@ Install using a named urlspec from a git branch with dev extras:
 pip install 'aec[dev] @ git+https://github.com/seek-oss/aec.git@master'
 ```
 
-Install a pull request
+NB: if you have already the package, delete it first so pip will detect the missing package and install from alternative location.
 
-```
-pip install 'dbt-snowflake @ git+https://github.com/dbt-labs/dbt-snowflake.git@refs/pull/65/head'
-```
-
-Install from a subdirectory in a git repo using ssh:
-
-```
-pip install 'git+ssh://git@github.com/tekumara/lab.git#egg=ebse&subdirectory=ebs_encrypter'
-```
+For more examples see [Dependency specification](python-requirements.md#dependency-specification).
 
 References:
 
-- [pip install - VCS Support](https://pip.pypa.io/en/stable/cli/pip_install/#vcs-support)
-- [PEP 508 -- Dependency specification for Python Software Packages](https://www.python.org/dev/peps/pep-0508/)
+- [pip - VCS Support](https://pip.pypa.io/en/stable/topics/vcs-support/)
 
 ## Wheels
 
