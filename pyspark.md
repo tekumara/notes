@@ -87,7 +87,7 @@ SPARK_LOCAL_IP=127.0.0.1 pyspark
 
 Or set `spark.driver.host`:
 
-``
+```
 SparkConf conf = new SparkConf().setMaster("local[*]").set("spark.driver.host", "localhost");
 
 ```
