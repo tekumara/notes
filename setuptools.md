@@ -19,7 +19,7 @@ A package is a directory with a `__init.__.py` file. Package data files are non 
 
 setuptools will automatically include your package's `.py`` files in the source dist.
 
-By default this includes python source files implied by the `packages` setup.py arguments. [`packages = find_packages()`](https://setuptools.pypa.io/en/stable/userguide/package_discovery.htmll) walks the target directory and finds any packages. Packages are only recognized if they include an `__init__.py` file. eg: to include all packages except tests in the source dist:
+By default this includes python source files implied by the `packages` setup.py arguments. [`packages = find_packages()`](https://setuptools.pypa.io/en/latest/userguide/package_discovery.html) walks the target directory and finds any packages. Packages are only recognized if they include an `__init__.py` file. eg: to include all packages except tests in the source dist:
 
 _setup.py_:
 
@@ -49,6 +49,8 @@ Any files included in the source dist will be available to setup.py during the i
 By default, files outside package directories are not included. eg: if you use setuptools-scm and have a _tests_ directory outside of the package folder and a _requirements.txt_ in the root, then these will be present in the sdist by not the wheel.
 
 `package_data` can specify additional fine-grained patterns of package files to include. These files must exist inside a package. Non-package files cannot be included. Files specified here that aren't included in MANIFEST.in or by an SCM plugin will be added to the source dist, which can include files generated during build.
+
+`exclude` can be used to exclude files from the wheel only (use MANIFEST.in to exclude them from the sdist). If they are excluded in the MANIFEST.in only but not `[tool.setuptools.packages.find]` they will still appear in the wheel.
 
 `data_files` is deprecated and does not work with wheels.
 

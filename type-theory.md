@@ -4,7 +4,10 @@ covariant = replaceable with subtype
 contravariant = replaceable with supertype
 invariant = not replaceable with subtype
 
-[more detail](https://www.reddit.com/r/rust/comments/8h2kt5/comment/dygvo9d/?utm_source=share&utm_medium=web2x&context=3)
+See
+
+- [more detail](https://www.reddit.com/r/rust/comments/8h2kt5/comment/dygvo9d/?utm_source=share&utm_medium=web2x&context=3)
+- [mypy - Variance of generic types](https://mypy.readthedocs.io/en/stable/generics.html#variance-of-generic-types)
 
 ## History
 

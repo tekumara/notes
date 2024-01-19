@@ -4,7 +4,7 @@ See also [procs](procs.md)
 
 ## ps (BSD)
 
-Show RSS in Kb
+Show RSS in Kb sorted by memory usage
 
 ```
 ps -A -m -o pid,vsz,rss,%mem,command

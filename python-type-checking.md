@@ -250,6 +250,52 @@ Argument of type "Type[A]" cannot be assigned to parameter "a" of type "A" in fu
 
 Pass the instance instead of the type, eg: `f(A())`
 
+## TypeVar bound in type alias is ignored
+
+Generic type aliases (ie: a type alias containing a `TypeVar`) must have their type parameter specified when the alias is used. If not, `Any` is assumed, see [mypy - Generic type aliases](https://mypy.readthedocs.io/en/stable/generics.html#generic-type-aliases):
+
+> Unsubscripted aliases are treated as original types with free variables replaced with Any.
+
+eg:
+
+```python
+import typing
+
+E = typing.TypeVar("E", bound="Exception")
+ExceptionHandler = typing.Callable[[int, E], int]
+
+
+class MyError(Exception):
+    pass
+
+
+class Foo:
+    pass
+
+
+def handle(_: ExceptionHandler) -> None:
+    pass
+
+
+def my_exception_handler(_i: int, _e: MyError) -> int:
+    return 42
+
+
+# does not generate a type error because ExceptionHandler is unsubscripted therefore E is Any
+handle(my_exception_handler)
+```
+
+To fix provide the type parameter when using the alias, eg:
+
+```python
+def handle(_: ExceptionHandler[E]) -> None:
+    pass
+```
+
+See also:
+
+- [explanation in pyright](https://github.com/microsoft/pyright/issues/6715#issuecomment-1852429229)
+
 ## References
 
 - [Tagged unions aka sum types](https://mypy.readthedocs.io/en/stable/literal_types.html#tagged-unions)

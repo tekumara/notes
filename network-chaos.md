@@ -1,7 +1,12 @@
 # network chaos
 
-<div title="Simulate Postgres down" creator="YourName" modifier="YourName" created="201704100458" tags="Postgresql" changecount="1">
-<pre>{{{
+## macos
+
+Use i
+
+## Simulate Postgres down (linux)
+
+```
 $ sudo iptables -S
 -P INPUT ACCEPT
 -P FORWARD ACCEPT
@@ -17,5 +22,4 @@ $ sudo iptables -S
 -A OUTPUT -p tcp -m tcp --dport 5432 -j DROP
 $ nc -v -w 5 localhost 5432
 nc: connect to localhost port 5432 (tcp) timed out: Operation now in progress
-}}}</pre>
-</div>
+```
