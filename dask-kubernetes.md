@@ -34,10 +34,16 @@ or
 stern -l dask.org/component=scheduler --tail 10
 ```
 
-Port forward dashboard
+Port forward dask (8786) and dashboard (8787)
 
 ```
-kubectl port-forward svc/dask-root-a31d4f8a-4 8787:8787
+kubectl port-forward svc/dask-root-a31d4f8a-4 8786:8786 8787:8787
+```
+
+CPU/Mem usage of scheduler
+
+```
+kubectl describe podmetrics -l dask.org/component=scheduler
 ```
 
 ## Orphaned dask pods

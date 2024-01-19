@@ -20,3 +20,21 @@ To [enable step debug logging](https://docs.github.com/en/actions/monitoring-and
 ## Status badges
 
 See [Adding a workflow status badge](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/adding-a-workflow-status-badge). If the status is stale, add the appropriate event to the url, eg: `..badge.svg?event=release`
+
+## Actions checkout using the merge ref by default
+
+`pull/N/merge` is a special reference that GitHub creates for each pull request. It's the PR merged into the target branch and is used to check for merge conflicts. It's also what actions/checkout uses by default, [which is surprising](https://github.com/actions/checkout/issues/504), eg: in the `Run actions/checkout` logs you'll see:
+
+```
+Checking out the ref
+  /usr/bin/git checkout --progress --force refs/remotes/pull/126/merge
+  Note: switching to 'refs/remotes/pull/126/merge'.
+```
+
+To [checkout pull request HEAD commit instead of merge commit](https://github.com/actions/checkout?tab=readme-ov-file#checkout-pull-request-head-commit-instead-of-merge-commit):
+
+```yaml
+- uses: actions/checkout@v4
+  with:
+    ref: ${{ github.event.pull_request.head.sha }}
+```

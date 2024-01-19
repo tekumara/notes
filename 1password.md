@@ -24,3 +24,7 @@ Read private key in PKCS #8 format:
 ```
 op read op://Personal/awesome.private-key/'Private Key'
 ```
+
+## Connecting to other Browsers
+
+`Settings -> Browser -> Add Browser` this allows browsers that have the extension installed to access the 1password native app. Without this, the browser extension can still access the vault but it needs to do an unlock itself.

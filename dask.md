@@ -36,3 +36,9 @@ from distributed.cluster_dump import DumpArtefact
 url = "file:///Users/tekumara/Downloads/dask-root-8ad03e68-6.dump.msgpack.gz"
 dump = DumpArtefact.from_url(url)
 ```
+
+## Deadlock
+
+Run [this check-deadlock.py](https://github.com/dask/distributed/issues/5879#issuecomment-1054873941).
+
+During the script you'll see `Run out-of-band function 'lambda'`
