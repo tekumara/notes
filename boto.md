@@ -58,3 +58,14 @@ See also [Boto3 Docs / Developer guide / Credentials](https://boto3.amazonaws.co
 ## Config vs credentials
 
 [Curious about the differences between ~/.aws/credentials and ~/.aws/config?🧵](https://twitter.com/jsaryer/status/1294365822819999744)
+
+## Logging
+
+Be careful enabling the debug loglevel on `botocore` as `botocore.endpoint` will log requests and `botocore.parsers` will log the response which may contain sensitive info.
+
+To log just retries:
+
+```
+logging.getLogger("botocore.retries.standard").setLevel(logging.DEBUG)
+logging.getLogger("botocore.retryhandler").setLevel(logging.DEBUG)
+```

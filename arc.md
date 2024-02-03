@@ -15,3 +15,8 @@ Issues
 Missing features
 
 - move tab in a space to Little Arc (the inverse is possible) NB: this is poss
+
+Calendar Notifications
+
+- In Mac OS Settings - Notifications - Arc - check Allow notifications and select Banners. Restart Arc after changing this.
+- In [Arc settings for Google Calender](arc://settings/content/siteDetails?site=https%3A%2F%2Fcalendar.google.com%3A443&search=notifications) ensure Notifications are Allowed

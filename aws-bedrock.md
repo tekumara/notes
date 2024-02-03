@@ -12,6 +12,21 @@ output_text = bedrock_client.list_foundation_models()
 print(output_text)
 ```
 
+```
+import boto3, json
+from botocore.config import Config
+config = Config(read_timeout=0.5, retries={"total_max_attempts": 2})
+client = boto3.client(service_name="bedrock-runtime", config=config)
+response = client.invoke_model(modelId="anthropic.claude-instant-v1",body=json.dumps({"prompt":"Human: foobar Assistant:", "max_tokens_to_sample":300}))
+json.loads(response.get("body").read())
+```
+
+Response headers:
+
+```
+{'Date': 'Thu, 01 Feb 2024 11:32:07 GMT', 'Content-Type': 'application/json', 'Content-Length': '224', 'Connection': 'keep-alive', 'x-amzn-RequestId': 'ea293f49-1509-4c7a-9acf-cb195c166d1b', 'X-Amzn-Bedrock-Invocation-Latency': '1328', 'X-Amzn-Bedrock-Output-Token-Count': '34', 'X-Amzn-Bedrock-Input-Token-Count': '11'}
+```
+
 ## marketplace subscriptions
 
 - "c468b48a-84df-43a4-8c46-8870630108a7" Claude (12K) (Amazon Bedrock Edition)

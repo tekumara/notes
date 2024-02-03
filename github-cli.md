@@ -111,6 +111,12 @@ Update repo, eg: set `delete_branch_on_merge`:
 gh api repos/OWNER/REPO -F delete_branch_on_merge=true
 ```
 
+Find names of up to 200 non-archived repos matching prefix `my-repos-`
+
+```
+gh search repos "my-repos-" --archived=false -L 200 | cut -f1 | sort
+```
+
 ## Sync
 
 Sync the fork default branch (ie: master/main) with its parent:

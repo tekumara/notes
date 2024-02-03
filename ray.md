@@ -82,3 +82,7 @@ For more detail:
 ```
 rg -C5 'killed|died|exit' /tmp/ray/session_latest/logs
 ```
+
+## Rolling updates
+
+Not supported - requires multiple ray clusters see [#527](https://github.com/ray-project/kuberay/issues/527#issuecomment-1920616895)
