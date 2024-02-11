@@ -35,10 +35,16 @@ cargo fmt
 
 Cargo will search your source file for tests and show `running 0 tests` when they [don't contain any tests](https://doc.rust-lang.org/cargo/guide/tests.html).
 
-Run tests showing stdout:
+Run tests showing stdout on success:
 
 ```
 cargo test -- --nocapture
+```
+
+Run test called test_me:
+
+```
+cargo test test_me
 ```
 
 ## utils

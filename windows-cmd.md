@@ -28,7 +28,7 @@ C:\Windows\System32\OpenSSH\ssh.exe
 To set an env var, eg:
 
 ```
-$env:RUST_LOG='debug'
+$env:RUST_LOG='debug,globset=warn'
 ```
 
 To list env vars:
@@ -36,3 +36,7 @@ To list env vars:
 ```
 dir env:
 ```
+
+## access denied when deleting a file
+
+Some process has it open. Restart and then try to delete it.

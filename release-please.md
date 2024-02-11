@@ -38,3 +38,8 @@ See also [Release Please bot does not create a release PR. Why?](https://github.
 1. Delete the existing tag. This will reset the release to a draft release.
 1. Push a commit that fixes the build.
 1. On the draft release set the new commit as the tag target and then click publish release.
+
+If you which to regenerate the release notes then:
+
+1. Delete the release.
+1. Revert the commit that bumped the version and updated CHANGELOG.md

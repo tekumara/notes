@@ -189,3 +189,54 @@ help: consider removing the leading `&`-reference
 ```
 
 [Deserialize](https://docs.rs/serde/latest/serde/trait.Deserialize.html) is not implemented for `&Vec`. Which makes sense, because you can't deserialize into a `&Vec`.
+
+### cannot borrow `*self` as mutable because it is also borrowed as immutable
+
+```
+error[E0502]: cannot borrow `*self` as mutable because it is also borrowed as immutable
+   --> crates/typos-lsp/src/lsp.rs:101:13
+    |
+95  |         for folder in self.workspace_folders.iter() {
+    |                       -----------------------------
+    |                       |
+    |                       immutable borrow occurs here
+    |                       immutable borrow later used here
+...
+101 |             self.router_insert(&path_wildcard, &path)?;
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ mutable borrow occurs here
+
+
+```
+
+Context:
+
+```rust
+struct BackendState<'s> {
+    severity: Option<DiagnosticSeverity>,
+    config: Option<PathBuf>,
+    workspace_folders: Vec<WorkspaceFolder>,
+    router: Router<TyposCli<'s>>,
+}
+
+impl<'s> BackendState<'s> {
+    ...
+    fn router_insert(&mut self, route: &str, path: &PathBuf) -> anyhow::Result<(), anyhow::Error> {
+        tracing::debug!("Adding route {} for path {}", route, &path.display());
+        let cli = try_new_cli(&path, self.config.as_deref())?;
+        self.router.insert(route, cli)?;
+        Ok(())
+    }
+
+```
+
+In this example `&mut` is only needed for `self.router` not `self`. When inlined Rust can determine which fields in a struct are being used immutably and which are used mutably and this error doesn't occur. But when passing the struct as a `&mut` to a method it doesn't extend its analysis to the method's implementation and only uses the signature.
+
+Solutions
+
+- inline
+- free function - avoid passing `&mut self` to `router_insert` and instead pass each arg to a free function without `self`
+- break the struct into smaller pieces
+- extension trait
+
+Ref
+- [What is the best way of dealing with "cannot borrow self as mutable because it is also borrowed as immutable"?](https://www.reddit.com/r/rust/comments/q0uo6t/what_is_the_best_way_of_dealing_with_cannot/)

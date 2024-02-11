@@ -36,7 +36,7 @@ RUN source "$HOME/.cargo/env" && pip install -e .
 ## Windows
 
 ```
-scoop install main/rust
+scoop install rustup
 ```
 
-You will need Microsoft C++ Build tools (MSVC) or otherwise switch to the [GNU toolchain](https://stackoverflow.com/a/64121601/149412).
+You will need [Microsoft C++ Build tools (MSVC)](ms-build-tools.md) or otherwise switch to the [GNU toolchain](https://stackoverflow.com/a/64121601/149412).

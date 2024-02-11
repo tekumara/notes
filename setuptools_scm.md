@@ -1,6 +1,6 @@
 # python package versioning with setuptools_scm
 
-`setuptools_scm` generate a version number for PKG-INFO from the status of a git repository. The version number records the distance to the latest tag, including whether the repo is in an uncommitted (dirty) state. The version number is not committed to a file in repo.
+`setuptools_scm` generate a version number for PKG-INFO from the status of a git repository. The version number records the distance to the latest tag, including whether the repo is in an uncommitted (dirty) state. The version number is not committed to a file in the repo.
 
 To use `setuptools_scm` add this to _pyproject.toml_:
 
