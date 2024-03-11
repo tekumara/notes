@@ -1,8 +1,10 @@
 # arc
 
+Chromium with a fancy UI.
+
 Features
 
-- multiple profiles (called spaces) in a single window
+- multiple profiles in different spaces in a single window
 - automatic routing urls to different spaces (eg: have github.com go to your personal space, and github.com/work to your work space)
 - auto-archive tabs after x hours
 - picture in picture for videos and video calls

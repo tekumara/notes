@@ -33,6 +33,12 @@ Display at least 20 rows:
 pd.set_option("display.min_rows", 20)
 ```
 
+Increase max to 200 rows:
+
+```python
+pd.set_option("display.max_rows", 200)
+```
+
 Don't truncate columns:
 
 ```python

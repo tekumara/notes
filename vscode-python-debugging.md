@@ -96,7 +96,7 @@ Connect to the debugger using an attach config:
 ```json
 {
   "name": "Python: Remote Attach",
-  "type": "python",
+  "type": "debugpy",
   "request": "attach",
   "connect": {
     "host": "localhost",

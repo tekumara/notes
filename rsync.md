@@ -24,6 +24,19 @@ To copy all non-hidden files in the current directory recursively, use \*, eg:
 rsync -riltz * /dest/
 ```
 
+## Dest dir with space
+
+This will copy into _~/Library/Application_ on the dest, not _~/Library/Application Support/_
+
+```
+rsync -ritlz ~/Library/Application\ Support/my-app beebop.local:~/Library/Application\ Support/
+```
+
+- Use quotes together with \ instead, eg: beebop.local:"~/Library/Application\ Support/".
+- use `-s` on newer versions of rsync.
+
+([ref](https://unix.stackexchange.com/questions/104618/how-to-rsync-over-ssh-when-directory-names-have-spaces))
+
 ## Other options
 
 | option            | description                                                               |

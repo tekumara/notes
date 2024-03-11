@@ -63,9 +63,9 @@ See also [Boto3 Docs / Developer guide / Credentials](https://boto3.amazonaws.co
 
 Be careful enabling the debug loglevel on `botocore` as `botocore.endpoint` will log requests and `botocore.parsers` will log the response which may contain sensitive info.
 
-To log just retries:
+To log retries and connections:
 
 ```
-logging.getLogger("botocore.retries.standard").setLevel(logging.DEBUG)
 logging.getLogger("botocore.retryhandler").setLevel(logging.DEBUG)
+logging.getLogger("urllib3.connectionpool").setLevel(logging.DEBUG)
 ```

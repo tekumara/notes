@@ -6,10 +6,26 @@ Install the Remote - SSH extension.
 
 When vscode connects to a host, it establishes dynamic port forwarding (`-D`) which acts as a SOCKS proxy server. Vscode then starts a remote server on the host and connects to it via the SOCKS proxy.
 
+In Output -> Remote - SSH you'll see
+
+```
+Starting forwarding server. local port 65148 -> socksPort 65134 -> remotePort 46753
+```
+
+ie: Local code listens on 65148 -> ssh socks port 65134 -> code server remote port 46753.
+
+And Extension Host will show:
+
+```
+2024-02-29 08:27:43.601 [info] [resolveAuthority(ssh-remote,1)][13430ms] setting tunnel factory...
+2024-02-29 08:27:43.601 [info] [resolveAuthority(ssh-remote,1)][13430ms] returned 127.0.0.1:65148
+```
+
+
 ## Port forwarding
 
 - User forwarded: added by the user in the Ports View, and forwarded via the SOCKS proxy.
-- Auto forwarded: auto port forwarding when vscode sees "http://localhost:xxxx" in the terminal or debug console. See setting `remote.autoForwardPortsSource` in the release notes [here](https://github.com/microsoft/vscode-docs/blob/49f6cab2a0435a7704ebfc208852f23a880265f6/remote-release-notes/v1_54.md#port-forwarding-source-is-output) and [here](https://github.com/microsoft/vscode-docs/search?q=auto+port+forward).
+- Auto forwarded: auto port forwarding when vscode sees `http://localhost:xxxx` in the terminal or debug console. See setting `remote.autoForwardPortsSource` in the release notes [here](https://github.com/microsoft/vscode-docs/blob/49f6cab2a0435a7704ebfc208852f23a880265f6/remote-release-notes/v1_54.md#port-forwarding-source-is-output) and [here](https://github.com/microsoft/vscode-docs/search?q=auto+port+forward).
 - Statically forwarded: ports configured in _~/.ssh/config_ via the `LocalForward` statement.
 
 ## Extensions

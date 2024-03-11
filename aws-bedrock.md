@@ -15,9 +15,10 @@ print(output_text)
 ```
 import boto3, json
 from botocore.config import Config
-config = Config(read_timeout=0.5, retries={"total_max_attempts": 2})
+config = Config(read_timeout=2, retries={"total_max_attempts": 2})
 client = boto3.client(service_name="bedrock-runtime", config=config)
-response = client.invoke_model(modelId="anthropic.claude-instant-v1",body=json.dumps({"prompt":"Human: foobar Assistant:", "max_tokens_to_sample":300}))
+prompt = "Human: foobar Assistant:"
+response = client.invoke_model(modelId="anthropic.claude-instant-v1",body=json.dumps({"prompt":prompt, "max_tokens_to_sample":300}))
 json.loads(response.get("body").read())
 ```
 

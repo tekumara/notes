@@ -77,7 +77,7 @@ List instances using security group
 aws ec2 describe-network-interfaces --filters Name=group-id,Values=sg-010794b2ac996e025
 ```
 
-Describe security group
+Describe security group which includes rules.
 
 ```
 aws ec2 describe-security-groups --group-ids sg-071ce0236a26a309c

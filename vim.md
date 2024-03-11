@@ -40,6 +40,9 @@ http://vim.wikia.com/wiki/Moving_around
 
 jump back: `ctrl o`
 jump forward: `ctrl i`
+jump to tag: `ctrl ]`
+
+A tag is like a link. See `:h tag`. 
 
 You jump when you perform a search, or move around with marks, scroll block wise with braces, use % key... and when switching buffers.
 See [vim doc jump-motions](http://vimdoc.sourceforge.net/htmldoc/motion.html#jump-motions)
@@ -59,17 +62,17 @@ If a multi-line paste is appearing on a single line, or auto-indenting is being 
 
 ## Copy/cut paste
 
-visual selection (by line) - `V`
-visual selection by column - `ctrl+V` - to replace, press `c`, type the replacement, and then press ESC   
-select whole file - `ggVG` (gg moves to first line, V starts visual selection, G jumps to last line)
-copy - `y`
-copy to system clipboard - `"*y`
+visual selection (by line) - `V`  
+visual selection by column - `ctrl+V` - to replace, press `c`, type the replacement, and then press ESC  
+select whole file - `ggVG` (gg moves to first line, V starts visual selection, G jumps to last line)  
+copy - `y`  
+copy to system clipboard - `"*y`  
 copy line - `yy`  
 cut line - `dd`  
 paste before - `P`  
-paste after - `p`
-paste before from system clipboard - `"*p`
-reindent - `=` - this will deindent if the indentation is incorrect.
+paste after - `p`  
+paste before from system clipboard - `"*p`  
+reindent - `=` - this will deindent if the indentation is incorrect.  
 
 `ciw` to replace the word under the cursor ([ref](https://stackoverflow.com/questions/1379198/how-to-delete-a-word-and-go-into-insert-mode-in-vim))
 
@@ -91,7 +94,7 @@ redo: `Ctrl-R`
 
 Insert the [escape character](http://en.wikipedia.org/wiki/Escape_character#ASCII_escape_character): 'ctrl' + 'v' + '['
 
-Insert at the end of file - <ESC>GA
+Insert at the end of file - `<ESC>GA`
 
 ## Delete
 
@@ -119,7 +122,7 @@ On load, if the status bar says "converted" ....
 Each file opened is stored in memory in a buffer.
 
 `:ls` or `:buffers` to list buffers/opened files
-`:b1` switch to buffer 1
+`:b1` switch split to buffer 1
 `:bd` delete buffer (aka close file)
 `:enew` open new buffer in a new tab
 See [Easier buffer switching](https://vim.fandom.com/wiki/Easier_buffer_switching)
