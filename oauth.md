@@ -5,6 +5,7 @@
 There are different types of [flows](https://developer.okta.com/docs/concepts/oauth-openid/#choosing-an-oauth-2-0-flow):
 
 - Interaction Code flow
+- Client Credentials flow
 - Authorization Code flow
 - Authorization Code flow with PKCE
 - etc.

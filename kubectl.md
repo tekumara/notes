@@ -49,6 +49,10 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl top nodes` show CPU/MEM usage for nodes
 `kubectl get nodes -o custom-columns=":metadata.name, :status.allocatable.memory, :status.allocatable.cpu, :status.capacity.memory, :status.capacity.cpu"` get nodes allocatable and capacity
 
+### Quotas
+
+`kubectl get resourcequotas`
+
 ### Pods
 
 `kubectl top pods` show CPU/MEM usage for pods in current namespace
@@ -60,11 +64,11 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl get pods mypod -o json | jq '.spec.containers[] | {image, env:[.env[] | "\(.name)=\(.value)" ]}'` list pod's container images and environment variables as json
 `kubectl get pods -o wide` list pods and the node they are running on  
 `kubectl get pod helper -o jsonpath='{.status.podIPs}` get pod ip
-`kubectl get pod -o "custom-columns=:metadata.name,:status.podIPs[*].ip"` list all pods and their  ips
+`kubectl get pod -o "custom-columns=:metadata.name,:status.podIPs[*].ip"` list all pods and their ips
 
 `kubectl get pod -n kube-system -l app.kubernetes.io/name=traefik -o custom-columns=:metadata.name --no-headers=true` get pod names by selector
 `kubectl get pods -o custom-columns=":metadata.name, :status.phase, :spec.serviceAccount"` get service accounts
-`kubectl get pods -n livy -w` watch pods in the namespace livy  
+`kubectl get pods -n livy -w` watch pods in the namespace livy
 
 `kubectl describe pod -l job-name` describe pods started by a job
 
@@ -82,7 +86,7 @@ kubectl get svc -o json --all-namespaces | jq '.items[] | {name:.metadata.name, 
 
 ### Deployments
 
-`kubectl get deployments -n kube-system` show deployments for kube itself  
+`kubectl get deployments -n kube-system` show deployments for kube itself
 
 `kubectl get deployment -o "custom-columns=:spec.template.spec.containers[*].image"` list images used in deployment
 
@@ -155,9 +159,8 @@ kubectl patch deployment orion --type json -p '[{"op": "add", "path": "/spec/tem
 ```
 
 securityContext:
-  capabilities:
-    add:
-    - SYS_PTRACE
+capabilities:
+add: - SYS_PTRACE
 
 ## Delete
 

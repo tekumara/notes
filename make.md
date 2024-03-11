@@ -306,6 +306,33 @@ This is because the `build` target has no recipe, and since there's a build.sh f
 
 Check the indentation is current under the `run` target.
 
+## make: warning: undefined variable `LDFLAGS'
+
+```
+rm -rf snapshots/my-repo
+.venv/bin/cookiecutter -o snapshots/my-repo/../ -f --no-input --config-file cookiecutter-config.yaml .
+touch snapshots/my-repo
+make: warning: undefined variable `LDFLAGS'
+make: warning: undefined variable `TARGET_ARCH'
+make: warning: undefined variable `LOADLIBES'
+make: warning: undefined variable `LDLIBS'
+cc   snapshots/my-repo.o   -o snapshots/my-repo
+clang: error: no such file or directory: 'snapshots/my-repo.o'
+clang: error: no input files
+```
+
+Caused by the use of wildcards like `%`, eg:
+
+```
+snapshots/my-repo%
+```
+
+This will call Make on all files with the prefix `snapshots/my-repo`.
+
+## git and make
+
+[Git doesn't preserve modified timestamps](https://archive.kernel.org/oldwiki/git.wiki.kernel.org/index.php/Git_FAQ.html#Why_isn.27t_Git_preserving_modification_time_on_files.3F). The modified time is the time when the file was created during a clone/checkout. Don't expect `make` to detect out of date files from cloned repos in CI.
+
 ## Reference
 
 - [Makefile Programming Language Tutorial](https://twolodzko.github.io/makefile-programming)
