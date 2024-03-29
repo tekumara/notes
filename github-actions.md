@@ -38,3 +38,51 @@ To [checkout pull request HEAD commit instead of merge commit](https://github.co
   with:
     ref: ${{ github.event.pull_request.head.sha }}
 ```
+
+## Reusable Workflows
+
+Allow a job, or group of jobs, to be reused across workflows. This allows a tree of jobs to be created, eg: see the overview diagram in [Reusing workflows](https://docs.github.com/en/actions/using-workflows/reusing-workflows). Reusable workflows must have the `workflow_call` trigger, and support parameters.
+
+## Composite actions
+
+Allow a step, or set of steps, to be reused across jobs.
+
+## Chaining workflows
+
+1. `workflow_run` - [triggers a dependent workflow](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run) when a upstream workflow executes or completes. The success or failure of the upstream workflow is available a conclusion to the dependent workflow.
+1. `workflow_call` - see [reusable workflows](#reusable-workflows) above
+1. `workflow_dispatch` - allows a workflow to be manually triggered, eg: via `gh workflow run` or the [dispatches endpoint](https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event). Dispatches workflows run on a branch or tag. They don't generate checks.
+
+## pull_request
+
+- Won't run if there's a merge conflict, resolve that first.
+- Have write permissions to the repo, if run from a branch in the same repository, but not from external forks.
+
+## pull_request_target
+
+Workflows triggered via a `pull_request_target` event:
+
+- have write permission to the target repository
+- can access to target repository secrets
+- run in the context of the base of the pull request, not the merge commit, to prevent execution of unsafe code in the PR, ie: [actions/checkout will checkout main](https://github.com/actions/checkout/pull/321#issuecomment-702961848) for a PR targeting main.
+- don't require [explicit approval when running for first time contributors to the repo](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#controlling-changes-from-forks-to-workflows-in-public-repositories)
+
+Useful for workflows that label or comment on PRs from forks. Avoid if you need to build or run code from the pull request, although you can do it, eg:
+
+```yaml
+- uses: actions/checkout@v4
+  with:
+    # Checkout the fork instead of the target
+    repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+    # Checkout the branch made in the fork
+    ref: ${{ github.head_ref }}
+```
+
+See
+
+- [Events that trigger workflows - pull_request_target](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target)
+- [Keeping your GitHub Actions and workflows secure Part 1: Preventing pwn requests](https://securitylab.github.com/research/github-actions-preventing-pwn-requests/)
+- [git-auto-commit-action - Use in forks from public repositories](https://github.com/stefanzweifel/git-auto-commit-action?tab=readme-ov-file#use-in-forks-from-public-repositories)
+- [autofix.ci - uses a github app rather than pull_request_target](https://autofix.ci/)
+- [Allowing changes to a pull request branch created from a fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork)

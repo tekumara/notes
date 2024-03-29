@@ -35,6 +35,8 @@ See also [Release Please bot does not create a release PR. Why?](https://github.
 
 ## Retriggering failed release
 
+Without updating changelog:
+
 1. Delete the existing tag. This will reset the release to a draft release.
 1. Push a commit that fixes the build.
 1. On the draft release set the new commit as the tag target and then click publish release.
@@ -42,4 +44,8 @@ See also [Release Please bot does not create a release PR. Why?](https://github.
 If you which to regenerate the release notes then:
 
 1. Delete the release.
-1. Revert the commit that bumped the version and updated CHANGELOG.md
+1. Delete the tag.
+1. Revert the commit that bumped the version and updated CHANGELOG.md.
+1. Push a commit that fixes the build.
+
+(1. Remove the `autorelease:tagged` label from the release PR. - may not be needed?)

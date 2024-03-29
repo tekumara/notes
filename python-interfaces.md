@@ -15,3 +15,8 @@ Because it structural, rather than nominal, an explicit import is not needed, an
 ```
 ImportError: cannot import name 'TransactionSet' from partially initialized module 'txgenerator.models' (most likely due to a circular import)
 ```
+
+See
+
+- [mypy - Protocols and structural subtyping](https://mypy.readthedocs.io/en/stable/protocols.html)
+- [Protocols](https://typing.readthedocs.io/en/latest/spec/protocol.html)

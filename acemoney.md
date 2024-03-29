@@ -78,35 +78,34 @@ from trans;
 Export CSV and use duckdb to reverse order the transactions so the balance matches the UI:
 
 ```sql
-CREATE TEMP TABLE ace AS SELECT * FROM read_csv_auto ('*transaction*.csv');
+CREATE TEMP TABLE ace AS SELECT * FROM read_csv_auto ('Transactions_*.csv');
 
 .mode csv
 .headers on
-# nb this will overwrite the file
-.once transaction.ace.csv
+-- nb this will overwrite the file
+.once transactions.ace.csv
 
 select '' as Num,strftime("Transaction Date", '%d/%m/%Y') as Date,Narration as Payee,'' as Category,'' as S,
-  Debit as Withdrawal,
+  abs(Debit) as Withdrawal,
   Credit as Deposit,
   Balance as Total,
   '' as Comment
 from ace order by rowid desc;
-
 ```
 
 ## St George
 
-Export CSV (nb: set the UI to order from oldest to newest).
+Export CSV (nb: set the UI to order from oldest to latest).
 
 using duckdb:
 
 ```sql
-CREATE TEMP TABLE ace AS SELECT * FROM read_csv_auto ('trans201122.csv');
+CREATE TEMP TABLE ace AS SELECT * FROM read_csv_auto ('trans150324.csv');
 
 .mode csv
 .headers on
-# nb this will overwrite the file
-.once trans.ace.csv
+-- nb this will overwrite the file
+.once trans.ace.csv 
 
 select '' as Num,strftime(column0, '%d/%m/%Y') as Date,
   regexp_replace(
