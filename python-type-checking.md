@@ -296,6 +296,66 @@ See also:
 
 - [explanation in pyright](https://github.com/microsoft/pyright/issues/6715#issuecomment-1852429229)
 
+## Variance
+
+```python
+from typing import Protocol
+
+
+class Data(Protocol):
+    text: str
+
+
+class MyData(Data):
+    text: str
+
+
+class Model(Protocol):
+    def embed(self) -> list[MyData]:
+        ...
+
+
+class MyModel(Model):
+    def embed(self) -> list[MyData]:
+        ...
+
+
+class Embedder(Protocol):
+    def embed(self) -> list[Data]:
+        ...
+
+
+def modeller() -> Model:
+    ...
+
+
+def go(e: Embedder) -> None:
+    pass
+
+
+go(modeller())
+
+```
+
+pylance errors with:
+
+```
+Argument of type "Model" cannot be assigned to parameter "e" of type "Embedder" in function "go"
+  "Model" is incompatible with protocol "Embedder"
+    "embed" is an incompatible type
+      Type "() -> list[MyData]" cannot be assigned to type "() -> list[Data]"
+        Function return type "list[MyData]" is incompatible with type "list[Data]"
+          "list[MyData]" is incompatible with "list[Data]" Pylance(reportArgumentType)
+```
+
+This is because list is invariant. Change to:
+
+```python
+class Embedder(Protocol):
+    def embed(self) -> Sequence[Data]:
+        ...
+```
+
 ## References
 
 - [Tagged unions aka sum types](https://mypy.readthedocs.io/en/stable/literal_types.html#tagged-unions)

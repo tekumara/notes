@@ -29,3 +29,9 @@ To make this OTP emit from a 2-second touch, [swap the slots](https://gist.githu
 ```
 ykman otp swap
 ```
+
+## Troubleshooting
+
+### Yubico Authenticator won't start on MacOS
+
+In System Settings - Privacy & Security - Input Monitoring: add Yubico Authenticator.

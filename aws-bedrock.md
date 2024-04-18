@@ -36,3 +36,16 @@ Response headers:
 - "1d288c71-65f9-489a-a3e2-9c7f4f6e6a85" Jurassic-2 Mid (Amazon Bedrock Edition)
 - "cc0bdd50-279a-40d8-829c-4009b77a1fcc" Jurassic-2 Ultra (Amazon Bedrock Edition)
 - "d0123e8d-50d6-4dba-8a26-3fed4899f388" SDXL Beta V0.8 (Amazon Bedrock Edition)
+
+## agents
+
+Scope: tool use + RAG + chat history.
+
+- [Data sources](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_CreateDataSource.html) - S3. Can configure [fixed size chunking with overlap](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_ChunkingConfiguration.html).
+- Knowledge bases (ie: data stores) - OpenSearch Serverless, Pinecone, Amazon Aurora, Redis Enterprise Cloud
+  LLMs - Bedrock.
+- [Sessions](https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html) - supports conversation history and multiple turns.
+- [Prompt templates](https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html).
+- [Monitoring - Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/model-invocation-logging.html)
+
+See more at the [Agents for Bedrock API](https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html)

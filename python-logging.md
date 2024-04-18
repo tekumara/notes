@@ -44,4 +44,10 @@ To disable [warnings](https://docs.python.org/3/library/warnings.html):
 python -W ignore::DeprecationWarning
 ```
 
+Or use the [PYTHONWARNINGS](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONWARNINGS) env var:
+
+```
+PYTHONWARNINGS=once python ..
+```
+
 See also how to configure this for [pytest](https://docs.pytest.org/en/latest/how-to/capture-warnings.html#disabling-warnings-summary).
