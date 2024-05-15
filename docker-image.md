@@ -58,7 +58,7 @@ writing image sha256:0328579a12e62fa3ca8dd3a0d46ef8db6d2effb413f6a4d6a985d5fafae
 Get compressed size of image on remote repository
 
 ```shell
-docker manifest inspect $repo:$tag | jq '[.layers[].size] | add'
+docker manifest inspect -v $repo:$tag | jq '.[] | select(.Descriptor.platform.architecture=="amd64").OCIManifest | [.layers[].size] | add' | numfmt --to iec
 ```
 
 Get uncompressed size of local image (local RootFS layers are not compressed):

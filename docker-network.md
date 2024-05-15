@@ -45,4 +45,3 @@ See:
 
 - [I want to connect from a container to a service on the host](https://docs.docker.com/docker-for-mac/networking/#known-limitations-use-cases-and-workarounds)
 - [How Docker Desktop Networking Works Under the Hood](https://www.docker.com/blog/how-docker-desktop-networking-works-under-the-hood/)
-
