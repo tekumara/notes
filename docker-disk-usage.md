@@ -15,6 +15,8 @@ total 68167208
 
 Actual usage is 68MB, max is 104G. To increase the max: _Docker - Preferences - Resources - Disk image size_
 
+See [Where does Docker Desktop store Linux containers and images? (Mac)](https://docs.docker.com/desktop/faqs/macfaqs/#where-does-docker-desktop-store-linux-containers-and-images)
+
 ### Linux
 
 Containers, images and volumes are stored under _/var/lib/docker/_ (requires sudo).
@@ -38,32 +40,34 @@ Unused images are images that aren't associated with a container (includes all d
 
 ## Pruning
 
+Remove containers:
+
 `docker container prune` remove all stopped containers  
 `docker container prune --filter 'until=1440h'` remove all containers created earlier than 60 days ago
 
-After removing containers you can remove their image.
+After removing containers you can remove their images:
 
 `docker image prune` remove dangling images  
 `docker image prune -a --filter 'until=1440h'` remove unused images (dangling or otherwise) created earlier than 60 days ago  
-`docker image rm $repo:$tag` remove specific image  
+`docker image rm $repo:$tag` remove specific image
 
-Pruning images does not automatically remove them from the build cache. It just removes the tag. So the total reclaimed space can be 0, but the image usage will decrease and the build cache usage will increase.
+Pruning images does not automatically remove them from the build cache. It just removes the tag. So the total reclaimed space can be 0, but the image usage will decrease and the build cache usage will increase. To prune the build cache:
 
 `docker builder prune` remove dangling build cache  
-`docker builder prune -a` remove all build cache  
+`docker builder prune -a` remove all build cache
 
-`docker volume prune -a` remove all (ie: anonymous and named) unused (ie: not referenced by a container) volumes  
+Finally unused volumes:
 
-To prune everything:
+`docker volume prune -a` remove all (ie: anonymous and named) unused (ie: not referenced by a container) volumes
+
+To remove everything:
 
 `docker system prune` remove all stopped containers (will delete k3d clusters not running!), unused networks, dangling images, dangling build cache objects  
 `docker system prune --volumes` remove above + volumes associated with the stopped containers  
 `docker system prune -a` remove all stopped containers, unused networks, unused images, and the whole build cache  
-`docker system prune -a --volumes` above + volumes too  
+`docker system prune -a --volumes` above + volumes too
 
-See also: [Disk utilization in Docker for Mac](https://docs.docker.com/docker-for-mac/space/)
-
-To remove most
+To remove most things, keeping images and containers built in the last 60 days:
 
 ```
 docker container prune --filter 'until=1440h'
