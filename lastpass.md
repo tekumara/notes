@@ -1,6 +1,12 @@
-# Lastpass CLI
+# Lastpass
 
-## Installation
+## Troubleshooting
+
+Sometimes Lastpass will block login attempts and send you an email to approve.
+
+## CLI
+
+### Installation
 
 - Mac: `brew install lastpass-cli --with-pinentry`
 - Ubuntu: `sudo apt-get install lastpass-cli`
@@ -9,7 +15,7 @@
 
 NB: Installing from [source](https://github.com/lastpass/lastpass-cli) won't include man pages.
 
-## Setup
+### Setup
 
 "An agent process (`lpass`) will be spawned in the background on a first successful command, and all subsequent commands will use the agent for decryption, instead of asking a user for a password. The agent will quit after one hour, unless the LPASS_AGENT_TIMEOUT environment variable is set to an alternative number of seconds in which to quit, or 0 to never quit."
 
@@ -23,7 +29,7 @@ echo LPASS_AGENT_TIMEOUT=43200 > ~/.lpass/env
 echo LPASS_AGENT_TIMEOUT=43200 > ~/.config/lpass/env
 ```
 
-## Usage
+### Usage
 
 Login
 
