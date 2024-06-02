@@ -58,8 +58,8 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl top pods` show CPU/MEM usage for pods in current namespace
 `kubectl top pods -A` show CPU/MEM usage for pods in all namespaces
 `kubectl describe podmetrics $PODNAME` show CPU/MEM usage and labels for specific pod
-`kubectl get pods -o custom-columns=":metadata.name, :status.phase, :spec.containers[*].resources"` get resource limits (cpu/mem) as golang map
 `kubectl get pods -o custom-columns=":metadata.name, :status.phase, :spec.containers[*].image"` list pods and their running container images
+`kubectl get pods -o custom-columns=":metadata.name, :status.phase, :spec.containers[*].resources"` get resource limits (cpu/mem) as golang map
 `kubectl get pods -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .spec.containers[*]}{.name}{"\t"}{.resources}{"\t"}{end}{"\n"}{end}'` list pod's resource requests and limits (eg: cpu/mem)
 `kubectl get pods mypod -o json | jq '.spec.containers[] | {image, env:[.env[] | "\(.name)=\(.value)" ]}'` list pod's container images and environment variables as json
 `kubectl get pods -o wide` list pods and the node they are running on  
@@ -71,6 +71,8 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl get pods -n livy -w` watch pods in the namespace livy
 
 `kubectl describe pod -l job-name` describe pods started by a job
+
+`kubectl exec <pod name here> -- netstat -tulpn` see ports the pod is listening on
 
 ### Services/Ingress
 
@@ -93,7 +95,13 @@ kubectl get svc -o json --all-namespaces | jq '.items[] | {name:.metadata.name, 
 Show deployment status
 
 ```
-kubectl get deployment slim-api -o jsonpath="{range .status.conditions[*]}{.lastUpdateTime}{'\t'}{.reason}{'\t'}{.message}{'\n'}{end}"
+kubectl get deployment awesome-api -o jsonpath="{range .status.conditions[*]}{.lastUpdateTime}{'\t'}{.reason}{'\t'}{.message}{'\n'}{end}"
+```
+
+Get version
+
+```
+export TAG=$(kgd awesome-api -o jsonpath='{.spec.template.metadata.labels.version}')
 ```
 
 ### Run interactively

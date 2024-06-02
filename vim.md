@@ -42,7 +42,7 @@ jump back: `ctrl o`
 jump forward: `ctrl i`
 jump to tag: `ctrl ]`
 
-A tag is like a link. See `:h tag`. 
+A tag is like a link. See `:h tag`.
 
 You jump when you perform a search, or move around with marks, scroll block wise with braces, use % key... and when switching buffers.
 See [vim doc jump-motions](http://vimdoc.sourceforge.net/htmldoc/motion.html#jump-motions)
@@ -72,7 +72,7 @@ cut line - `dd`
 paste before - `P`  
 paste after - `p`  
 paste before from system clipboard - `"*p`  
-reindent - `=` - this will deindent if the indentation is incorrect.  
+reindent - `=` - this will deindent if the indentation is incorrect.
 
 `ciw` to replace the word under the cursor ([ref](https://stackoverflow.com/questions/1379198/how-to-delete-a-word-and-go-into-insert-mode-in-vim))
 

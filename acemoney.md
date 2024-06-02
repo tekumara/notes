@@ -100,7 +100,7 @@ Export CSV (nb: set the UI to order from oldest to latest).
 using duckdb:
 
 ```sql
-CREATE TEMP TABLE ace AS SELECT * FROM read_csv_auto ('trans150324.csv');
+CREATE TEMP TABLE ace AS SELECT * FROM read_csv_auto ('trans270424.csv');
 
 .mode csv
 .headers on

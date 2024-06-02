@@ -13,8 +13,6 @@ Prefect should be invisible. It adds workflow semantics to python functions by c
 - task and flow level concurrency limits
 - [caching](https://docs.prefect.io/core/concepts/persistence.html#input-caching) of task outputs and inputs
 
-Tasks cannot be run within tasks, but normal functions can. This forces the execution graph into a flow.
-
 ## Memory consumption
 
 Prefect 2 does not release memory eagerly for tasks that are submitted as futures, because Prefect can't know if the result will be needed downstream. Prefect might also hold onto the data for normal task calls too as it tracks the state of all task runs created in a flow.

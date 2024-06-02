@@ -62,7 +62,7 @@ Short answer: Type parameters are controlled by the caller, but associated types
 
 ## [Impl trait](https://google.github.io/comprehensive-rust/generics/impl-trait.html)
 
-`T: Trait` and `impl Trait` are similiar, except `impl Trait` is an anonymous type. When used as parameter the caller cannot specific the generic parameter, ie: it cannot be used with the `::<>` turbo fish syntax.
+`T: Trait` and `impl Trait` are similar, except `impl Trait` is an anonymous type. When used as parameter the caller cannot specific the generic parameter, ie: it cannot be used with the `::<>` turbo fish syntax.
 
 See also [The Rust Reference - Impl trait](https://doc.rust-lang.org/reference/types/impl-trait.html)
 
@@ -87,7 +87,7 @@ The effect of moving ownership to another thread is that destructors will run in
 
 ## Sync
 
-A type `T` is `Sync` if it is thread-safe, ie: safe to access a `T` value from multiple threads at the same time.
+A type `T` is `Sync` if it is thread-safe, ie: safe to access (borrow) a `T` value from multiple threads at the same time.
 More precisely, the definition is:
 
 > T is Sync if and only if &T is Send

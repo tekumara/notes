@@ -87,3 +87,30 @@ Generates a type error `Type "str" cannot be assigned to type "str | None"` see 
 > To better support introspection, modules should explicitly declare the names in their public API using the `__all__` attribute. Setting `__all__` to an empty list indicates that the module has no public API.
 
 Also [PEP 484](https://www.python.org/dev/peps/pep-0484/#stub-files) mentions that imported modules are not considered exported unless they use the `import ... as ...` syntax or equivalent.
+
+## Type "Foo" is incompatible with type "Self@Foo"
+
+```python
+class Foo(StrEnum):
+    BAR = "Bar"
+
+    @classmethod
+    def from_baz(cls, baz: Baz) -> Self:
+        return Foo.__members__[baz]
+```
+
+> Expression of type "Foo" is incompatible with return type "Self@Foo"
+> Type "Foo" is incompatible with type "Self@Foo"
+
+Fix:
+
+```python
+    def from_baz(cls, baz: Baz) -> "Foo":
+        return Foo.__members__[baz]
+```
+
+See [this comment](https://github.com/microsoft/pyright/issues/7712#issuecomment-2059690457):
+
+> It's odd to use Self in an enum class the way you're doing here. Normally, Self is used to enable subclassing, but the runtime doesn't allow subclassing of enum classes, so this seems unnecessary.
+
+When subclassing use `cls` see [Self - Use in Classmethod Signatures](https://typing.readthedocs.io/en/latest/spec/generics.html#use-in-classmethod-signatures)
