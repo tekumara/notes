@@ -1,8 +1,8 @@
 # Git diff
 
-`git diff main` compare working dir to main NB: excludes untracked files, stage these first if you want them to be part of the diff.
-`git diff main r2` compares tips of main and r2, ie: changes need to go from main -> r2. `r2 main` will show the same set of changes, but left and right side are swapped, ie: as a patch to go from r2 -> main.
-`git diff main r2 [<path>...]` for specific files
+`git diff main` compare working dir to main NB: excludes untracked files, stage these first if you want them to be part of the diff.  
+`git diff main r2` compares tips of main and r2, ie: changes need to go from main -> r2. `r2 main` will show the same set of changes, but left and right side are swapped, ie: as a patch to go from r2 -> main.  
+`git diff main r2 [<path>...]` for specific files  
 
 ## Ranges
 
@@ -55,3 +55,18 @@ index = staging area
 `git diff --cached <filename>` shows only staged changes (aka changes to be committed), ie: changes made to the index vs r2
 
 `git diff r2 filename` shows difference between r2 and working directory (includes both staged and unstaged changes), ie: changes made to the working tree vs r2.
+
+## Troubleshooting
+
+### unknown revision or path not in the working tree
+
+eg:
+
+```sh
+git diff commitA..commitB
+fatal: ambiguous argument 'commitA..commitB': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+```
+
+Make sure commitA and commitB exist as local branches. If they have are remote branches, use `origin/commitA` or `origin/commitB`
