@@ -117,6 +117,12 @@ Find names of up to 200 non-archived repos matching prefix `my-repos-`
 gh search repos "my-repos-" --archived=false -L 200 | cut -f1 | sort
 ```
 
+List all unarchived repos for a team
+
+```
+gh api orgs/"$org"/teams/"$team"/repos --paginate --jq '.[] | select(.archived == false) | .full_name'
+```
+
 ## Sync
 
 Sync the fork default branch (ie: master/main) with its parent:

@@ -8,7 +8,7 @@ To debug inside dependencies and visualise them in the call stack, add `"justMyC
   "configurations": [
     {
       "name": "Python: Debug Tests",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "${file}",
       "purpose": ["debug-test"],

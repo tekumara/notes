@@ -35,3 +35,9 @@ Update symlinks pointing at _/usr/local/bin/python3_:
 ```
 find -L . -maxdepth 6 -samefile /usr/local/bin/python3 -iname python3 -exec ln -sf /usr/bin/python3.9 {} \;
 ```
+
+Recursively delete all directories named .terraform:
+
+```
+find . -type d -name .terraform -prune -exec rm -rf {} \;
+```
