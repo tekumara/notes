@@ -41,7 +41,7 @@ To [checkout pull request HEAD commit instead of merge commit](https://github.co
 
 ## Reusable Workflows
 
-Allow a job, or group of jobs, to be reused across workflows. This allows a tree of jobs to be created, eg: see the overview diagram in [Reusing workflows](https://docs.github.com/en/actions/using-workflows/reusing-workflows). Reusable workflows must have the `workflow_call` trigger, and support parameters.
+Allow a job, or group of jobs, to be reused across workflows. This allows a tree of jobs to be created, eg: see the overview diagram in [Reusing workflows](https://docs.github.com/en/actions/using-workflows/reusing-workflows). Reusable workflows must have the `workflow_call` trigger, and support parameters. Reusable workflows are called by [jobs.<job_id>.uses](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_iduses).
 
 ## Composite actions
 
@@ -51,7 +51,7 @@ Allow a step, or set of steps, to be reused across jobs.
 
 1. `workflow_run` - [triggers a dependent workflow](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run) when a upstream workflow executes or completes. The success or failure of the upstream workflow is available a conclusion to the dependent workflow.
 1. `workflow_call` - see [reusable workflows](#reusable-workflows) above
-1. `workflow_dispatch` - allows a workflow to be manually triggered, eg: via `gh workflow run` or the [dispatches endpoint](https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event). Dispatches workflows run on a branch or tag. They don't generate checks.
+1. [workflow_dispatch](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch) - allows a workflow to be manually triggered, eg: via `gh workflow run` or the [dispatches endpoint](https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event). Dispatched workflows run on a branch or tag. They don't generate checks.
 
 ## pull_request
 
@@ -86,3 +86,13 @@ See
 - [git-auto-commit-action - Use in forks from public repositories](https://github.com/stefanzweifel/git-auto-commit-action?tab=readme-ov-file#use-in-forks-from-public-repositories)
 - [autofix.ci - uses a github app rather than pull_request_target](https://autofix.ci/)
 - [Allowing changes to a pull request branch created from a fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork)
+
+## Troubleshooting
+
+### Workflow does not have 'workflow_dispatch' trigger
+
+The dispatch event runs the workflow at commit `ref`. Make sure the workflow exists at that ref.
+
+### Workflow dispatch does not trigger
+
+You can't use a GITHUB_TOKEN to
