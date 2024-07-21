@@ -48,9 +48,30 @@ The [zsh completion system](http://zsh.sourceforge.net/Doc/Release/Completion-Sy
 
 `compinit` will create a dump file (`~/.zshcompdump`) that will be read on future invocations. `compinit -C` will only create the dump file if one doesn't already exist.
 
-`$fpath` is the [function search path](http://zsh.sourceforge.net/Doc/Release/Functions.html) and contains `/usr/local/share/zsh/site-functions`. The convention for autoloaded functions used in completion is that they start with an underscore; eg: `_docker` to complete `docker` names. When `compinit` runs it reads all files in `$fpath` and reads the first line looking for a `#compdef` or `#autoload` tag, see [Autoloaded files](http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Autoloaded-files).
+`$fpath` is the [function search path](http://zsh.sourceforge.net/Doc/Release/Functions.html) and contains `/usr/local/share/zsh/site-functions`. The convention for autoloaded functions used in completion is that they start with an underscore; eg: `_docker` to complete `docker` names.
 
-A `#compdef` tag or `compdef` command, defines a completion, eg: `compdef _docker docker` enables completion for the name docker via the `_docker` function. See [Functions](http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Functions-2)
+When `compinit` runs it reads all files in `$fpath` and reads the first line looking for a `#compdef` or `#autoload` tag, see [Autoloaded files](http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Autoloaded-files).
+
+A `#compdef` tag or `compdef` command defines a completion, eg: `compdef _docker docker` enables completion for the name docker via the `_docker` function. See [Functions](http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Functions-2)
+
+If something is marked as autoloaded then a stub will be added, eg:
+
+```sh
+❯ autoload -Uz _foobar
+❯ which _foobar
+_foobar () {
+    # undefined
+    builtin autoload -XUz
+}
+```
+
+When `_foobar` is first called zsh will load the function from a file with the same name located in `$fpath`.
+
+To search for files in `$fpath`:
+
+```
+echo $fpath | xargs find | fzf
+```
 
 ## completion troubleshooting
 
