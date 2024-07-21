@@ -41,7 +41,7 @@ class RunArgs(_RequiredRunArgs, total=False):
 ...
 ```
 
-NB: [PEP 655](https://www.python.org/dev/peps/pep-0655/) introduces a new syntax for this in Python 3.10.
+NB: [PEP 655](https://typing.readthedocs.io/en/latest/spec/typeddict.html#required-notrequired) introduces a new syntax for this in Python 3.10.
 
 A TypedDict is not compatible with `dict`, because it is [considered a mutable invariant collection](https://github.com/python/mypy/issues/4976), eg:
 

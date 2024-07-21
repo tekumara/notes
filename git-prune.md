@@ -1,15 +1,25 @@
 # git prune
 
+## Stale tracking branches
+
 See stale tracking branches (ie: `origin/*`) that no longer exist on origin
 
 ```
 git remote prune origin --dry-run
+# or using https://github.com/seachicken/gh-poi
+gh poi --dry-run
 ```
 
 Remove stale origin branches, and keeps the local branch:
 
 ```
 git remote prune origin
+```
+
+Fetch new heads and remove stale local tracking branches:
+
+```
+git fetch -p
 ```
 
 Remove stale origin branches and the same named local branch regardless of merge status (use this for squash merged branches):
@@ -24,17 +34,13 @@ Remove stale origin branches and the same named local branch if the local branch
 git remote prune origin | awk '$2 == "[pruned]" {sub("origin/", "", $3); print $3}' | xargs git branch -d
 ```
 
-Fetch new heads and remove stale local tracking branches:
-
-```
-git fetch -p
-```
-
 To manually remove a tracking branch
 
 ```
 git branch -d -r origin/<name>
 ```
+
+### Gone branches
 
 List branches including `gone` branches:
 
@@ -76,4 +82,14 @@ git branch --merged master | grep -v master | xargs git branch -d
 
 [Source](https://stackoverflow.com/a/33548037/149412)
 
-See also [gh-poi](https://github.com/seachicken/gh-poi) and [git-sync](https://github.com/jacobwgillespie/git-sync)
+## git sync
+
+[git-sync](https://github.com/jacobwgillespie/git-sync) will:
+
+- If the local branch is outdated, fast-forward it;
+- If the local branch contains unpushed work, warn about it;
+- If the branch seems merged and its upstream branch was deleted, delete it.
+
+See [hub-sync](https://hub.github.com/hub-sync.1.html).
+
+Doesn't fetch branches on the remote that you don't have locally.

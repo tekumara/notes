@@ -75,3 +75,17 @@ docker image prune -a --filter 'until=1440h'
 docker volume prune -a
 docker builder prune
 ```
+
+## Docker desktop logs
+
+Check the logs dir for excessive usage:
+
+```
+du -ksh ~/Library/Containers/com.docker.docker/Data/log
+```
+
+And remove it if needed
+
+```
+rm -rf doc~/Library/Containers/com.docker.docker/Data/log
+```

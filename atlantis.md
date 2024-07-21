@@ -34,6 +34,7 @@ Additional features:
 `atlantis version` will [show the terraform version](https://github.com/runatlantis/atlantis/blob/90e92e3a13e8cb7f07ae6b0935b1a0bdf90be927/server/core/runtime/version_step_runner.go) not the atlantis version.
 `atlantis plan -p myproject -- -replace=aws_dynamodb_table.dynamodb_table` to destroy and recreate a resource. Anything after `--` is passed to terraform.
 `atlantis plan -p myproject -- -destroy` to remove myproject (run before deleting the project's files)
+`atlantis state -d dir rm 'aws_instance.example["foo"]' -- -lock=false` modify state
 
 ## Helm
 
@@ -56,13 +57,15 @@ The chart installs:
 
 If this is a concern, then run the projects separately, eg: `atlantis apply -p test` followed by `atlantis apply -p prod`
 
-By default atlantis will require any approver. To only allow approvers that are code owners, set the branch protection rules to `Require review from Code Owners` and in atlantis.yaml set
+By default atlantis will allow anyone to approve the PR before apply. To only allow approvers that are code owners, set the branch protection rules to `Require review from Code Owners` and in atlantis.yaml set
 
 ```
 apply_requirements: [mergeable]
 ```
 
-If you want to ensure PRs are merged after apply, set `automerge`
+To ensure this doesn't prevent merging if `atlantis/apply` is required on your branch, set `ATLANTIS_GH_ALLOW_MERGEABLE_BYPASS_APPLY=TRUE` see [runatlantis/atlantis#2112 (comment)](https://github.com/runatlantis/atlantis/issues/2112#issuecomment-1281138661).
+
+If you want to ensure PRs are merged after apply, set `automerge`.
 
 ### Order
 

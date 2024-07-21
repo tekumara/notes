@@ -16,6 +16,18 @@ Show all stopped processes
 ps -o stat,command,pid | grep '^S+'
 ```
 
+Show command env vars of running process $pid:
+
+```
+ps eww $pid
+```
+
+For nicer formatting use envps, eg: to set env vars of the running pytest process:
+
+```
+envps $(pgrep -f bin/pytest)
+```
+
 ## ps (GNU)
 
 Human-friendly memory stats:

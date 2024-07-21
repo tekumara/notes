@@ -41,3 +41,9 @@ Recursively delete all directories named .terraform:
 ```
 find . -type d -name .terraform -prune -exec rm -rf {} \;
 ```
+
+Delete snapshots/\* keeping top level files and .venv and node_modules
+
+```
+find snapshots -mindepth 2 -not -path "*/.venv*" -not -path "*/node_modules*" -delete
+```

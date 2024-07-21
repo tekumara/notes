@@ -69,7 +69,7 @@ bar:
 
 ## Variable assignment
 
-`VARIABLE = value` - lazy set, values within it are (recursively) expanded **everytime** the variable is used, not when it's declared.
+`VARIABLE = value` - lazy set, values within it are (recursively) expanded **every time and only when**  the variable is used, not when it's declared.
 `VARIABLE := value` - immediate set, values within it are expanded at declaration time
 
 When you want "call" a variable with arguments, use `=`, eg:

@@ -1,8 +1,18 @@
 # aws bedrock
 
-## usage
+## cli
+
+List all models, including ones you don't have access to:
 
 ```
+aws bedrock list-foundation-models | jq -r '.modelSummaries[].modelId'
+```
+
+See also this [list of models by region](https://docs.aws.amazon.com/bedrock/latest/userguide/models-regions.html).
+
+## boto
+
+```python
 import boto3
 bedrock_client = boto3.client(
  service_name='bedrock',
@@ -12,7 +22,7 @@ output_text = bedrock_client.list_foundation_models()
 print(output_text)
 ```
 
-```
+```python
 import boto3, json
 from botocore.config import Config
 config = Config(read_timeout=2, retries={"total_max_attempts": 2})
