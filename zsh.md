@@ -40,57 +40,6 @@ System config files on macOS:
 _/etc/zprofile_  
 _/etc/zshrc_ - sets a few things like the location of zsh_history
 
-## completion
-
-The [zsh completion system](http://zsh.sourceforge.net/Doc/Release/Completion-System.html)
-
-`compinit` initialises completion for the current session, and installs utility functions like `compdef`. `autoload -U compinit` is recommended to autoload it.
-
-`compinit` will create a dump file (`~/.zshcompdump`) that will be read on future invocations. `compinit -C` will only create the dump file if one doesn't already exist.
-
-`$fpath` is the [function search path](http://zsh.sourceforge.net/Doc/Release/Functions.html) and contains `/usr/local/share/zsh/site-functions`. The convention for autoloaded functions used in completion is that they start with an underscore; eg: `_docker` to complete `docker` names.
-
-When `compinit` runs it reads all files in `$fpath` and reads the first line looking for a `#compdef` or `#autoload` tag, see [Autoloaded files](http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Autoloaded-files).
-
-A `#compdef` tag or `compdef` command defines a completion, eg: `compdef _docker docker` enables completion for the name docker via the `_docker` function. See [Functions](http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Functions-2)
-
-If something is marked as autoloaded then a stub will be added, eg:
-
-```sh
-❯ autoload -Uz _foobar
-❯ which _foobar
-_foobar () {
-    # undefined
-    builtin autoload -XUz
-}
-```
-
-When `_foobar` is first called zsh will load the function from a file with the same name located in `$fpath`.
-
-To search for files in `$fpath`:
-
-```
-echo $fpath | xargs find | fzf
-```
-
-## completion troubleshooting
-
-If a completion doesn't load, then trying running `compdump` to recreate the dump file (you can also delete it)
-
-```
-code <TAB>(eval):1: command not found: _code
-(eval):1: command not found: _code
-(eval):1: command not found: _code
-(eval):1: command not found: _code
-```
-
-A completion that used to exist has been removed.
-To fix remove the completions:
-
-```
-rm ~/.zcompdump
-```
-
 ## plugins
 
 - {name}.plugin.zsh (antigen style)
@@ -139,4 +88,12 @@ To avoid a `no match` error when a glob doesn't expand to anything use the `(N)`
 
 ```
 files=($HOME/.kube/*.yaml(N) $HOME/.k3d/kubeconfig*.yaml(N))
+```
+
+## start empty zsh
+
+To start zsh without any env vars set and without loading config files:
+
+```
+env -i zsh -f
 ```
