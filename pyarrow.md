@@ -1,4 +1,45 @@
-# pyarrow
+# arrow
+
+Arrow is optimised for use in-memory and is only lightly compressed. Parquet uses columnar compression. See [What is the difference between Apache Arrow and Apache Parquet?](https://arrow.apache.org/faq/#what-is-the-difference-between-apache-arrow-and-apache-parquet). The [IPC format](#ipc) can be compressed.
+
+## Arrays
+
+> An array represents a known-length sequence of values all having the same type.
+>
+> A arrow::ChunkedArray is, like an array, a logical sequence of values; but unlike a simple array, a chunked array does not require the entire sequence to be physically contiguous in memory. Also, the constituents of a chunked array need not have the same size, but they must all have the same data type.
+
+See [Arrays](https://arrow.apache.org/docs/cpp/arrays.html).
+
+## Arrow table vs Record Batch
+
+> Record batches can be sent between implementations, such as via IPC or via the C Data Interface. Tables and chunked arrays, on the other hand, are concepts in the C++ implementation, not in the Arrow format itself, so they aren’t directly portable.
+>
+> However, a table can be converted to and built from a sequence of record batches easily without needing to copy the underlying array buffers.
+
+See [Record batches](https://arrow.apache.org/docs/cpp/tables.html#record-batches).
+
+## IPC
+
+The [IPC stream format](https://arrow.apache.org/docs/format/Columnar.html#ipc-streaming-format) contains a schema, and a series of `DictionaryBatch` and `RecordBatch`.
+
+The [IPC format](https://arrow.apache.org/docs/format/Columnar.html#ipc-file-format) is an extension of the streaming format that allows for random access.
+
+![formats diagram](https://wesmckinney.com/images/arrow_file_formats.png)
+
+See [Streaming Columnar Data with Apache Arrow](https://wesmckinney.com/blog/arrow-streaming-columnar/).
+
+[Feather v2](https://arrow.apache.org/docs/python/feather.html) is the IPC format. Supports LZ4 and ZSTD compression.
+
+[Mime types and file extensions](https://arrow.apache.org/faq/#mime-types-iana-media-types-for-arrow-data) are:
+
+- `.arrow` is recommend for the IPC file format
+- `.arrows` for the streaming format.
+
+## JSON
+
+pyarrow can [read line-delimited json](https://arrow.apache.org/docs/python/json.html) either compressed or uncompressed, with multi-threading and type inference.
+
+## S3
 
 > When reading from S3, file open/close are very expensive operations, so set a high value for the default_block_size in s3fs.S3FileSystem. This is especially important when reading from large files; experiment and derive the number of bytes to forward seek empirically. When reading all the columns in a Parquet file, do not list the column names in pyarrow.parquet.ParquetFile.read. Pyarrow provides multi-threading for free; utilize it by setting use_threads=True in pyarrow.parquet.ParquetFile.read
 
