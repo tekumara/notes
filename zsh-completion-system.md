@@ -2,21 +2,26 @@
 
 The [zsh completion system](http://zsh.sourceforge.net/Doc/Release/Completion-System.html).
 
-Use `autoload -Uz compinit` to source the stub before running `compinit` (see [Autoloading](#autoloading)).
-
 ## compinit
+
+To initialise, load from $fpath using [autoload](zsh-functions#autoload):
+
+```
+autoload -Uz compinit && compinit
+```
 
 [`compinit`](https://github.com/zsh-users/zsh/blob/master/Completion/compinit) initialises:
 
 - completion system functions like `compdef` and [`compdump`](https://github.com/zsh-users/zsh/blob/master/Completion/compdump).
 
-- completions for the current session by initialising the [completion arrays](https://github.com/zsh-users/zsh/blob/09c5b10dc2affbe4e46f69e64d573b197c14b988/Completion/compinit#L113)
+- completions for the current session
 
-The completion arrays are initialised by loading the dump file if it exists (see [compdump](#compdump) below). Otherwise compinit [iterates through all files in `$fpath`](https://github.com/zsh-users/zsh/blob/09c5b10dc2affbe4e46f69e64d573b197c14b988/Completion/compinit#L520) and reads the first line looking for a `#compdef` or `#autoload` tag, and then executing `compdef` or `autoload` respectively. See [Autoloaded files](http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Autoloaded-files).
+completions for the current session are initialised by loading the [completion arrays](https://github.com/zsh-users/zsh/blob/09c5b10dc2affbe4e46f69e64d573b197c14b988/Completion/compinit#L113) from the dump file if it exists (see [compdump](#compdump) below).
 
-`$fpath` is the [function search path](http://zsh.sourceforge.net/Doc/Release/Functions.html) and contains `/usr/local/share/zsh/site-functions` by [default](https://unix.stackexchange.com/a/607827/2680). Autoloaded functions must start with an underscore; eg: `_docker` to complete `docker` names.
+Otherwise `compinit` [iterates through `$fpath`](https://github.com/zsh-users/zsh/blob/09c5b10dc2affbe4e46f69e64d573b197c14b988/Completion/compinit#L523) to find completion functions that with an underscore; eg: `_docker` to complete `docker` commands.
+`compinit` reads the first line looking for a `#compdef` or `#autoload` tag, and then executes `compdef` or `autoload` respectively. See [Autoloaded files](http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Autoloaded-files).
 
-To search file names in `$fpath` starting with `_`:
+To search your completion functions, ie: file names in `$fpath` starting with `_`:
 
 ```
 echo $fpath | xargs -J % find -E  % -name '_*' | fzf
@@ -28,27 +33,13 @@ The [`compdef` command](https://github.com/zsh-users/zsh/blob/09c5b10dc2affbe4e4
 
 A completion is registered by adding the command and function to the [completion arrays](https://github.com/zsh-users/zsh/blob/09c5b10dc2affbe4e46f69e64d573b197c14b988/Completion/compinit#L381).
 
-The `compdef` command requires `compinit` has been run, otherwise you'll see the error `command not found: compdef`. To be decoupled from initialisation use `#compdef` in files in `$fpath` instead (see above).
+The `compdef` command requires `compinit` has been run, otherwise you'll see the error:
 
-## Autoloading
-
-If something is marked as autoloaded then a stub will be added, eg:
-
-```sh
-❯ autoload -Uz _foobar
-❯ which _foobar
-_foobar () {
-    # undefined
-    builtin autoload -XUz
-}
+```
+command not found: compdef
 ```
 
-When `_foobar` is first called zsh will load the function from a file with the same name located in `$fpath`. Autoload is not only useful for lazy loading. Its used even when you immediately call the function as a way to load the function from `$fpath`.
-
-In autoload `-Uz` ([ref](https://stackoverflow.com/questions/12570749/zsh-completion-difference)):
-
-- the `-U` flag suppresses alias expansion when the function is loaded
-- the `-z` flag mark the function to be autoloaded as native zsh
+To be decoupled from initialisation use `#compdef` in files in `$fpath` instead (see above).
 
 ## compdump
 
