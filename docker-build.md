@@ -108,7 +108,6 @@ tarsum v1 [does not include mtime](https://github.com/moby/moby/pull/12031) but 
 tarsum v1 also includes uid and gids
 
 - in this PR Docker will [normalise uid and guid](https://github.com/docker/cli/pull/513) to 0:0 in the tar archive so these don't matter.
-- but buildkit does not (see https://github.com/moby/buildkit/issues/3291)
 
 To view perms, uid, guid, size, mtime, name use `ll` or
 

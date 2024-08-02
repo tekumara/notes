@@ -6,9 +6,9 @@ A function runs inside the current shell process, whereas a script is started an
 
 Functions are useful for modifying the current shell environment.
 
-## autoload
+## Loading functions
 
-`autoload` or `function -u` creates an undefined function that is lazy-loaded from `$fpath`.
+`autoload` or `function -u` is used to load functions `$fpath`. On execution it creates an undefined function that is lazy-loaded when first used.
 
 An undefined function does not have a body, eg:
 
@@ -23,8 +23,6 @@ foobar () {
 
 When `foobar` is first called, zsh will search `$fpath` to load the function definition from a file named `foobar` or `foobar.zwc`.
 
-Autoload is not only useful for lazy loading. Its used even when you immediately call the function as a way to load the function from `$fpath`.
-
 autoload flags include:
 
 - `-U` suppress alias expansion when the function is loaded
@@ -32,7 +30,7 @@ autoload flags include:
 
 ## fpath
 
-`$fpath` is the search path for function definitions. Its analog is `$path` which is the search path for an executable script or binary.
+`$fpath` is the search path for function definitions. Its similar to `$path` which is the search path for an executable script or binary, except unlike `$path` function definition in `$fpath` must be explicitly autoloaded before its used.
 
 `$fpath` contains `/usr/local/share/zsh/site-functions` by [default](https://unix.stackexchange.com/a/607827/2680).
 
