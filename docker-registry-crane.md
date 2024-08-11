@@ -71,13 +71,21 @@ crane manifest python:3.9.13-buster --platform linux/amd64 | jq '[.layers[].size
 
 ## curl
 
-[List repos](https://docs.docker.com/registry/spec/api/#listing-repositories):
+[List repos](https://distribution.github.io/distribution/spec/api/#listing-repositories):
 
 ```
 curl localhost:5555/v2/_catalog
 ```
 
-[List tags](https://docs.docker.com/registry/spec/api/#listing-image-tags) for a docker hub repo (requires auth, adapted from this [gist](https://gist.github.com/Exchizz/02b2276cb992c5c7cd04a824c921d0f3)):
+[List tags](https://distribution.github.io/distribution/spec/api/#listing-image-tags) for a repo:
+
+```
+curl localhost:5555/v2/my-ubuntu/tags/list
+```
+
+## Auth
+
+[DockerHub auth](https://docs.docker.com/registry/#authentication), adapted from this [gist](https://gist.github.com/Exchizz/02b2276cb992c5c7cd04a824c921d0f3)):
 
 ```
 REPO=tekumara/spark
@@ -85,11 +93,13 @@ TOKEN="$(curl -s "https://auth.docker.io/token?service=registry.docker.io&scope=
 curl -H "Authorization: Bearer $TOKEN" https://registry-1.docker.io/v2/$REPO/tags/list
 ```
 
-List tags for a repo (local registry):
+With Artifactory, use https and basic auth, eg:
 
 ```
-curl localhost:5555/v2/my-ubuntu/tags/list
+curl -u "$ARTIFACTORY_USER:$ARTIFACTORY_PASS" -L https://$REGISTRY/v2/$REPO/tags/list
 ```
+
+Can also use the [auth endpoint to get creds](https://jfrog.com/help/r/jfrog-artifactory-documentation/set-your-docker-credentials-manually).
 
 ## Local registry
 
@@ -105,3 +115,13 @@ Upload:
 docker tag ubuntu:16.04 localhost:5555/my-ubuntu
 docker push localhost:5555/my-ubuntu
 ```
+
+## Docker
+
+Get manifest (same as crane manifest):
+
+```
+docker manifest inpect
+```
+
+Can be used to verify if image exists.

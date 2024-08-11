@@ -161,6 +161,15 @@ Can happen when `pathMappings` point the remote directory to somewhere other tha
 
 Try deleting the pathMappings.
 
+> Notebook weirdness
+
+When debugging a notebook I've noticed:
+
+- values change underneath me
+- not all code paths are hit
+
+Possibly not seeing all the threads?
+
 ## References
 
 - [Python debugging in VS Code](https://code.visualstudio.com/docs/python/debugging)

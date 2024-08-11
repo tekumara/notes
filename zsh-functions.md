@@ -34,7 +34,7 @@ autoload flags include:
 
 `$fpath` contains `/usr/local/share/zsh/site-functions` by [default](https://unix.stackexchange.com/a/607827/2680).
 
-Zsh maintains `$FPATH` and `$fpath` as linked parameters. The uppercase version is a string separated by colons. The lowercase version is an array. Its normally easier to work with the array.
+`$FPATH` and `$fpath` are tied parameters, containing the same value in different formats (see [typeset -T](https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html)). The uppercase param is a string separated by colons. The lowercase param is an array. Its normally easier to work with the array.
 
 ## References
 

@@ -36,15 +36,21 @@ Search all files and subdirectories (-r) of current directory that have the file
 grep -ir --include "*.tsv" boo .
 ```
 
-## Basic vs extended vs perl regular expressions
+## Basic vs extended vs perl regular expressions (BSD)
 
 > In basic regular expressions the meta-characters `?`, `+`, `{`, `|`, `(`, and `)` lose their special meaning; instead use the backslashed versions `\?`, `\+`, `\{`, `\|`, `\(`, and `\)`.
 
 In extended and perl regular expressions they retain their special meaning.
 
-`grep -E` enables ERE, ie: extended regular expressions. See [man re_format](https://www.unix.com/man-page/osx/7/re_format/). This includes [enhanced](https://stackoverflow.com/a/23146221/149412) extended REs, ie: `\s`, `\S` etc.
+BSD grep supports [enhanced](https://stackoverflow.com/a/23146221/149412) REs, ie: `\s`, `\S`, `\d` etc.`grep -E` enables ERE, ie: extended regular expressions. See ENHANCED FEATURES in [man re_format](https://www.unix.com/man-page/osx/7/re_format/).
+
+NB: `\d+` is extended. `\d\+` is the equivalent basic regex.
 
 `grep -P` enables PCRE ie: perl-compatible regular expressions. Needed to support things like the non-greedy operator `?` or [look arounds](#look-arounds-pcre). Not available on BSD grep, see [PCRE on macOS](#pcre-on-macos).
+
+## GNU
+
+To match digits with `\d` using perl expressions on GNU grep, eg: `grep -P '\d+'`
 
 ### PCRE on macOS
 
