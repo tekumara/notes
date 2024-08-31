@@ -25,7 +25,7 @@ class BasicStarship:
     stats: ClassVar[Dict[str, int]] = {}  # class variable
 ```
 
-Note the [python allows an object to overwrite a class variable with an instance variable of the same name](https://microsoft.github.io/pyright/#/type-concepts-advanced?id=class-and-instance-variables)
+Note that [python allows an object to overwrite a class variable with an instance variable of the same name](https://microsoft.github.io/pyright/#/type-concepts-advanced?id=class-and-instance-variables)
 
 ## **init**
 
