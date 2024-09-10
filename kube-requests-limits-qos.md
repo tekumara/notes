@@ -8,7 +8,7 @@ The following recommendations are derived from the [EKS best practices guide](ht
 
 CPU:
 
-- If your app can not use for multiple cores do not request more than 1000m CPU.
+- If your app can not use multiple cores do not request more than 1000m CPU.
 - Do not specify resource limits on CPU. The request acts as a weight on how much relative CPU time containers get, and no limit avoids throttling. If your cluster requires a limit, make this high enough to avoid throttling.
 
 Memory:
@@ -80,6 +80,12 @@ Show requests & limits quotas for the namespace
 
 ```
 kubectl get resourcequotas -o custom-columns="req cpu:.status.hard.requests\.cpu,req mem:.status.hard.requests\.memory,limit cpu:.status.hard.limits\.cpu,limit mem:.status.hard.limits\.memory"
+```
+
+Show limit range for the namespace
+
+```
+kubectl get LimitRange -o yaml
 ```
 
 Show resources available and allocated across the cluster
