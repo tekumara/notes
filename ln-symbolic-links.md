@@ -9,6 +9,7 @@ ln -s source target
 ```
 
 target is the symbolic link's name.
+source is a relative or absolute path. If it's relative it will be resolved relative to the target's directory.
 
 ## Replacing a symbolic link that points to a directory
 

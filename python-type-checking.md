@@ -117,6 +117,19 @@ pyright:
       Type parameter "_T@list" is invariant, but "str" is not the same as "str | None"
 ```
 
+## Mapping covariance
+
+```
+Type parameter "_VT_co@Mapping" is covariant, but "((request: Request, exc: MyException) -> JSONResponse) | ((request: Request, exc: PotatoException) -> JSONResponse)" is not a subtype of "ExceptionHandler"
+```
+
+`_VT_co` = value type, covariant in `@Mapping`
+`_VT` = value type, invariant in `@dict`
+
+## Union covariance
+
+Covariance is a property of type parameters in generic types, not a property of a Union type. To ensure covariance, the components of the union must be covariant.
+
 ## Ignore
 
 Add `# type: ignore` to the end of a line to disable type checking, or the top of the file to disable type-checking for the whole module.
@@ -355,6 +368,36 @@ class Embedder(Protocol):
     def embed(self) -> Sequence[Data]:
         ...
 ```
+
+## Dictionary can't be unpacked
+
+```python
+        model_kwargs = {
+            "max_tokens": chat_params.max_tokens,
+            "temperature": chat_params.temperature,
+            "top_p": chat_params.top_p,
+        }
+        if extraconfig:
+            model_kwargs = model_kwargs | extraconfig
+
+        return self.client.chat.completions.create(
+            model=chat_params.model,
+            messages=messages,
+            **model_kwargs,
+        )
+```
+
+Errors with:
+
+```
+Argument of type "int | float" cannot be assigned to parameter "function_call" of type "FunctionCall | NotGiven" in function "create" (reportArgumentType)
+```
+
+Because when `strictDictionaryInference = true`, then `model_kwargs` is inferred as `dict[str, int | float]` and some of the kwargs to `create` are not `int | float`. NB: if `strictDictionaryInference = false` then `model_kwargs` is inferred as `dict[str, Unknown]`.
+
+Can be fixed by annotating `model_kwargs: dict[str, Any]`.
+
+- [Treat unchanging dictionaries with known keys as ad-hoc TypedDicts to avoid errors involving \*\*kwargs #7270](https://github.com/microsoft/pyright/issues/7270)
 
 ## References
 

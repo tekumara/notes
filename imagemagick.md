@@ -12,6 +12,12 @@ To identify existing format
 identify -format "%x x %y" flyer.pdf
 ```
 
+Convert from webp:
+
+```
+convert img.webp img.png
+```
+
 ## Convert PDFs
 
 Convert PDF to 200dpi image

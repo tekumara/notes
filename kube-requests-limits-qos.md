@@ -9,12 +9,12 @@ The following recommendations are derived from the [EKS best practices guide](ht
 CPU:
 
 - If your app can not use multiple cores do not request more than 1000m CPU.
-- Do not specify resource limits on CPU. The request acts as a weight on how much relative CPU time containers get, and no limit avoids throttling. If your cluster requires a limit, make this high enough to avoid throttling.
+- Do not specify CPU limits. This avoids throttling. If your cluster requires a limit, make this high enough to avoid throttling.
 
 Memory:
 
-- requests=limits provides the most predictable behaviour. If requests!=limits, the container also has its QOS reduced from Guaranteed to Burstable making it more likely to be evicted in the event of node pressure.
-- if you know you need oversubscription to improve efficiency, do not specify a limit that is much larger than the request. The larger limits are configured relative to requests, the more likely nodes will be overcommitted leading to high chances of workload interruption.
+- Set requests=limits. If requests!=limits, the container also has its QOS reduced from Guaranteed to Burstable making it more likely to be evicted in the event of node pressure.
+- If you know you need oversubscription to improve efficiency, do not specify a limit that is much larger than the request. The larger limits are configured relative to requests, the more likely nodes will be overcommitted leading to high chances of workload interruption.
 
 ## Requests
 
@@ -34,7 +34,7 @@ See [How Kubernetes applies resource requests and limits](https://kubernetes.io/
 
 When requests < limits, a pod can opportunistically use resources if they are not being used by other containers. This is known as the `Burstable` QoS class.
 
-When requests = limits for all containers and resources, the pod is assigned the `Guaranteed` QoS class. This is the top priority class. The pod's containers will not be cpu throttled or oom killed unless they exceed limits, or the node is under memory pressure and there are no lower priority containers that can be evicted.
+When requests = limits for all containers and resources (ie: both CPU and mem), the pod is assigned the `Guaranteed` QoS class. This is the top priority class. The pod's containers will not be cpu throttled or OOM killed unless they exceed limits, or the node is under memory pressure and there are no lower priority containers that can be evicted.
 
 ## Unspecified requests or limits
 
@@ -54,7 +54,7 @@ The EKS AMI sets [kubeReserved and evictionHard](https://github.com/awslabs/amaz
 
 ## CPU and requests
 
-CPU requests are a promise of how much CPU the container will receive **when the system is at capacity** (ie: where there are more runnable tasks than available timeslices). It is used to generate the `cpu.shares` value for each container used by the Linux CFS for scheduling. Idle/unused cpu shares are available for other cgroups to use. Containers can burst beyond their requests to consumer idle cpu shares, but they can't steal share from other processes when those process are non-idle. For more info see [CPU Shares for Docker containers](https://www.batey.info/cgroup-cpu-shares-for-docker.html)
+CPU requests are a guaranteed minimum of how much CPU the container will receive **when the system is at capacity** (ie: where there are more runnable tasks than available timeslices). It is used to generate the `cpu.shares` value for each container used by the Linux CFS for scheduling. Idle/unused cpu shares are available for other cgroups to use. Containers can burst beyond their requests to consumer idle cpu shares, but they can't steal share from other processes when those process are non-idle. For more info see [CPU Shares for Docker containers](https://www.batey.info/cgroup-cpu-shares-for-docker.html) and this [comment](https://www.reddit.com/r/kubernetes/comments/wgztqh/comment/ij422xd/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button).
 
 ## Inspection
 

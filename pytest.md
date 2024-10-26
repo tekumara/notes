@@ -18,7 +18,7 @@ Stream logs INFO or greater whilst running, and include time in log message:
 pytest --log-cli-level=INFO --log-cli-format="%(asctime)s %(levelname)s %(message)s"
 ```
 
-List test names
+Run tests listing test names
 
 ```
 pytest -v
@@ -27,7 +27,19 @@ pytest -v
 Run tests which contain the string `perfect_data` and not the string `half` (case-insensitive)
 
 ```
-pytest -k "perfect_data and not half" -v
+pytest -k "perfect_data and not half"
+```
+
+Run test that exactly matches:
+
+```
+pytest tests/test_merge.py::test_transform_merge
+```
+
+List tests found:
+
+```
+pytest --collectonly
 ```
 
 ## Config files
