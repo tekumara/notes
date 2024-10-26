@@ -3,5 +3,5 @@
 Replace \n with newline:
 
 ```
-pbpaste | sd '\\n' '\n'
+pbpaste | sd '\\n' '\n' | pbcopy
 ```

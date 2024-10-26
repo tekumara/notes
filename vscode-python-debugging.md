@@ -168,7 +168,7 @@ When debugging a notebook I've noticed:
 - values change underneath me
 - not all code paths are hit
 
-Possibly not seeing all the threads?
+Possibly not seeing all the threads? Use print statements to understand what's going on.
 
 ## References
 

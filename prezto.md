@@ -8,7 +8,7 @@
 - [terminal](https://github.com/sorin-ionescu/prezto/tree/master/modules/terminal) - sets terminal window title to the current directory (the pure theme does this anyway)
 - [editor](https://github.com/sorin-ionescu/prezto/tree/master/modules/editor) - sets editor specific key bindings options and variables.
 - [history](https://github.com/sorin-ionescu/prezto/tree/master/modules/histhistory) - set share history across sessions and other options
-- [directory](https://github.com/sorin-ionescu/prezto/tree/master/modules/directory) - sets directory options (eg: EXTENDED_GLOB)and prevents > from overwriting existing files.
+- [directory](https://github.com/sorin-ionescu/prezto/tree/master/modules/directory) - sets directory options (eg: EXTENDED_GLOB) and prevents > from overwriting existing files.
 - [utility](https://github.com/sorin-ionescu/prezto/tree/master/modules/utility) - coloured directory listings (ie: `ls -G`), `ll`, safe ops that ask the user for confirmation before performing a destructive operation, spell correction
 - [completion](https://github.com/sorin-ionescu/prezto/tree/master/modules/completion) - [zsh-completions](https://github.com/zsh-users/zsh-completions) with customisation.
 - [prompt](https://github.com/sorin-ionescu/prezto/tree/master/modules/prompt) - nice prompts, eg: [pure](https://github.com/sindresorhus/pure)

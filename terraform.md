@@ -221,3 +221,15 @@ Check that your provider is being used by your resources. If it has an `alias` t
 > │ directory
 
 The modules don't exist on the filesystem. Check the `source`.
+
+### mkdir .terraform: no such file or directory
+
+Race condition if terraform runs concurrently in atlantis.
+
+### Error: Failed to persist state to backend
+
+Try replanning.
+
+### Error: Backend configuration changed
+
+The backend configuration has changed since the last init. Check the command you've run uses the correct backend and backend config command line args.
