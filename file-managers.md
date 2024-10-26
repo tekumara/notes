@@ -14,6 +14,8 @@ Familiar vim keyboard shortcuts.
 
 ## lf
 
+Shows preview
+
 `st` sort by time ascending
 `za` show date and size  
 reverse sort ?

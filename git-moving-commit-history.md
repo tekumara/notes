@@ -46,3 +46,7 @@ When merging, use --allow-unrelated-histories, eg:
 ```
 git merge scala --allow-unrelated-histories
 ```
+
+## References
+
+[Splitting sub-folder(s) out into a new Git repository](https://making.close.com/posts/splitting-sub-folders-out-into-new-git-repository)

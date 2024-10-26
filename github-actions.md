@@ -87,6 +87,10 @@ See
 - [autofix.ci - uses a github app rather than pull_request_target](https://autofix.ci/)
 - [Allowing changes to a pull request branch created from a fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork)
 
+## release
+
+When triggered by `release: [published]` the workflow used is that of the target branch/commit. If the target doesn't have the release trigger then the workflow won't run.
+
 ## Troubleshooting
 
 ### Workflow does not have 'workflow_dispatch' trigger

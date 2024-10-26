@@ -96,6 +96,26 @@ Show the last 3 commits for the current branch
 git log -3
 ```
 
+## Search
+
+Search for commit messages that match pattern
+
+```
+git log --grep=<pattern>
+```
+
+Search for commits with patch text that contains added/removed lines that match pattern, `-p` shows the patch:
+
+```
+git log -G<regex> -p
+```
+
+Search for commits that change the number of occurrences of the string, ie: adds or deletes it. A patch that updates it doesn't isn't included. `-p` shows the patch:
+
+```
+git log -S<string> -p
+```
+
 ## Ranges
 
 git log accepts [range revisions](https://git-scm.com/docs/gitrevisions#_specifying_ranges) to specify a set of commits. The dotted range notation, ie: `..` and `...`, works as follows.

@@ -15,7 +15,7 @@ See also this [list of models by region](https://docs.aws.amazon.com/bedrock/lat
 ```python
 import boto3
 bedrock_client = boto3.client(
- service_name='bedrock',
+ service_name='bedrock-runtime',
  region_name='us-east-1')
 bedrock_client
 output_text = bedrock_client.list_foundation_models()

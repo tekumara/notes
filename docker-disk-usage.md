@@ -87,5 +87,5 @@ du -ksh ~/Library/Containers/com.docker.docker/Data/log
 And remove it if needed
 
 ```
-rm -rf doc~/Library/Containers/com.docker.docker/Data/log
+rm -rf ~/Library/Containers/com.docker.docker/Data/log
 ```
