@@ -106,10 +106,9 @@ export TAG=$(kgd awesome-api -o jsonpath='{.spec.template.metadata.labels.versio
 
 ### Run interactively
 
-`kubectl run helper -it --image=alpine` starts an pod called _helper_ running the alpine image in the cluster with requests/limits of 250m cpu 1Gi mem
+`kubectl run helper -it --image=alpine` starts a pod called _helper_ running the alpine image in the cluster with requests/limits of 250m cpu 1Gi mem
 `kubectl run helper -it --image=alpine --overrides='{ "spec": { "serviceAccount": "your-sa-here" } }'` run _helper_ with your service account
 `kubectl delete pod helper` delete the helper pod
---overrides='{ "spec": { "serviceAccount": "your-sa-here" } }'
 `kubectl run helper -it --image=bitnami/kubectl --command -- /bin/bash` start pod and override command
 `kubectl run helper -it --image=ubuntu --requests "cpu=100m"` starts an ubuntu pod with 100m cpu
 `kubectl run aws-cli -it --image=amazon/aws-cli --command -- /bin/bash` start the aws-cli image
