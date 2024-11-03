@@ -3,10 +3,10 @@
 ## .NET Core
 
 ```
-brew cask install dotnet-sdk
+brew install dotnet-sdk
 ```
 
-This installs the `dotnet` binary.
+This installs the `dotnet` binary together with the SDK.
 
 ## .NET Framework
 
