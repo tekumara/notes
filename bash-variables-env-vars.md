@@ -1,4 +1,4 @@
-# bash variables
+# bash variables and env vars
 
 ## set vs export
 
