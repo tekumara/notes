@@ -110,7 +110,7 @@ On load, if the status bar says "converted" ....
 
 ## Show line ends
 
-`:set list` to show new lines a `$`
+`:set list` to show special chars, eg: `$` for new lines, `^I` for tab
 `:e ++ff=unix` to show carriage returns as `^M` (reopens dos file in unix format). Oor start vim in binary mode, eg: `vim -b`.  
 `:set nolist` to go back to normal.
 `:set ff` to see file type in status bar (eg: unix, dos)

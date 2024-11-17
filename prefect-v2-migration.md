@@ -15,7 +15,6 @@ rg -F -l 'logger = prefect.context.get("logger")' | xargs sed -i '' 's/logger = 
     flowlink = f"https://cloud.prefect.io/flow-run/{ctx.task_run.flow_run_id}"
 ```
 
-
 ```
 @task(trigger=any_successful)
 ```

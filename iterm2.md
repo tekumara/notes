@@ -31,3 +31,18 @@ To enable:
 - Press Other Actions... Set as default
 
 [ref](https://apple.stackexchange.com/questions/154292/iterm-going-one-word-backwards-and-forwards)
+
+#### In .zshrc
+
+Key bindings can also be configured in zsh, eg:
+
+```
+bindkey "\e[1;3D" backward-word     # ⌥←
+bindkey "\e[1;3C" forward-word      # ⌥→
+bindkey "^[[1;9D" beginning-of-line # cmd+←
+bindkey "^[[1;9C" end-of-line       # cmd+→
+```
+
+However they won't work in remote or container terminals, so setting them in iterm is preferred.
+
+[ref](https://stackoverflow.com/a/73241402/149412)

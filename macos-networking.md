@@ -6,6 +6,18 @@ Routing tables:
 netstat -rn
 ```
 
+Internet sockets open by processes owner by current user:
+
+```
+lsof -i -P -n
+```
+
+Owned by any user:
+
+```
+sudo lsof -i -P -n
+```
+
 ## Troubleshooting
 
 ### Service not listening on 127.0.0.1 but listening on [::1]
