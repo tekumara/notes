@@ -2,29 +2,33 @@
 
 ## Summary
 
-I'd put Bazel in the "principled and worth studying but non-ergonomic hard to use" category...
+I'd put Bazel in the "principled and worth studying but non-ergonomic and hard to use" category...
 
-Bazel's primary advantage seems to be for building massive code bases. If it takes you say > 20 mins to do a clean build then it can be a win because it does distributed/parallel build and caching right. I really like the way it does dependency management ie: resolve deps quickly and once up front, rather than seemingly randomly whenever Gradle feels like it, or SBT which takes forever and a day. The Skylark BUILD file language is restricted and not general purpose, which I think is nice because you end up with a declarative build file and a lot of the complexity hidden.
+Bazel's primary advantage seems to be for building massive codebases. If it takes you say > 20 mins to do a clean build, then it can be a win because it does distributed/parallel build and caching right. I really like the way it does dependency management, i.e., resolving deps quickly and once up front, rather than seemingly randomly whenever Gradle feels like it, or SBT which takes forever and a day. The Skylark BUILD file language is restricted and not general purpose, which I think is nice because you end up with a declarative build file and a lot of the complexity hidden.
 
 That said, it's a lot of work to set up (so many layers of indirection!) and unfortunately the out of the box scala rules don't use Zinc so the local test-compile feedback loop is like 2x longer :-( Java is probably OK.
 
-In particular I found setting up external dependencies quite tricky, and there is a lack of support for repositories that require authentication. The external dependency story seems like it could do with a lot of love but I guess it hasn't received much attention because they vendor everything at the big G.
+In particular, I found setting up external dependencies quite tricky, and there is a lack of support for repositories that require authentication. The external dependency story seems like it could do with a lot of love, but I guess it hasn't received much attention because they vendor everything at the big G.
 
 ## What is bazel?
 
-Bazel is a distributed build system, that manages an explicitly defined dependency graph of rules which are pure functions that turn inputs into outputs. Rules can even be bash scripts (see [genrule](https://docs.bazel.build/versions/master/be/general.html#genrule)). Rather than modification times like Make, bazel uses intelligent hashing of the compiler and inputs to detect when rebuilds need to occur. Outputs are stored and managed by the bazel cache using content addressable storage, and can be shared remotely.
+TLDR: reproducible Make + toolchain installation.
 
-Bazel makes it cheap to create fine grained modules, which coupled with pure functions, enable parallelization, caching, and remote execution which can scale your build to very large repos.
+Bazel is a distributed build system that manages an explicitly defined dependency graph of rules which are pure functions that turn inputs into outputs. Rules can even be bash scripts (see [genrule](https://docs.bazel.build/versions/master/be/general.html#genrule)). Rather than modification times like Make, bazel uses intelligent hashing of the compiler and inputs to detect when rebuilds need to occur. Outputs are stored and managed by the bazel cache using content addressable storage, and can be shared remotely.
+
+Bazel makes it cheap to create fine-grained modules which, coupled with pure functions, enable parallelization, caching, and remote execution which can scale your build to very large repos.
 
 Bazel build definitions are meant to be simple, with any complexity pushed into plugins, rather than providing a turing complete build language.
 
 ## Why bazel?
 
+- Support for multiple languages
+- Installs the toolchain for you eg: go compiler, python, java
 - Dependencies are resolved once when added, and not on every build - faster and means you can work offline.
 - Dependencies are versioned once, across all projects, and move in lock-step
 - Reproducible builds - you should never need to run `bazel clean` to get the build system out of an invalid state. Non-reproducibility is considered a bug, eg: [#3360](https://github.com/bazelbuild/bazel/issues/3360). If you want to trade away reproducibility, workers will allow you to run compilers that keep state.
 - Warm starts and incremental module builds across machines - the Bazel remote build cache works across invocations and machines, so you get warms start on a new laptop without having to rebuild everything from a clean slate. Rules (including tests) are only invoked when there are changes.
-- Speed - Bazel doesn't run your compile or test rules any faster than they would usually. In fact, without the use of an incremental compiler (which may cut against reproducibility) individual module builds will run slower. However, by breaking the build into small, pure functions that can be parallelized locally or on cloud machines (via remote execution) so the total build time can be reduced.
+- Speed - Bazel doesn't run your compile or test rules any faster than they would usually. In fact, without the use of an incremental compiler (which may cut against reproducibility) individual module builds will run slower. However, by breaking the build into small, pure functions that can be parallelized locally or on cloud machines (via remote execution) the total build time can be reduced.
 - Supports large code bases (eg: monorepos) - when the time to build a large code base from an empty/clean state is say >20 mins, bazel may be a win because parallelism enables faster builds and caching enables warm starts - see [this discussion](https://github.com/bazelbuild/rules_scala/issues/328#issuecomment-418572865)
 - Explicit graph of build targets - can be queried to see what needs to be redeployed
 
@@ -41,7 +45,7 @@ Areas that are a little rough:
 Pants trades off reproducible builds for faster builds in languages like Scala.
 
 Gradle configures and resolves every time you build. Configuring takes 10s on a large multi-project build and resolving requires an internet connection.
-Reruns tests when nothing has changed and using --build-cache`
+Reruns tests when nothing has changed and using `--build-cache`
 
 Gradle also supports modularisation but gradle modules are typically quite heavyweight, and its build cache hasn't historically been reliable, although this is improving.
 
