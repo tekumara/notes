@@ -35,6 +35,7 @@ Additional features:
 `atlantis plan -p myproject -- -replace=aws_dynamodb_table.dynamodb_table` to destroy and recreate a resource. Anything after `--` is passed to terraform.
 `atlantis plan -p myproject -- -destroy` to remove myproject (run before deleting the project's files)
 `atlantis state -d dir rm 'aws_instance.example["foo"]' -- -lock=false` modify state
+`atlantis import -p myproject module.cool_bucket.aws_s3_bucket.this cool_bucket` see [atlantis import](https://www.runatlantis.io/docs/using-atlantis#atlantis-import)
 
 ## Helm
 

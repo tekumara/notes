@@ -60,7 +60,13 @@ This baselines immediately approves all operating system security-related patche
 
 ## Compliance
 
-If an instance is patched with the NoReboot option, and there are patches pending a reboot, then the instance will have a noncompliant status. Once the instance has been rebooted run the patch baseline scan has been run to update its patch summary to compliant.
+If an instance is patched with the NoReboot option, and there are patches pending a reboot, then the instance will have a non-compliant status. Once the instance has been rebooted ensure the patch baseline scan has been run to update its patch summary to compliant.
+
+## Summaries
+
+The patch summary and compliance summary will show all instances (whether running or not) that have run the patch baseline.
+
+The instance set should be the same, except instances that have been terminated they won't reflect in the patch summary until the baseline runs again.
 
 ## Reference
 

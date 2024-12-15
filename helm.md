@@ -12,7 +12,7 @@
 `helm repo list` list chart repos  
 `helm repo update` get latest version of charts from repos  
 `helm show all $repo/$name` inspect chart $name from repo $repo  
-`helm template mychart --values values.yaml` render chart  
+`helm template mychart --values values.yaml` render chart  eg: `helm template helm-incubator/generic-service -f ./infra/helm/app/values.yaml -f ./infra/helm/app/values-prod.yaml`
 `helm get all $release` describe all info (hooks, manifest, notes, values) for the release  
 `helm get manifest $release` describe all resources for the release (does not include CRDs)  
 `helm get manifest $release | yq '.' -o json allm | jq -r '"- \(.kind) \(.metadata.name)"'` describe all resources kinds and their name

@@ -41,7 +41,7 @@ HashiCorp recommends an admin AWS account for the state bucket see [Multi-accoun
 Terraform allows separate roles for
 
 - read/write state
-- roles in th etarget account to create/update/delete resources.
+- roles in the target account to create/update/delete resources.
 
 References:
 
