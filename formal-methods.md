@@ -31,7 +31,7 @@ And then use a model checker to assert invariants and temporal properties, or pr
 
 ## Liveness & Fairness
 
-Liveness is the property that something good eventually happens. Practically this means avoiding infinite loops or deadlocks and states that cannot be recovered from.
+Liveness is the property that something good eventually happens. Practically this means avoiding infinite loops or deadlocks and states that cannot be recovered from. A deadlock is a state from which all transitions are disabled.
 
 > Liveness in the simplest sense is just specification of reachability properties - does your system always eventually reach some desired state? - using something called a temporal formula
 

@@ -1,6 +1,6 @@
 # Exactly-once delivery is impossible but exactly-once processing is possible
 
-Exactly-once delivery at the network communication layer is impossible. But exactly-once processing in the application layer is possible, if you design your system to tolerate duplicates through idempotency.
+Exactly-once delivery at the network transport layer is impossible. But exactly-once processing in the application layer is possible, if you design your system to tolerate duplicates through idempotency.
 
 Idempotency means that even if a message is delivered multiple times, the processing logic ensures the effect happens only once. However, this does not mean you achieve exactly-once delivery — the message itself may still arrive more than once.
 
@@ -21,7 +21,7 @@ This uncertainty forces the sender to make a choice:
 ## But Exactly-Once Processing is Possible
 
 While **exactly-once delivery** is impossible, **exactly-once processing** is achievable in many real-world applications.
-The trick is to design processing in a way that it can handle duplicate deliveries safely. This is done by making processing **idempotent**. No matter how many times a message is processed, the outcome is the same as if it were processed just once.
+The trick is to design processing in the application in a way that it can handle duplicate deliveries safely. This is done by making processing **idempotent**. No matter how many times a message is processed, the outcome is the same as if it were processed just once.
 
 eg: If the message is "Add $10 to Account A" we can add a unique ID to each transaction so duplicates are detected and ignored.
 
@@ -29,8 +29,12 @@ eg: If the message is "Add $10 to Account A" we can add a unique ID to each tran
 
 This solution requires keeping track of which messages we've processed.
 Theoretically, we need to store this information forever to guarantee perfect idempotency.
-In practice, systems often compromise by storing this information for a reasonable time period.
+In practice, systems often compromise by storing this information for a reasonable time period (eg: SQS FIFO queues store deduplication IDs for 5 minutes).
 
 ## The Bottom Line
 
-Many real-world applications that appear to have exactly-once delivery actually implement exactly-once processing through idempotency. This is good enough for most business needs, even if it's not technically "exactly-once delivery."
+Even if it were possible to guarantee exactly-once delivery at the transport level, it likely wouldn’t achieve what you actually need. Here’s why:
+
+When a subscriber receives a message from the transport layer, it might crash before successfully processing the message. In such a case, you’d want the messaging system to deliver the message again to ensure it gets processed.
+
+Relying strictly on exactly-once delivery would mean the message is never resent, leaving you with a gap in processing if a failure occurs. For most real-world application ensuring reliable processing, rather than strict delivery guarantees, is typically the goal and can be achieved with at-least-once delivery and application-designed idempotency.

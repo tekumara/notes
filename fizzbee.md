@@ -21,6 +21,13 @@ Crashes are represented as valid states when there are no safety or liveness ass
 
 Stutters appear when there are liveness assertions, and no fair actions that make progress towards the live state. Stutter appears on the error graph and is equivalent to crash on the states graph, although the crash state occurs regardless of any liveness assertions.
 
+## Deadlock
+
+Means we have reached a state with no further transitions because there are no enabled actions. This can happen when, either:
+
+- all actions are disabled, or
+- some actions are waiting, and they consume all available concurrency and so enabled actions can't run (happens when `if` is the last statement see [here](https://github.com/fizzbee-io/fizzbee/issues/109#issuecomment-2509387638))
+
 ## States graph
 
 Forks = tree depth
@@ -41,3 +48,11 @@ The state on the left hand side is:
 
 - diff link: the last state
 - yield diff: the last yield. This is usually the same as diff link, except when the last state is a crash then this shows the yield before the crash.
+
+## Vs TLA+
+
+In TLA+ actions are atomic. Atomic actions have no yield points between the statements. In Fizzbee actions and blocks are no atomic unless explicitly stated as `atomic` and so can interleave.
+
+See [FizzBee Quick Start for TLA+ Users](https://github.com/fizzbee-io/fizzbee/blob/8ea290d56e9d3d35baf9b710cadfd64fd1bab30a/docs/fizzbee-quick-start-for-tlaplus-users.md).
+
+FizzBee can more succiently model parallel statements using `parallel`. See the equivalent [tla+ here](https://github.com/fizzbee-io/fizzbee/blob/8ea290d56e9d3d35baf9b710cadfd64fd1bab30a/docs/language_design_for_review.md#parallel).
