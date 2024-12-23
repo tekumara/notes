@@ -100,28 +100,28 @@ Export CSV (nb: set the UI to order from oldest to latest).
 using duckdb:
 
 ```sql
-CREATE TEMP TABLE ace AS SELECT * FROM read_csv_auto ('trans270424.csv');
+CREATE TEMP TABLE ace AS SELECT * FROM read_csv_auto ('trans211224.csv');
 
 .mode csv
 .headers on
 -- nb this will overwrite the file
 .once trans.ace.csv 
 
-select '' as Num,strftime(column0, '%d/%m/%Y') as Date,
+select '' as Num,strftime(Date, '%d/%m/%Y') as Date,
   regexp_replace(
     -- format by stripping out leading transaction type and using it as a comment bellow
     regexp_replace(
-      column1, '^(Visa Purchase( O/Seas)?|Visa Credit( Overseas)?|Osko Withdrawal|Osko Deposit|Sct Deposit|Eftpos Debit|Eftpos Credit|Tfr Wdl BPAY Internet|Atm Withdrawal( -Wbc)?)\s+\S+\s',''
+      Description, '^(Visa Purchase( O/Seas)?|Visa Credit( Overseas)?|Osko Withdrawal|Osko Deposit|Sct Deposit|Eftpos Debit|Eftpos Credit|Tfr Wdl BPAY Internet|Atm Withdrawal( -Wbc)?)\s+\S+\s',''
     ),
     -- normalise by striping out trailing reference numbers
     '\d{4,}$', ''
   ) as Payee,
   '' as Category,'' as S,
-  column2 as Withdrawal,
-  column3 as Deposit,
-  column4 as Total,
+  Debit as Withdrawal,
+  Credit as Deposit,
+  Balance as Total,
   regexp_extract(
-      column1, '^(Visa Purchase( O/Seas)?|Visa Credit( Overseas)?|Osko Withdrawal|Osko Deposit|Sct Deposit|Eftpos Debit|Eftpos Credit|Tfr Wdl BPAY Internet|Atm Withdrawal( -Wbc)?)'
+      Description, '^(Visa Purchase( O/Seas)?|Visa Credit( Overseas)?|Osko Withdrawal|Osko Deposit|Sct Deposit|Eftpos Debit|Eftpos Credit|Tfr Wdl BPAY Internet|Atm Withdrawal( -Wbc)?)'
   ) as Comment
 from ace
 order by rowid asc;
