@@ -75,6 +75,10 @@ from trans;
 
 ## BankWest
 
+Use MS Money (QIF)
+
+### CSV (not recommended)
+
 Export CSV and use duckdb to reverse order the transactions so the balance matches the UI:
 
 ```sql

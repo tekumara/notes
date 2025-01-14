@@ -4,7 +4,7 @@
 
 - orion (only 1password extension): 356
 - arc (w/ 1password, ublock): 361, 246
-- arc (icognito): 418
+- arc (incognito): 418
 - firefox (with extensions): 254
 - firefox (private window): 322
-- chrome (icognito): 418
+- chrome (incognito): 418
