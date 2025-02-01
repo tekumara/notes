@@ -31,7 +31,23 @@ cargo install rustfmt
 cargo fmt
 ```
 
+## Updating deps
+
+Update the dep in Cargo.toml and then run `cargo build` to update the lockfile and rebuild.
+
+## Specifying deps
+
+If you specify a dependency as `"0.1.12"` it allows for any compatible version according to semantic versioning (semver), eg: in this case it means anything in the range `>=0.1.12, <0.2.0`. Use the string `"=0.1.12"` to pin to only that version and not a range.
+
+See [Specifying Dependencies](https://doc.rust-lang.org/nightly/cargo/reference/specifying-dependencies.html)
+
 ## Tests
+
+To run tests (auto rebuilding if needed):
+
+```
+cargo test
+```
 
 Cargo will search your source file for tests and show `running 0 tests` when they [don't contain any tests](https://doc.rust-lang.org/cargo/guide/tests.html).
 

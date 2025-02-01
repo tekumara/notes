@@ -8,7 +8,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source $HOME/.cargo/env
 ```
 
-To upgrade:
+To upgrade to latest rustc:
 
 ```
 rustup update
