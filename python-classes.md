@@ -27,7 +27,8 @@ class BasicStarship:
 
 Note that [python allows an object to overwrite a class variable with an instance variable of the same name](https://microsoft.github.io/pyright/#/type-concepts-advanced?id=class-and-instance-variables)
 
-## **init**
+## \_\_init\_\_
 
-If you override the `__init__` method of a superclass, and you want it to be called, you need to do that explicitly, eg:
-`super().__init__(...)`
+A subclass will contain its superclass's `__init__` method. If you override the `__init__` method of a superclass, and you want it to be called, you need to do that explicitly, eg: `super().__init__(...)`
+
+See [When is \_\_init\_\_ called exactly?](https://discuss.python.org/t/when-is-init-called-exactly/12892/2)

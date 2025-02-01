@@ -97,3 +97,9 @@ jupyter-labextension list
 jupyter-nbextension list
 jupyter-bundlerextension list
 ```
+
+## Troubleshooting
+
+> TqdmWarning: IProgress not found
+
+`pip install ipywidgets`

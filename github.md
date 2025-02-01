@@ -13,3 +13,9 @@
   ```
 </details>
 ````
+
+## Notifications for specific repos in Slack
+
+```
+/github subscribe org repo
+```
