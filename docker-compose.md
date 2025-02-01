@@ -41,16 +41,24 @@ Docker Desktop ships:
 
 ### Error response from daemon: network ... not found
 
+This can happen when a container is created with a network and `docker compose down` removes the network but not the container. This will happen when the container is part of a profile but that profile isn't specified in `docker compose down`.
+
+So the container still exists but will have the old network id, and when `docker compose up` runs it starts the container but can't find the network.
+
+Either:
+1. Remove the container with `docker compose down <profile>`
+1. Re-up using `docker compose up --force-recreate` to recreate the container, which will point it at the newly created network. See [#5745](https://github.com/docker/compose/issues/5745#issuecomment-590400979).
+
 A service is dependent on another service in a different profile, eg:
 
 ```
     profiles: ["frontend"]
     depends_on:
-      backend:
+      db:
         condition: service_started
 ```
 
-But the qdrant service is not in the `app` profile.
+But the db service is not in the `frontend` profile.
 
 Either align the profiles or place them all on the same network, eg:
 
@@ -66,7 +74,7 @@ services:
     networks:
       - common_network
     depends_on:
-      backend:
+      db:
         condition: service_started
 
   api:

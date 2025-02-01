@@ -1,6 +1,6 @@
 # GCP remote dev
 
-Colab
+Colab Enterprise
 
 - no github.com integration
 - serverless
@@ -20,4 +20,5 @@ Cloud Workstations
 - VMs with an IDE accessible by browser or remote ssh
 
 https://cloud.google.com/workstations/docs/develop-code-using-local-vscode-editor#connect-to-cloud-workstations-host
+
 https://cloud.google.com/workstations/docs/base-editor-overview#upload_and_download_files_and_directories
