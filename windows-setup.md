@@ -1,5 +1,7 @@
 # Windows setup
 
+A basic Windows 10 setup with the Windows SDK, scope, rust needs ~50 GB.
+
 ## Create a non-admin user
 
 Settings - Accounts - Other Users - Add account - I don't have this person's sign-in information - Add a user without a Microsoft account

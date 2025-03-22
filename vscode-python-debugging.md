@@ -170,6 +170,10 @@ When debugging a notebook I've noticed:
 
 Possibly not seeing all the threads? Use print statements to understand what's going on.
 
+> connect ECONNREFUSED 127.0.0.1:62888
+
+If this happens when using `debugpy` in the terminal, check the terminal doesn't have a yellow warning label to signify the terminal needs to be relaunced see [No-Config Debugging - Troubleshooting](https://github.com/microsoft/vscode-python-debugger/wiki/No%E2%80%90Config-Debugging#troubleshooting)
+
 ## References
 
 - [Python debugging in VS Code](https://code.visualstudio.com/docs/python/debugging)
