@@ -344,7 +344,7 @@ BUCKET=awesome-bucket && aws s3api put-bucket-policy --bucket $BUCKET --policy '
 eg:
 
 ```
-aws s3 ls s3://ai2-public-datasets/ --no-sign-request
+aws s3 ls --recursive --summarize --human-readable s3://ai2-public-datasets/ --no-sign-request
 ```
 
 ## S3 Bucket Keys

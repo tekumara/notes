@@ -44,7 +44,7 @@ bar
 
 # NB: but foo3 is not set in the shell
 echo $foo3
-
+    
 # Take the COLUMNS shell var and export it to a subprocess that is piped (defaults to 80 when stdout is piped)
 COLUMNS=$COLUMNS python -c 'import shutil; print(shutil.get_terminal_size())' | head
 os.terminal_size(columns=151, lines=24)

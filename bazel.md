@@ -476,6 +476,18 @@ error: object apache is not a member of package org
 
 ..and when navigating to the file in IntelliJ you will see the ijar only. Add the relevant dependency to the package's BUILD file (in this case commons_codec).
 
+```
+ERROR: no such package '@@+_repo_rules+fizzbee//': BUILD file not found in directory '' of external repository @@+_repo_rules+fizzbee. Add a BUILD file to a directory to mark it as a package.
+```
+
+Can't find BUILD in your http_archive. Use strip_prefix to remove any top-level directory prefix.
+
+```
+ERROR: error loading package '@@+_repo_rules+fizzbee//': Unable to find package for @@[unknown repo 'rules_go' requested from @@+_repo_rules+fizzbee]//go:def.bzl: The repository '@@[unknown repo 'rules_go' requested from @@+_repo_rules+fizzbee]' could not be resolved: No repository visible as '@rules_go' from repository '@@+_repo_rules+fizzbee'.
+```
+
+Add rules_go to MODULE.bazel.
+
 ## Buildozer
 
 Install: `go get github.com/bazelbuild/buildtools/buildozer`

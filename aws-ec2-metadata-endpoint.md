@@ -57,6 +57,14 @@ Instance type
 curl http://169.254.169.254/latest/meta-data/instance-type
 ```
 
+## Cloud init
+
+Cloud init also provides much of the same [instance metadata](https://cloudinit.readthedocs.io/en/stable/explanation/instancedata.html), eg:
+
+```
+cat /run/cloud-init/instance-data.json
+```
+
 ## Reference
 
 [Instance metadata categories](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-categories.html) lists whats available from the metadata endpoint.
