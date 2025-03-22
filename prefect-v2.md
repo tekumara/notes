@@ -81,6 +81,48 @@ Mapping always runs concurrently via the task runner:
 
 See [States](https://docs.prefect.io/concepts/states/)
 
+## Logging
+
+Prefect will override any explicit logging config, eg: (`logging.basicConfig()`) and config logging according to its [logging.yml](https://github.com/PrefectHQ/prefect/blob/c4b74cfd3b3b693fc228261abee00a8b3bef6f43/src/prefect/logging/logging.yml). This defaults to INFO level logs from prefect's own logger, and [WARNING level logs](https://github.com/PrefectHQ/prefect/blob/c4b74cfd3b3b693fc228261abee00a8b3bef6f43/src/prefect/logging/logging.yml#L123) for everything else.
+
+To capture non-Prefect loggers and send them to Prefect via the [API handler](https://github.com/PrefectHQ/prefect/blob/c4b74cfd3b3b693fc228261abee00a8b3bef6f43/src/prefect/logging/logging.yml#L82) (but not the console):
+
+```
+PREFECT_LOGGING_EXTRA_LOGGERS=httpx python -m myflow
+```
+
+Non-Prefect loggers use the [`prefect.extra` handler](https://github.com/PrefectHQ/prefect/blob/c4b74cfd3b3b693fc228261abee00a8b3bef6f43/src/prefect/logging/configuration.py#L94). To send their logs to the console as well as the API set:
+
+```
+PREFECT_LOGGING_LOGGERS_PREFECT_EXTRA_PROPAGATE=true
+```
+
+Structlog loggers will bypass Prefect logging altogether.
+
+## Gotchas
+
+This is supposed to override the root log level:
+
+```
+PREFECT_LOGGING_ROOT_LEVEL=info python -m myflow
+```
+
+However, it silences all logs ... unless you reset logging:
+
+```
+logging.basicConfig(level=logging.INFO, force=True)
+```
+
+
+
+
+
+To override level for a third party logger (defaults to warning):
+
+```
+PREFECT_LOGGING_LOGGERS_HTTPX_LEVEL=info
+```
+
 ## Troubleshooting
 
 ### Crash detected! Execution was interrupted by an unexpected exception.
@@ -91,3 +133,7 @@ The pod failed before prefect could start. Check the pod logs.
 
 - Check the logs of the agent.
 - Check the agent is configured with the correct PREFECT_API_URL / PREFECT**CLOUD**API env var.
+
+```
+
+```

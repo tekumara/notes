@@ -77,11 +77,17 @@ pstree 4099
 See all child threads created by PID 4099, individually with their PID
 
 ```
-ps -p 4099
+pstree -p 4099
 ```
 
 See parents, and children, of PID 4099, individually with their PID
 
 ```
-ps -s -p 4099
+pstree -s -p 4099
+```
+
+Show child processes of 4099
+
+```
+ps -f --ppid 4099
 ```

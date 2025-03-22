@@ -190,3 +190,11 @@ The `pip` module isn't present on `sys.path`.
 > pyenv-virtualenvwrapper: system: python is not available.
 
 pyenv-virtualenvwrapper expects `python` to be on the path, has it been installed? If using ubuntu, the [python-is-python3](https://launchpad.net/ubuntu/focal/+package/python-is-python3) package can be used to symlink python -> python3.
+
+> pyenv: virtualenv: command not found
+
+Install virtualenv:
+
+```
+PIP_REQUIRE_VIRTUALENV=false pip install --force-reinstall virtualenv
+```

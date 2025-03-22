@@ -45,6 +45,7 @@ Install using a named urlspec from a git branch with dev extras:
 
 ```
 pip install 'aec[dev] @ git+https://github.com/seek-oss/aec.git@master'
+pip install 'aec[dev] @ git+ssh://git@github.com/seek-oss/aec.git@master'
 ```
 
 NB: if you have already the package, delete it first so pip will detect the missing package and install from alternative location.
