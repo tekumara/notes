@@ -137,9 +137,9 @@ Pylance bundles stubs for pandas, matplotlib and [other libraries](https://githu
 
 ## Exporting symbols from a typed library
 
-Python doesn't have an explicit export keyword. Instead conventions has arisen on how to specify which modules and symbols in a library are its [public interface](https://github.com/microsoft/pyright/blob/main/docs/typed-libraries.md#library-interface). These include the following in in _\_\_init\_\_.py_:
+Python doesn't have an explicit export keyword to indicate symbols that are for use by consumers of a package. Instead conventions has arisen on how to specify which modules and symbols in a library are its [public interface](https://github.com/microsoft/pyright/blob/main/docs/typed-libraries.md#library-interface). These include the following in _\_\_init\_\_.py_:
 
-- specifying exported symbols via the `__all__` symbol
+- specifying exported symbols via the `__all__` symbol, or
 - using a redundant module or symbol alias during the import, eg: `from . import box as box`. See [PEP 484](https://www.python.org/dev/peps/pep-0484/#stub-files) and the example here in [rich #1596](https://github.com/willmcgugan/rich/pull/1596/files).
 
 [pyright 1.1.168](https://github.com/microsoft/pyright/releases/tag/1.1.168) and later errors with `reportPrivateImportUsage` when trying to import symbols that it considers private (ie: haven't be declared as above) from a type stubs or a py.typed library.

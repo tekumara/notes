@@ -130,6 +130,38 @@ Type parameter "_VT_co@Mapping" is covariant, but "((request: Request, exc: MyEx
 
 Covariance is a property of type parameters in generic types, not a property of a Union type. To ensure covariance, the components of the union must be covariant.
 
+## Typevar covariance
+
+eg:
+
+```
+  error: Argument of type "CollectionDef[TableSource[Fruit]]" cannot be assigned to parameter "cdef" of type "CollectionDef[CollectionSource[D@index]]" in function "index"
+    "CollectionDef[TableSource[Fruit]]" is incompatible with "CollectionDef[TableSource[Fruit] | SQLSource[Fruit]]"
+      Type parameter "S@CollectionDef" is invariant, but "TableSource[Fruit]" is not the same as "TableSource[Fruit] | SQLSource[Fruit]"
+```
+
+Make the TypeVar covariant:
+
+```python
+CollectionSource = TableSource[D] | SQLSource[D]
+
+S = TypeVar("S", bound=CollectionSource, covariant=True)
+```
+
+## Type is already specialized
+
+```
+Type "TableSource[Unknown]" is already specializedPylancereportInvalidTypeArguments
+Type "SQLSource[Unknown]" is already specializedPylancereportInvalidTypeArguments
+(type) CollectionSource = TableSource[Unknown] | SQLSource[Unknown]
+```
+
+Ensure CollectionSource is parameterised:
+
+```python
+CollectionSource = TableSource[D] | SQLSource[D]
+```
+
 ## Ignore
 
 Add `# type: ignore` to the end of a line to disable type checking, or the top of the file to disable type-checking for the whole module.

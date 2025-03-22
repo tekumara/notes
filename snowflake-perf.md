@@ -10,3 +10,7 @@
 the fewer overlaps the more discriminating a key, see [Clustering Depth Illustrated](https://docs.snowflake.com/en/user-guide/tables-clustering-micropartitions#clustering-depth-illustrated)
 
 use [SYSTEM$CLUSTERING_INFORMATION](https://docs.snowflake.com/en/sql-reference/functions/system_clustering_information) to get the average overlaps.
+
+## clustering keys
+
+[Clustering Keys & Clustered Tables](https://docs.snowflake.com/en/user-guide/tables-clustering-keys)

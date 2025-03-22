@@ -100,8 +100,8 @@ Make sure your pattern is valid on macOS, eg: use `[[:digit:]]` instead of `\d`
 ## Prefix with newline
 
 `echo hello | sed -e 's/^/\\n/'` produces `\nhello`
-
-`echo hello | sed -e $'s/^/\\\n/'` works correctly. The `$'....'` contains a string literal in which bash performs C-style backslash substitution, e.g. `$'\n'` is translated to an actual newline. The `\\` is needed to produce a `\` which is required by sed in front of an actual newline. [ref](https://stackoverflow.com/a/11163357/149412)
+`echo hello | sed -e 's/^/\n/'` works
+`echo hello | sed -e $'s/^/\\\n/'` also works. The `$'....'` contains a string literal in which bash performs C-style backslash substitution, e.g. `$'\n'` is translated to an actual newline. The `\\` is needed to produce a `\` which is required by sed in front of an actual newline. [ref](https://stackoverflow.com/a/11163357/149412)
 
 ## + not matching
 

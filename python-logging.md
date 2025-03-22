@@ -51,3 +51,21 @@ PYTHONWARNINGS=once python ..
 ```
 
 See also how to configure this for [pytest](https://docs.pytest.org/en/latest/how-to/capture-warnings.html#disabling-warnings-summary).
+
+## Exceptions and errors
+
+These do the same thing, ie: log at ERROR level with an exception traceback:
+
+```python
+logger.exception(f"Unhandled exception {sql_text=}")
+logger.exception(f"Unhandled exception {sql_text=}", exc_info=e)
+logger.error(f"Unhandled error {sql_text=}", exc_info=e)
+```
+
+This doesn't show the traceback:
+
+```python
+logger.error(f"Unhandled error {sql_text=}")
+```
+
+See [error-instead-of-exception (TRY400)](https://docs.astral.sh/ruff/rules/error-instead-of-exception/)
