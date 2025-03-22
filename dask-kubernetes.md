@@ -38,6 +38,8 @@ Port forward dask (8786) and dashboard (8787)
 
 ```
 kubectl port-forward svc/dask-root-a31d4f8a-4 8786:8786 8787:8787
+# or when using dask operator
+kubectl port-forward svc/dask-cluster-scheduler 8786:8786 8787:8787
 ```
 
 CPU/Mem usage of scheduler

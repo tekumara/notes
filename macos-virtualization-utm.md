@@ -20,11 +20,17 @@ VM specific config can only be accessed when the VM is topped. Switch windows to
 
 ## Sharing
 
-Install the guest tools for you OS, eg: [Windows](https://docs.getutm.app/guest-support/windows/). NB: must be run as administrator.
+Install the guest tools for your OS, eg: [Windows](https://docs.getutm.app/guest-support/windows/). NB: must be run as administrator.
 
 Select the folder to share from the Shared Folder icon on the top right of the running VM. This can be changed at any time.
 
 This folder will be now available as Z:\
+
+## Disk space
+
+The qcow2 image isn't preallocated and will grow and shrink automatically as the VM disk usage changes.
+
+To reclaim Windows disk space, within Windows go to System - Storage - Temporary Files - Remove files.
 
 ## Troubleshooting
 

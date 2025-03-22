@@ -1,5 +1,11 @@
 # golang modules
 
+Init:
+
+```
+go mod init
+```
+
 To add a module:
 
 ```

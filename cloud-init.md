@@ -6,13 +6,19 @@ cloud-init runs as root, to view the logs:
 sudo less /var/log/cloud-init-output.log
 ```
 
-view user data for current instance:
+view user data for current instance (requires sudo because its considered sensitive):
 
 ```
 sudo cat /var/lib/cloud/instance/user-data.txt
 ```
 
 (previous instance instantiations are available in /var/lib/cloud/instances/)
+
+To see [instance metadata](https://cloudinit.readthedocs.io/en/stable/explanation/instancedata.html) (world-readable)
+
+```
+/run/cloud-init/instance-data.json
+```
 
 ## Package modules
 
