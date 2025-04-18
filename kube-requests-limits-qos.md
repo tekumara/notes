@@ -94,6 +94,11 @@ Show resources available and allocated across the cluster
 kubectl describe nodes
 ```
 
+## Why does throttling occur when cpu requests % in grafana is low?
+
+CPU quota is granted and throttled by 100ms slices.
+The Grafana [rate](https://prometheus.io/docs/prometheus/latest/querying/functions/#rate) aggregates CPU Request % at a larger grain, eg: 2 mins `rate(container_cpu_usage_seconds_total {...}[2m])`
+
 ## References
 
 - [Resource Quality of Service in Kubernetes](https://github.com/kubernetes/design-proposals-archive/blob/main/node/resource-qos.md)

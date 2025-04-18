@@ -39,3 +39,9 @@ class Money(Decimal):
     ) -> CoreSchema:
         return core_schema.no_info_before_validator_function(cls.strip_currency_symbols, core_schema.decimal_schema())
 ```
+
+## Convert list to json
+
+```python
+json.dumps(pydantic_core.to_jsonable_python(mylist))
+```
