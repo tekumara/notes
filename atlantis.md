@@ -68,6 +68,8 @@ To ensure this doesn't prevent merging if `atlantis/apply` is required on your b
 
 If you want to ensure PRs are merged after apply, set `automerge`.
 
+To prevent applies if there are any changes on the base branch since the most recent plan set the [undiverged apply requirement](https://www.runatlantis.io/docs/command-requirements.html#undiverged).
+
 ### Order
 
 eg: _atlantis.yaml_

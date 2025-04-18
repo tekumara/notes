@@ -1,5 +1,13 @@
 # docker disk usage
 
+A sign you are running out of space in the docker disk image file is apt-get failures:
+
+```
+6.111 W: An error occurred during the signature verification. The repository is not updated and the previous index files will be used. GPG error: http://ports.ubuntu.com/ubuntu-ports focal InRelease: At least one invalid signature was encountered.
+```
+
+Verify this by checking physical usage (see below)
+
 ## Physical usage
 
 ### Docker Desktop on Mac
