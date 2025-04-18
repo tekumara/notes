@@ -4,7 +4,7 @@ A mechanism for storing development package requirements in pyproject.toml files
 
 Similar to requirements.txt in that:
 
-- they are not published as distinct metadata in any built distribution (unlike `extras`)
+- they are not published as distinct metadata in any built distribution (unlike `project.optional-dependencies` aka extras in pyproject.toml)
 - installation of a dependency group does not imply installation of a package's dependencies or the package itself. Part of their purpose is to support non-package projects.
 
 Groups can include other groups, creating hierarchies.

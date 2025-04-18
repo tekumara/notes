@@ -51,3 +51,4 @@ The TaskGroup will wait for both tasks to complete, and will cancel one if the o
 ## Notes
 
 An object constructor cannot be async.
+
