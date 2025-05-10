@@ -35,7 +35,7 @@ A
 B
 ```
 
-Select specific keys from objects in  array:
+Select specific keys from objects in array:
 
 ```
 echo ' [ {"a": 1, "b": 2}, {"a": 3, "b": 4} ] ' | jq '[ .[]| {a} ]'
@@ -54,6 +54,19 @@ Choose an element in an array based on a key value, and return another one of it
 ```json
 echo '[ { "snapshot":"A", "state": "1" }, { "snapshot":"B", "state": "2" }]' | jq 'map(select(.snapshot == "A")) | .[0].state'
 "1"
+```
+
+map isn't needed if the array is unwrapped eg:
+
+```
+❯ echo '[ { "snapshot":"A", "state": "1" }, { "snapshot":"B", "state": "2" }]' | jq '.[] | select(.snapshot == "A") | .state'
+"1"
+```
+
+Example using terraform state and a jq arg (variable)
+
+```
+cat /tmp/tfstate | jq --arg module "module.$repo" '.resources[] | select(.module == $module and .type == "github_repository") | .instances[0].attributes | {merge_commit_message,merge_commit_title, etag}'
 ```
 
 `jq -C` write out ANSI colours when piping (useful with less -R)

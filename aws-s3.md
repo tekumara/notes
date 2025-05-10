@@ -341,10 +341,10 @@ BUCKET=awesome-bucket && aws s3api put-bucket-policy --bucket $BUCKET --policy '
 
 ## Access a public bucket without credentials
 
-eg:
+a csv file
 
 ```
-aws s3 ls --recursive --summarize --human-readable s3://ai2-public-datasets/ --no-sign-request
+aws s3 cp --no-sign-request s3://air-example-data/iris.csv - | head
 ```
 
 a json file

@@ -75,6 +75,8 @@ To remove everything:
 `docker system prune -a` remove all stopped containers, unused networks, unused images, and the whole build cache  
 `docker system prune -a --volumes` above + volumes too
 
+### Recommended cleanup
+
 To remove most things, keeping images and containers built in the last 60 days:
 
 ```
