@@ -34,4 +34,10 @@ ykman otp swap
 
 ### Yubico Authenticator won't start on MacOS
 
+Upgrade to the latest version:
+
+```
+brew upgrade yubico-authenticator
+```
+
 In System Settings - Privacy & Security - Input Monitoring: add Yubico Authenticator.

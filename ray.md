@@ -1,6 +1,6 @@
 # ray
 
-"Kubernetes in Python":
+"Kubernetes in Python" or "Multi-processing on a cluster"
 
 - auto-scaling from zero based on task queue depth ([unlike AWS Batch](https://raysummit.anyscale.com/content/Videos/nAcQJ2jkNGDjJ5smP)).
 - heterogeneous pipelines across CPU and GPU to maximise GPU usage
@@ -39,6 +39,27 @@ ray spills to _/tmp/ray/session\_\*/ray_spilled_objects_
 - a [distributed scheduler](https://www.youtube.com/watch?v=2fem9_iBo-c) vs the central dask scheduler - see [Ownership](https://docs.google.com/document/d/1tBw9A4j62ruI5omIJbMxly-la5w4q_TjyJgJL_jN2fI/preview#heading=h.vjc9egi2q5aa)
 - workers on the same node can share memory via the [plasma object store](https://docs.ray.io/en/latest/ray-core/objects/serialization.html), which allows zero-copy read-only access to numpy arrays
 - [spill to s3](https://docs.ray.io/en/latest/ray-core/objects/object-spilling.html)
+
+## remote debugging
+
+You can use VS Code breakpoints in remote tasks/actors and attach to the head/driver, but you won't be able to see the local variables in a local subprocess or a remote process on a cluster.
+
+To debug a sub/remote process you'll need to get it to trigger the debugger:
+
+1. First install `debugpy` into your ray environment before starting ray.
+1. Then add a `breakpoint()` line to your remote code. When this is hit, the program will pause and you'll see the debugger listening on a randomly assigned port:
+
+   > Ray debugger is listening on 127.0.0.1:60895
+
+You can create a launch config with this port and connect, or you can use the [Ray Distributed Debugger VS Code plugin](https://marketplace.visualstudio.com/items/?itemName=anyscalecompute.ray-distributed-debugger).
+
+The plugin finds the remote task via the dashboard and attaches to it. For the task to be visible to the plugin, ray must be started with the dashboard, which is installed via `pip install "ray[default]"`. When ray starts the dashboard you'll see the following in the logs:
+
+> ... View the dashboard at http://127.0.0.1:8265
+
+See [Ray Distributed Debugger](https://docs.ray.io/en/latest/ray-observability/ray-distributed-debugger.html).
+
+NB: the `RAY_DEBUG` env var doesn't need to be set.
 
 ## troubleshooting
 

@@ -19,7 +19,9 @@ requires-dist = [
 ]
 ```
 
-If this don't match pyproject.toml the lock file is considered out of date. Updating the lock file, via `uv lock` or `uv sync` or `uv run` will update the `package.*` keys and make a _minimal_ update to the lock file, ie: packages will only change if pyproject.toml has changed, or dependency constraints [now exclude the previous locked version](https://docs.astral.sh/uv/concepts/projects/sync/#upgrading-locked-package-versions). To bump all packages to the latest version use `uv lock --upgrade` or `uv sync --upgrade`.
+If these don't match pyproject.toml the lock file is considered out of date. Updating the lock file, via `uv lock` or `uv sync` or `uv run`, will update the `package.*` keys and make a _minimal_ update to the lock file, ie: packages will only change if pyproject.toml has changed, or dependency constraints [now exclude the previous locked version](https://docs.astral.sh/uv/concepts/projects/sync/#upgrading-locked-package-versions).
+
+To bump all packages to the latest version within the version constraints of pyproject.toml use `uv lock --upgrade` or `uv sync --upgrade`.
 
 ## uv sync
 
