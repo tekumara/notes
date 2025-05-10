@@ -107,3 +107,9 @@ Collect the last hour of logs (1h) in a file:
 ```
 
 Or use the console ([example](https://docs.docker.com/desktop/troubleshoot/overview/#check-the-logs)).
+
+## Troubleshooting
+
+> You can’t open the application “WhatsApp” because it may be damaged or incomplete.
+
+Can happen when trying to open from Spotlight. Open from Finder - Applications instead.

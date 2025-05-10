@@ -31,7 +31,7 @@ curl: (6) Could not resolve host: google.com
 Config allow localhost access only:
 
 ```
-; File: no-network-localhost-only.sb
+; File: localhost-only.sb
 ; eg: sandbox-exec -f no-network-localhost-only.sb curl -vvv http://localhost
 (version 1)
 (debug deny) ; Log denials to Console.app under sandboxd reports for debugging
