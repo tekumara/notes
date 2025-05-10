@@ -96,6 +96,12 @@ Show the last 3 commits for the current branch
 git log -3
 ```
 
+Show every commit that touched a specific line or lines:
+
+```
+git log -L110,112:/lib/client.js
+```
+
 ## Search
 
 Search for commit messages that match pattern

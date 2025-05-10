@@ -22,3 +22,15 @@ If you installed git lfs as a system package (eg: a .deb from packagecloud) then
 
 When the git lfs smudge filter fails it can leave a repo with a dirty working tree.
 Reset the working tree, and uninstall the filters.
+
+## Troubleshooting
+
+> Encountered 1 file(s) that should have been pointers, but weren't
+
+Reset:
+
+```
+git lfs uninstall
+git reset --hard
+git lfs install
+```
