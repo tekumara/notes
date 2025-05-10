@@ -23,5 +23,16 @@ The new replicas cannot create because of the quota limits.
 
 Solution: manually delete the old replica set.
 
-## Cannot schedule your job
+## ContainerStatusUnknown
 
+eg:
+
+```
+    State:          Terminated
+      Reason:       ContainerStatusUnknown
+      Message:      The container could not be located when the pod was terminated
+```
+
+Might happen when nodes are low on disk and things are evicted.
+
+Just delete the pod.

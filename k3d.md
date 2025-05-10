@@ -269,3 +269,11 @@ Each node runs as a docker container without resource constraints and so has acc
 A single node can allocate pods with CPU requests up to the number of CPUs.
 If CPU requests > number of CPUs then you scheduling will fail with `Insufficient cpu`.
 To resolve, you add an additional node which will double the allocatable CPU (even though you aren't actually increasing the number of actual CPUs).
+
+#### The node was low on resource: ephemeral-storage
+
+Or
+
+> FreeDiskSpaceFailed Failed to garbage collect required amount of images
+
+Clean up [docker disk space on the host](docker-disk-usage.md#recommended-cleanup).

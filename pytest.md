@@ -58,6 +58,28 @@ _pyproject.toml_:
 addopts = "-s"
 ```
 
+## Plugins
+
+If you import plugins in _conftest.py_, eg:
+
+```python
+import fakesnow.fixtures
+```
+
+The IDE will be able to jump to their definition when used a function args.
+
+You can enable them like this:
+
+```
+pytest_plugins = (fakesnow.fixtures.__name__,)
+```
+
+The downside of importing them is you can hit import errors when imported into a non-top dir conftest. Which is probably why the docs [suggest using a string literal](https://docs.pytest.org/en/stable/how-to/fixtures.html#using-fixtures-from-other-projects), eg:
+
+```
+pytest_plugins = ("fakesnow.fixtures",)
+```
+
 ## Troubleshooting
 
 ### ModuleNotFoundError: No module named X

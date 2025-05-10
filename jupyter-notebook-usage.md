@@ -3,11 +3,13 @@
 ## Shell
 
 To execute a single line shell command and capture output to a variable:
+
 ```
 ls = !ls -al
 ```
 
 To execute a multiple line shell command and capture output to a variable:
+
 ```
 %%bash --out std_out
 ssh ....
@@ -24,11 +26,11 @@ To run pip with the current kernel: `%pip`
 
 ## Visualisations
 
-Run the following first: 
+Run the following first:
+
 ```
 %matplotlib inline
 ```
-
 
 ## Reconnecting
 

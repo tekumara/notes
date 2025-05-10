@@ -6,26 +6,9 @@
 - Run hooks only on changed files of given type
 - Don't fail fast, ie: run all hooks independently regardless of failure in previous hooks
 - Succinct output - only show output when hooks fail
-- Run hooks in parallel across batches of files
+- Run single hooks in parallel across batches of files
+- Installs hooks from github repos
 - Has some nice formatters for python, eg: [double-quote-string-fixer](https://github.com/pre-commit/pre-commit-hooks#double-quote-string-fixer) to convert double to single quotes.
-
-## Cache
-
-Non-local [non-system](https://pre-commit.com/#system) hooks are cloned into their own [temp dir](https://github.com/pre-commit/pre-commit/blob/48f0dc9615488b583b11f2d90bd4a332701c6b6a/pre_commit/store.py#L161) under _~/.cache/pre-commit/repoXXXXXXXX_.
-
-Python hooks run in their own isolated virtualenv managed by pre-commit and created in the `py_env-python3.X` directory in the cache dir. `additional_dependencies` for local hooks will also be stored in the virtualenv. The virtualenv is created using the active version of python at the time the hook is installed. The python version can be [overridden using `language_version`](https://pre-commit.com/#overriding-language-version).
-
-To identify the cache directory for every hook:
-
-```
-sqlite3 ~/.cache/pre-commit/db.db 'select * from repos;'
-```
-
-Or for just black
-
-```
-sqlite3 ~/.cache/pre-commit/db.db "select * from repos where repo like '%black%';"
-```
 
 ## Languages
 
@@ -55,13 +38,36 @@ The hooks return an non-zero exit code when they make changes (hence the `|| ech
 
 See [Debug how pre-commit initializes its environment #1508](https://github.com/pre-commit/pre-commit/issues/1508#issuecomment-648874721)
 
+## Cache
+
+Non-local [non-system](https://pre-commit.com/#system) hooks are cloned into their own [temp dir](https://github.com/pre-commit/pre-commit/blob/48f0dc9615488b583b11f2d90bd4a332701c6b6a/pre_commit/store.py#L161) under _~/.cache/pre-commit/repoXXXXXXXX_.
+
+Python hooks run in their own isolated virtualenv managed by pre-commit and created in the `py_env-python3.X` directory in the cache dir. `additional_dependencies` for local hooks will also be stored in the virtualenv. The virtualenv is created using the active version of python at the time the hook is installed. The python version can be [overridden using `language_version`](https://pre-commit.com/#overriding-language-version).
+
+To identify the cache directory for every hook:
+
+```
+sqlite3 ~/.cache/pre-commit/db.db 'select * from repos;'
+```
+
+Or for just black
+
+```
+sqlite3 ~/.cache/pre-commit/db.db "select * from repos where repo like '%black%';"
+```
+
+## Issues
+
+pre-commit is tightly coupled to git and requires a git repo to run.
+It also isn't designed to run multiple stages, see [run multiple hook stages](https://github.com/pre-commit/pre-commit/issues/3037).
+
 ## Gotchas
 
 If you need something to run inside your project's virtualenv (eg: pylint, pyright to identify valid imports) then run it as a [local hook](https://pre-commit.com/#repository-local-hooks).
 
 ### running hooks on a repo backed up to Dropbox
 
-pre-commit hooks will first move unstaged files to a pre-commit stash and restore them, eg:
+pre-push hooks will first move unstaged files to a pre-commit stash and restore them, eg:
 
 ```
 [WARNING] Unstaged files detected.
@@ -88,6 +94,8 @@ This causes a weird interaction when the repo is backed up to Dropbox. The stash
 #      untracked: [3] github-releases (tekumara's conflicted copy 2023-07-29).md
 #      untracked: [4] typescript (tekumara's conflicted copy 2023-07-29).md
 ```
+
+Use pre-commit hooks instead.
 
 ### Linter not excluding files
 
