@@ -7,6 +7,9 @@
 - an actor model for stateful computation
 - [service discovery/binding](https://docs.ray.io/en/latest/serve/key-concepts.html#servehandle-composing-deployments)
 - [gpu sharing](https://docs.ray.io/en/latest/serve/scaling-and-resource-allocation.html#fractional-cpus-and-fractional-gpus)
+- process management ie: restarting processes that have died
+- [memory monitoring](https://docs.ray.io/en/latest/ray-core/scheduling/ray-oom-prevention.html) and preemptive killing of tasks/actors when memory > 95% usage to avoid SIGKILLs from the Linux OOM.
+- used of shared memory via /dev/shm for processes on the same host
 
 ## ray locally
 
@@ -40,6 +43,10 @@ ray spills to _/tmp/ray/session\_\*/ray_spilled_objects_
 - workers on the same node can share memory via the [plasma object store](https://docs.ray.io/en/latest/ray-core/objects/serialization.html), which allows zero-copy read-only access to numpy arrays
 - [spill to s3](https://docs.ray.io/en/latest/ray-core/objects/object-spilling.html)
 
+## ray serve
+
+adds http + routing + queuing + [request batching](https://docs.ray.io/en/latest/serve/advanced-guides/dyn-req-batch.html)
+
 ## remote debugging
 
 You can use VS Code breakpoints in remote tasks/actors and attach to the head/driver, but you won't be able to see the local variables in a local subprocess or a remote process on a cluster.
@@ -70,6 +77,8 @@ Usually an [OOM](https://docs.ray.io/en/latest/ray-core/scheduling/ray-oom-preve
 - reducing total memory usage of actors
 - release object refs earlier, eg: don't return all object refs to the driver but block and consume them in tasks instead. This applies back pressure.
 - [explicitly reduce task concurrency](https://docs.ray.io/en/latest/ray-core/patterns/limit-running-tasks.html#core-patterns-limit-running-tasks)
+
+see also [Debugging Memory Issues](https://docs.ray.io/en/latest/ray-observability/user-guides/debug-apps/debug-memory.html) or use `ray memory` to [inspect ray's object store](https://docs.ray.io/en/latest/ray-core/scheduling/memory-management.html#debugging-using-ray-memory).
 
 eg:
 

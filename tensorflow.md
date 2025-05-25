@@ -1,23 +1,5 @@
 # Tensorflow
 
-## CUDA
-
-Tensorflow has been built and tested with the specific CUDA versions [documented here](https://www.tensorflow.org/install/source#gpu).
-
-It may work with other versions, eg: tensorflow 2.15 works with CUDA 12.1 - 12.4.
-
-To show the CUDA build versions
-
-```python
-import tensorflow as tf
-
-# Show CUDA version
-print("CUDA version:", tf.sysconfig.get_build_info()['cuda_version'])
-
-# Show cuDNN version
-print("cuDNN version:", tf.sysconfig.get_build_info()['cudnn_version'])
-```
-
 ## Hello world
 
 ```python
@@ -62,6 +44,55 @@ export_during_activation "KMP_AFFINITY=granularity=fine,compact,1,0"
 export_during_activation "KMP_BLOCKTIME=1"
 export_during_activation "KMP_SETTINGS=0"
 ```
+
+## CUDA
+
+Tensorflow has been built and tested with the specific CUDA versions [documented in the matrix here](https://www.tensorflow.org/install/source#gpu).
+
+It may work with other versions, eg: tensorflow 2.15 works with CUDA 12.1 - 12.4.
+
+To show the CUDA build versions
+
+```python
+import tensorflow as tf
+
+# Show CUDA version
+print("CUDA version:", tf.sysconfig.get_build_info()['cuda_version'])
+
+# Show cuDNN version
+print("cuDNN version:", tf.sysconfig.get_build_info()['cudnn_version'])
+```
+
+To install CUDA pip wheels use:
+
+```
+pip install tensorflow[and-cuda]
+```
+
+eg: for tensorflow 21.5 this adds:
+
+```
+nvidia-cublas-cu12==12.2.5.6
+nvidia-cuda-cupti-cu12==12.2.142
+nvidia-cuda-nvcc-cu12==12.2.140
+nvidia-cuda-nvrtc-cu12==12.2.140
+nvidia-cuda-runtime-cu12==12.2.140
+nvidia-cudnn-cu12==8.9.4.25
+nvidia-cufft-cu12==11.0.8.103
+nvidia-curand-cu12==10.3.3.141
+nvidia-cusolver-cu12==11.5.2.141
+nvidia-cusparse-cu12==12.1.2.141
+nvidia-nccl-cu12==2.16.5
+nvidia-nvjitlink-cu12==12.2.140
+```
+
+Size of these packages:
+
+```
+$ du -ksh .venv/lib/python3.10/site-packages/nvidia/
+2.9G    .venv/lib/python3.10/site-packages/nvidia/
+```
+
 
 ## Troubleshooting
 

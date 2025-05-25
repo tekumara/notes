@@ -27,3 +27,31 @@ Similar to [this](https://news.ycombinator.com/item?id=42299464).
 - [Guardrails #1197](https://github.com/pydantic/pydantic-ai/issues/1197)
 - [Improve "Ergonomics" of Graph Streaming #1452](https://github.com/pydantic/pydantic-ai/issues/1452)
 - [Parallel node execution in Graphs #704](https://github.com/pydantic/pydantic-ai/issues/704)
+
+## HITL
+
+> I implemented this HITL using FullStatePersistence and graph.iter:
+> async with run_graph as run:
+>
+> ```
+>     while True:
+>         node = await run.next()
+>         if isinstance(node, WaitForHumanInput):
+>             await run.next()
+>             break
+> ```
+>
+> where `run_graph` is either:
+>
+> ```
+> graph.iter(EntryNode(), state=state, deps=deps, persistence=persistence)
+> ``
+> when starting a new iteration, or:
+> ``
+> graph.iter_from_persistence(
+>             persistence,
+>             deps=deps,
+>         )
+> ```
+>
+> If returning with an already existing persistence json.
