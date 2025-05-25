@@ -1,5 +1,28 @@
 # AMIs
 
+## [Deep Learning Base OSS Nvidia Driver GPU AMI (Ubuntu 22.04) 20250505](https://aws.amazon.com/releasenotes/aws-deep-learning-base-gpu-ami-ubuntu-22-04/)
+
+ami-0bbdd5918468148eb Deep Learning Base OSS Nvidia Driver GPU AMI (Ubuntu 22.04) 20250505
+
+```
+AMI Name: Deep Learning Base OSS Nvidia Driver GPU AMI (Ubuntu 22.04)
+Supported EC2 instances: G4dn, G5, G6, Gr6, G6e, P4d, P4de, P5, P5e, P5en
+NVIDIA driver version: 570.133.20
+CUDA versions available: cuda-12.4 cuda-12.5 cuda-12.6 cuda-12.8
+Default CUDA version is 12.8
+```
+
+```
+ubuntu@ip-10-97-37-2:~$ df -h
+Filesystem       Size  Used Avail Use% Mounted on
+/dev/root         73G   50G   24G  68% /
+tmpfs            7.8G     0  7.8G   0% /dev/shm
+tmpfs            3.1G  896K  3.1G   1% /run
+tmpfs            5.0M     0  5.0M   0% /run/lock
+efivarfs         128K  3.8K  120K   4% /sys/firmware/efi/efivars
+/dev/nvme0n1p15  105M  6.1M   99M   6% /boot/efi
+tmpfs            1.6G  4.0K  1.6G   1% /run/user/1000
+```
 
 ## [Deep Learning Base AMI (Ubuntu 18.04) Version 31.0](https://aws.amazon.com/marketplace/pp/B077GCZ4GR)
 
