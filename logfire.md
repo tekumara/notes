@@ -37,7 +37,6 @@ SELECT
 span_id, duration, span_name,
 message_event->>'gen_ai.message.index' as "gen_ai.message.index", message_event->>'role' as message_role, message_event->>'name' as tool_name, message_event, exception_type, exception_stacktrace
 FROM message_events
-where exception_type is not null
 ```
 
 Logfire uses datafusion as its database with syntactic sugar to make it support a postgresql like dialect.

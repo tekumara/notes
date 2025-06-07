@@ -55,3 +55,11 @@ Similar to [this](https://news.ycombinator.com/item?id=42299464).
 > ```
 >
 > If returning with an already existing persistence json.
+
+## model retry
+
+ModelRetry has a circuit breaker that only allows max_retries errors per tool before it aborts the loop by raising an UnexpectedModelBehavior (see [here](https://github.com/pydantic/pydantic-ai/blob/8f83407d870475dfc1885fa5119024dc2ffb44ab/pydantic_ai_slim/pydantic_ai/tools.py#L417)).
+
+If it doesn’t abort, the exception message is converted to a [RetryPromptPart](https://ai.pydantic.dev/api/messages/#pydantic_ai.messages.RetryPromptPart) and sent to the model when with "Fix the errors and try again." [appended to the message](https://github.com/pydantic/pydantic-ai/blob/08cf5dd33c21d477895a8437c05afb9742e9b25d/pydantic_ai_slim/pydantic_ai/messages.py#L442).
+
+If the goal is for the LLM to exit the loop and respond nicely you need to return an error result from the tool. And in the agent instructions tell it to convert any error results into a nice user message.
