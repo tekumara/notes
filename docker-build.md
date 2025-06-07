@@ -27,7 +27,7 @@ When specifying a directory, the directory itself is not copied, just its conten
 eg:
 
 - `COPY src /app/` and `COPY src/ /app/` copy the contents of _src_ to _/app/_
-- `COPY . /app/` the contents of the current directory will be copied /app, including directories it contains. Note this will copy the Dockerfile, and so will be recopied everytime the Dockerfile changes which is probably not what you want, so specify individual files/dirs or add the Dockerfile to _.dockerignore_.
+- `COPY . /app/` the contents of the current directory will be copied /app, including directories it contains. Note this will copy the Dockerfile, and so will be recopied every time the Dockerfile changes which is probably not what you want, so specify individual files/dirs or add the Dockerfile to _.dockerignore_.
 - `COPY system.sh /tmp` copy system.sh to the file _/tmp/system.sh_ because _/tmp_ is an existing directory
 - `COPY system.sh /tmp/setup` copy system.sh to the file _/tmp/setup_ if the directory _/tmp/setup/_ doesn't exist, or _/tmp/setup/system.sh_ if it does
 - `COPY system.sh /tmp/setup/` copy system.sh to the file _/tmp/setup/system.sh_

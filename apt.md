@@ -56,24 +56,6 @@ Show package version and dependencies
 dpkg-query -W -f='${binary:Package}\t${Version}\t${Depends}\n' curl
 ```
 
-Show package dependents
-
-```
-apt-cache rdepends curl
-```
-
-Show package dependents that are currently installed
-
-```
-apt-cache rdepends --installed curl
-```
-
-Show transitive dependencies at a dot graph
-
-```
-debtree curl
-```
-
 List packages matching wildcard
 
 ```
@@ -114,6 +96,26 @@ Show all package versions, and their url, across all repos
 apt-cache showpkg PACKAGENAME
 ```
 
+Show package dependents
+
+```
+apt-cache rdepends curl
+```
+
+Show package dependents that are currently installed
+
+```
+apt-cache rdepends --installed curl
+```
+
+## Dependency tree
+
+Show transitive dependencies as a dot graph
+
+```
+debtree curl
+```
+
 ## Blocked updates
 
 Blocked updates are updates that will change the status (possibly removing) another installed package, or install additional new packages.
@@ -135,6 +137,44 @@ Defaults env_keep = "http_proxy ftp_proxy"
 ```
 
 [ref](http://askubuntu.com/questions/7470/how-to-run-sudo-apt-get-update-through-proxy-in-commandline)
+
+## unmet dependencies
+
+eg:
+
+```
+ubuntu@ip-10-97-36-125:~$ sudo apt-get install nvidia-open-570
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Some packages could not be installed. This may mean that you have
+requested an impossible situation or if you are using the unstable
+distribution that some required packages have not yet been created
+or been moved out of Incoming.
+The following information may help to resolve the situation:
+
+The following packages have unmet dependencies:
+ nvidia-persistenced : Depends: libnvidia-cfg1 (= 575.57.08-0ubuntu1)
+E: Unable to correct problems, you have held broken packages.
+```
+
+Can't meet this dependency because `libnvidia-compute-570` depends on `libnvidia-cfg1-570`:
+
+```
+$ debtree nvidia-open-570 | grep libnvidia-cfg1
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+        "libnvidia-compute-570" -> "libnvidia-cfg1-570" [color=blue,label="(= 570.148.08-1ubuntu1)"];
+        "libnvidia-cfg1-570" -> "libnvidia-cfg1-any" [color=red];
+        "nvidia-persistenced" -> "libnvidia-cfg1" [color=blue,label="(= 575.57.08-0ubuntu1)"];
+```
+
+Downgrade `nvidia-persistenced` so it doesn't ask for `libnvidia-cfg1`, and also pin `nvidia-open-570` at the same time:
+
+```
+sudo apt-get install nvidia-open-570=570.148.08-1ubuntu1 nvidia-persistenced=570.148.08-1ubuntu1
+```
 
 ## Source
 
