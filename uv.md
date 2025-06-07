@@ -1,5 +1,14 @@
 # uv
 
+## Pypy
+
+```
+uv python install pypy@3.10
+
+# create venv in folder pypy_venv
+uv venv -p pypy@3.10 pypy_venv
+```
+
 ## Tools
 
 Tools installed into _~/Library/Application Support/uv/tools_ and added to _~/.local/bin_.

@@ -8,7 +8,7 @@
 - [service discovery/binding](https://docs.ray.io/en/latest/serve/key-concepts.html#servehandle-composing-deployments)
 - [gpu sharing](https://docs.ray.io/en/latest/serve/scaling-and-resource-allocation.html#fractional-cpus-and-fractional-gpus)
 - process management ie: restarting processes that have died
-- [memory monitoring](https://docs.ray.io/en/latest/ray-core/scheduling/ray-oom-prevention.html) and preemptive killing of tasks/actors when memory > 95% usage to avoid SIGKILLs from the Linux OOM.
+- [memory monitoring](https://docs.ray.io/en/latest/ray-core/scheduling/ray-oom-prevention.html) and pre-emptive killing of tasks/actors when memory > 95% usage to avoid SIGKILLs from the Linux OOM.
 - used of shared memory via /dev/shm for processes on the same host
 
 ## ray locally
@@ -111,6 +111,14 @@ For more detail:
 
 ```
 rg -C5 'killed|died|exit' /tmp/ray/session_latest/logs
+```
+
+### File system monitor
+
+Indicates disk is over 95% full:
+
+```
+ file_system_monitor.cc:116: /tmp/ray/session_2025-05-27_08-49-02_002069_48979 is over 95% full, available space: 21.5741 GB; capacity: 460.432 GB. Object creation will fail if spilling is required.
 ```
 
 ## Rolling updates

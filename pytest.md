@@ -30,6 +30,12 @@ Run tests which contain the string `perfect_data` and not the string `half` (cas
 pytest -k "perfect_data and not half"
 ```
 
+Run test_execute with one of the parameterised variants named `parquet`:
+
+```
+pytest -k 'test_execute[parquet]'
+```
+
 Run test that exactly matches:
 
 ```
