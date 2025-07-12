@@ -6,8 +6,8 @@ I'd probably default to NamedTuples or Dataclasses, and use TypedDicts for speci
 
 - don't support attribute access (eg: `Order.id`)
 - can't have methods
-- can only inherit from other `TypedDicts` so aren't great for building class hierarchies, eg: if you try to inherit from a TypedDict and Protocol you'll get a `TypeError: cannot inherit from both a TypedDict type and a non-TypedDict base class`. In python 3.11 there so support however for [TypedDict to inherit from Generic](https://github.com/python/cpython/issues/89026#issuecomment-1116093221) and a special case.
-- a dictionary can be inferred as a TypedDict when supplied as a function argument or returned from a function, but requires an explicit annotation when assigned to a variable ([ref](https://github.com/microsoft/pyright/issues/1727#issuecomment-813123780)). So we don't have a way of typechecking construction when assigned to a variable.
+- can only inherit from other `TypedDicts` so aren't great for building class hierarchies, eg: if you try to inherit from a TypedDict and Protocol you'll get a `TypeError: cannot inherit from both a TypedDict type and a non-TypedDict base class`. In python 3.11 there is support however for [TypedDict to inherit from Generic](https://github.com/python/cpython/issues/89026#issuecomment-1116093221) and a special case.
+- a dictionary can be inferred as a TypedDict when supplied as a function argument or returned from a function, but requires an explicit annotation when assigned to a variable ([ref](https://github.com/microsoft/pyright/issues/1727#issuecomment-813123780)). So we don't have a way of type-checking construction when assigned to a variable.
 
 NB: TypedDict can't be inferred when using a [dict constructor](https://github.com/microsoft/pyright/issues/6051), use a dict literal instead.
 

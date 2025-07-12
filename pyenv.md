@@ -108,6 +108,8 @@ See [tekumara/zsh-pyenv-virtualenvwrapper-lazy](https://github.com/tekumara/zsh-
 
 ## Troubleshooting
 
+To enable `set -x` run with `PYENV_DEBUG=1`.
+
 > ImportError: cannot import name 'main'
 
 eg:

@@ -70,4 +70,6 @@ This can happen when
 
 See [#4361](https://github.com/microsoft/pylance-release/issues/4361).
 
+Try reloading the window first.
+
 NB: To force Pylance to use the interpreter in the virtualenv, set `.venvPath` and `.venv` in the pyright config.
