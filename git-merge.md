@@ -23,7 +23,7 @@ Conflicts appear as unmerged files in `git status`.
 You will need to resolve the conflicts, eg:
 
 - `git checkout --ours .` to keep all our changes
-- `git checkout --theirs .` to keep all their changes
+- `git checkout --theirs .` to keep all their changes, followed by git add .
 - `git mergetool unmerged_file_name` to run your merge conflict resolution tool on unmerged_file_name. See [man git-mergetool](http://schacon.github.com/git/git-mergetool.html) for more.
 - `git rm file_name` to delete a file that has changes but was deleted by them or deleted by us.
 

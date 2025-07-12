@@ -102,6 +102,8 @@ Show every commit that touched a specific line or lines:
 git log -L110,112:/lib/client.js
 ```
 
+NB: Use [git blame](git-blame.md) if you want to follow the lines over file copies/renames.
+
 ## Search
 
 Search for commit messages that match pattern

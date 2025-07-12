@@ -3,6 +3,7 @@
 `git diff main` compare working dir to main NB: excludes untracked files, stage these first if you want them to be part of the diff.  
 `git diff main r2` compares tips of main and r2, ie: changes need to go from main -> r2. `r2 main` will show the same set of changes, but left and right side are swapped, ie: as a patch to go from r2 -> main.  
 `git diff main r2 [<path>...]` for specific files  
+`git diff 44ee08f~1 44ee08f` changes to go from `4ee08f~1` -> `44ee08f` via the first ancestor which will be main if this is a merge to main. Useful for comparing before and after when squash merge to main isn't used.
 
 ## Ranges
 
