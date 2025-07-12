@@ -32,14 +32,7 @@ Tag an already pushed image:
 crane tag localhost:5555/tekumara/spark:3.2.1-hadoop3.2-java11-python3.9-bullseye latest
 ```
 
-Get manifest (or manifest list) digest for a tag (or latest if no tag):
-
-```
-❯ crane digest python:3.9-slim
-sha256:3bab254e90bb0986ead59a3d415e719439e629d0ff3acfdfc96021a75aab0621
-```
-
-Export by digest to a local file:
+Export by digest (ie: checksum) to a local file:
 
 ```
 crane export localhost:5555/readme@sha256:0c5834c5243e64acc398983b01bc6272f6fe2f2c2320c425edf00ed9fd8e489c > readme
@@ -68,6 +61,15 @@ Get compressed size of image on remote repository in MiB (the [same as compresse
 ```
 crane manifest python:3.9.13-buster --platform linux/amd64 | jq '[.layers[].size] | add' | awk '{printf "%''d MiB\n", $1/1048576}'
 ```
+
+Get manifest (or manifest list) digest (ie: checksum) for a tag (or latest if no tag):
+
+```
+❯ crane digest python:3.9-slim
+sha256:3bab254e90bb0986ead59a3d415e719439e629d0ff3acfdfc96021a75aab0621
+```
+
+NB: This is the same as the `Docker-Content-Digest` and `X-Checksum-Sha256` headers when fetching the manifest via `crane digest -v`.
 
 ## curl
 
@@ -121,7 +123,7 @@ docker push localhost:5555/my-ubuntu
 Get manifest (same as crane manifest):
 
 ```
-docker manifest inpect
+docker manifest inspect
 ```
 
 Can be used to verify if image exists.

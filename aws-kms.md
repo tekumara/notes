@@ -56,10 +56,15 @@ Use SSE-KMS as the transparent encryption mechanism rather than SSE-S3 because:
 
 ## Troubleshooting
 
-com.amazonaws.services.kms.model.AWSKMSException: The ciphertext refers to a customer master key that does not exist, does not exist in this region, or you are not allowed to access.
+> com.amazonaws.services.kms.model.AWSKMSException: The ciphertext refers to a customer master key that does not exist, does not exist in this region, or you are not allowed to access.
 
 The key policy does not grant your user/role access.
+
+> InvalidKMSResourceException: AccessDenied by KMS while using the CMK. Check the key policy to ensure that the KMS grant related apis are allowed. Try again after the key policy has the right permissions.
+
 
 ## References
 
 - [Why are cross-account users getting Access Denied errors when they try to access S3 objects encrypted by a custom AWS KMS key?](https://aws.amazon.com/premiumsupport/knowledge-center/cross-account-access-denied-error-s3/)
+
+Check your role has kms:CreateGrant

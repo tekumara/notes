@@ -43,7 +43,7 @@ See [Specifying Dependencies](https://doc.rust-lang.org/nightly/cargo/reference/
 
 ## Tests
 
-To run tests (auto rebuilding if needed):
+To run tests (auto rebuilding if needed - if not make sure the ide is saving your files):
 
 ```
 cargo test

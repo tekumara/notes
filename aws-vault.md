@@ -91,3 +91,7 @@ aws-vault login <profile>
 ## Troubleshooting
 
 AccessDenied when assuming a role: check the ARN in _~/.aws/config_ is correctly formed.
+
+> aws-vault: error: exec: Failed to get credentials for ...: Keychain Error. (100028)
+
+May be caused by low disk space. Try again.

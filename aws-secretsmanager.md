@@ -137,3 +137,5 @@ Your role needs:
       "kms:Decrypt",
       "kms:GenerateDataKey*"
 ```
+
+Also ensure that the kms key ARN is correct (not missing any chars etc.)
