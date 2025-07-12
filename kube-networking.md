@@ -3,10 +3,10 @@
 ## Resources
 
 [Service](https://kubernetes.io/docs/concepts/services-networking/) exposes a set of pods via a network address, either internally with the cluster or externally. When a Service object has a selector, the Service controller will maintain an Endpoints object of internal pod IP addresses targeted by the service. See [Defining a Service](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service). To access a service within the cluster use:
-- http://service-name (within same namespace)
-- http://service-name.namespace
-- http://service-name.namespace.svc.cluster.local
-- 
+
+- `http://service-name` (within same namespace)
+- `http://service-name.namespace`
+- `http://service-name.namespace.svc.cluster.local`
 
 A `ClusterIP` type will expose the service internally. A ClusterIP is made routable within the cluster with iptables, and is not routable from outside the cluster. The name of a `ClusterIP` service will resolve to its IP address, and its fully qualified name includes the namespace as a domain.
 

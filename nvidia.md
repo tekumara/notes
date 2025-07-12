@@ -121,7 +121,6 @@ After this operation, 2543 MB of additional disk space will be used.
 
 ## Runfile install
 
-
 ```
 $ du -ksh /usr/local/cuda-12.2
 6.7G    /usr/local/cuda-12.2

@@ -110,6 +110,10 @@ Or use the console ([example](https://docs.docker.com/desktop/troubleshoot/overv
 
 ## Troubleshooting
 
-> You can’t open the application “WhatsApp” because it may be damaged or incomplete.
+### You can’t open the application “WhatsApp” because it may be damaged or incomplete.
 
 Can happen when trying to open from Spotlight. Open from Finder - Applications instead.
+
+### Disk space being consumed
+
+On restart the disk space is released. To locate the source, close each running program one by one and check `df -h` before and after.

@@ -60,7 +60,7 @@ To see the effects of commands that modify the cluster (eg: apply/path), add `--
 `kubectl describe podmetrics $PODNAME` show CPU/MEM usage and labels for specific pod
 `kubectl get pods -o custom-columns=":metadata.name, :status.phase, :spec.containers[*].image"` list pods and their running container images
 `kubectl get pods -o custom-columns=":metadata.name, :status.phase, :spec.containers[*].resources"` get resource limits (cpu/mem) as golang map
-`kubectl get pods -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .spec.containers[*]}{.name}{"\t"}{.resources}{"\t"}{end}{"\n"}{end}'` list pod's resource requests and limits (eg: cpu/mem)
+`kubectl get pods -o custom-columns="POD:.metadata.name,CONTAINER:.spec.containers[*].name,REQUESTS_CPU:.spec.containers[*].resources.requests.cpu,REQUESTS_MEM:.spec.containers[*].resources.requests.memory,LIMITS_CPU:.spec.containers[*].resources.limits.cpu,LIMITS_MEM:.spec.containers[*].resources.limits.memory"` list pod's resource requests and limits (eg: cpu/mem)
 `kubectl get pods mypod -o json | jq '.spec.containers[] | {image, env:[.env[] | "\(.name)=\(.value)" ]}'` list pod's container images and environment variables as json
 `kubectl get pods -o wide` list pods and the node they are running on  
 `kubectl get pod helper -o jsonpath='{.status.podIPs}` get pod ip

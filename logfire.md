@@ -5,8 +5,8 @@
 Tools or exception:
 
 ```sql
-select trace_id, span_id, message, attributes->>'gen_ai.tool.name', exception_type, exception_stacktrace from records
-where  attributes->>'gen_ai.tool.name' is not null or exception_type is not null
+select trace_id, span_id, message, attributes->'gen_ai.tool.name', exception_type, exception_stacktrace from records
+where  attributes->'gen_ai.tool.name' is not null or exception_type is not null
 ```
 
 First two messages or exception:
@@ -27,11 +27,11 @@ Unnest all_messages_events (one per row):
 WITH message_events AS (
   SELECT 
     span_id, duration, span_name,
-    attributes->>'all_messages_events'->>unnest(generate_series(0, (json_length(attributes->>'all_messages_events')-1)::int)) as message_event,
+    attributes->'all_messages_events'->unnest(generate_series(0, (json_length(attributes->'all_messages_events')-1)::int)) as message_event,
     exception_type, exception_stacktrace
   FROM records
   WHERE otel_scope_name = 'pydantic-ai'
-    AND attributes->>'all_messages_events' IS NOT NULL
+    AND attributes->'all_messages_events' IS NOT NULL
 )
 SELECT 
 span_id, duration, span_name,

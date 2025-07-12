@@ -47,3 +47,8 @@ If you wish to regenerate the release notes then:
 1. Delete the tag.
 1. Revert the commit that bumped the version and updated CHANGELOG.md.
 1. Push a commit that fixes the build.
+
+## Fix release notes
+
+On the release PR you can directly edit the PR description and CHANGELOG.md before merge.
+fa

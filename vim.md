@@ -31,7 +31,7 @@ This will pipe the result back into the buffer.
 `;` repeat search  
 `^` takes you to the beginning of a line, and `$` to the end  
 `G + o` create a line after the last line of the file
-
+`:set number` show line numbers 
 `:%s/foo/bar/g` find and replace 'foo' with 'bar' in all the lines.
 
 http://vim.wikia.com/wiki/Moving_around

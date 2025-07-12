@@ -47,6 +47,13 @@ ray spills to _/tmp/ray/session\_\*/ray_spilled_objects_
 
 adds http + routing + queuing + [request batching](https://docs.ray.io/en/latest/serve/advanced-guides/dyn-req-batch.html)
 
+## ray jobs
+
+The ray job entrypoint script runs on the head node.
+`ray.init` inside the script connects to the head node's cluster. Any remote tasks run on the cluster.
+
+The alternative is to run the script from a client. Using a job avoids requiring a long-running connection to the cluster.
+
 ## remote debugging
 
 You can use VS Code breakpoints in remote tasks/actors and attach to the head/driver, but you won't be able to see the local variables in a local subprocess or a remote process on a cluster.
@@ -69,6 +76,10 @@ See [Ray Distributed Debugger](https://docs.ray.io/en/latest/ray-observability/r
 NB: the `RAY_DEBUG` env var doesn't need to be set.
 
 ## troubleshooting
+
+## job submit but nothing happens
+
+Make sure you don't have a local ray running and it's gone there instead.
 
 ### ray.exceptions.OwnerDiedError
 
@@ -124,3 +135,11 @@ Indicates disk is over 95% full:
 ## Rolling updates
 
 Not supported - requires multiple ray clusters see [#527](https://github.com/ray-project/kuberay/issues/527#issuecomment-1920616895)
+
+## Deployment Best Practices on Ray
+
+- 1 job at a time on a Ray cluster. Ray currently does not have physical resource isolation between jobs nor multi-tenancy support (fairness, sharing between independent jobs). Consider implementing a job queue or multiple clusters. See [Do Ray clusters support multi-tenancy?](https://docs.ray.io/en/latest/cluster/faq.html#do-ray-clusters-support-multi-tenancy)
+
+- Avoid using Ray Client. Ray Client has architectural limitations, is not actively maintained and can lead to compatibility issues with Ray libraries. The best practice is to run jobs directly on the head node of the cluster using `ray.init()`.
+
+Source: [Best Practices for Ray in Production](https://www.youtube.com/watch?v=FXfQ1eI89Kk)

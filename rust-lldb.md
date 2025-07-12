@@ -10,3 +10,5 @@ eg: `rust-lldb ./target/debug/guessing-game`
 `c` - continue execution  
 `fr v` - show all local variables  
 `thread list`
+
+Example tracing a [segmentation fault using lldb](https://github.com/pyenv/pyenv/issues/3177).

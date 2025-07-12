@@ -14,6 +14,17 @@
 
 ## File system
 
+Open writable regular files sorted by size
+
+```
+lsof -s | {                               # lsof with sizes
+    read -r header                        # grab the header line
+    printf '%s\n' "$header"               # print it back out
+    awk '$4~/[0-9]+[wu]$/ && $5=="REG"' | # keep writable regular files
+    sort -hr -k7,7                        # sort SIZE descending
+}
+```
+
 `lsof -c ssh-agent` files ssh-agent currently has open  
 `sudo fs_usage -w` tail filesystem sys calls and page faults (includes fstat64 calls)  
 `sudo fs_usage -w -f filesys` watch filesystem sys calls  
