@@ -20,7 +20,7 @@ Custom engine but requires multiple commands to ingest and work on CSV, so not g
 
 For executing SQL queries on csv files. Backed by sqlite.
 
-Older version (1.4) available in repo but it doesn't quoted field chars ([ref](https://github.com/harelba/q/issues/56)). To install: `sudo apt-get install q-text-as-data`
+Older version (1.4) available in repo but it doesn't quote delimiter chars ([ref](https://github.com/harelba/q/issues/56)). To install: `sudo apt-get install q-text-as-data`
 
 Latest version (1.6.3, recommend):
 
@@ -54,30 +54,46 @@ echo 'scale=2;4147/11198' | bc
 ### q vs
 
 5x faster than [csvkit](http://csvkit.readthedocs.io/en/1.0.2/) (which is also backed by sqlite)
-Has a SQL syntax, unlike [Miller](http://johnkerl.org/miller/doc/) and [xsv](https://github.com/BurntSushi/xsv)
+Has a SQL syntax.
 
-## [xsv](https://github.com/BurntSushi/xsv)
+## [miller](https://github.com/johnkerl/miller)
 
-Install:
+Non-sql syntax. Support JSON and JSON Lines too.
 
-- linux: `curl -fsSLo xsv.tar.gz https://github.com/BurntSushi/xsv/releases/download/0.13.0/xsv-0.13.0-x86_64-unknown-linux-musl.tar.gz && tar -xvf xsv.tar.gz && sudo install xsv /usr/local/bin && rm xsv xsv.tar.gz`
+Install
 
-Non SQL syntax with sample and regex functionality.
+```
+brew install miller
+```
+
+## [xan](https://github.com/medialab/xan)
+
+Successor to xsv. Non SQL syntax with sample and regex functionality.
+
+Install
+
+```
+brew install xan
+```
 
 Row count
 
 ```
-xsv count logs.csv
+xan count logs.csv
 ```
 
 Count number of rows matching the regex
 
 ```
-xsv search "(root-7920f013|job-38f944ae)" logs.csv | xsv count
+xan search "(root-7920f013|job-38f944ae)" logs.csv | xan count
 ```
 
 Sort by time asc
 
 ```
-xsv sort -s _messagetime logs.csv
+xan sort -s _messagetime logs.csv
 ```
+
+## [qsv](https://github.com/dathere/qsv)
+
+..

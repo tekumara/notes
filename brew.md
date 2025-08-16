@@ -50,3 +50,16 @@ Docs:
 ### Troubleshooting
 
 When copying an existing formula, remove the `bottle` block. This is added by the Homebrew CI system.
+
+### Error purging
+
+```
+==> Purging files for version 4.43.2,199162 of Cask docker-desktop
+Error: docker-desktop: It seems there is already an App at '/opt/homebrew/Caskroom/docker-desktop/4.19.0,106363/Docker.app'.
+```
+
+To fix:
+
+```
+/opt/homebrew/Caskroom/docker-desktop/4.19.0,106363/Docker.app
+```

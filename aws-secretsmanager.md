@@ -28,6 +28,16 @@ Create secret encrypted using the account's default KMS key `aws/secretsmanager`
 aws secretsmanager create-secret --name topsecret --description "top secret!" --secret-string file://topsecret.json
 ```
 
+Create secret encrypted using a customer managed KMS key (CMK) with value from env var
+
+```
+aws secretsmanager create-secret \
+  --name topsecret-cmk \
+  --description "top secret with CMK!" \
+  --kms-key-id arn:aws:kms:us-east-1:123456789012:key/abcd1234-abcd-1234-abcd-1234abcd1234 \
+  --secret-string "$TOPSECRET_VALUE"
+```
+
 List
 
 ```
