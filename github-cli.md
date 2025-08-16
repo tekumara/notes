@@ -239,3 +239,13 @@ Trying to add the private key file. Provide the public key file.
 Repository is not found. Check that the gh auth token has access to my-org/my-repo.
 
 <!-- markdownlint-disable-file MD001 -->
+
+#### Cannot open in browser: maximum URL length exceeded
+
+Filling the PR description results in an URL too long.
+
+Create without filling, eg:
+
+```
+gh pr create -w
+```

@@ -36,4 +36,19 @@ git add .
 git commit
 ```
 
+If you get a `does not have their version` error during checkout, nothing will have been updated, so you need to surgically checkout only those updated in both versions:
+
+To use theirs:
+
+```
+# First, handle only the files that CAN be checked out to theirs (UU conflicts)
+git status --porcelain | grep "^UU" | cut -c4- | xargs -r git checkout --theirs --
+
+# Then handle deletions - remove files that were deleted by them (UD status)
+git status --porcelain | grep "^UD" | cut -c4- | xargs -r git rm
+
+# add any changes
+git add -u
+``
+
 `git merge --abort` to abort a merge, ie: reset your working copy to whatever state it was in before the merge, and remove the MERGE_HEAD branch.
