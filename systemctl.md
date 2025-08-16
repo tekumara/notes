@@ -6,6 +6,12 @@ List active services
 systemctl list-units --type=service
 ```
 
+View service unit file content
+
+```
+systemctl cat <service>
+```
+
 List active timers
 
 ```
@@ -60,7 +66,7 @@ Systemctl's load:
 sudo tail -f /var/log/syslog | grep systemd
 ```
 
-List dependencies `mnt-fsx.mount` is after, ie: dependencies that run *before* `mnt-fsx.mount`
+List dependencies `mnt-fsx.mount` is after, ie: dependencies that run _before_ `mnt-fsx.mount`
 
 ```
 systemctl list-dependencies --after mnt-fsx.mount

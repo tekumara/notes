@@ -91,3 +91,9 @@ Show child processes of 4099
 ```
 ps -f --ppid 4099
 ```
+
+Kill all zsh processes that have been reparented to pid 1 (useful if file system locks still held)
+
+```
+ps -ef | awk '$3 == 1 && $8 ~ /zsh/'  | awk '{print $2}' | xargs kill
+```

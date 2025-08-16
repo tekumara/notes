@@ -39,3 +39,41 @@ uv sync will include the `dev` dependency group. Use `--all-groups` for all grou
 ## uv run
 
 Will use the virtualenv of the current project, if any. The virtualenv will be created and updated before invoking the command.
+
+## debugging resolution
+
+to understand why uv resolved to a lower version than expecting, try forcing it to the higher version in your pyproject.toml to get a conflict measure
+
+by default uv will try to resolve for all platforms and python versions. But this [can be restricted](https://docs.astral.sh/uv/concepts/resolution/#limited-resolution-environments), eg: to not resolve for pypy:
+
+```
+[tool.uv]
+environments = [
+    "platform_python_implementation != 'PyPy'"
+]
+```
+
+see also
+
+- [Platform markers](https://docs.astral.sh/uv/concepts/resolution/#platform-markers)
+- [Multi-version resolution](https://docs.astral.sh/uv/concepts/resolution/#multi-version-resolution)
+
+## unstable resolution
+
+eg:
+
+```
+uv add vcrpy
+# urllib3==2.5.0
+uv add google-api-core
+
+```
+
+differs from
+
+```
+uv add vcrpy google-api-core
+# urllib3==1.26.20
+```
+
+Because the order in which forks occur matters, see [Forking](https://docs.astral.sh/uv/reference/resolver-internals/#forking).
