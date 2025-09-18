@@ -73,6 +73,8 @@ paste before - `P`
 paste after - `p`  
 paste before from system clipboard - `"*p`  
 reindent - `=` - this will deindent if the indentation is incorrect.
+indent - `>` to ident again, press `.` (redo)
+comment - ctrl+V to select visually the first column, then shift+i, #, esc
 
 `ciw` to replace the word under the cursor ([ref](https://stackoverflow.com/questions/1379198/how-to-delete-a-word-and-go-into-insert-mode-in-vim))
 
@@ -88,7 +90,7 @@ save as `:w myfile.txt`
 ## Editing
 
 undo: `u`
-redo: `Ctrl-R`
+redo: `Ctrl-R` or `.`
 
 ## Insert
 
