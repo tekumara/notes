@@ -2,6 +2,8 @@
 
 ## [dsq](https://github.com/multiprocessio/dsq)
 
+Last release 2022
+
 SQLite based engine for querying CSV, parquet, and other file formats. The CLI for [datastation](https://github.com/multiprocessio/datastation)
 
 ```
@@ -24,6 +26,7 @@ Older version (1.4) available in repo but it doesn't quote delimiter chars ([ref
 
 Latest version (1.6.3, recommend):
 
+- macos: `brew install harelba/q/q`
 - download from http://harelba.github.io/q/install.html and run `sudo dpkg -i ~/Downloads/q-text-as-data*`
 - if `python` is python 3, and you get `SyntaxError: invalid syntax` when running `q`, to fix:`sudo sed -i 's/env python$/env python2/' /usr/bin/q`
 

@@ -59,3 +59,20 @@ Scope: tool use + RAG + chat history.
 - [Monitoring - Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/model-invocation-logging.html)
 
 See more at the [Agents for Bedrock API](https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html)
+
+## bedrock knowledge bases
+
+- [natural language to sql](https://aws.amazon.com/about-aws/whats-new/2024/12/amazon-bedrock-knowledge-bases-structured-data-retrieval/)
+- [graphRAG](https://aws.amazon.com/about-aws/whats-new/2024/12/amazon-bedrock-knowledge-bases-graphrag-preview/)
+
+## agentcore
+
+- serverless runtime
+- identify for secure tool access
+- memory
+- tools: browser, code interpreter
+- [gateway](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html) - MCP-ify Lambda and other APIs without hosting anything
+- observability
+- any LLM
+
+See [Bedrock AgentCore Starter Toolkit](https://github.com/aws/bedrock-agentcore-starter-toolkit)

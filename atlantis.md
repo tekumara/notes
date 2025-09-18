@@ -105,3 +105,10 @@ Plans on push but commands are ignored - make sure the [webhooks](https://www.ru
 `Ran Plan for 0 projects` - If you've made changes outside any project (eg: to atlantis.yaml) you'll need to explicitly provide the project to plan, eg: `atlantis plan -p awesome_project`. Also make sure you have `dir` defined in _atlantis.yaml_ (see [#1919](https://github.com/runatlantis/atlantis/issues/1919#issuecomment-1046132473)).
 
 `Ran Apply for 0 projects` - make sure you have planned first.
+
+```
+the default workspace at path . is currently locked by another command that is running for this pull request.
+Wait until the previous command is complete and try again
+```
+
+`Pull request must be mergeable before running apply.` if atlantis/apply is a required status check (to prevent merging without applying) and its failed, then try removing it as a status check.
