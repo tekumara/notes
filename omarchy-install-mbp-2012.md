@@ -33,31 +33,7 @@ If clicking on WiFi does nothing, and `ip link` will returns `wlan0` device, the
 
 ### Broadcom b43 firmware install
 
-Perform an offline install of the [broadcom wireless firmware](https://wiki.archlinux.org/title/MacBookPro10,x#Wi-Fi) as follows.
-
-On a separate computer:
-
-1. Download from mirror [b43-fwcutter](https://archlinux.org/packages/core/x86_64/b43-fwcutter/)
-1. Download snapshot and sources of the AUR [b43-firmwave package](https://aur.archlinux.org/packages/b43-firmware)
-1. Copy to USB
-
-On the target:
-
-1. Mount the USB: `sudo mkdir -p /mnt/usb && sudo mount /dev/sdb1 /mnt/usb`
-1. Install b43-fwcutter: `sudo pacman -U --noconfirm b43-fwcutter-019-6-x86_64.pkg.tar.zst`
-1. Make and install the b43-firmware package:
-
-   ```
-   tar -xvf /mnt/usb/b43-firmware.tar -C /tmp/
-   cp /mnt/usb/broadcom-wl-6.30.163.46.tar.bz2 /tmp/b43-firmware/
-   cd /tmp/b43-firmware
-   # point source at local file so we don't try to download it
-   sed -i -E 's|https://.*/(broadcom-wl.6.30.163.46.tar.bz2)|\1|' PKGBUILD
-   makepkg -si --noconfirm
-   ```
-
-1. Restart
-1. Run `impala`, or click on the WiFi network icon top right, and connect to your WiFi network.
+See [Broadcom b43 firmware install](https://github.com/tekumara/setup-arch/blob/main/install/b43firmware.md).
 
 ## Enable SSHD
 
@@ -70,14 +46,35 @@ sudo systemctl start sshd
 
 ## GPU
 
-NVIDIA GeForce GT 650M GPU is supported by the NVIDIA 470.xx Legacy drivers. See [Unix Driver Archive](https://www.nvidia.com/en-us/drivers/unix/).
+The 2012 MacBook Pro has two graphics processors:
 
-Remove latest drivers and install 390 which supports [GeForce 600 series](https://github.com/korvahannu/arch-nvidia-drivers-installation-guide):
+- Intel integrated GPU (for basic graphics)
+- Dedicated NVIDIA [GeForce GT 650M](https://en.wikipedia.org/wiki/GeForce_600_series) GPU (for better performance)
 
-```
-pacman -Rns nvidia-dkms lib32-nvidia-utils nvidia-utils
-yay -S nvidia-390xx-dkms nvidia-390xx-utils lib32-nvidia-390xx-utils
-```
+Without working drivers, the dedicated GPU can't manage power correctly, preventing the laptop from suspending.
+
+### The NVIDIA Driver Problem
+
+Omarchy comes with modern NVIDIA drivers (nvidia-dkms), but these don't work with the older GeForce GT 650M which is only supported by [legacy NVIDIA 470.xx drivers](https://www.nvidia.com/en-us/drivers/unix/legacy-gpu/). However the legacy drivers only support the EGLStreams buffer api and not the modern [GBM buffer API that Hyprland](https://wiki.archlinux.org/title/Wayland#Requirements) requires.
+
+The open-source [Nouveau](https://wiki.archlinux.org/title/Nouveau) drivers provide power management, allowing suspend/resume. They support the GBM buffer API, although I'm yet to test that.
+
+To switch to Nouveau drivers, remove the nvidia drivers:
+
+1. Edit `/etc/mkinitcpio.conf` and remove these modules from the `MODULES=(...)` line:
+
+   - `nvidia`
+   - `nvidia_modeset`
+   - `nvidia_uvm`
+   - `nvidia_drm`
+
+2. Uninstall the NVIDIA drivers:
+
+   ```
+   sudo pacman -Rns nvidia-dkms lib32-nvidia-utils nvidia-utils
+   ```
+
+The reboot the Nouveau kernel module will run.
 
 ## Blank screen
 
@@ -90,7 +87,7 @@ journalctl | grep -i hypr
 Check displays:
 
 ```
-lspci -d ::03xx
+lspci -d ::03xx -nn
 ls -l /dev/dri/by-path
 ```
 
@@ -116,13 +113,15 @@ Modify timeouts:
 nvim ~/.config/hypr/hypridle.config
 ```
 
-## Troubleshooting
-
-For hardware issues check `dmesg`.
-
 ## Suspend / resume
 
-Won't resuming from suspend (issued via laptop lid close, `systemctl suspend` or Menu -> System -> Suspend).
+Suspend is issued via laptop lid close, `systemctl suspend` or Menu -> System -> Suspend. By default this will trigger deep aka s3 aka suspend to ram.
+
+Suspend / resume messages will be issued by ACPI and visible in dmesg/journalctl.
+
+If not resuming from suspend use the Nouveau drivers (see [GPU](#gpu) above).
+
+Alternatively, switch to s2idle however this doesn't save as much battery because the dedicated GPU will still be running.
 
 ### Check sleep states
 
@@ -151,14 +150,12 @@ If not supported then s2idle will be a shallow software-based suspend.
 
 See [Diagnose Sleep on Linux](https://docs.anduinos.com/Skills/System-Management/Diagnose-Sleep.html) for more info.
 
-## Not waking from sleep
-
-To fix waking from s3 sleep install the nvidia 390 drivers.
-
-Alternatively, switch to s2idle however this doesn't save as much battery in theory (I haven't verified this empirically).
-
 ## Boot loader
 
 MBP 10.1 uses EFI. Omarchy installs a EFI boot partition mounted at /boot containing [Limine](https://wiki.archlinux.org/title/Limine). See also [Docs Addition: Limine + Snapper](https://github.com/basecamp/omarchy/issues/1068). GRUB, systemd-boot, and rEFInd are all alternatives to Limine.
 
 TODO: auto-boot into omarchy
+
+## Troubleshooting
+
+For hardware issues check `dmesg`.
