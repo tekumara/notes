@@ -118,11 +118,13 @@ Search for commits with patch text that contains added/removed lines that match 
 git log -G<regex> -p
 ```
 
-Search for commits that change the number of occurrences of the string, ie: adds or deletes it. A patch that updates it isn't included. `-p` shows the patch.
+Search for commits that change the number of occurrences of the string, ie: adds or deletes it (aka pickaxe). A patch that updates it isn't included. `-p` shows the patch.
 
 ```
 git log -S<string> -p
 ```
+
+See these additional [pickaxe examples](https://tekin.co.uk/2020/11/patterns-for-searching-git-revision-histories).
 
 ## Ranges
 

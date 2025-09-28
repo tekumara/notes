@@ -1,12 +1,15 @@
 # jj
 
+> Powerful history-editing features, such as for splitting and squashing commits, for moving parts of a commit to or from its parent, and for editing the contents or commit message of any commit
+> First-class conflicts means that conflicts won't prevent rebase, and existing conflicts can be rebased or rolled back
+
 ## vs git
 
 In general jj has fewer concepts than git. The core ones are:
 
-- [commits](https://jj-vcs.github.io/jj/latest/glossary/#commit) A snapshot of the files in the repository at a given point in time.
-- [changes](https://jj-vcs.github.io/jj/latest/glossary/#change) Changes provide stable identifiers even as the change (the commit) is amended or modified over time.
-- the [working copy](https://jj-vcs.github.io/jj/latest/working-copy/) contains the files you are currently working on and any file changes are automatically committed at the beginning of most `jj` commands.
+- [commit](https://jj-vcs.github.io/jj/latest/glossary/#commit) aka revision. A snapshot of the files in the repository at a given point in time.
+- [change](https://jj-vcs.github.io/jj/latest/glossary/#change) - Changes provide stable identifiers even as the change (the commit) is amended or modified over time. A change ID is a property of a commit.
+- the [working copy](https://jj-vcs.github.io/jj/latest/working-copy/) contains the files you are currently working on. Any file changes are automatically committed at the beginning of most `jj` commands.
 
 Also has a better default diff viewer than git's default or diff-so-fancy.
 
@@ -43,9 +46,31 @@ Or to avoid tracking claude:
 jj config set --repo snapshot.auto-track "~(.claude/ | CLAUDE.md)"
 ```
 
+More info: see [arguments for auto snapshotting](https://github.com/jj-vcs/jj/issues/323#issuecomment-2571760838).
+
+## ignore
+
+To ignore a file (eg: uv.lock) in the working copy:
+
+```
+echo uv.lock >> .gitignore
+jj file untrack uv.lock
+```
+
+Ideally this would be a one-liner, see [#3493](https://github.com/jj-vcs/jj/issues/3493).
+
+## blame
+
+To blame each line in pyproject.toml:
+
+```
+jj file annotate pyproject.toml
+```
+
 ## bookmarks
 
-In Jujutsu (jj), “bookmarks” are like Git branches: named pointers to commits.
+Bookmarks are named pointers to commits, like branches in git.
+
 Running `jj bookmark track ...` sets a local bookmark to follow its remote counterpart (upstream), so future `jj git fetch` updates will automatically fast‑forward your local bookmark when the remote moves.
 
 Track a specific bookmark: `jj bookmark track main@origin`
@@ -54,10 +79,12 @@ A `*` suffix on a bookmark means that the local bookmark and its corresponding r
 
 A `??` suffix will show on multiple revisions for a bookmark when its conflicted. `jj bookmark list <name>` or `jj bookmark list -c` will describe the conflict. Using the bookmark name to look up a revision will resolve to all potential targets. See [Bookmarks - Conflicts](https://jj-vcs.github.io/jj/latest/bookmarks/#conflicts)
 
-``jj bookmark set` will create or update a single bookmark.
-``jj bookmark move` will move a set of existing bookmarks to a revision.
+`jj bookmark set` will create or update a single bookmark.
+`jj bookmark move` will move a set of existing bookmarks to a revision
 
 Use either to resolve a conflict.
+
+Because jj operates in a detacted head state, moving bookmarks backwards doesn't hide the previous tip in the log.
 
 ## push
 
@@ -112,6 +139,10 @@ move a revision in whole or partially
 ## diffedit
 
 choose what to keep in a revision
+
+## restore
+
+`jj restore` will drop all file changes in current revision, like `git checkout --` drops unstaged changes
 
 ## rebase
 
