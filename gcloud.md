@@ -65,15 +65,15 @@ Provides a federated workload identity, identified by a [federated access token]
 Once identified your workload can access resources using:
 
 - [direct access](https://cloud.google.com/iam/docs/workload-identity-federation) as your federated workload identity using resource-specific roles.
-- service account impersonation - Instead of granting access to a workload directly, you grant access to a service account, then have the workload use the service account as its identity. Uses
+- service account impersonation - Instead of granting access to a workload directly, you grant access to a service account, then have the workload use the service account as its identity.
 
 Application Default Credentials (ADC) support WIF credential configuration files, see [create credential config for AWS or Azure](https://cloud.google.com/iam/docs/workload-identity-federation-with-other-clouds#create-cred-config).
 
 For more info see
 
-- [Configure Workload Identity Federation with AWS or Azure VMs](https://cloud.google.com/iam/docs/workload-identity-federation-with-other-clouds).
+- [Configure Workload Identity Federation with AWS or Azure VMs](https://cloud.google.com/iam/docs/workload-identity-federation-with-other-clouds)
 - [Configure Workload Identity Federation with Kubernetes](https://cloud.google.com/iam/docs/workload-identity-federation-with-kubernetes)
-- [AIP-4117 External Account Credentials (Workload Identity Federation)](https://google.aip.dev/auth/4117).
+- [AIP-4117 External Account Credentials (Workload Identity Federation)](https://google.aip.dev/auth/4117)
 
 ### Service account impersonation
 
