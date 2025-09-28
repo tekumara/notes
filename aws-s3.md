@@ -7,7 +7,7 @@ List objects in bucket:
 ```python
 from boto3 import client
 conn = client('s3')
-for key in conn.list_objects(Bucket='xero-data-apps-prod-xos-sandbox-flows')['Contents']:
+for key in conn.list_objects(Bucket='mybucket')['Contents']:
     print(key['Key'])
 ```
 

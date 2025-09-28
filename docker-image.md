@@ -41,7 +41,7 @@ A docker [image config document](https://github.com/moby/moby/tree/master/image/
 
 A local docker image ID is a digest that uniquely identifies a image config document. It's not the same as the manifest digest, which uniquely identifies a [manifest](https://github.com/opencontainers/image-spec/blob/main/manifest.md) document containing **compressed** layers.
 
-There are references between the two documents. A manifest contains the image id/digest in its `config.digest` field, eg: `docker manifest inspect repo:tag | jq .config.digest`. After pulling an image, docker will store the manifest digest in the `RepoDigest` field of its local version of the image config, eg: `docker image inspect data-applications-docker-common.artifactory.xero-support.com/br_orgbizids-prefect:cache | jq '.[].RepoDigests[]'` NB: the `Repo*` fields don't exist in the image config stored on the registry.
+There are references between the two documents. A manifest contains the image id/digest in its `config.digest` field, eg: `docker manifest inspect repo:tag | jq .config.digest`. After pulling an image, docker will store the manifest digest in the `RepoDigest` field of its local version of the image config, eg: `docker image ubuntu:24.04 | jq '.[].RepoDigests[]'` NB: the `Repo*` fields don't exist in the image config stored on the registry.
 
 `docker push` shows the uncompressed layer digests.
 

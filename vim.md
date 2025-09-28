@@ -75,6 +75,7 @@ paste before from system clipboard - `"*p`
 reindent - `=` - this will deindent if the indentation is incorrect.
 indent - `>` to ident again, press `.` (redo)
 comment - ctrl+V to select visually the first column, then shift+i, #, esc
+`o` in normal mode: Create new line below current, enter insert mode.
 
 `ciw` to replace the word under the cursor ([ref](https://stackoverflow.com/questions/1379198/how-to-delete-a-word-and-go-into-insert-mode-in-vim))
 
