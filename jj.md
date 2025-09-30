@@ -2,13 +2,19 @@
 
 > Powerful history-editing features, such as for splitting and squashing commits, for moving parts of a commit to or from its parent, and for editing the contents or commit message of any commit
 > First-class conflicts means that conflicts won't prevent rebase, and existing conflicts can be rebased or rolled back
+> Being able to pick and choose where modifications go makes it easier to be intentional about where something belongs.
+> more mindful about where any particular code changes “belongs”. It’s easy to put things in the right place, and to build a commit or change series that’s a logical and well-encapsulated series of discrete steps
+> jj encourages a rebase-friendly workflow, given how easy it is to rebase and rearrange things at any time. This is somewhat incompatible with forges2 like GitHub, where force pushes invalidate review comments in pull requests.
+
+super easy to do fixups
 
 ## vs git
 
 In general jj has fewer concepts than git. The core ones are:
 
-- [commit](https://jj-vcs.github.io/jj/latest/glossary/#commit) aka revision. A snapshot of the files in the repository at a given point in time.
-- [change](https://jj-vcs.github.io/jj/latest/glossary/#change) - Changes provide stable identifiers even as the change (the commit) is amended or modified over time. A change ID is a property of a commit.
+- [commit](https://jj-vcs.github.io/jj/latest/glossary/#commit). A snapshot of the files in the repository at a given point in time.
+- [change](https://jj-vcs.github.io/jj/latest/glossary/#change) - provides a stable identifier even as the change is amended or modified over time to point at a different commit. A change identifier is a property of a commit.
+- revision - synonymous with commit according to the glossary. Note that a revision CLI argument can be a commit id, change id, bookmark or symbol, see [revsets](https://jj-vcs.github.io/jj/latest/revsets/).
 - the [working copy](https://jj-vcs.github.io/jj/latest/working-copy/) contains the files you are currently working on. Any file changes are automatically committed at the beginning of most `jj` commands.
 
 Also has a better default diff viewer than git's default or diff-so-fancy.
@@ -69,7 +75,7 @@ jj file annotate pyproject.toml
 
 ## bookmarks
 
-Bookmarks are named pointers to commits, like branches in git.
+Bookmarks are named pointers to commits, like branches in git. But unlike git branches they don't automatically move as new commits are made.
 
 Running `jj bookmark track ...` sets a local bookmark to follow its remote counterpart (upstream), so future `jj git fetch` updates will automatically fast‑forward your local bookmark when the remote moves.
 
@@ -86,6 +92,8 @@ Use either to resolve a conflict.
 
 Because jj operates in a detacted head state, moving bookmarks backwards doesn't hide the previous tip in the log.
 
+There is an [experimental feature](https://github.com/jj-vcs/jj/discussions/3549) that advances a bookmark forward on `jj commit` or `jj new`
+
 ## push
 
 To create a name implicitly on push
@@ -96,9 +104,21 @@ jj git push -c @
 
 ## conflicts
 
-[conflicts](https://jj-vcs.github.io/jj/latest/conflicts/) are stored logically inside commits. They can be postponed until you need to resolve, you aren't forced to do this up front.
+[Conflicts](https://jj-vcs.github.io/jj/latest/conflicts/) are stored logically inside commits. They can be postponed until you need to resolve, you aren't forced to do this up front.
 
-conflicts will be materialised into [conflict markers](https://jj-vcs.github.io/jj/latest/conflicts/#conflict-markers), which look a bit different from git's.
+Conflicts will be materialised into [conflict markers](https://jj-vcs.github.io/jj/latest/conflicts/#conflict-markers), which look a bit different from git's.
+
+Conflicts can be generated on `jj git fetch` when a branch is merged and is deleted on the remote, eg: if `trunk-based` is deleted on the remote, then `wxko` and `rpxp` will be abandoned, and descendants rebased, which can cause a conflict in `uwys` if the abandoned commits contained conflict resolutions changes.
+
+```
+○ │  uwys tekumara 2025-09-23 21:57:10 80da
+├─╯  cruft update
+○  wxko tekumara 2025-09-23 21:44:54 trunk-based ca33
+│  update contributing
+○  rpxp tekumara 2025-09-23 20:25:41 23e5
+│  require pytest-mock
+○  npvu tekumara 2025-09-23 20:10:27 del-me ffb2
+```
 
 ### resolving conflicts
 
@@ -171,3 +191,7 @@ See [CLI reference: jj rebase](https://jj-vcs.github.io/jj/latest/cli-reference/
 ## limitations
 
 - [no git hook support yet](https://github.com/jj-vcs/jj/discussions/403)
+
+## references
+
+- [What I've learned from jj](https://zerowidth.com/2025/what-ive-learned-from-jj/)
