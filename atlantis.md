@@ -111,4 +111,6 @@ the default workspace at path . is currently locked by another command that is r
 Wait until the previous command is complete and try again
 ```
 
+try without parallel
+
 `Pull request must be mergeable before running apply.` if atlantis/apply is a required status check (to prevent merging without applying) and its failed, then try removing it as a status check.

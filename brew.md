@@ -12,6 +12,7 @@ Get info
 `brew search postgresql` Search installed taps for formulae and casks with `postgresql` in the name.
 `brew tap-info --installed` List all installed taps and how many formulae they contain (whether installed or not).
 `brew list --full-name -1 | grep /` List all installed formulae that came from a tap.
+`readlink /opt/homebrew/bin/envsubst` See link, and therefore package, that owns envsubst
 
 Show package owner of msbuild
 
