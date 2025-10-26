@@ -59,6 +59,10 @@ echo 'scale=2;4147/11198' | bc
 5x faster than [csvkit](http://csvkit.readthedocs.io/en/1.0.2/) (which is also backed by sqlite)
 Has a SQL syntax.
 
+## [csvtk](https://github.com/shenwei356/csvtk)
+
+haven't tried yet
+
 ## [miller](https://github.com/johnkerl/miller)
 
 Non-sql syntax. Support JSON and JSON Lines too.

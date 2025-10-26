@@ -31,11 +31,23 @@ docker compose run --service-ports app
 ```
 
 ## macos
-
+  
 Docker Desktop ships:
 
 - docker-compose v2
 - docker compose v2
+
+## SSH agent forwarding
+
+```yaml
+# enable ssh agent forwarding for cloning from github
+volumes:
+  - type: bind
+    source: /run/host-services/ssh-auth.sock
+    target: /run/host-services/ssh-auth.sock
+environment:
+  - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
+```
 
 ## Troubleshooting
 
@@ -46,6 +58,7 @@ This can happen when a container is created with a network and `docker compose d
 So the container still exists but will have the old network id, and when `docker compose up` runs it starts the container but can't find the network.
 
 Either:
+
 1. Remove the container with `docker compose down <profile>`
 1. Re-up using `docker compose up --force-recreate` to recreate the container, which will point it at the newly created network. See [#5745](https://github.com/docker/compose/issues/5745#issuecomment-590400979).
 

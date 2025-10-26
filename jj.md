@@ -169,10 +169,16 @@ choose what to keep in a revision
 
 ## rebase
 
-to reparent a revision `r1` and it descendants, eg:
+to reparent a revision `r1` and it descendants to `d2`, eg:
 
 ```
 jj rebase -s r1 -d r2
+```
+
+with multiple parents:
+
+```
+jj rebase -s r1 -d r2 -d r3
 ```
 
 to remove a parent, eg: if `r1` has two parents `p1` and `p2` this removes parent `p2`
