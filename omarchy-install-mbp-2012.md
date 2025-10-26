@@ -159,3 +159,7 @@ TODO: auto-boot into omarchy
 ## Troubleshooting
 
 For hardware issues check `dmesg`.
+
+## Bluetooth
+
+After pairing and connecting to an audio device, for it to become available restart Pulse Audio using CMD+ALT+SPACE, Update -> Hardware -> Audio. You can then select the device in Pulse Audio (via the Speaker icon in the status bar).

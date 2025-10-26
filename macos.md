@@ -116,4 +116,34 @@ Can happen when trying to open from Spotlight. Open from Finder - Applications i
 
 ### Disk space being consumed
 
-On restart the disk space is released. To locate the source, close each running program one by one and check `df -h` before and after.
+On restart the disk space is released. To locate the source, close each running program one by one and check `df -h` before and after. Also run `dust` and compare between startup and the full state.
+
+Likely culprits:
+
+- Docker logs
+- Vscode temp files
+- Dynamic Wallpapers
+
+Dynamic wallpapers are downloaded in the background as .tmp files into `/var/folders/zz/zyxvpxvq6csfxvn_n0000000000000/T/com.apple.idleassetsd` (requires sudo) then moved to `/Library/Application\ Support/com.apple.idleassetsd` as .mov files. The set of .mov files are managed and my grow and shrink.
+
+If you delete the .mov files they will be re-downloaded.
+
+Switching to a static wallpaper doesn't stop the downloads.
+`pkill idleassetsd` and it is restarted by launchd.
+
+Can't be unloaded:
+
+```
+sudo launchctl bootout system/com.apple.idleassetsd
+Boot-out failed: 150: Operation not permitted while System Integrity Protection is engaged
+```
+
+And disabling appears to work but does nothing:
+
+```
+sudo launchctl disable system/com.apple.idleassetsd
+```
+
+See also:
+
+- [[PSA — SOLVED] idleassetsd high CPU usage](https://www.reddit.com/r/mac/comments/1douiay/psa_solved_idleassetsd_high_cpu_usage/)
