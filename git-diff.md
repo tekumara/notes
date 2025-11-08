@@ -11,7 +11,7 @@ Git diff compares endpoints and does not use the normal [dotted range notation](
 
 `git diff main..r2` is equivalent to `git diff main r2` (see above).
 
-`git diff main...r2` determines the merge base of main and r2, ie: their common ancestor, and then shows the diff between r2 and the merge base. Equivalent to `git diff $(git merge-base main r2)..r2`. `r2...main` will show a different set of changes, ie: the diff between main and the merge base.
+`git diff main...r2` determines the merge base of main and r2, ie: their common ancestor, and then shows the diff between r2 and the merge base. Equivalent to `git diff $(git merge-base main r2)..r2`. `r2...main` will show a different set of changes, ie: the diff between main and the merge base. To include staged and unstaged changes in this comparison while you are on `r2`, diff the working tree against the merge base instead: `git diff --merge-base main` (or `git diff $(git merge-base main HEAD)`).
 
 If there are multiple possible merge bases, it'll pick the most recent one. `git merge-base main r2` shows the merge base (use `--all` to see all).
 

@@ -1,13 +1,30 @@
 # git prune
 
+## Recommended
+
+[poi](https://github.com/seachicken/gh-poi) will show local branches (tracking or not) that have been merged
+
+```
+gh poi --dry-run
+```
+
+Show local branches that have closed PRs (whether merged or not). This is a superset of the previous command:
+
+```
+gh poi --closed --dry-run
+```
+
+Local branches won't be deleted if:
+
+- they deviate from the closed/merged PR, eg: have additional commits
+- they can't be matched to a PR. If they are tracking branches see the next section.
+
 ## Stale tracking branches
 
 See stale tracking branches (ie: `origin/*`) that no longer exist on origin
 
 ```
 git remote prune origin --dry-run
-# or using https://github.com/seachicken/gh-poi
-gh poi --dry-run
 ```
 
 Remove stale origin branches, and keeps the local branch:
@@ -74,10 +91,10 @@ List local branches without a remote tracking branch:
 git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv) | awk '{print $1}'
 ```
 
-Delete branches merged into master
+Delete branches merged into main
 
 ```
-git branch --merged master | grep -v master | xargs git branch -d
+git branch --merged main | grep -v main | xargs git branch -d
 ```
 
 [Source](https://stackoverflow.com/a/33548037/149412)
