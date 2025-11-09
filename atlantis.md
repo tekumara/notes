@@ -111,9 +111,12 @@ the default workspace at path . is currently locked by another command that is r
 Wait until the previous command is complete and try again
 ```
 
-try without parallel
+See https://github.com/runatlantis/atlantis/pull/3345/files
+
+Try planning a single project at a time.
+
+Or remove parallel planning.
 
 `Pull request must be mergeable before running apply.` if atlantis/apply is a required status check (to prevent merging without applying) and its failed, then try removing it as a status check.
-
 
 `Error: Running atlantis apply is disabled.` check the global lock on the atlantis instance page.

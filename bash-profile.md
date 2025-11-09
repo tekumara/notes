@@ -1,10 +1,14 @@
 # bash profile
 
-profile files are _/etc/profile_, _~/.bash_profile_, _~/.bash_login_, _~/.profile_.
+Bash profiles are for login shells, ie: the first login via console or ssh.
 
-They are only executed at login time, eg: when sshing in, or using `bash -l`
+Running `bash` in an existing shell, or starting a new bash terminal in Xbuntu, does not start a login shell.
 
-They are not executed when running `bash` in an existing shell, or starting a bash terminal in Xbuntu.
+Login shells might include additional things, like a message of the day or diagnostic info.
+
+profile files are _/etc/profile_, _~/.bash_profile_, _~/.bash_login_, _~/.profile_. They are only executed by login shells
+
+.bashrc is executed for interactive non-login shells. Its usually a subset of what you want to do at login, and is sourced from a bash_profile.
 
 ## bash login shell
 
