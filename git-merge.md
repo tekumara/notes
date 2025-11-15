@@ -20,6 +20,11 @@ Conflicts appear as unmerged files in `git status`.
 - _ours_ = current change, updated upstream eg: HEAD. The currently checked out branch if merging, or the new HEAD being rebased on to.
 - _theirs_ = incoming change, stashed changes. The branch being merged in (eg: stashed changes), or the branch being rebased.
 
+ie:
+
+- when merging my_branch into main, main is --ours
+- when rebasing my_branch onto main, main is still --ours
+
 You will need to resolve the conflicts, eg:
 
 - `git checkout --ours .` to keep all our changes
@@ -52,3 +57,4 @@ git add -u
 ``
 
 `git merge --abort` to abort a merge, ie: reset your working copy to whatever state it was in before the merge, and remove the MERGE_HEAD branch.
+```

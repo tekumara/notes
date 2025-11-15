@@ -140,7 +140,7 @@ for more info see [Conflicts](https://jj-vcs.github.io/jj/latest/working-copy/#c
 `@+` the child (next) revision.  
 `::x` ancestors of x, including x.  
 `x::` descendants of x, including x.
-`x..` Revisions that are not ancestors of x, eg: `main@origin..` are commits not in main@origin, and `immutable_heads()..` are mutable commits (ie: no immutable ancestor, so not pushed to origin)
+`x..` Revisions that are not ancestors of x, eg: `main@origin..` are commits not in main@origin, and `immutable_heads()..` are mutable commits (ie: not ancestor of, so not pushed to origin)
 `heads(x)` within the set x, those commits that have no ancestors (they may have ancestors outside the set x).  
 `heads(::@ & bookmarks())` intersection of ancestors of current revision and bookmarks, that are heads (ie: have no ancestors in this set), eg: "bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"
 

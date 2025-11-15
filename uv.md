@@ -44,6 +44,12 @@ uv sync will include the `dev` dependency group. Use `--all-groups` for all grou
 
 Will use the virtualenv of the current project, if any. The virtualenv will be created and updated before invoking the command.
 
+## uv tree
+
+Show's the project's dependency tree, not what's in the virtualenv.
+
+Use `uv pip freeze` to see what's in the virtualenv.
+
 ## debugging resolution
 
 to understand why uv resolved to a lower version than expecting, try forcing it to the higher version in your pyproject.toml to get a conflict measure

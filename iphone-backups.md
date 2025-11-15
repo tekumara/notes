@@ -34,9 +34,13 @@ On restore, your security code will change. Computer restores will be treated as
 
 Only syncs reading list and bookmarks to iCloud. Open tabs are NOT synced.
 
-### Wallet
+#### Wallet
 
 Restored via both iCloud and computer restores (need to double check this works without an iCloud account connected) but need to be manually reactivated.
+
+#### Signal
+
+Computer backup nor iCloud backup does not contain chat history. Needs old phone to transfer chats to the new phone.
 
 ## References
 

@@ -46,13 +46,14 @@ rsync -a * /dest/
 | -S                | handle sparse files efficiently so they take up less space on destination                               |
 | -H                | recreate hardlinks in destination                                                                       |
 | -z                | Turns on compression during the transfer. This option compresses the data when copied over the network. |
+| -c                | Compare by content checksums (much slower)                                                              |
 
 ## Compare files
 
 Show files that will have changes applied (excluding permissions and file/group owner differences)
 
 ```
-rsync -nirlt --del /data/Music/ /media/LittleMac/Music/
+rsync -ncirlt --del /data/Music/ /media/LittleMac/Music/
 ```
 
 eg:
@@ -61,9 +62,15 @@ eg:
 *deleting   01 Another Town.mp3
 >f+++++++++ 1-01 Fidelity.mp3
 >f..tp..... 01 Daylight.mp3
+>cd++++++++ no-sticker-pack/
 ```
 
-ie: 1) a file being deleted, 2) a file being added, and 3) a timestamp (t) and permission (p) change
+ie:
+
+- a file being deleted
+- a file being added
+- a timestamp (t) and permission (p) change
+- creation (c) of a directory (d)
 
 ## Dest dir with space
 
