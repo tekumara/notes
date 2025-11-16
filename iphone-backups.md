@@ -4,7 +4,7 @@
 
 System Data builds up over time (e.g., my phone accumulated 32.46 GB).
 
-A factory reset and restore clears accumulated System Data.
+A factory reset and restore clears accumulated System Data (down to about ~5Gb on my phone).
 
 During restore, System Data temporarily holds backup files. When apps first launch and restore their data from backup, System Data usage drops.
 

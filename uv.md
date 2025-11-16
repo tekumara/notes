@@ -48,7 +48,7 @@ Will use the virtualenv of the current project, if any. The virtualenv will be c
 
 Show's the project's dependency tree, not what's in the virtualenv.
 
-Use `uv pip freeze` to see what's in the virtualenv.
+Use `uv pip tree` or `uv pip freeze` to see what's in the virtualenv.
 
 ## debugging resolution
 

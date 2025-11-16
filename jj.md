@@ -140,7 +140,7 @@ for more info see [Conflicts](https://jj-vcs.github.io/jj/latest/working-copy/#c
 `@+` the child (next) revision.  
 `::x` ancestors of x, including x.  
 `x::` descendants of x, including x.
-`x..` Revisions that are not ancestors of x, eg: `main@origin..` are commits not in main@origin, and `immutable_heads()..` are mutable commits (ie: not ancestor of, so not pushed to origin)
+`x..` Revisions that are not ancestors of x, ie: not on the branch that ends with x (inclusive), eg: `main@origin..` are commits not in branch main@origin
 `heads(x)` within the set x, those commits that have no ancestors (they may have ancestors outside the set x).  
 `heads(::@ & bookmarks())` intersection of ancestors of current revision and bookmarks, that are heads (ie: have no ancestors in this set), eg: "bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"
 
@@ -148,6 +148,7 @@ for more info see [Conflicts](https://jj-vcs.github.io/jj/latest/working-copy/#c
 
 `trunk()` is head of default bookmark for default remote, eg: main@origin
 `immutable_heads()` is `present(trunk()) | tags() | untracked_remote_bookmarks()` ie: all the tips on origin.
+`immutable_heads()..` commits not on trunk and local bookmarks
 
 ## split
 
@@ -189,6 +190,12 @@ to remove a parent, eg: if `r1` has two parents `p1` and `p2` this removes paren
 
 ```
 jj rebase -s r1 -d p1
+```
+
+to merge main into the current revision we rebase `@` onto its existing parent (`@-`) and main:
+
+```
+jj rebase -d @- -d main
 ```
 
 There are three different ways of specifying which revisions to rebase:
