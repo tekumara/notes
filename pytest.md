@@ -88,9 +88,9 @@ pytest_plugins = ("fakesnow.fixtures",)
 
 ## Troubleshooting
 
-### ModuleNotFoundError: No module named X
+### ModuleNotFoundError: No module named 'tests'
 
-Make sure _tests/\_\_init\_\_.py_ exists.
+Make sure \_\_init\_\_.py_ exists in the directory containing your tests.
 
 If you still get the above when running `pytest` from the command line, run via the python interpreter:
 

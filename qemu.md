@@ -50,5 +50,7 @@ Full-screen (sdl display): `CTRL+ALT+F`
 To share clipboard requires using spice (nb: has a higher resolution display)
 
 ```
-quickemu --vm windows-11.conf --display splice
+quickemu --vm windows-11.conf --display spice
 ```
+
+Full-screen (spice display): `Shift+F11`

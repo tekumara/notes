@@ -22,6 +22,7 @@ This will pipe the result back into the buffer.
 `ctrl-d` scrolls down half a page  
 `ctrl-u` scrolls up half a page  
 `G` Jump to beginning of the last line of the file  
+`Go` create a line after the last line of the file
 `gg` Jump to start of file
 `10, right arrow` move 10 chars to the right  
 `b` move backward to the beginning of next word (NB: It's just a coincidence that `Alt + Left arrow` = `^[b` and therefore moves back a word, but with an alarm because of the `^[b`)
@@ -30,8 +31,7 @@ This will pipe the result back into the buffer.
 `f` find a single character  
 `;` repeat search  
 `^` takes you to the beginning of a line, and `$` to the end  
-`G + o` create a line after the last line of the file
-`:set number` show line numbers 
+`:set number` show line numbers
 `:%s/foo/bar/g` find and replace 'foo' with 'bar' in all the lines.
 
 http://vim.wikia.com/wiki/Moving_around
@@ -81,6 +81,51 @@ comment - ctrl+V to select visually the first column, then shift+i, #, esc
 
 To paste in the middle on a line at the current cursor position, enter insert mode, and press Ctrl-R to paste the unnamed buffer.
 
+### Clipboard registers
+
+
+
+The default clipboard register in Vim is the **unnamed register `"`** (double quote).
+
+When you yank or delete without specifying a register:
+
+- `yy` → copies to `"` register
+- `dd` → cuts to `"` register
+- `p` → pastes from `"` register
+
+This is separate from the system clipboard registers (`+` and `*`) unless you set `clipboard=unnamedplus`, which makes the unnamed register sync with the `+` (system clipboard) register.
+
+To see what's in the unnamed register:
+
+```vim
+:reg "
+```
+
+In Vim/Neovim, `*` and `+` are special clipboard registers:
+
+`+` register (clipboard):
+
+- The system clipboard (Ctrl+C/Ctrl+V on Linux/Windows, Cmd+C/Cmd+V on macOS)
+- Used for copying/pasting between applications
+
+`*` register (primary selection):
+
+- X11/Linux primary selection (middle-click paste)
+- On Windows/macOS, often mapped to the same as `+`
+- Automatically populated when you select text with the mouse
+
+On macOS both `\*` and `+` typically point to the same system clipboard (pasteboard), so they're functionally identical.
+
+On Linux (X11):
+
+- `+` = Ctrl+C/Ctrl+V clipboard
+- `*` = Select text + middle-click paste (primary selection)
+
+### Unnamedplus
+
+`unnamedplus` is a Vim/Neovim clipboard option that automatically uses the system clipboard (`+` register) for all yank, delete, change, and put operations.
+
+
 ## File operations
 
 open file: `:e <filename>`  
@@ -128,6 +173,7 @@ Each file opened is stored in memory in a buffer.
 `:b1` switch split to buffer 1
 `:bd` delete buffer (aka close file)
 `:enew` open new buffer in a new tab
+
 See [Easier buffer switching](https://vim.fandom.com/wiki/Easier_buffer_switching)
 
 ## Vim Splits/Windows
@@ -151,3 +197,7 @@ Open a new tabpage `:tab`
 `:set rtp?` see the value of the `rtp` (runtimepath) option
 `:set bg=dark` better color scheme  
 `:set nowrap` disable word wrapping
+
+## Config
+
+`:echo $USER` show the value of the USER env var

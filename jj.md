@@ -138,7 +138,7 @@ for more info see [Conflicts](https://jj-vcs.github.io/jj/latest/working-copy/#c
 `@` current revision.  
 `@-` the parent (previous) revision.  
 `@+` the child (next) revision.  
-`::x` ancestors of x, including x.  
+`::x` ancestors of x, including x (ie: branches ending in x)  
 `x::` descendants of x, including x.
 `x..` Revisions that are not ancestors of x, ie: not on the branch that ends with x (inclusive), eg: `main@origin..` are commits not in branch main@origin
 `heads(x)` within the set x, those commits that have no ancestors (they may have ancestors outside the set x).  
@@ -148,7 +148,7 @@ for more info see [Conflicts](https://jj-vcs.github.io/jj/latest/working-copy/#c
 
 `trunk()` is head of default bookmark for default remote, eg: main@origin
 `immutable_heads()` is `present(trunk()) | tags() | untracked_remote_bookmarks()` ie: all the tips on origin.
-`immutable_heads()..` commits not on trunk and local bookmarks
+`immutable_heads()..` local bookmarks and commits not on trunk  
 
 ## split
 

@@ -7,8 +7,10 @@ Connecting the input and output of several commands, and grouping commands. See 
 Log stdout and stderr to a file
 
 `.... >/tmp/log 2>&1`
+or
+``.... &> /tmp/log`
 
-Log stdout and stderr to console and a file
+`&>` requires a file argument, so you can't pipe directly after it. So to log stdout and stderr to console and a file use `2>&1` eg:
 
 `2>&1 | tee /tmp/log`
 
@@ -64,6 +66,7 @@ bcompare <(unzip -l play.zip | sort) <(unzip -l play.old.zip | sort)
 Similarly you can use `>(command)` if you want to pipe something into a command.
 
 See:
+
 - [Chapter 23. Process Substitution](https://tldp.org/LDP/abs/html/process-sub.html)
 - [Stack Overflow](http://stackoverflow.com/a/3800207/149412)
 
