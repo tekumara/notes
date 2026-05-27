@@ -1,7 +1,7 @@
 # rsync
 
 ```sh
-rsync -a --stats ----info=progress2 source dest/
+rsync -a --stats --info=progress2 source dest/
 ```
 
 `-a` turns on archive mode. Basically this causes rsync to recurse the directory copying all the files and directories and preserving things like case, permissions, and ownership on the target. (Note: Ownership may not be preserved if you are not logged in as the root user.) Equivalent to -rlptgoD (ie: recursive, recreate symlinks, copy permissions, copy modification times, copy group owner, copy file owner, copy character & block device files & named sockets & fifos)
@@ -39,6 +39,7 @@ rsync -a * /dest/
 | -i                | list changes (if any) that are being made.                                                              |
 | -r                | recursive                                                                                               |
 | -l                | recreate symlinks on dest                                                                               |
+| -L                | Copy targets of symbolic links, rather than the link itself                                             |
 | -t, --times       | copy modification times                                                                                 |
 | --del or --delete | delete destination files that don't exist on source                                                     |
 | -h                | output numbers in a human-readable format                                                               |
@@ -53,8 +54,12 @@ rsync -a * /dest/
 Show files that will have changes applied (excluding permissions and file/group owner differences)
 
 ```
-rsync -ncirlt --del /data/Music/ /media/LittleMac/Music/
+rsync -nirlt --del ~/Documents/University/ /run/media/oliver/LittleMac/University/
 ```
+
+NB:
+- use -c to compare checksums 
+- make sure you have / at the end of source and dest
 
 eg:
 
