@@ -88,3 +88,8 @@ You don't have write access to the socket.
 > Could not open a connection to your authentication agent.
 
 You don't have the SSH_AUTH_SOCK env var set.
+
+## Alternatives
+
+dory - has an [auto-idle](https://github.com/Augani/dory#runtime-modes-and-resource-control) feature that detects socket usage and when not in use will stop its VM. Similar to [docker desktop resource saver](https://docs.docker.com/desktop/use-desktop/resource-saver/).
+[orbstack](https://docs.orbstack.dev/efficiency#memory) - returns idle memory to host, similar to [docker vmm](https://docs.docker.com/desktop/features/vmm/?uuid=9D8E7CFA-B611-44FE-BA32-13FE9E031A9A#docker-vmm).

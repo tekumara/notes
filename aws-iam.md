@@ -20,6 +20,18 @@ python -c 'import boto3; client = boto3.client("sts"); print(client.get_caller_i
 
 InstanceProfile - associated with a Role, and can be attached to an EC2 instance so the EC2 instance assumes that role.
 
+List instance profiles
+
+```
+aws iam list-instance-profiles
+```
+
+See attached roles:
+
+```
+aws iam get-instance-profile --instance-profile-name $PROFILENAME
+```
+
 ## Roles
 
 Describe role ARN, MaxSessionDuration, trust relationships for assuming the role (ie: AssumeRolePolicyDocument) etc.

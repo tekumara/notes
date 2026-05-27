@@ -217,6 +217,8 @@ choose what to keep in a revision
 
 `jj restore` will drop all file changes in current revision, like `git checkout --` drops unstaged changes
 
+`jj restore -f [filesets]` will revert files in filesets to main.
+
 ## rebase
 
 to reparent a revision `r1` and it descendants to `d2`, eg:

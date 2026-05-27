@@ -51,7 +51,7 @@ The state on the left hand side is:
 
 ## Vs TLA+
 
-In TLA+ actions are atomic. Atomic actions have no yield points between the statements. In Fizzbee actions and blocks are no atomic unless explicitly stated as `atomic` and so can interleave.
+In TLA+ actions are atomic. Atomic actions have no yield points between the statements. In Fizzbee actions and blocks are not atomic unless explicitly stated as `atomic` and so can interleave.
 
 See [FizzBee Quick Start for TLA+ Users](https://github.com/fizzbee-io/fizzbee/blob/8ea290d56e9d3d35baf9b710cadfd64fd1bab30a/docs/fizzbee-quick-start-for-tlaplus-users.md).
 
