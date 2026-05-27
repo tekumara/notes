@@ -57,11 +57,7 @@ See man page for security implications.
 
 When forwarding is enabled `ssh-add -l` will show the same set of keys locally as it will in the ssh session on the remote host.
 
-## Troubleshooting
 
-### Too many authentication failures
-
-If ssh produces this error then it may be because ssh-agent has provided > 5 identities before the correct one and ssh gives up.
 
 Add the following to your `.ssh/config` so that ssh only uses the authentication identity files configured in the ssh config file, and not any of ssh-agent's identities.
 

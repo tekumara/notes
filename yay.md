@@ -49,3 +49,10 @@ Show build dir (defaults to ~/.cache/yay):
 ```
 yay -Pg | jq .buildDir
 ```
+
+Show info on package
+
+
+```
+yay -Si rustic
+```

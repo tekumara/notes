@@ -11,7 +11,7 @@ ssh-keygen -t ed25519 -C "you@example.com"
 Copy the public key to the server:
 
 ```
-ssh-copy-id user@server
+ssh-copy-id -i ~/.ssh/id_ed25519.pub user@server
 ```
 
 If `ssh-copy-id` is unavailable:
@@ -25,3 +25,9 @@ Test:
 ```
 ssh user@server
 ```
+
+## Troubleshooting
+
+### Too many authentication failures
+
+If ssh produces this error then it may be because the client has provided > 5 identities before the correct one, or asking for a password, and ssh gives up.
