@@ -31,10 +31,6 @@ sed -i '/natural_scroll/s/# *//' ~/.config/hypr/input.conf
 
 If clicking on WiFi does nothing, and `ip link` will returns `wlan0` device, then you are missing WiFi device drivers.
 
-### Broadcom b43 firmware install
-
-See [Broadcom b43 firmware install](https://github.com/tekumara/setup-arch/blob/main/install/b43firmware.md).
-
 ## Enable SSHD
 
 To enable remote logins using password:
@@ -128,6 +124,21 @@ Suspend / resume messages will be issued by ACPI and visible in dmesg/journalctl
 If not resuming from suspend use the Nouveau drivers (see [GPU](#gpu) above).
 
 Alternatively, switch to s2idle however this doesn't save as much battery because the dedicated GPU will still be running.
+
+## Wifi (BCM4331) does not work after wake from suspend
+
+wlan0 shows as degraded in `networkctl` and doesn't work after waking from suspend.
+
+`journalctl` shows
+
+```
+kernel: ERROR @wl_dev_intvar_get :
+kernel: error (-1)
+kernel: ERROR @wl_cfg80211_get_tx_power :
+kernel: error (-1)
+```
+
+Running `sudo modprobe -r wl` causes the system to freeze.
 
 ### Check sleep states
 
